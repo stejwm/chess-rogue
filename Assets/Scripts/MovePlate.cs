@@ -63,7 +63,7 @@ public class MovePlate : MonoBehaviour
             attackedPiece = cp.GetComponent<Chessman>();
             totalDefensePower=attackedPiece.defense;
 
-            
+            //Set attacked piece to empty for valid support
             controller.GetComponent<Game>().SetPositionEmpty(attackedPiece.GetXBoard(), attackedPiece.GetYBoard());
             
             if(cp.name.Contains("white")){
@@ -98,7 +98,6 @@ public class MovePlate : MonoBehaviour
     }
     private IEnumerator AddSupport(int totalPower, Chessman targetPiece, ArrayList pieces, bool isAttacking){
         _readyForSupport=false;
-        Debug.Log("Is attacking?: "+isAttacking);
         foreach (GameObject pieceObject in pieces)
         {
             var piece =pieceObject.GetComponent<Chessman>() ;
@@ -136,8 +135,6 @@ public class MovePlate : MonoBehaviour
     
     private void RunBattlePanel(){
         Debug.Log("Starting Battle Panel");
-        Debug.Log("Total attack power: "+totalAttackPower);
-        Debug.Log("Total defense power: "+totalDefensePower);
         controller = GameObject.FindGameObjectWithTag("GameController");
         var game = controller.GetComponent<Game>();
 
@@ -244,6 +241,10 @@ public class MovePlate : MonoBehaviour
         }
         else{
             Debug.Log(movingPiece.name + " failed to capture "+ attackedPiece.name);
+            //Reset attacked pieces position if capture failed 
+            attackedPiece.SetXBoard(matrixX);
+            attackedPiece.SetYBoard(matrixY);
+            //update x and y coords with original location
             matrixX = movingPiece.GetXBoard();
             matrixY = movingPiece.GetYBoard();
             attackedPiece.attack-=1;
@@ -252,7 +253,10 @@ public class MovePlate : MonoBehaviour
             attackedPieceObject.GetComponent<Chessman>().SetCoords();
             Debug.Log("Setting bounce tone");
             audioSource.clip = bounce;
-            BattlePanel._instance.SetAndShowResults("Bounce!");   
+            BattlePanel._instance.SetAndShowResults("Bounce!"); 
+             
+            
+            
 
         }
         
