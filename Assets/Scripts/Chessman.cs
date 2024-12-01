@@ -75,6 +75,8 @@ public class Chessman : MonoBehaviour
         float x = xBoard;
         float y = yBoard;
 
+        info= "("+xBoard+","+yBoard+")";
+
         //Adjust by variable offset
         x *= .95f;
         y *= .95f;
@@ -100,11 +102,13 @@ public class Chessman : MonoBehaviour
     public void SetXBoard(int x)
     {
         xBoard = x;
+        info= "("+xBoard+","+yBoard+")";
     }
 
     public void SetYBoard(int y)
     {
         yBoard = y;
+        info = "("+xBoard+","+yBoard+")";
     }
 
      private void OnMouseDown()
@@ -166,8 +170,9 @@ public class Chessman : MonoBehaviour
         
     } 
 
-public List<Tuple<int,int>> GetValidSupportMoves()
+    public List<Tuple<int,int>> GetValidSupportMoves()
     {
+        validMoves.Clear();
         switch (this.name)
         {
             case "black_queen":
@@ -214,14 +219,14 @@ public List<Tuple<int,int>> GetValidSupportMoves()
             //Debug.Log("Object at position: "+ sc.GetPosition(x,y));
         while (sc.PositionOnBoard(x, y) && sc.GetPosition(x, y) == null)
         {
-            //Debug.Log("Position Valid: "+x+", "+y);
+            //Debug.Log("Position Valid: "+x+", "+y +" for "+this.name);
             validMoves.Add(Tuple.Create(x,y));
             x += xIncrement;
             y += yIncrement;
         }
         if (sc.PositionOnBoard(x, y) && sc.GetPosition(x, y).GetComponent<Chessman>().player != player)
         {
-            //Debug.Log("Position Valid: "+x+", "+y);
+            //Debug.Log("Position Valid: "+x+", "+y +" for "+this.name +" "+sc.GetPosition(x, y).GetComponent<Chessman>().player+ " is not "+player);
             validMoves.Add(Tuple.Create(x,y));
         }
 

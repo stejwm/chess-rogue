@@ -68,10 +68,12 @@ public class Game : MonoBehaviour
 
         //Overwrites either empty space or whatever was there
         positions[cm.GetXBoard(), cm.GetYBoard()] = obj;
+        //Debug.Log("Set "+cm.name+" position to "+cm.GetXBoard()+", "+cm.GetYBoard());
     }
 
     public void SetPositionEmpty(int x, int y)
     {
+        //Debug.Log("Removing "+ positions[x,y].name +" from "+x+", "+y);
         positions[x, y] = null;
     }
 

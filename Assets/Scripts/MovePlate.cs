@@ -55,7 +55,7 @@ public class MovePlate : MonoBehaviour
         //Set the Chesspiece's original location to be empty
             controller.GetComponent<Game>().SetPositionEmpty(movingPiece.GetXBoard(), movingPiece.GetYBoard());
 
-        //Destroy the victim Chesspiece
+        
         if (attack)
         {
             GameObject cp = controller.GetComponent<Game>().GetPosition(matrixX, matrixY);
@@ -63,7 +63,7 @@ public class MovePlate : MonoBehaviour
             attackedPiece = cp.GetComponent<Chessman>();
             totalDefensePower=attackedPiece.defense;
 
-            //Set attacked piece to empty for valid support
+            //Set attacked piece to empty to check for valid support
             controller.GetComponent<Game>().SetPositionEmpty(attackedPiece.GetXBoard(), attackedPiece.GetYBoard());
             
             if(cp.name.Contains("white")){
@@ -244,13 +244,15 @@ public class MovePlate : MonoBehaviour
             //Reset attacked pieces position if capture failed 
             attackedPiece.SetXBoard(matrixX);
             attackedPiece.SetYBoard(matrixY);
+            attackedPiece.SetCoords();
+            controller.GetComponent<Game>().SetPosition(attackedPieceObject);
             //update x and y coords with original location
             matrixX = movingPiece.GetXBoard();
             matrixY = movingPiece.GetYBoard();
             attackedPiece.attack-=1;
             attackedPiece.defense-=1;
-            controller.GetComponent<Game>().SetPosition(attackedPieceObject);
-            attackedPieceObject.GetComponent<Chessman>().SetCoords();
+            
+            
             Debug.Log("Setting bounce tone");
             audioSource.clip = bounce;
             BattlePanel._instance.SetAndShowResults("Bounce!"); 
