@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public enum Type
+public enum Team
 {
     Enemy,
     Hero,
@@ -13,7 +14,19 @@ public enum PieceColor
     White,
     Black,
 }
-public class Chessman : MonoBehaviour
+
+public enum PieceType
+{
+    Pawn,
+    Knight,
+    Bishop,
+    Rook,
+    Queen,
+    King,
+
+
+}
+public abstract class Chessman : MonoBehaviour
 {
     //References to objects in our Unity Scene
     public GameObject controller;
@@ -21,20 +34,24 @@ public class Chessman : MonoBehaviour
 
     //Position for this Chesspiece on the Board
     //The correct position will be set later
-    private int xBoard = -1;
-    private int yBoard = -1;
+    public int xBoard = -1;
+    public int yBoard = -1;
+    public MovementProfile moveProfile;
+    public List<StatEffect> statEffects;
+    protected Sprite sprite;
 
     public int attack = 1;
     public int defense = 1;
     public int support = 1;
     public string info = "";
     public PieceColor color;
-    public Type type;
+    public Team team;
+    public PieceType type;
 
     private ArrayList abilities;
     
 
-    List<Tuple<int,int>> validMoves = new List<Tuple<int, int>>();
+    List<BoardPosition> validMoves = new List<BoardPosition>();
 
     //Variable for keeping track of the player it belongs to "black" or "white"
     private string player;
@@ -43,6 +60,32 @@ public class Chessman : MonoBehaviour
     public Sprite black_queen, black_knight, black_bishop, black_king, black_rook, black_pawn;
     public Sprite white_queen, white_knight, white_bishop, white_king, white_rook, white_pawn;
 
+    public abstract List<BoardPosition> GetValidMoves();
+    public abstract List<BoardPosition> GetValidSupportMoves();
+    public int CalculateSupport(){
+        int bonus=0;
+        foreach (var stat in statEffects)
+        {
+            bonus+= stat.CalculateSupport(this);
+        }
+        return bonus;
+    }
+    public int CalculateAttack(){
+        int bonus=0;
+        foreach (var stat in statEffects)
+        {
+            bonus+= stat.CalculateAttack(this);
+        }
+        return bonus;
+    }
+    public int CalculateDefense(){
+        int bonus=0;
+        foreach (var stat in statEffects)
+        {
+            bonus+= stat.CalculateDefense(this);
+        }
+        return bonus;
+    }
     public void Activate()
     {
         //Get the game controller
@@ -67,6 +110,7 @@ public class Chessman : MonoBehaviour
             case "white_rook": this.GetComponent<SpriteRenderer>().sprite = white_rook; player = "white"; break;
             case "white_pawn": this.GetComponent<SpriteRenderer>().sprite = white_pawn; player = "white"; break;
         }
+        this.statEffects.Add(new BaseStats());
     }
 
     public void SetCoords()
@@ -74,8 +118,6 @@ public class Chessman : MonoBehaviour
         //Get the board value in order to convert to xy coords
         float x = xBoard;
         float y = yBoard;
-
-        info= "("+xBoard+","+yBoard+")";
 
         //Adjust by variable offset
         x *= .95f;
@@ -102,25 +144,29 @@ public class Chessman : MonoBehaviour
     public void SetXBoard(int x)
     {
         xBoard = x;
-        info= "("+xBoard+","+yBoard+")";
     }
 
     public void SetYBoard(int y)
     {
         yBoard = y;
-        info = "("+xBoard+","+yBoard+")";
     }
 
      private void OnMouseDown()
     {
-        if (!controller.GetComponent<Game>().IsGameOver() && controller.GetComponent<Game>().GetCurrentPlayer() == player)
-        {
-            //Remove all moveplates relating to previously selected piece
-            DestroyMovePlates();
-            validMoves.Clear();
-            //Create new MovePlates
-            GetValidMoves();
-            DisplayValidMoves();
+        if(controller.GetComponent<Game>().isInInventory)
+            controller.GetComponent<Game>().PieceSelected(this);
+        else{    
+            Debug.Log(this.name+ " piece clicked");
+            if (!controller.GetComponent<Game>().IsGameOver() && controller.GetComponent<Game>().GetCurrentPlayer() == player)
+            {
+                //Remove all moveplates relating to previously selected piece
+                DestroyMovePlates();
+                validMoves.Clear();
+
+                //Create new MovePlates
+                validMoves=GetValidMoves();
+                DisplayValidMoves();
+            }
         }
     } 
 
@@ -134,7 +180,7 @@ public class Chessman : MonoBehaviour
         }
     }
 
-     public List<Tuple<int,int>> GetValidMoves()
+/*      public List<Tuple<int,int>> GetValidMoves()
     {
         switch (this.name)
         {
@@ -168,9 +214,9 @@ public class Chessman : MonoBehaviour
             
         }
         
-    } 
+    }  */
 
-    public List<Tuple<int,int>> GetValidSupportMoves()
+/* public List<Tuple<int,int>> GetValidSupportMoves()
     {
         validMoves.Clear();
         switch (this.name)
@@ -205,34 +251,7 @@ public class Chessman : MonoBehaviour
             
         }
         
-    } 
-
-     public List<Tuple<int,int>> LineMovePlate(int xIncrement, int yIncrement)
-    {
-        Game sc = controller.GetComponent<Game>();
-        
-        int x = xBoard + xIncrement;
-        int y = yBoard + yIncrement;
-        //Debug.Log("Checking "+name +" Valid moves");
-        //Debug.Log("Position is on board? "+sc.PositionOnBoard(x,y));
-        //if(sc.PositionOnBoard(x,y))
-            //Debug.Log("Object at position: "+ sc.GetPosition(x,y));
-        while (sc.PositionOnBoard(x, y) && sc.GetPosition(x, y) == null)
-        {
-            //Debug.Log("Position Valid: "+x+", "+y +" for "+this.name);
-            validMoves.Add(Tuple.Create(x,y));
-            x += xIncrement;
-            y += yIncrement;
-        }
-        if (sc.PositionOnBoard(x, y) && sc.GetPosition(x, y).GetComponent<Chessman>().player != player)
-        {
-            //Debug.Log("Position Valid: "+x+", "+y +" for "+this.name +" "+sc.GetPosition(x, y).GetComponent<Chessman>().player+ " is not "+player);
-            validMoves.Add(Tuple.Create(x,y));
-        }
-
-        return validMoves;
-        
-    } 
+    }  */
 
     public void DisplayValidMoves(){
         Game sc = controller.GetComponent<Game>();
@@ -240,46 +259,20 @@ public class Chessman : MonoBehaviour
 
         foreach (var coordinate in validMoves)
         {
-            if (sc.PositionOnBoard(coordinate.Item1, coordinate.Item2))
+            if (sc.PositionOnBoard(coordinate.x, coordinate.y))
             {
-                GameObject cp = sc.GetPosition(coordinate.Item1, coordinate.Item2);
+                GameObject cp = sc.GetPosition(coordinate.x, coordinate.y);
                 if (cp == null)
                 {
-                    MovePlateSpawn(coordinate.Item1, coordinate.Item2);
+                    MovePlateSpawn(coordinate.x, coordinate.y);
                 }
                 else if (cp.GetComponent<Chessman>().player != player)
                 {
-                    MovePlateAttackSpawn(coordinate.Item1, coordinate.Item2);
+                    MovePlateAttackSpawn(coordinate.x, coordinate.y);
                 }
             }
         }
     }
-
-     public List<Tuple<int,int>> ValidKnightMoves()
-    {
-        validMoves.Add(Tuple.Create(xBoard + 1, yBoard + 2));
-        validMoves.Add(Tuple.Create(xBoard - 1, yBoard + 2));
-        validMoves.Add(Tuple.Create(xBoard + 2, yBoard + 1));
-        validMoves.Add(Tuple.Create(xBoard + 2, yBoard - 1));
-        validMoves.Add(Tuple.Create(xBoard + 1, yBoard - 2));
-        validMoves.Add(Tuple.Create(xBoard - 1, yBoard - 2));
-        validMoves.Add(Tuple.Create(xBoard - 2, yBoard + 1));
-        validMoves.Add(Tuple.Create(xBoard - 2, yBoard - 1));
-        return validMoves;
-    } 
-
-     public List<Tuple<int,int>> ValidKingMoves()
-    {
-        validMoves.Add(Tuple.Create(xBoard, yBoard + 1));
-        validMoves.Add(Tuple.Create(xBoard, yBoard - 1));
-        validMoves.Add(Tuple.Create(xBoard - 1, yBoard + 0));
-        validMoves.Add(Tuple.Create(xBoard - 1, yBoard - 1));
-        validMoves.Add(Tuple.Create(xBoard - 1, yBoard + 1));
-        validMoves.Add(Tuple.Create(xBoard + 1, yBoard + 0));
-        validMoves.Add(Tuple.Create(xBoard + 1, yBoard - 1));
-        validMoves.Add(Tuple.Create(xBoard + 1, yBoard + 1));
-        return validMoves;
-    } 
 
      public void PointMovePlate(int x, int y)
     {
@@ -297,49 +290,6 @@ public class Chessman : MonoBehaviour
                 MovePlateAttackSpawn(x, y);
             }
         }
-    } 
-
-     public List<Tuple<int,int>> ValidPawnMoves(int x, int y)
-    {
-        Game sc = controller.GetComponent<Game>();
-        if (sc.PositionOnBoard(x, y))
-        {
-            //Debug.Log("Object at position: "+ sc.GetPosition(x+1,y));
-            //Debug.Log("Object at position: "+ sc.GetPosition(x-1,y));
-            if (sc.GetPosition(x, y) == null)
-            {
-                validMoves.Add(Tuple.Create(x, y));
-            }
-
-            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
-            {
-                validMoves.Add(Tuple.Create(x + 1, y));
-            }
-
-            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
-            {
-                validMoves.Add(Tuple.Create(x - 1, y));
-            }
-        }
-        return validMoves;
-    } 
-
-     public List<Tuple<int,int>> ValidPawnSupportMoves(int x, int y)
-    {
-        Game sc = controller.GetComponent<Game>();
-        if (sc.PositionOnBoard(x, y))
-        {
-            if (sc.PositionOnBoard(x + 1, y))
-            {
-                validMoves.Add(Tuple.Create(x + 1, y));
-            }
-
-            if (sc.PositionOnBoard(x - 1, y))
-            {
-                validMoves.Add(Tuple.Create(x - 1, y));
-            }
-        }
-        return validMoves;
     } 
 
      public void MovePlateSpawn(int matrixX, int matrixY)
@@ -364,37 +314,6 @@ public class Chessman : MonoBehaviour
         mpScript.SetCoords(matrixX, matrixY);
     } 
 
-    public List<Tuple<int,int>> ValidRookMoves(){
-        List<Tuple<int,int>> thisValidMoves = new List<Tuple<int,int>>();
-        thisValidMoves.AddRange(LineMovePlate(1, 0));
-        thisValidMoves.AddRange(LineMovePlate(0, 1));
-        thisValidMoves.AddRange(LineMovePlate(-1, 0));
-        thisValidMoves.AddRange(LineMovePlate(0, -1));
-        return thisValidMoves;
-    }
-
-    public List<Tuple<int,int>> ValidBishopMoves(){
-
-        List<Tuple<int,int>> thisValidMoves = new List<Tuple<int,int>>();
-        thisValidMoves.AddRange(LineMovePlate(1, 1));
-        thisValidMoves.AddRange(LineMovePlate(1, -1));
-        thisValidMoves.AddRange(LineMovePlate(-1, 1));
-        thisValidMoves.AddRange(LineMovePlate(-1, -1));
-        return thisValidMoves;
-    }
-
-    public List<Tuple<int,int>> ValidQueenMoves(){
-        List<Tuple<int,int>> thisValidMoves = new List<Tuple<int,int>>();
-        thisValidMoves.AddRange(LineMovePlate(1, 0));
-        thisValidMoves.AddRange(LineMovePlate(0, 1));
-        thisValidMoves.AddRange(LineMovePlate(1, 1));
-        thisValidMoves.AddRange(LineMovePlate(-1, 0));
-        thisValidMoves.AddRange(LineMovePlate(0, -1));
-        thisValidMoves.AddRange(LineMovePlate(-1, -1));
-        thisValidMoves.AddRange(LineMovePlate(-1, 1));
-        thisValidMoves.AddRange(LineMovePlate(1, -1));
-        return thisValidMoves;
-    }
      public void MovePlateAttackSpawn(int matrixX, int matrixY)
     {
         //Get the board value in order to convert to xy coords
@@ -420,9 +339,9 @@ public class Chessman : MonoBehaviour
 
     private void OnMouseEnter(){
         var sprite = this.GetComponent<SpriteRenderer>().sprite;
-        if(type==Type.Hero)
+        if(team==Team.Hero)
             StatBoxManager._instance.SetAndShowStats(attack.ToString(),defense.ToString(),support.ToString(),info,name, sprite);
-        else if(type == Type.Enemy)
+        else if(team == Team.Enemy)
             EnemyStatBoxManager._instance.SetAndShowStats(attack.ToString(),defense.ToString(),support.ToString(),info,name, sprite);
     }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,15 +8,45 @@ using UnityEngine.UI;
 public class Game : MonoBehaviour
 {
     //Reference from Unity IDE
-    public GameObject chesspiece;
-
+    public GameObject pawn;
+    public GameObject knight;
+    public GameObject bishop;
+    public GameObject rook;
+    public GameObject queen;
+    public GameObject king;
+    public GameObject card;
+    public ArrayList playerWhite;
+    public ArrayList playerBlack;
+    public PieceColor heroColor;
+    public AudioSource audioSource;
+    public AudioClip capture;
+    public AudioClip bounce;
+    public AudioClip ability;
+    public float waitTime;
+    public bool isInInventory;
     //Matrices needed, positions of each of the GameObjects
     //Also separate arrays for the players in order to easily keep track of them all
     //Keep in mind that the same objects are going to be in "positions" and "playerBlack"/"playerWhite"
     private GameObject[,] positions = new GameObject[8, 8];
-    public ArrayList playerBlack;
-    public ArrayList playerWhite;
-    public PieceColor heroColor;
+    
+    
+    //Variables for handling attacks
+    private int targetedX;
+    private int targetedY;
+    private int totalAttackPower;
+    private int totalDefensePower;
+    private bool readyForCleanup;
+
+
+    //Variables for selecting cards
+    private Card selectedCard;
+    private List<GameObject> cards = new List<GameObject>();
+    [SerializeField] private List<Ability> abilities;
+    private Chessman selectedPiece;
+    private bool applyingAbility=false;
+
+    private ArrayList defendingUnits;
+    private ArrayList attackingUnits;
 
     //current turn
     private string currentPlayer = "white";
@@ -27,18 +58,18 @@ public class Game : MonoBehaviour
     //that Unity can call for you
     public void Start()
     {
-        playerWhite = new ArrayList(new GameObject[] { Create("white_rook", 0, 0,PieceColor.White, Type.Hero), Create("white_knight", 1, 0,PieceColor.White, Type.Hero),
-            Create("white_bishop", 2, 0,PieceColor.White, Type.Hero), Create("white_queen", 3, 0,PieceColor.White, Type.Hero), Create("white_king", 4, 0,PieceColor.White, Type.Hero),
-            Create("white_bishop", 5, 0,PieceColor.White, Type.Hero), Create("white_knight", 6, 0,PieceColor.White, Type.Hero), Create("white_rook", 7, 0,PieceColor.White, Type.Hero),
-            Create("white_pawn", 0, 1,PieceColor.White, Type.Hero), Create("white_pawn", 1, 1,PieceColor.White, Type.Hero), Create("white_pawn", 2, 1,PieceColor.White, Type.Hero),
-            Create("white_pawn", 3, 1,PieceColor.White, Type.Hero), Create("white_pawn", 4, 1,PieceColor.White, Type.Hero), Create("white_pawn", 5, 1,PieceColor.White, Type.Hero),
-            Create("white_pawn", 6, 1,PieceColor.White, Type.Hero), Create("white_pawn", 7, 1,PieceColor.White, Type.Hero) });
-        playerBlack = new ArrayList(new GameObject[] { Create("black_rook", 0, 7,PieceColor.Black, Type.Enemy), Create("black_knight",1,7,PieceColor.Black, Type.Enemy),
-            Create("black_bishop",2,7,PieceColor.Black, Type.Enemy), Create("black_queen",3,7,PieceColor.Black, Type.Enemy), Create("black_king",4,7,PieceColor.Black, Type.Enemy),
-            Create("black_bishop",5,7,PieceColor.Black, Type.Enemy), Create("black_knight",6,7,PieceColor.Black, Type.Enemy), Create("black_rook",7,7,PieceColor.Black, Type.Enemy),
-            Create("black_pawn", 0, 6,PieceColor.Black, Type.Enemy), Create("black_pawn", 1, 6,PieceColor.Black, Type.Enemy), Create("black_pawn", 2, 6,PieceColor.Black, Type.Enemy),
-            Create("black_pawn", 3, 6,PieceColor.Black, Type.Enemy), Create("black_pawn", 4, 6,PieceColor.Black, Type.Enemy), Create("black_pawn", 5, 6,PieceColor.Black, Type.Enemy),
-            Create("black_pawn", 6, 6,PieceColor.Black, Type.Enemy), Create("black_pawn", 7, 6,PieceColor.Black, Type.Enemy) });
+        playerWhite = new ArrayList(new GameObject[] { Create(PieceType.Rook,"white_rook", 0, 0,PieceColor.White, Team.Hero), Create(PieceType.Knight,"white_knight", 1, 0,PieceColor.White, Team.Hero),
+            Create(PieceType.Bishop,"white_bishop", 2, 0,PieceColor.White, Team.Hero), Create(PieceType.Queen,"white_queen", 3, 0,PieceColor.White, Team.Hero), Create(PieceType.King,"white_king", 4, 0,PieceColor.White, Team.Hero),
+            Create(PieceType.Bishop,"white_bishop", 5, 0,PieceColor.White, Team.Hero), Create(PieceType.Knight,"white_knight", 6, 0,PieceColor.White, Team.Hero), Create(PieceType.Rook,"white_rook", 7, 0,PieceColor.White, Team.Hero),
+            Create(PieceType.Pawn,"white_pawn", 0, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 1, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 2, 1,PieceColor.White, Team.Hero),
+            Create(PieceType.Pawn,"white_pawn", 3, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 4, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 5, 1,PieceColor.White, Team.Hero),
+            Create(PieceType.Pawn,"white_pawn", 6, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 7, 1,PieceColor.White, Team.Hero) });
+        playerBlack = new ArrayList(new GameObject[] { Create(PieceType.Rook,"black_rook", 0, 7,PieceColor.Black, Team.Enemy), Create(PieceType.Knight,"black_knight",1,7,PieceColor.Black, Team.Enemy),
+            Create(PieceType.Bishop,"black_bishop",2,7,PieceColor.Black, Team.Enemy), Create(PieceType.Queen,"black_queen",3,7,PieceColor.Black, Team.Enemy), Create(PieceType.King,"black_king",4,7,PieceColor.Black, Team.Enemy),
+            Create(PieceType.Bishop,"black_bishop",5,7,PieceColor.Black, Team.Enemy), Create(PieceType.Knight,"black_knight",6,7,PieceColor.Black, Team.Enemy), Create(PieceType.Rook,"black_rook",7,7,PieceColor.Black, Team.Enemy),
+            Create(PieceType.Pawn,"black_pawn", 0, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 1, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 2, 6,PieceColor.Black, Team.Enemy),
+            Create(PieceType.Pawn,"black_pawn", 3, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 4, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 5, 6,PieceColor.Black, Team.Enemy),
+            Create(PieceType.Pawn,"black_pawn", 6, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 7, 6,PieceColor.Black, Team.Enemy) });
 
             heroColor=PieceColor.White;
         //Set all piece positions on the positions board
@@ -47,18 +78,47 @@ public class Game : MonoBehaviour
             SetPosition((GameObject)playerBlack[i]);
             SetPosition((GameObject)playerWhite[i]);
         }
+        GenerateAbilities();
     }
 
-    public GameObject Create(string name, int x, int y, PieceColor color, Type type)
+    public void GenerateAbilities(){
+        abilities.Add(new Ability("Scout", "Allows a pawn to move as a queen. Can still only capture and support as a regular pawn.", new ScoutPawn(),null));
+    }
+
+    public GameObject Create(PieceType type, string name, int x, int y, PieceColor color, Team team)
     {
-        GameObject obj = Instantiate(chesspiece, new Vector3(0, 0, -1), Quaternion.identity);
+        GameObject obj;
+        switch (type)
+        {
+            case PieceType.Queen:
+                obj = Instantiate(queen, new Vector3(0, 0, -1), Quaternion.identity);
+                break;
+            case PieceType.Knight:
+                obj = Instantiate(knight, new Vector3(0, 0, -1), Quaternion.identity); 
+                break;               
+            case PieceType.Bishop:
+                obj = Instantiate(bishop, new Vector3(0, 0, -1), Quaternion.identity);                
+                break;
+            case PieceType.King:
+                obj = Instantiate(king, new Vector3(0, 0, -1), Quaternion.identity);                
+                break;
+            case PieceType.Rook:
+                obj = Instantiate(rook, new Vector3(0, 0, -1), Quaternion.identity);                
+                break;
+            case PieceType.Pawn:
+                obj = Instantiate(pawn, new Vector3(0, 0, -1), Quaternion.identity);                
+                break;
+            default:
+                return null;
+            
+        }
         Chessman cm = obj.GetComponent<Chessman>(); //We have access to the GameObject, we need the script
         cm.color=color;
-        cm.type=type;
+        cm.team=team;
         cm.name = name; //This is a built in variable that Unity has, so we did not have to declare it before
         cm.SetXBoard(x);
         cm.SetYBoard(y);
-        cm.Activate(); //It has everything set up so it can now Activate()
+        //cm.Activate(); //It has everything set up so it can now Activate()
         return obj;
     }
 
@@ -68,12 +128,10 @@ public class Game : MonoBehaviour
 
         //Overwrites either empty space or whatever was there
         positions[cm.GetXBoard(), cm.GetYBoard()] = obj;
-        //Debug.Log("Set "+cm.name+" position to "+cm.GetXBoard()+", "+cm.GetYBoard());
     }
 
     public void SetPositionEmpty(int x, int y)
     {
-        //Debug.Log("Removing "+ positions[x,y].name +" from "+x+", "+y);
         positions[x, y] = null;
     }
 
@@ -119,6 +177,24 @@ public class Game : MonoBehaviour
             //Using UnityEngine.SceneManagement is needed here
             SceneManager.LoadScene("Game"); //Restarts the game by loading the scene over again
         }
+
+        if(selectedCard && selectedPiece){
+            if(!applyingAbility)
+                StartCoroutine(ApplyAbility(selectedPiece.gameObject)); 
+             
+        }
+    }
+
+    private IEnumerator ApplyAbility(GameObject target){
+        applyingAbility=true;
+        selectedCard.Use(target);
+        audioSource.clip = ability;
+        audioSource.Play();
+        yield return new WaitForSeconds(waitTime);
+        ClearCard();
+        ClearPiece(); 
+        applyingAbility=false;
+        yield break;
     }
     
     public void Winner(string playerWinner)
@@ -131,4 +207,296 @@ public class Game : MonoBehaviour
 
         GameObject.FindGameObjectWithTag("RestartText").GetComponent<Text>().enabled = true;
     }
+
+    public void HandleMove(Chessman piece, int x, int y, bool attack){
+        Chessman movingPiece = piece;
+        
+
+        //Set the Chesspiece's original location to be empty
+        SetPositionEmpty(movingPiece.xBoard, movingPiece.yBoard);
+
+        //Destroy the victim Chesspiece
+        if (attack)
+        {
+            Chessman attackedPiece = GetPosition(x,y).GetComponent<Chessman>();
+            HandleAttack(movingPiece, attackedPiece, x, y);   
+        }
+        else{
+
+            //Move reference chess piece to this position
+            movingPiece.SetXBoard(x);
+            movingPiece.SetYBoard(y);
+            movingPiece.SetCoords();
+
+            //Update the matrix
+            SetPosition(movingPiece.gameObject);
+
+            //Switch Current Player
+            NextTurn();
+
+            //Destroy the move plates including self
+            movingPiece.DestroyMovePlates();
+        }
+    }
+    public void HandleAttack(Chessman movingPiece, Chessman attackedPiece, int x, int y){
+        targetedX = x;
+        targetedY = y;
+        //Set attacked piece to empty for valid support
+        SetPositionEmpty(attackedPiece.GetXBoard(), attackedPiece.GetYBoard());
+        
+        if(attackedPiece.color==PieceColor.White){
+            defendingUnits = new ArrayList(playerWhite);
+            attackingUnits = new ArrayList(playerBlack);
+        }
+        else if(attackedPiece.color==PieceColor.Black){
+            defendingUnits = new ArrayList(playerBlack);
+            attackingUnits = new ArrayList(playerWhite);
+        }
+        Debug.Log("All Black Pieces: ");
+        foreach( GameObject piece in playerBlack) {
+            Debug.Log(piece.name);
+        }
+        Debug.Log("All Defending units: ");
+        foreach( GameObject piece in defendingUnits) {
+            Debug.Log(piece.name);
+        }
+        //Calculate attacking support first
+        StartCoroutine(AddSupport(movingPiece, attackedPiece, true));
+    }
+
+    private IEnumerator AddSupport(Chessman movingPiece, Chessman attackedPiece, bool isAttacking){
+        ArrayList pieces;
+        Chessman targetPiece;
+        int totalPower;
+        if(isAttacking){
+            pieces=attackingUnits;
+            targetPiece=movingPiece;
+            totalPower=targetPiece.CalculateAttack(); 
+        }
+        else{
+            pieces=defendingUnits;
+            targetPiece=attackedPiece;
+            totalPower=targetPiece.CalculateDefense();
+        }
+        
+        foreach (GameObject pieceObject in pieces)
+        {
+            Debug.Log("Checking support from "+ pieceObject.name);
+            var piece =pieceObject.GetComponent<Chessman>() ;
+            if (piece == targetPiece)
+                continue; 
+            foreach (var coordinate in piece.GetValidSupportMoves()){
+                if (coordinate.x==targetedX && coordinate.y==targetedY){
+                    totalPower+= piece.CalculateSupport();
+                    Vector2 localPosition = new Vector2(2, 2);
+                    var bonusPopUpInstance= SpawnsBonusPopups.Instance.BonusAdded(piece.support, localPosition);
+                    RectTransform rt = bonusPopUpInstance.GetComponent<RectTransform>();
+                    rt.position = pieceObject.transform.position;
+                    Debug.Log("Spawned bonus for " + piece.name + " at position " + rt.position);
+                    yield return new WaitForSeconds(waitTime/2);
+                    break;
+                }
+            }
+        }
+        yield return new WaitForSeconds(waitTime);
+        if(isAttacking){
+            totalAttackPower=totalPower;
+        }else{
+            totalDefensePower = totalPower;
+        }
+        Debug.Log("Ready for battle panel?: "+ readyForCleanup);
+        if(readyForCleanup){
+            RunBattlePanel(movingPiece, attackedPiece);
+            yield break;
+        }
+        readyForCleanup=true;
+        Debug.Log("Running support check on other pieces.");
+        yield return StartCoroutine(AddSupport(movingPiece, attackedPiece, false));
+        
+    }
+    
+    private void RunBattlePanel(Chessman movingPiece, Chessman attackedPiece){
+        Debug.Log("Starting Battle Panel");
+
+        //if (attackedPiece.name == "white_king") Winner("black");
+        //if (attackedPiece.name == "black_king") Winner("white");
+
+        
+
+        StartCoroutine(ShowBattlePanel(movingPiece, attackedPiece));
+    }
+    private void AttackCleanUp(Chessman movingPiece){
+        Debug.Log("Starting cleanup");
+
+        //Move reference chess piece to this position
+        movingPiece.xBoard=targetedX;
+        movingPiece.yBoard=targetedY;
+        movingPiece.SetCoords();
+
+        //Update the matrix
+        SetPosition(movingPiece.gameObject);
+
+        //Switch Current Player
+        NextTurn();
+
+        //Destroy the move plates including self
+        movingPiece.DestroyMovePlates();
+
+        //reset all variables
+        targetedX = -1;
+        targetedY =-1;
+        totalAttackPower=0;
+        totalDefensePower=0;
+        readyForCleanup=false;
+        defendingUnits.Clear();
+        attackingUnits.Clear();
+
+    }
+
+    private IEnumerator ShowBattlePanel(Chessman movingPiece, Chessman attackedPiece){
+
+        var attackVal = movingPiece.CalculateAttack();
+        var supportVal=totalAttackPower-attackVal;
+        var sprite = movingPiece.GetComponent<SpriteRenderer>().sprite;
+
+        var defendVal = attackedPiece.CalculateDefense();
+        var defendSupportVal=totalDefensePower-defendVal;
+        var defendSprite = attackedPiece.GetComponent<SpriteRenderer>().sprite;
+        //If hero is attacking
+        if(movingPiece.team==Team.Hero){
+            BattlePanel._instance.SetAndShowAttackingStats(attackVal.ToString(),supportVal.ToString(),totalAttackPower.ToString(),movingPiece.name,
+            sprite,defendVal.ToString(),defendSupportVal.ToString(),totalDefensePower.ToString(),attackedPiece.name,defendSprite);
+            BattlePanel._instance.SetAndShowHeroAttack(attackVal);
+            yield return new WaitForSeconds(waitTime/2);
+            BattlePanel._instance.SetAndShowHeroSupport(supportVal);
+            yield return new WaitForSeconds(waitTime/2);
+            BattlePanel._instance.SetAndShowHeroTotal(totalAttackPower);
+            yield return new WaitForSeconds(waitTime/2);
+            BattlePanel._instance.SetAndShowEnemyAttack(defendVal);
+            yield return new WaitForSeconds(waitTime/2);
+            BattlePanel._instance.SetAndShowEnemySupport(defendSupportVal);
+            yield return new WaitForSeconds(waitTime/2);
+            BattlePanel._instance.SetAndShowEnemyTotal(totalDefensePower);
+
+        }
+        //If enemy is attacking
+        else if(attackedPiece.team==Team.Hero){
+            BattlePanel._instance.SetAndShowDefendingStats(defendVal.ToString(),defendSupportVal.ToString(),totalDefensePower.ToString(),attackedPiece.name,
+            defendSprite,attackVal.ToString(),supportVal.ToString(),totalAttackPower.ToString(),movingPiece.name,sprite);
+            
+            BattlePanel._instance.SetAndShowEnemyAttack(attackVal);
+            yield return new WaitForSeconds(waitTime/2);
+            BattlePanel._instance.SetAndShowEnemySupport(supportVal);
+            yield return new WaitForSeconds(waitTime/2);
+            BattlePanel._instance.SetAndShowEnemyTotal(totalAttackPower);
+            yield return new WaitForSeconds(waitTime/2);
+
+            BattlePanel._instance.SetAndShowHeroAttack(defendVal);
+            yield return new WaitForSeconds(waitTime/2);
+            BattlePanel._instance.SetAndShowHeroSupport(defendSupportVal);
+            yield return new WaitForSeconds(waitTime/2);
+            BattlePanel._instance.SetAndShowHeroTotal(totalDefensePower);
+            //yield return new WaitForSeconds(waitTime);
+            
+        }
+        
+
+        yield return new WaitForSeconds(waitTime);
+        if(totalAttackPower>=totalDefensePower){
+            Debug.Log(movingPiece.name + " captures "+ attackedPiece.name);
+            if(playerBlack.Contains(attackedPiece.gameObject))
+                playerBlack.Remove(attackedPiece.gameObject);
+            if(playerWhite.Contains(attackedPiece.gameObject))
+                playerWhite.Remove(attackedPiece.gameObject);
+            Debug.Log("Setting capture tone");
+            audioSource.clip = capture; 
+            BattlePanel._instance.SetAndShowResults("Capture!");   
+            Destroy(attackedPiece.gameObject);
+        }
+        else{
+            Debug.Log(movingPiece.name + " failed to capture "+ attackedPiece.name);
+            //Reset attacked pieces position if capture failed 
+            attackedPiece.SetXBoard(targetedX);
+            attackedPiece.SetYBoard(targetedY);
+            //update x and y coords with original location
+            targetedX = movingPiece.GetXBoard();
+            targetedY = movingPiece.GetYBoard();
+            if(attackedPiece.attack>0)
+                attackedPiece.attack-=1;
+            if(attackedPiece.defense>0)
+                attackedPiece.defense-=1;
+            SetPosition(attackedPiece.gameObject);
+            attackedPiece.SetCoords();
+            Debug.Log("Setting bounce tone");
+            audioSource.clip = bounce;
+            BattlePanel._instance.SetAndShowResults("Bounce!"); 
+             
+            
+            
+
+        }
+        
+        Debug.Log("Playing audio");
+        audioSource.Play();
+        yield return new WaitForSeconds(waitTime);
+        BattlePanel._instance.HideResults();   
+        BattlePanel._instance.HideStats();
+        AttackCleanUp(movingPiece);
+        yield break;
+    }
+
+    public void CardSelected(Card card){
+        SpriteRenderer sprite;
+        Debug.Log("Card selected");
+        if (selectedCard != null){
+            sprite= selectedCard.GetComponent<SpriteRenderer>();
+            sprite.color = Color.white;
+        }
+        selectedCard = card;
+        sprite = selectedCard.GetComponent<SpriteRenderer>();
+        sprite.color = Color.green;
+    }
+    public void ClearCard(){
+        selectedCard = null;
+        foreach (var card in cards)
+        {
+            Destroy(card);
+        }
+        
+    }
+
+    public void CreateCards(){
+        
+        Debug.Log("Creating Cards");
+        GameObject obj;
+        for(int i=0; i<3;i++){
+            Vector2 localPosition = new Vector2(i+i, 2);
+            obj = Instantiate(card, localPosition, Quaternion.identity);
+            int s = Random.Range (0, abilities.Count);
+            obj.GetComponent<Card>().ability = abilities[s];
+            cards.Add(obj);
+        }
+        
+    }
+    public void PieceSelected(Chessman piece){
+        SpriteRenderer sprite;
+        Debug.Log("Piece selected");
+        if (selectedPiece != null){
+            sprite= selectedPiece.GetComponent<SpriteRenderer>();
+            sprite.color = Color.white;
+        }
+        selectedPiece = piece;
+        sprite = selectedPiece.GetComponent<SpriteRenderer>();
+        sprite.color = Color.green;
+    }
+    public void ClearPiece(){
+        SpriteRenderer sprite;
+        if (selectedPiece != null){
+            sprite= selectedPiece.GetComponent<SpriteRenderer>();
+            sprite.color = Color.white;
+        }
+        selectedPiece = null;
+        
+    }
+
 }

@@ -2027,7 +2027,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 29.999939, y: 71.000244}
+  m_AnchoredPosition: {x: 29.999939, y: 71.002075}
   m_SizeDelta: {x: -1528.06, y: -120}
   m_Pivot: {x: 0.000000034458935, y: 0.000000027939677}
 --- !u!114 &1185444666
@@ -3227,6 +3227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1624334842}
   - component: {fileID: 1624334841}
+  - component: {fileID: 1624334843}
   m_Layer: 0
   m_Name: Controller
   m_TagString: GameController
@@ -3246,8 +3247,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03049dea99ae9249bfb32b122e5ac40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chesspiece: {fileID: 3818072202481534963, guid: 79bfca2726e1d2f478315c493f5f41fc, type: 3}
+  pawn: {fileID: 3564942054791330591, guid: 9bb7988fa7b61a140a650a9249825308, type: 3}
+  knight: {fileID: 1179102283785704673, guid: 05c3ca02eecb8374fbe7917141dfde5e, type: 3}
+  bishop: {fileID: 7515838367634678274, guid: 158c60feca9afb7409623cc12b48c718, type: 3}
+  rook: {fileID: 6029048972313450518, guid: 817d708a507f7b34bb86f4f4bbfcdcc1, type: 3}
+  queen: {fileID: 4455156182322048620, guid: ca4b3543593258c4fb48acebc9b0221f, type: 3}
+  king: {fileID: 4415314566445101187, guid: 5aca3ac72911eaf4da06e03d6d5dbdfa, type: 3}
+  card: {fileID: 3186847924759451737, guid: 213abdc1572143548af75a7c41f77bd7, type: 3}
   heroColor: 0
+  audioSource: {fileID: 1624334843}
+  capture: {fileID: 8300000, guid: 3becec1909f194046945d85ac1077772, type: 3}
+  bounce: {fileID: 8300000, guid: ff5f85da24bc943d1abdc5760a22bc81, type: 3}
+  ability: {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
+  waitTime: 0.7
+  isInInventory: 0
+  abilities: []
 --- !u!4 &1624334842
 Transform:
   m_ObjectHideFlags: 0
@@ -3263,6 +3277,102 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1624334843
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624334840}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1637328787
 GameObject:
   m_ObjectHideFlags: 0

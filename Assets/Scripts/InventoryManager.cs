@@ -37,7 +37,8 @@ public class InventoryManager : MonoBehaviour
         gameObject.SetActive(true);
         var controller = GameObject.FindGameObjectWithTag("GameController");
         var game = controller.GetComponent<Game>();
-
+        game.isInInventory=true;
+        game.CreateCards();
         if(game.heroColor==PieceColor.White)
             myPieces=game.playerWhite;
         else
@@ -60,7 +61,10 @@ public class InventoryManager : MonoBehaviour
 
     public void CloseInventory(){
         
-
+        var controller = GameObject.FindGameObjectWithTag("GameController");
+        var game = controller.GetComponent<Game>();
+        game.ClearCard();
+        game.ClearPiece();
         foreach (GameObject piece in myPieces)
         {
             if (piece.GetComponent<SpriteRenderer>())
@@ -74,6 +78,7 @@ public class InventoryManager : MonoBehaviour
                 rend.sortingOrder = 1;
             }
         }
+        game.isInInventory=false;
         gameObject.SetActive(false);
     }
 
