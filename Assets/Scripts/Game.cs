@@ -413,7 +413,7 @@ public class Game : MonoBehaviour
         if(totalAttackPower>=totalDefensePower){
               
             Debug.Log(movingPiece.name + " captures "+ attackedPiece.name);
-            OnPieceCaptured.Invoke(movingPiece);  // Trigger the event
+            
             if (playerBlack.Contains(attackedPiece.gameObject))
                 playerBlack.Remove(attackedPiece.gameObject);
             if(playerWhite.Contains(attackedPiece.gameObject))
@@ -422,6 +422,8 @@ public class Game : MonoBehaviour
             audioSource.clip = capture; 
             BattlePanel._instance.SetAndShowResults("Capture!");   
             Destroy(attackedPiece.gameObject);
+            AttackCleanUp(movingPiece);
+            OnPieceCaptured.Invoke(movingPiece);  // Trigger the event
               
         }
         else{
@@ -441,7 +443,8 @@ public class Game : MonoBehaviour
             Debug.Log("Setting bounce tone");
             audioSource.clip = bounce;
             BattlePanel._instance.SetAndShowResults("Bounce!"); 
-             
+            AttackCleanUp(movingPiece);
+
             
             
 
@@ -452,7 +455,7 @@ public class Game : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         BattlePanel._instance.HideResults();   
         BattlePanel._instance.HideStats();
-        AttackCleanUp(movingPiece);
+        
         yield break;
     }
 

@@ -37,7 +37,6 @@ public abstract class Chessman : MonoBehaviour
     public int xBoard = -1;
     public int yBoard = -1;
     public MovementProfile moveProfile;
-    public List<StatEffect> statEffects;
     protected Sprite sprite;
 
     public int attack = 1;
@@ -63,28 +62,13 @@ public abstract class Chessman : MonoBehaviour
     public abstract List<BoardPosition> GetValidMoves();
     public abstract List<BoardPosition> GetValidSupportMoves();
     public int CalculateSupport(){
-        int bonus=0;
-        foreach (var stat in statEffects)
-        {
-            bonus+= stat.CalculateSupport(this);
-        }
-        return bonus;
+        return support;
     }
     public int CalculateAttack(){
-        int bonus=0;
-        foreach (var stat in statEffects)
-        {
-            bonus+= stat.CalculateAttack(this);
-        }
-        return bonus;
+        return attack;
     }
     public int CalculateDefense(){
-        int bonus=0;
-        foreach (var stat in statEffects)
-        {
-            bonus+= stat.CalculateDefense(this);
-        }
-        return bonus;
+        return defense;
     }
     public void Activate()
     {
@@ -110,7 +94,7 @@ public abstract class Chessman : MonoBehaviour
             case "white_rook": this.GetComponent<SpriteRenderer>().sprite = white_rook; player = "white"; break;
             case "white_pawn": this.GetComponent<SpriteRenderer>().sprite = white_pawn; player = "white"; break;
         }
-        this.statEffects.Add(new BaseStats());
+        
         
     }
 

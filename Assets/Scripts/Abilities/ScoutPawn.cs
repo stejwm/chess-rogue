@@ -1,24 +1,30 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class ScoutPawn : MovementProfile
-{
-    public override List<BoardPosition> GetValidMoves(Chessman piece) {
-        List<BoardPosition> validMoves = new List<BoardPosition>();
-        validMoves.AddRange(Movement.ValidScoutMoves(piece,piece.xBoard,piece.yBoard));
 
-        if(piece.color==PieceColor.White)
-            validMoves.AddRange(Movement.ValidPawnSupportMoves(piece,piece.xBoard,piece.yBoard+1));
-        else
-            validMoves.AddRange(Movement.ValidPawnSupportMoves(piece,piece.xBoard,piece.yBoard-1));
+[CreateAssetMenu(fileName = "ScoutPawn", menuName = "Abilities/ScoutPawn")]
+public class ScoutPawn : Ability
+{
+    private MovementProfile startingProfile;
+    public ScoutPawn() : base("Scout", "Moves like queen. Captures & supports like pawn") {}
+
+
+    public override void Apply(Chessman piece)
+    {
+        if (piece.type != PieceType.Pawn)
+            return;
+            
+        startingProfile=piece.moveProfile;
+        piece.moveProfile = new ScoutPawnMovement();
+        piece.info += " "+abilityName;
         
-        return validMoves;
-     }
-    public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
-        if(piece.color==PieceColor.White)
-            return Movement.ValidPawnSupportMoves(piece,piece.xBoard,piece.yBoard+1);
-        else
-            return Movement.ValidPawnSupportMoves(piece,piece.xBoard,piece.yBoard-1);
+        
+    }
+
+    public override void Remove(Chessman piece)
+    {
+
+        piece.moveProfile=startingProfile;
+
     }
 }

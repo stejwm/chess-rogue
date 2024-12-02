@@ -9,7 +9,7 @@ public class BloodThirstAbility : Ability
     private GameObject controller;
     MovementProfile startingProfile;
     
-    public BloodThirstAbility() : base("Assassin", "Gains +5 attack when unsupported.") {}
+    public BloodThirstAbility() : base("Blood Thirst", "Attack again after capture.") {}
 
 
     public override void Apply(Chessman piece)
@@ -18,7 +18,7 @@ public class BloodThirstAbility : Ability
         game = controller.GetComponent<Game>();
         startingProfile=piece.moveProfile;
         this.piece = piece;
-        piece.info += " " + this.name;
+        piece.info += " " + abilityName;
         //game.OnPieceCaptured += Thirst;
         Debug.Log(game==null);
 
@@ -45,9 +45,11 @@ public class BloodThirstAbility : Ability
 
     private void EnableSecondAttack()
     {
+
         piece.moveProfile = new AttackOnlyMovement(startingProfile);
         game.NextTurn();
         if (piece.moveProfile.GetValidMoves(piece).Count<=0){
+            Debug.Log("No valid attack found, thirst over");
             piece.moveProfile=startingProfile;
             game.NextTurn();
         }

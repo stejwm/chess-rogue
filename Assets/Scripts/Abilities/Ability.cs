@@ -4,9 +4,6 @@ using UnityEngine;
 
 public abstract class Ability : ScriptableObject
 {   
-    public MovementProfile profile;
-    public StatEffect statEffect;
-
     public string abilityName;
     public string description;
 
