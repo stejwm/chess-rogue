@@ -47,9 +47,9 @@ public abstract class Chessman : MonoBehaviour
     public PieceColor color;
     public Team team;
     public PieceType type;
+    public List<Ability> abilities;
+    //public AbilityManager abilityManager; 
 
-    private ArrayList abilities;
-    
 
     List<BoardPosition> validMoves = new List<BoardPosition>();
 
@@ -111,6 +111,7 @@ public abstract class Chessman : MonoBehaviour
             case "white_pawn": this.GetComponent<SpriteRenderer>().sprite = white_pawn; player = "white"; break;
         }
         this.statEffects.Add(new BaseStats());
+        
     }
 
     public void SetCoords()
@@ -149,6 +150,13 @@ public abstract class Chessman : MonoBehaviour
     public void SetYBoard(int y)
     {
         yBoard = y;
+    }
+
+    public void AddAbility(Ability ability)
+    {
+        abilities.Add(ability);
+        ability.Apply(this);
+        //abilityManager.AddAbility(ability, this);
     }
 
      private void OnMouseDown()

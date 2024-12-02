@@ -4,6 +4,9 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
+using Random = UnityEngine.Random;
+using UnityEngine.Events;
 
 public class Game : MonoBehaviour
 {
@@ -24,6 +27,9 @@ public class Game : MonoBehaviour
     public AudioClip ability;
     public float waitTime;
     public bool isInInventory;
+    public List<Ability> AllAbilities; // Drag-and-drop ScriptableObject assets here in the Inspector
+
+
     //Matrices needed, positions of each of the GameObjects
     //Also separate arrays for the players in order to easily keep track of them all
     //Keep in mind that the same objects are going to be in "positions" and "playerBlack"/"playerWhite"
@@ -54,6 +60,12 @@ public class Game : MonoBehaviour
     //Game Ending
     private bool gameOver = false;
 
+
+    //Events
+    public UnityEvent<Chessman> OnPieceCaptured = new UnityEvent<Chessman>();
+    //public event Action<Chessman> OnPieceCaptured;
+
+
     //Unity calls this right when the game starts, there are a few built in functions
     //that Unity can call for you
     public void Start()
@@ -78,11 +90,6 @@ public class Game : MonoBehaviour
             SetPosition((GameObject)playerBlack[i]);
             SetPosition((GameObject)playerWhite[i]);
         }
-        GenerateAbilities();
-    }
-
-    public void GenerateAbilities(){
-        abilities.Add(new Ability("Scout", "Allows a pawn to move as a queen. Can still only capture and support as a regular pawn.", new ScoutPawn(),null));
     }
 
     public GameObject Create(PieceType type, string name, int x, int y, PieceColor color, Team team)
@@ -121,6 +128,7 @@ public class Game : MonoBehaviour
         //cm.Activate(); //It has everything set up so it can now Activate()
         return obj;
     }
+    
 
     public void SetPosition(GameObject obj)
     {
@@ -180,12 +188,12 @@ public class Game : MonoBehaviour
 
         if(selectedCard && selectedPiece){
             if(!applyingAbility)
-                StartCoroutine(ApplyAbility(selectedPiece.gameObject)); 
+                StartCoroutine(ApplyAbility(selectedPiece)); 
              
         }
     }
 
-    private IEnumerator ApplyAbility(GameObject target){
+    private IEnumerator ApplyAbility(Chessman target){
         applyingAbility=true;
         selectedCard.Use(target);
         audioSource.clip = ability;
@@ -403,8 +411,10 @@ public class Game : MonoBehaviour
 
         yield return new WaitForSeconds(waitTime);
         if(totalAttackPower>=totalDefensePower){
+              
             Debug.Log(movingPiece.name + " captures "+ attackedPiece.name);
-            if(playerBlack.Contains(attackedPiece.gameObject))
+            OnPieceCaptured.Invoke(movingPiece);  // Trigger the event
+            if (playerBlack.Contains(attackedPiece.gameObject))
                 playerBlack.Remove(attackedPiece.gameObject);
             if(playerWhite.Contains(attackedPiece.gameObject))
                 playerWhite.Remove(attackedPiece.gameObject);
@@ -412,6 +422,7 @@ public class Game : MonoBehaviour
             audioSource.clip = capture; 
             BattlePanel._instance.SetAndShowResults("Capture!");   
             Destroy(attackedPiece.gameObject);
+              
         }
         else{
             Debug.Log(movingPiece.name + " failed to capture "+ attackedPiece.name);
@@ -472,8 +483,8 @@ public class Game : MonoBehaviour
         for(int i=0; i<3;i++){
             Vector2 localPosition = new Vector2(i+i, 2);
             obj = Instantiate(card, localPosition, Quaternion.identity);
-            int s = Random.Range (0, abilities.Count);
-            obj.GetComponent<Card>().ability = abilities[s];
+            int s = Random.Range (0, AllAbilities.Count);
+            obj.GetComponent<Card>().ability = AllAbilities[s];
             cards.Add(obj);
         }
         

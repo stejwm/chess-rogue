@@ -7,12 +7,14 @@ public class Card : MonoBehaviour
     public GameObject controller;
     public Ability ability;
 
-    public void Use(GameObject target){
-        if (ability.profile != null)
-            target.GetComponent<Chessman>().moveProfile=ability.profile;
-        if(ability.statEffect!=null)
-            target.GetComponent<Chessman>().statEffects.Add(ability.statEffect);
-        target.GetComponent<Chessman>().info += " "+ability.abilityName;
+    public Card(Ability ability)
+    {
+        this.ability = ability;
+    }
+
+    public void Use(Chessman target)
+    {
+        target.AddAbility(ability);
     }
 
     void OnMouseDown(){
