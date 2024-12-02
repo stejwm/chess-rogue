@@ -21,4 +21,8 @@ public class Card : MonoBehaviour
         controller = GameObject.FindGameObjectWithTag("GameController");
         controller.GetComponent<Game>().CardSelected(this);
     }
+    void OnMouseOver(){
+        this.GetComponent<SpriteRenderer>().sprite=ability.sprite;
+
+    }
 }

@@ -45,9 +45,18 @@ public class BloodThirstAbility : Ability
 
     private void EnableSecondAttack()
     {
-
+        ArrayList pieces;
         piece.moveProfile = new AttackOnlyMovement(startingProfile);
         game.NextTurn();
+        if (piece.color==PieceColor.White){
+            pieces=game.playerWhite;
+        }else
+            pieces=game.playerBlack;
+        foreach (GameObject pieceObject in pieces)
+        {
+            pieceObject.GetComponent<Chessman>().isValidForAttack=false;
+        }
+        piece.isValidForAttack=true;
         if (piece.moveProfile.GetValidMoves(piece).Count<=0){
             Debug.Log("No valid attack found, thirst over");
             piece.moveProfile=startingProfile;

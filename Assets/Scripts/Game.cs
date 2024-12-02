@@ -41,6 +41,10 @@ public class Game : MonoBehaviour
     private int targetedY;
     private int totalAttackPower;
     private int totalDefensePower;
+    public int attackSupport;
+    public int defenseSupport;
+    public int baseAttack;
+    public int baseDefense;
     private bool readyForCleanup;
 
 
@@ -63,6 +67,11 @@ public class Game : MonoBehaviour
 
     //Events
     public UnityEvent<Chessman> OnPieceCaptured = new UnityEvent<Chessman>();
+    public UnityEvent<Chessman,int> OnAttack = new UnityEvent<Chessman,int>();
+    public UnityEvent<Chessman, int> OnAttackEnd = new UnityEvent<Chessman, int>();
+    public UnityEvent<Chessman> OnMove = new UnityEvent<Chessman>();
+    public UnityEvent OnGameEnd = new UnityEvent();
+
     //public event Action<Chessman> OnPieceCaptured;
 
 
@@ -90,6 +99,7 @@ public class Game : MonoBehaviour
             SetPosition((GameObject)playerBlack[i]);
             SetPosition((GameObject)playerWhite[i]);
         }
+        SetWhiteTurn();
     }
 
     public GameObject Create(PieceType type, string name, int x, int y, PieceColor color, Team team)
@@ -129,6 +139,26 @@ public class Game : MonoBehaviour
         return obj;
     }
     
+    public void SetWhiteTurn(){
+        foreach (GameObject item in playerWhite)
+            {
+                item.GetComponent<Chessman>().isValidForAttack=true;
+            }
+        foreach (GameObject item in playerBlack)
+            {
+                item.GetComponent<Chessman>().isValidForAttack=false;
+            }
+    }
+    public void SetBlackTurn(){
+        foreach (GameObject item in playerBlack)
+        {
+            item.GetComponent<Chessman>().isValidForAttack=true;
+        }
+        foreach (GameObject item in playerWhite)
+        {
+            item.GetComponent<Chessman>().isValidForAttack=false;
+        }
+    }
 
     public void SetPosition(GameObject obj)
     {
@@ -169,10 +199,12 @@ public class Game : MonoBehaviour
         if (currentPlayer == PieceColor.White)
         {
             currentPlayer = PieceColor.Black;
+            SetBlackTurn();
         }
         else
         {
             currentPlayer = PieceColor.White;
+            SetWhiteTurn();
         }
     }
 
@@ -219,7 +251,7 @@ public class Game : MonoBehaviour
     public void HandleMove(Chessman piece, int x, int y, bool attack){
         Chessman movingPiece = piece;
         
-
+        OnMove.Invoke(piece);
         //Set the Chesspiece's original location to be empty
         SetPositionEmpty(movingPiece.xBoard, movingPiece.yBoard);
 
@@ -275,16 +307,14 @@ public class Game : MonoBehaviour
     private IEnumerator AddSupport(Chessman movingPiece, Chessman attackedPiece, bool isAttacking){
         ArrayList pieces;
         Chessman targetPiece;
-        int totalPower;
+        int supportPower=0;
         if(isAttacking){
             pieces=attackingUnits;
             targetPiece=movingPiece;
-            totalPower=targetPiece.CalculateAttack(); 
         }
         else{
             pieces=defendingUnits;
             targetPiece=attackedPiece;
-            totalPower=targetPiece.CalculateDefense();
         }
         
         foreach (GameObject pieceObject in pieces)
@@ -295,7 +325,7 @@ public class Game : MonoBehaviour
                 continue; 
             foreach (var coordinate in piece.GetValidSupportMoves()){
                 if (coordinate.x==targetedX && coordinate.y==targetedY){
-                    totalPower+= piece.CalculateSupport();
+                    supportPower+= piece.support;
                     Vector2 localPosition = new Vector2(2, 2);
                     var bonusPopUpInstance= SpawnsBonusPopups.Instance.BonusAdded(piece.support, localPosition);
                     RectTransform rt = bonusPopUpInstance.GetComponent<RectTransform>();
@@ -306,11 +336,16 @@ public class Game : MonoBehaviour
                 }
             }
         }
+        OnAttack.Invoke(targetPiece, supportPower); 
         yield return new WaitForSeconds(waitTime);
         if(isAttacking){
-            totalAttackPower=totalPower;
-        }else{
-            totalDefensePower = totalPower;
+            baseAttack=targetPiece.attack;
+            totalAttackPower=baseAttack+supportPower;
+            attackSupport=supportPower;
+        }else{   
+            baseDefense=targetPiece.defense;
+            totalDefensePower = baseDefense+supportPower;
+            defenseSupport=supportPower;
         }
         Debug.Log("Ready for battle panel?: "+ readyForCleanup);
         if(readyForCleanup){
@@ -334,8 +369,7 @@ public class Game : MonoBehaviour
         StartCoroutine(ShowBattlePanel(movingPiece, attackedPiece));
     }
     private void AttackCleanUp(Chessman movingPiece){
-        Debug.Log("Starting cleanup");
-
+        OnAttackEnd.Invoke(movingPiece, attackSupport); 
         //Move reference chess piece to this position
         movingPiece.xBoard=targetedX;
         movingPiece.yBoard=targetedY;
@@ -355,6 +389,10 @@ public class Game : MonoBehaviour
         targetedY =-1;
         totalAttackPower=0;
         totalDefensePower=0;
+        attackSupport=0;
+        defenseSupport=0;
+        baseAttack=0;
+        baseDefense=0;
         readyForCleanup=false;
         defendingUnits.Clear();
         attackingUnits.Clear();
@@ -363,12 +401,12 @@ public class Game : MonoBehaviour
 
     private IEnumerator ShowBattlePanel(Chessman movingPiece, Chessman attackedPiece){
 
-        var attackVal = movingPiece.CalculateAttack();
-        var supportVal=totalAttackPower-attackVal;
+        var attackVal = movingPiece.attack;
+        var supportVal= attackSupport;
         var sprite = movingPiece.GetComponent<SpriteRenderer>().sprite;
 
-        var defendVal = attackedPiece.CalculateDefense();
-        var defendSupportVal=totalDefensePower-defendVal;
+        var defendVal = attackedPiece.defense;
+        var defendSupportVal= defenseSupport;
         var defendSprite = attackedPiece.GetComponent<SpriteRenderer>().sprite;
         //If hero is attacking
         if(movingPiece.team==Team.Hero){

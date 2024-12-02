@@ -47,6 +47,7 @@ public abstract class Chessman : MonoBehaviour
     public Team team;
     public PieceType type;
     public List<Ability> abilities;
+    public bool isValidForAttack =false;
     //public AbilityManager abilityManager; 
 
 
@@ -149,7 +150,7 @@ public abstract class Chessman : MonoBehaviour
             controller.GetComponent<Game>().PieceSelected(this);
         else{    
             Debug.Log(this.name+ " piece clicked");
-            if (!controller.GetComponent<Game>().IsGameOver() && controller.GetComponent<Game>().GetCurrentPlayer() == color)
+            if (!controller.GetComponent<Game>().IsGameOver() && isValidForAttack)
             {
                 //Remove all moveplates relating to previously selected piece
                 DestroyMovePlates();
