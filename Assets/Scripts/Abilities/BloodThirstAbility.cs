@@ -7,6 +7,7 @@ public class BloodThirstAbility : Ability
 {
     private Chessman piece;
     private GameObject controller;
+    MovementProfile startingProfile;
     
     public BloodThirstAbility() : base("Assassin", "Gains +5 attack when unsupported.") {}
 
@@ -15,7 +16,7 @@ public class BloodThirstAbility : Ability
     {
         GameObject controller = GameObject.FindGameObjectWithTag("GameController");
         game = controller.GetComponent<Game>();
-
+        startingProfile=piece.moveProfile;
         this.piece = piece;
         piece.info += " " + this.name;
         //game.OnPieceCaptured += Thirst;
@@ -44,6 +45,13 @@ public class BloodThirstAbility : Ability
 
     private void EnableSecondAttack()
     {
-        Debug.Log("you can attack again");
+        piece.moveProfile = new AttackOnlyMovement(startingProfile);
+        game.NextTurn();
+        if (piece.moveProfile.GetValidMoves(piece).Count<=0){
+            piece.moveProfile=startingProfile;
+            game.NextTurn();
+        }
+
+        
     }
 }

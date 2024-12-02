@@ -165,7 +165,7 @@ public abstract class Chessman : MonoBehaviour
             controller.GetComponent<Game>().PieceSelected(this);
         else{    
             Debug.Log(this.name+ " piece clicked");
-            if (!controller.GetComponent<Game>().IsGameOver() && controller.GetComponent<Game>().GetCurrentPlayer() == player)
+            if (!controller.GetComponent<Game>().IsGameOver() && controller.GetComponent<Game>().GetCurrentPlayer() == color)
             {
                 //Remove all moveplates relating to previously selected piece
                 DestroyMovePlates();

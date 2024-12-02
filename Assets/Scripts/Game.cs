@@ -55,7 +55,7 @@ public class Game : MonoBehaviour
     private ArrayList attackingUnits;
 
     //current turn
-    private string currentPlayer = "white";
+    private PieceColor currentPlayer = PieceColor.White;
 
     //Game Ending
     private bool gameOver = false;
@@ -154,7 +154,7 @@ public class Game : MonoBehaviour
         return true;
     }
 
-    public string GetCurrentPlayer()
+    public PieceColor GetCurrentPlayer()
     {
         return currentPlayer;
     }
@@ -166,13 +166,13 @@ public class Game : MonoBehaviour
 
     public void NextTurn()
     {
-        if (currentPlayer == "white")
+        if (currentPlayer == PieceColor.White)
         {
-            currentPlayer = "black";
+            currentPlayer = PieceColor.Black;
         }
         else
         {
-            currentPlayer = "white";
+            currentPlayer = PieceColor.White;
         }
     }
 
