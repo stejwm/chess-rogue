@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "bleh.sln"
+    "dotnet.defaultSolution": "chess-rogue.sln"
 }
