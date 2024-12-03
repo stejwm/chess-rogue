@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Increasing Strike
   description: Permanently gain +1 to attack for every capture
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: ab838ec2398edc9488173788ab3e5871, type: 3}
