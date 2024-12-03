@@ -14,7 +14,7 @@ public class Card : MonoBehaviour
 
     public void Use(Chessman target)
     {
-        target.AddAbility(ability);
+        target.AddAbility(ability.Clone());
     }
 
     void OnMouseDown(){

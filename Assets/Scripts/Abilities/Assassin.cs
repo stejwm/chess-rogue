@@ -28,11 +28,11 @@ public class Assassin : Ability
     }
     public void AddBonus(Chessman attacker, int support){
         if (attacker==piece && support==0)
-            piece.attack+=5;
+            piece.attackBonus+=5;
     }
     public void RemoveBonus(Chessman attacker, int support){
         if (attacker==piece && support==0)
-            piece.attack-=5;
+            piece.attackBonus-=5;
     }
 
 }

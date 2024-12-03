@@ -70,9 +70,11 @@ public class Game : MonoBehaviour
     public UnityEvent<Chessman,int> OnAttack = new UnityEvent<Chessman,int>();
     public UnityEvent<Chessman, int> OnAttackEnd = new UnityEvent<Chessman, int>();
     public UnityEvent<Chessman> OnMove = new UnityEvent<Chessman>();
-    public UnityEvent OnGameEnd = new UnityEvent();
+    public UnityEvent<Chessman, Chessman> OnPieceBounced = new UnityEvent<Chessman,Chessman>();
+    public UnityEvent<Chessman> OnSupportAdded = new UnityEvent<Chessman>();
 
-    //public event Action<Chessman> OnPieceCaptured;
+
+    public UnityEvent OnGameEnd = new UnityEvent();
 
 
     //Unity calls this right when the game starts, there are a few built in functions
@@ -325,13 +327,14 @@ public class Game : MonoBehaviour
                 continue; 
             foreach (var coordinate in piece.GetValidSupportMoves()){
                 if (coordinate.x==targetedX && coordinate.y==targetedY){
-                    supportPower+= piece.support;
+                    supportPower+= piece.CalculateSupport();
                     Vector2 localPosition = new Vector2(2, 2);
-                    var bonusPopUpInstance= SpawnsBonusPopups.Instance.BonusAdded(piece.support, localPosition);
+                    var bonusPopUpInstance= SpawnsBonusPopups.Instance.BonusAdded(piece.CalculateSupport(), localPosition);
                     RectTransform rt = bonusPopUpInstance.GetComponent<RectTransform>();
                     rt.position = pieceObject.transform.position;
                     Debug.Log("Spawned bonus for " + piece.name + " at position " + rt.position);
                     yield return new WaitForSeconds(waitTime/2);
+                    OnSupportAdded.Invoke(piece);
                     break;
                 }
             }
@@ -339,11 +342,11 @@ public class Game : MonoBehaviour
         OnAttack.Invoke(targetPiece, supportPower); 
         yield return new WaitForSeconds(waitTime);
         if(isAttacking){
-            baseAttack=targetPiece.attack;
+            baseAttack=targetPiece.CalculateAttack();
             totalAttackPower=baseAttack+supportPower;
             attackSupport=supportPower;
         }else{   
-            baseDefense=targetPiece.defense;
+            baseDefense=targetPiece.CalculateDefense();
             totalDefensePower = baseDefense+supportPower;
             defenseSupport=supportPower;
         }
@@ -401,11 +404,11 @@ public class Game : MonoBehaviour
 
     private IEnumerator ShowBattlePanel(Chessman movingPiece, Chessman attackedPiece){
 
-        var attackVal = movingPiece.attack;
+        var attackVal = movingPiece.CalculateAttack();
         var supportVal= attackSupport;
         var sprite = movingPiece.GetComponent<SpriteRenderer>().sprite;
 
-        var defendVal = attackedPiece.defense;
+        var defendVal = attackedPiece.CalculateDefense();
         var defendSupportVal= defenseSupport;
         var defendSprite = attackedPiece.GetComponent<SpriteRenderer>().sprite;
         //If hero is attacking
@@ -472,16 +475,17 @@ public class Game : MonoBehaviour
             //update x and y coords with original location
             targetedX = movingPiece.GetXBoard();
             targetedY = movingPiece.GetYBoard();
-            if(attackedPiece.attack>0)
-                attackedPiece.attack-=1;
-            if(attackedPiece.defense>0)
-                attackedPiece.defense-=1;
+            if(attackedPiece.CalculateAttack()>0)
+                attackedPiece.attackBonus-=1;
+            if(attackedPiece.CalculateDefense()>0)
+                attackedPiece.defenseBonus-=1;
             SetPosition(attackedPiece.gameObject);
             attackedPiece.SetCoords();
             Debug.Log("Setting bounce tone");
             audioSource.clip = bounce;
             BattlePanel._instance.SetAndShowResults("Bounce!"); 
             AttackCleanUp(movingPiece);
+            OnPieceBounced.Invoke(movingPiece, attackedPiece);
 
             
             
@@ -525,7 +529,7 @@ public class Game : MonoBehaviour
             Vector2 localPosition = new Vector2(i+i, 2);
             obj = Instantiate(card, localPosition, Quaternion.identity);
             int s = Random.Range (0, AllAbilities.Count);
-            obj.GetComponent<Card>().ability = AllAbilities[s];
+            obj.GetComponent<Card>().ability = AllAbilities[s].Clone();
             cards.Add(obj);
         }
         

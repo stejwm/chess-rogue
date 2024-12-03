@@ -35,7 +35,7 @@ public class EnemyStatBoxManager : MonoBehaviour
     {
         //transform.position=Input.mousePosition;
     }
-    public void SetAndShowStats(string attack, string defense, string support, string info, string name, Sprite sprite){
+    public void SetAndShowStats(int attack, int defense, int support, string info, string name, Sprite sprite){
         gameObject.SetActive(true);
         this.attack.text="attack: "+attack;
         this.defense.text="defense: "+defense;

@@ -13,7 +13,7 @@ public class ScoutPawn : Ability
     {
         if (piece.type != PieceType.Pawn)
             return;
-            
+
         startingProfile=piece.moveProfile;
         piece.moveProfile = new ScoutPawnMovement();
         piece.info += " "+abilityName;
@@ -23,8 +23,6 @@ public class ScoutPawn : Ability
 
     public override void Remove(Chessman piece)
     {
-
         piece.moveProfile=startingProfile;
-
     }
 }

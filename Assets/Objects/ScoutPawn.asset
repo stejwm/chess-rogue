@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Scout
   description: Moves like queen. Captures & supports like pawn
+  sprite: {fileID: 21300000, guid: baaa8ce7abe065044aca7498a7f2c973, type: 3}

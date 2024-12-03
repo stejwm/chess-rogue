@@ -17,4 +17,8 @@ public abstract class Ability : ScriptableObject
         abilityName = name;
         this.description = description;
     }
+    public Ability Clone()
+    {
+    return Instantiate(this);
+    }
 }

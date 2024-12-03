@@ -19,7 +19,7 @@ public class Monk : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         game.OnMove.AddListener(AddBonus);
-        game.OnGameEnd.AddListener(RemoveBonus);
+        //game.OnGameEnd.AddListener(RemoveBonus);
 
     }
 
@@ -33,18 +33,18 @@ public class Monk : Ability
         if (movedPiece.color == piece.color && movedPiece!=piece){
             int s = Random.Range (0, 3);
             switch(s){
-                case 0: piece.attack++; break;
-                case 1: piece.defense++; break;
-                case 2: piece.support++; break;
+                case 0: piece.attackBonus++; break;
+                case 1: piece.defenseBonus++; break;
+                case 2: piece.supportBonus++; break;
 
             }
         }
     }
 
     public void RemoveBonus(){
-        piece.attack -= attackIncrease;
-        piece.defense -= attackIncrease;
-        piece.support -= attackIncrease;
+        //piece.attack -= attackIncrease;
+        //piece.defense -= attackIncrease;
+        //piece.support -= attackIncrease;
     }
 
 }

@@ -42,6 +42,10 @@ public abstract class Chessman : MonoBehaviour
     public int attack = 1;
     public int defense = 1;
     public int support = 1;
+
+    public int attackBonus = 0;
+    public int defenseBonus = 0;
+    public int supportBonus = 0;
     public string info = "";
     public PieceColor color;
     public Team team;
@@ -63,13 +67,13 @@ public abstract class Chessman : MonoBehaviour
     public abstract List<BoardPosition> GetValidMoves();
     public abstract List<BoardPosition> GetValidSupportMoves();
     public int CalculateSupport(){
-        return support;
+        return support+supportBonus;
     }
     public int CalculateAttack(){
-        return attack;
+        return attack+attackBonus;
     }
     public int CalculateDefense(){
-        return defense;
+        return defense+defenseBonus;
     }
     public void Activate()
     {
@@ -333,9 +337,9 @@ public abstract class Chessman : MonoBehaviour
     private void OnMouseEnter(){
         var sprite = this.GetComponent<SpriteRenderer>().sprite;
         if(team==Team.Hero)
-            StatBoxManager._instance.SetAndShowStats(attack.ToString(),defense.ToString(),support.ToString(),info,name, sprite);
+            StatBoxManager._instance.SetAndShowStats(CalculateAttack(),CalculateDefense(),CalculateSupport(),info,name, sprite);
         else if(team == Team.Enemy)
-            EnemyStatBoxManager._instance.SetAndShowStats(attack.ToString(),defense.ToString(),support.ToString(),info,name, sprite);
+            EnemyStatBoxManager._instance.SetAndShowStats(CalculateAttack(),CalculateDefense(),CalculateSupport(),info,name, sprite);
     }
 
     private void OnMouseExit(){

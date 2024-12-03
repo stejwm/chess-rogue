@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfc3230dc2c63354a85b279d0c1e5c83, type: 3}
-  m_Name: BloodThirstyAbility
+  m_Script: {fileID: 11500000, guid: 70b34d5f50138b743ae6d5a186ebaef1, type: 3}
+  m_Name: IronResolve
   m_EditorClassIdentifier: 
-  abilityName: Blood Thirst
-  description: Attack again after capturing if possible.
-  sprite: {fileID: 21300000, guid: 0e423b7f466a2674ca90c5a53156a612, type: 3}
+  abilityName: Iron Resolve
+  description: Permanently gain +1 to defense every time you bounce an enemy
+  sprite: {fileID: 0}
