@@ -25,7 +25,7 @@ public class IncreasingStrike : Ability
     }
     public void AddBonus(Chessman attacker){
         if (attacker==piece){
-            Debug.Log("adding 1 bonus");
+            //Debug.Log("adding 1 bonus");
             piece.attack+=1;
         }
     }

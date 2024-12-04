@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System;
 using Random = UnityEngine.Random;
 using UnityEngine.Events;
+using Unity.VisualScripting;
 
 public class Game : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class Game : MonoBehaviour
     public float waitTime;
     public bool isInInventory;
     public List<Ability> AllAbilities; // Drag-and-drop ScriptableObject assets here in the Inspector
+    public Opponent opponent;
 
 
     //Matrices needed, positions of each of the GameObjects
@@ -46,6 +48,8 @@ public class Game : MonoBehaviour
     public int baseAttack;
     public int baseDefense;
     private bool readyForCleanup;
+    private ArrayList defendingUnits;
+    private ArrayList attackingUnits;
 
 
     //Variables for selecting cards
@@ -55,8 +59,7 @@ public class Game : MonoBehaviour
     private Chessman selectedPiece;
     private bool applyingAbility=false;
 
-    private ArrayList defendingUnits;
-    private ArrayList attackingUnits;
+
 
     //current turn
     private PieceColor currentPlayer = PieceColor.White;
@@ -72,8 +75,6 @@ public class Game : MonoBehaviour
     public UnityEvent<Chessman> OnMove = new UnityEvent<Chessman>();
     public UnityEvent<Chessman, Chessman> OnPieceBounced = new UnityEvent<Chessman,Chessman>();
     public UnityEvent<Chessman> OnSupportAdded = new UnityEvent<Chessman>();
-
-
     public UnityEvent OnGameEnd = new UnityEvent();
 
 
@@ -137,6 +138,8 @@ public class Game : MonoBehaviour
         cm.name = name; //This is a built in variable that Unity has, so we did not have to declare it before
         cm.SetXBoard(x);
         cm.SetYBoard(y);
+        opponent.Initialize();
+        opponent.color=PieceColor.Black;
         //cm.Activate(); //It has everything set up so it can now Activate()
         return obj;
     }
@@ -208,6 +211,10 @@ public class Game : MonoBehaviour
             currentPlayer = PieceColor.White;
             SetWhiteTurn();
         }
+
+        if(opponent.color==currentPlayer){
+            StartCoroutine(OpponentMove());
+        }
     }
 
     public void Update()
@@ -225,6 +232,7 @@ public class Game : MonoBehaviour
                 StartCoroutine(ApplyAbility(selectedPiece)); 
              
         }
+            
     }
 
     private IEnumerator ApplyAbility(Chessman target){
@@ -273,11 +281,12 @@ public class Game : MonoBehaviour
             //Update the matrix
             SetPosition(movingPiece.gameObject);
 
-            //Switch Current Player
-            NextTurn();
+            
 
             //Destroy the move plates including self
             movingPiece.DestroyMovePlates();
+            //Switch Current Player
+            NextTurn();
         }
     }
     public void HandleAttack(Chessman movingPiece, Chessman attackedPiece, int x, int y){
@@ -294,14 +303,14 @@ public class Game : MonoBehaviour
             defendingUnits = new ArrayList(playerBlack);
             attackingUnits = new ArrayList(playerWhite);
         }
-        Debug.Log("All Black Pieces: ");
+        /* Debug.Log("All Black Pieces: ");
         foreach( GameObject piece in playerBlack) {
             Debug.Log(piece.name);
         }
         Debug.Log("All Defending units: ");
         foreach( GameObject piece in defendingUnits) {
             Debug.Log(piece.name);
-        }
+        } */
         //Calculate attacking support first
         StartCoroutine(AddSupport(movingPiece, attackedPiece, true));
     }
@@ -381,8 +390,7 @@ public class Game : MonoBehaviour
         //Update the matrix
         SetPosition(movingPiece.gameObject);
 
-        //Switch Current Player
-        NextTurn();
+        
 
         //Destroy the move plates including self
         movingPiece.DestroyMovePlates();
@@ -399,7 +407,8 @@ public class Game : MonoBehaviour
         readyForCleanup=false;
         defendingUnits.Clear();
         attackingUnits.Clear();
-
+        //Switch Current Player
+        NextTurn();
     }
 
     private IEnumerator ShowBattlePanel(Chessman movingPiece, Chessman attackedPiece){
@@ -452,14 +461,17 @@ public class Game : MonoBehaviour
 
         yield return new WaitForSeconds(waitTime);
         if(totalAttackPower>=totalDefensePower){
-              
+            if (attackedPiece.type==PieceType.King){
+                EndGame();
+                yield break;
+            }
             Debug.Log(movingPiece.name + " captures "+ attackedPiece.name);
             
             if (playerBlack.Contains(attackedPiece.gameObject))
                 playerBlack.Remove(attackedPiece.gameObject);
             if(playerWhite.Contains(attackedPiece.gameObject))
                 playerWhite.Remove(attackedPiece.gameObject);
-            Debug.Log("Setting capture tone");
+            //Debug.Log("Setting capture tone");
             audioSource.clip = capture; 
             BattlePanel._instance.SetAndShowResults("Capture!");   
             Destroy(attackedPiece.gameObject);
@@ -481,7 +493,7 @@ public class Game : MonoBehaviour
                 attackedPiece.defenseBonus-=1;
             SetPosition(attackedPiece.gameObject);
             attackedPiece.SetCoords();
-            Debug.Log("Setting bounce tone");
+            //Debug.Log("Setting bounce tone");
             audioSource.clip = bounce;
             BattlePanel._instance.SetAndShowResults("Bounce!"); 
             AttackCleanUp(movingPiece);
@@ -492,7 +504,7 @@ public class Game : MonoBehaviour
 
         }
         
-        Debug.Log("Playing audio");
+        //Debug.Log("Playing audio");
         audioSource.Play();
         yield return new WaitForSeconds(waitTime);
         BattlePanel._instance.HideResults();   
@@ -536,7 +548,7 @@ public class Game : MonoBehaviour
     }
     public void PieceSelected(Chessman piece){
         SpriteRenderer sprite;
-        Debug.Log("Piece selected");
+        //Debug.Log("Piece selected");
         if (selectedPiece != null){
             sprite= selectedPiece.GetComponent<SpriteRenderer>();
             sprite.color = Color.white;
@@ -555,4 +567,20 @@ public class Game : MonoBehaviour
         
     }
 
+    public void ExecuteTurn(Chessman piece, int x, int y){
+        bool attack =false;
+        if (GetPosition(x,y)!=null)
+            attack=true;
+        HandleMove(piece,x,y,attack);
+    }
+
+    private IEnumerator OpponentMove(){
+        //yield return new WaitForSeconds(waitTime*2);
+        opponent.Move();
+        yield break;
+    }
+
+    private void EndGame(){
+        SceneManager.LoadScene(0);
+    }
 }

@@ -55,7 +55,7 @@ public abstract class Chessman : MonoBehaviour
     //public AbilityManager abilityManager; 
 
 
-    List<BoardPosition> validMoves = new List<BoardPosition>();
+    public List<BoardPosition> validMoves = new List<BoardPosition>();
 
     //Variable for keeping track of the player it belongs to "black" or "white"
     private string player;
@@ -250,9 +250,9 @@ public abstract class Chessman : MonoBehaviour
         
     }  */
 
-    public void DisplayValidMoves(){
+    public List<BoardPosition> DisplayValidMoves(){
         Game sc = controller.GetComponent<Game>();
-        
+        List<BoardPosition> theseValidMoves=new List<BoardPosition>();
 
         foreach (var coordinate in validMoves)
         {
@@ -262,13 +262,16 @@ public abstract class Chessman : MonoBehaviour
                 if (cp == null)
                 {
                     MovePlateSpawn(coordinate.x, coordinate.y);
+                    theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
                 }
                 else if (cp.GetComponent<Chessman>().player != player)
                 {
                     MovePlateAttackSpawn(coordinate.x, coordinate.y);
+                    theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
                 }
             }
         }
+        return theseValidMoves;
     }
 
      public void PointMovePlate(int x, int y)

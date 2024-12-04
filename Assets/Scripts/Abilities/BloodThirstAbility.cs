@@ -20,10 +20,10 @@ public class BloodThirstAbility : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         //game.OnPieceCaptured += Thirst;
-        Debug.Log(game==null);
+        //Debug.Log(game==null);
 
         game.OnPieceCaptured.AddListener(Thirst);
-        Debug.Log("Blood Thirst ability applied, subscribed to OnAttackTriggered");
+        //Debug.Log("Blood Thirst ability applied, subscribed to OnAttackTriggered");
     }
 
     public override void Remove(Chessman piece)
@@ -36,7 +36,7 @@ public class BloodThirstAbility : Ability
 
     public void Thirst(Chessman attacker)
     {
-        Debug.Log("Thirsting");
+        //Debug.Log("Thirsting");
         if (attacker == piece)
         {
             EnableSecondAttack();
@@ -44,10 +44,9 @@ public class BloodThirstAbility : Ability
     }
 
     private void EnableSecondAttack()
-    {
+    {   game.NextTurn();
         ArrayList pieces;
         piece.moveProfile = new AttackOnlyMovement(startingProfile);
-        game.NextTurn();
         if (piece.color==PieceColor.White){
             pieces=game.playerWhite;
         }else
