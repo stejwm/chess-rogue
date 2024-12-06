@@ -26,4 +26,8 @@ public class AttackOnlyMovement : MovementProfile
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
         return oldProfile.GetValidSupportMoves(piece);
     }
+
+    public override List<Vector2Int> GetDirections(Chessman piece){
+        return oldProfile.GetDirections(piece);
+    } 
 }

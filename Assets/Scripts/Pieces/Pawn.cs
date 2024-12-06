@@ -7,6 +7,7 @@ public class Pawn : Chessman
         public void Start(){
         Activate();
         moveProfile = new PawnMovement();
+        type = PieceType.Pawn;
     }
 
     public override List<BoardPosition> GetValidMoves() => moveProfile.GetValidMoves(this);

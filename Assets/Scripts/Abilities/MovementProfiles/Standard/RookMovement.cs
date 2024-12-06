@@ -10,4 +10,14 @@ public class RookMovement : MovementProfile
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
         return Movement.ValidRookMoves(piece,piece.xBoard,piece.yBoard);
     }
+    public override List<Vector2Int> GetDirections(Chessman piece)
+    {
+        return new List<Vector2Int>
+        {
+            new Vector2Int(0, 1),   // Up
+            new Vector2Int(0, -1),  // Down
+            new Vector2Int(1, 0),   // Right
+            new Vector2Int(-1, 0)   // Left
+        };
+    }
 }

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323c7fd420435b145addb35397951314, type: 3}
+  m_Name: SpectralStride
+  m_EditorClassIdentifier: 
+  abilityName: Spectral Stride
+  description: Piece can move through it's own pieces according to it's typical movement
+  sprite: {fileID: 0}

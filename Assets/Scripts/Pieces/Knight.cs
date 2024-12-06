@@ -7,6 +7,7 @@ public class Knight : Chessman
         public void Start(){
         Activate();
         moveProfile = new KnightMovement();
+        type = PieceType.Knight;
     }
     public override List<BoardPosition> GetValidMoves() => moveProfile.GetValidMoves(this);
     public override List<BoardPosition> GetValidSupportMoves() => moveProfile.GetValidSupportMoves(this);

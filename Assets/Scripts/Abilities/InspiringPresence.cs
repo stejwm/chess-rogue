@@ -36,7 +36,7 @@ public class InspiringPresence : Ability
 
         game.OnPieceCaptured.RemoveListener(IsCapture);
     }
-    public void IsBounce(Chessman attacker, Chessman defender){
+    public void IsBounce(Chessman attacker, Chessman defender, bool isBounceReduced){
         if(defender.team==piece.team)
             AddBonus();
 

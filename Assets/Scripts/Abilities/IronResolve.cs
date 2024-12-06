@@ -23,7 +23,7 @@ public class IronResolve : Ability
         game.OnPieceBounced.RemoveListener(AddBonus); 
 
     }
-    public void AddBonus(Chessman attacker, Chessman defender){
+    public void AddBonus(Chessman attacker, Chessman defender, bool isBounceReduced){
         if (defender==piece){
             piece.defense+=1;
         }

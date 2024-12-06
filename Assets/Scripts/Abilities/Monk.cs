@@ -26,7 +26,6 @@ public class Monk : Ability
     public override void Remove(Chessman piece)
     {
         game.OnMove.RemoveListener(AddBonus); 
-        game.OnGameEnd.RemoveListener(RemoveBonus); 
 
     }
     public void AddBonus(Chessman movedPiece){
@@ -39,12 +38,6 @@ public class Monk : Ability
 
             }
         }
-    }
-
-    public void RemoveBonus(){
-        //piece.attack -= attackIncrease;
-        //piece.defense -= attackIncrease;
-        //piece.support -= attackIncrease;
     }
 
 }

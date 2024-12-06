@@ -13,6 +13,7 @@ public enum PieceColor
 {
     White,
     Black,
+    None
 }
 
 public enum PieceType
@@ -23,6 +24,7 @@ public enum PieceType
     Rook,
     Queen,
     King,
+    None
 
 
 }
@@ -74,6 +76,9 @@ public abstract class Chessman : MonoBehaviour
     }
     public int CalculateDefense(){
         return defense+defenseBonus;
+    }
+    public void SetValidMoves(){
+        validMoves=GetValidMoves();
     }
     public void Activate()
     {
@@ -274,6 +279,27 @@ public abstract class Chessman : MonoBehaviour
         return theseValidMoves;
     }
 
+public List<BoardPosition>GetAllValidMoves(){
+        Game sc = controller.GetComponent<Game>();
+        List<BoardPosition> theseValidMoves=new List<BoardPosition>();
+
+        foreach (var coordinate in validMoves)
+        {
+            if (sc.PositionOnBoard(coordinate.x, coordinate.y))
+            {
+                GameObject cp = sc.GetPosition(coordinate.x, coordinate.y);
+                if (cp == null)
+                {
+                    theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
+                }
+                else if (cp.GetComponent<Chessman>().player != player)
+                {
+                    theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
+                }
+            }
+        }
+        return theseValidMoves;
+    }
      public void PointMovePlate(int x, int y)
     {
         Game sc = controller.GetComponent<Game>();
@@ -349,4 +375,15 @@ public abstract class Chessman : MonoBehaviour
         //StatBoxManager._instance.HideStats();
     }
 
+    public override bool Equals(object obj)
+    {
+        var item = obj as Chessman;
+
+        if (item == null)
+        {
+            return false;
+        }
+
+        return this.name ==item.name && this.xBoard == item.xBoard && this.yBoard==item.yBoard;
+    }
 }

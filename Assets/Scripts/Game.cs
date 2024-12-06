@@ -29,7 +29,8 @@ public class Game : MonoBehaviour
     public float waitTime;
     public bool isInInventory;
     public List<Ability> AllAbilities; // Drag-and-drop ScriptableObject assets here in the Inspector
-    public Opponent opponent;
+    public PlayerAgent opponent;
+    public bool isBounceReduced;
 
 
     //Matrices needed, positions of each of the GameObjects
@@ -73,9 +74,9 @@ public class Game : MonoBehaviour
     public UnityEvent<Chessman,int> OnAttack = new UnityEvent<Chessman,int>();
     public UnityEvent<Chessman, int> OnAttackEnd = new UnityEvent<Chessman, int>();
     public UnityEvent<Chessman> OnMove = new UnityEvent<Chessman>();
-    public UnityEvent<Chessman, Chessman> OnPieceBounced = new UnityEvent<Chessman,Chessman>();
+    public UnityEvent<Chessman, Chessman, bool> OnPieceBounced = new UnityEvent<Chessman,Chessman, bool>();
     public UnityEvent<Chessman> OnSupportAdded = new UnityEvent<Chessman>();
-    public UnityEvent OnGameEnd = new UnityEvent();
+    public UnityEvent <PieceColor> OnGameEnd= new UnityEvent<PieceColor>();
 
 
     //Unity calls this right when the game starts, there are a few built in functions
@@ -103,6 +104,8 @@ public class Game : MonoBehaviour
             SetPosition((GameObject)playerWhite[i]);
         }
         SetWhiteTurn();
+        opponent.StartUp();
+        opponent.color=PieceColor.Black;
     }
 
     public GameObject Create(PieceType type, string name, int x, int y, PieceColor color, Team team)
@@ -138,8 +141,7 @@ public class Game : MonoBehaviour
         cm.name = name; //This is a built in variable that Unity has, so we did not have to declare it before
         cm.SetXBoard(x);
         cm.SetYBoard(y);
-        opponent.Initialize();
-        opponent.color=PieceColor.Black;
+        
         //cm.Activate(); //It has everything set up so it can now Activate()
         return obj;
     }
@@ -183,6 +185,10 @@ public class Game : MonoBehaviour
         return positions[x, y];
     }
 
+public GameObject[,] GetPositions()
+    {
+        return positions;
+    }
     public bool PositionOnBoard(int x, int y)
     {
         if (x < 0 || y < 0 || x >= positions.GetLength(0) || y >= positions.GetLength(1)) return false;
@@ -217,6 +223,9 @@ public class Game : MonoBehaviour
         }
     }
 
+    public void PlayerTurn(){
+        currentPlayer=heroColor;
+    }
     public void Update()
     {
         if (gameOver == true && Input.GetMouseButtonDown(0))
@@ -481,23 +490,29 @@ public class Game : MonoBehaviour
         }
         else{
             Debug.Log(movingPiece.name + " failed to capture "+ attackedPiece.name);
+            isBounceReduced=false;
+
             //Reset attacked pieces position if capture failed 
             attackedPiece.SetXBoard(targetedX);
             attackedPiece.SetYBoard(targetedY);
             //update x and y coords with original location
             targetedX = movingPiece.GetXBoard();
             targetedY = movingPiece.GetYBoard();
-            if(attackedPiece.CalculateAttack()>0)
+            if(attackedPiece.CalculateAttack()>0){
                 attackedPiece.attackBonus-=1;
-            if(attackedPiece.CalculateDefense()>0)
+                isBounceReduced =true;
+            }
+            if(attackedPiece.CalculateDefense()>0){
                 attackedPiece.defenseBonus-=1;
+                isBounceReduced =true;
+            }
             SetPosition(attackedPiece.gameObject);
             attackedPiece.SetCoords();
             //Debug.Log("Setting bounce tone");
             audioSource.clip = bounce;
             BattlePanel._instance.SetAndShowResults("Bounce!"); 
             AttackCleanUp(movingPiece);
-            OnPieceBounced.Invoke(movingPiece, attackedPiece);
+            OnPieceBounced.Invoke(movingPiece, attackedPiece, isBounceReduced);
 
             
             
@@ -575,8 +590,9 @@ public class Game : MonoBehaviour
     }
 
     private IEnumerator OpponentMove(){
-        //yield return new WaitForSeconds(waitTime*2);
-        opponent.Move();
+        yield return new WaitForSeconds(waitTime);
+        if(currentPlayer==opponent.color)
+            opponent.RequestDecision();
         yield break;
     }
 
