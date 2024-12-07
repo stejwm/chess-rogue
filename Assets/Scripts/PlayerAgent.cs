@@ -172,7 +172,7 @@ public class PlayerAgent : Agent
     private IEnumerator ReloadScene()
     {
         yield return null; // Allow EndEpisode to complete
-        SceneManager.LoadScene(0);
+        //SceneManager.LoadScene(0);
     }
 
     public void CaptureReward(Chessman attacker){

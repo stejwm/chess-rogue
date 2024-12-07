@@ -31,6 +31,7 @@ public class Game : MonoBehaviour
     public List<Ability> AllAbilities; // Drag-and-drop ScriptableObject assets here in the Inspector
     public PlayerAgent opponent;
     public bool isBounceReduced;
+    public bool readyForOpponent;
 
 
     //Matrices needed, positions of each of the GameObjects
@@ -597,6 +598,8 @@ public GameObject[,] GetPositions()
     }
 
     private void EndGame(){
+        BattlePanel._instance.HideResults();   
+        BattlePanel._instance.HideStats();
         SceneManager.LoadScene(0);
     }
 }

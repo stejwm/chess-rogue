@@ -44,7 +44,8 @@ public class BloodThirstAbility : Ability
     }
 
     private void EnableSecondAttack()
-    {   game.PlayerTurn();
+    {   
+        game.PlayerTurn();
         ArrayList pieces;
         piece.moveProfile = new AttackOnlyMovement(startingProfile);
         if (piece.color==PieceColor.White){
