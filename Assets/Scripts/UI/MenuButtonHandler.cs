@@ -25,31 +25,38 @@ public class MenuButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        eventData.selectedObject = null;    
+        if (eventData.selectedObject = gameObject)
+            eventData.selectedObject = null;    
     }
 
     public void OnSelect(BaseEventData eventData)
     {
+        this.GetComponent<AudioSource>().Play();
         StartCoroutine(MoveElement(true));
     }
 
     private IEnumerator MoveElement(bool startingAnimation){
+        
         Vector3 endPosition;
         Vector3 endScale;
 
         float elapsedTime =0f;
         while(elapsedTime <_moveTime){
-            elapsedTime = Time.deltaTime;
+            elapsedTime += Time.deltaTime;
 
             if(startingAnimation){
                 endPosition = _startPos + new Vector3(0f, _verticalMoveAmount, 0f);
                 endScale = _startScale * _scaleAmount;
+                
             }else{
                 endPosition = _startPos;
                 endScale = _startScale;
+
+                //transform.position = _startPos;
+                //transform.localScale = _startScale;
             }
 
-            Vector3 lerpedPos = Vector3.Lerp(transform.position, endPosition, (elapsedTime/_moveTime));
+            Vector3 lerpedPos = Vector3.Lerp(transform.position, endPosition, elapsedTime/_moveTime);
             Vector3 lerpedScale = Vector3.Lerp(transform.localScale,  endScale, elapsedTime/_moveTime);
 
             transform.position = lerpedPos;

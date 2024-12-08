@@ -10,7 +10,6 @@ public class InventoryManager : MonoBehaviour
     public ArrayList myPieces;
 
     //current turn
-    private string currentPlayer = "white";
     private InventoryManager _instance;
 
 
@@ -56,7 +55,11 @@ public class InventoryManager : MonoBehaviour
                 //Change the order (or priority) of the layer
                 rend.sortingOrder = 5;
             }
+            
         }
+        var selectedPieceObj= (GameObject)myPieces[0];
+        var selectedPiece= selectedPieceObj.GetComponent<Chessman>();
+        game.PieceSelected(selectedPiece);
     }
 
     public void CloseInventory(){

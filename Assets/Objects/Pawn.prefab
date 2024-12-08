@@ -145,13 +145,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
   movePlate: {fileID: 7734472472800598565, guid: 7322ecef2e332e04aa5d5fa94c39ff49, type: 3}
+  xBoard: -1
+  yBoard: -1
+  moveProfile: {fileID: 0}
   attack: 1
   defense: 1
   support: 1
+  attackBonus: 0
+  defenseBonus: 0
+  supportBonus: 0
   info: Pawn
   color: 0
   team: 0
   type: 0
+  abilities: []
+  isValidForAttack: 0
+  gridOrigin: {x: 0, y: 0, z: 0}
+  cellSize: 1
   black_queen: {fileID: 21300000, guid: 8a261e5b4469e144e92e1a37de996771, type: 3}
   black_knight: {fileID: 21300000, guid: b973ff1fa6772124c9761f1f74d89d78, type: 3}
   black_bishop: {fileID: 21300000, guid: 29c9a6637c780b94d9a73a31c6b62944, type: 3}

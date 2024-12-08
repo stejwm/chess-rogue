@@ -8,6 +8,7 @@ using System;
 using Random = UnityEngine.Random;
 using UnityEngine.Events;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 public class Game : MonoBehaviour
 {
@@ -572,6 +573,7 @@ public GameObject[,] GetPositions()
         selectedPiece = piece;
         sprite = selectedPiece.GetComponent<SpriteRenderer>();
         sprite.color = Color.green;
+        RewardStatManager._instance.SetAndShowStats(piece);
     }
     public void ClearPiece(){
         SpriteRenderer sprite;

@@ -54,6 +54,9 @@ public abstract class Chessman : MonoBehaviour
     public PieceType type;
     public List<Ability> abilities;
     public bool isValidForAttack =false;
+    public Vector3 gridOrigin;
+    public float cellSize =1f; //.95f
+
     //public AbilityManager abilityManager; 
 
 
@@ -155,8 +158,9 @@ public abstract class Chessman : MonoBehaviour
 
      private void OnMouseDown()
     {
-        if(controller.GetComponent<Game>().isInInventory)
+        if(controller.GetComponent<Game>().isInInventory){
             controller.GetComponent<Game>().PieceSelected(this);
+        }
         else{    
             Debug.Log(this.name+ " piece clicked");
             if (!controller.GetComponent<Game>().IsGameOver() && isValidForAttack)
@@ -279,7 +283,7 @@ public abstract class Chessman : MonoBehaviour
         return theseValidMoves;
     }
 
-public List<BoardPosition>GetAllValidMoves(){
+    public List<BoardPosition>GetAllValidMoves(){
         Game sc = controller.GetComponent<Game>();
         List<BoardPosition> theseValidMoves=new List<BoardPosition>();
 
