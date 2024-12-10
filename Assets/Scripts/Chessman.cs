@@ -110,6 +110,11 @@ public abstract class Chessman : MonoBehaviour
         
         
     }
+    public void ResetBonuses(){
+        this.attackBonus=0;
+        this.defenseBonus=0;
+        this.supportBonus=0;
+    }
 
     public void SetCoords()
     {

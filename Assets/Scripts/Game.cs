@@ -128,12 +128,13 @@ public class Game : MonoBehaviour
         Array.Clear(positions, 0, positions.Length);
         foreach (GameObject key in startingPositions.Keys)
         {   
-            if(key.GetComponent<Chessman>().color==PieceColor.Black)
+            Chessman piece = key.GetComponent<Chessman>();
+            if(piece.color==PieceColor.Black)
                 playerBlack.Add(key);
-            else if (key.GetComponent<Chessman>().color==PieceColor.White)
+            else if (piece.color==PieceColor.White)
                 playerWhite.Add(key);
             key.SetActive(true);
-            
+            piece.ResetBonuses();
             SetPosition(key,startingPositions[key].x,startingPositions[key].y); 
             key.GetComponent<Chessman>().SetCoords();
         }
@@ -511,11 +512,7 @@ public class Game : MonoBehaviour
 
         yield return new WaitForSeconds(waitTime);
         if(totalAttackPower>=totalDefensePower){
-            if (attackedPiece.type==PieceType.King){
-                movingPiece.DestroyMovePlates();
-                EndGame();
-                yield break;
-            }
+            
             Debug.Log(movingPiece.name + " captures "+ attackedPiece.name);
             
             if (playerBlack.Contains(attackedPiece.gameObject))
@@ -528,6 +525,10 @@ public class Game : MonoBehaviour
             attackedPiece.gameObject.SetActive(false);
             AttackCleanUp(movingPiece);
             OnPieceCaptured.Invoke(movingPiece);  // Trigger the event
+            if (attackedPiece.type==PieceType.King){
+                EndGame();
+                yield break;
+            }
               
         }
         else{
