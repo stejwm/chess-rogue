@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Spectral Stride
   description: Piece can move through it's own pieces according to it's typical movement
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 63123a5574a3bd649aab3ed1fc501176, type: 3}

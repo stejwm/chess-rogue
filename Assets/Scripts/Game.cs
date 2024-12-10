@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 using UnityEngine.Events;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
+using System.Linq;
+using Rand= System.Random;
 
 public class Game : MonoBehaviour
 {
@@ -33,6 +35,8 @@ public class Game : MonoBehaviour
     public PlayerAgent opponent;
     public bool isBounceReduced;
     public bool readyForOpponent;
+    Dictionary<GameObject, BoardPosition> startingPositions = new Dictionary<GameObject, BoardPosition>();
+    private static Rand rng = new Rand();
 
 
     //Matrices needed, positions of each of the GameObjects
@@ -78,7 +82,7 @@ public class Game : MonoBehaviour
     public UnityEvent<Chessman> OnMove = new UnityEvent<Chessman>();
     public UnityEvent<Chessman, Chessman, bool> OnPieceBounced = new UnityEvent<Chessman,Chessman, bool>();
     public UnityEvent<Chessman> OnSupportAdded = new UnityEvent<Chessman>();
-    public UnityEvent <PieceColor> OnGameEnd= new UnityEvent<PieceColor>();
+    public UnityEvent<PieceColor> OnGameEnd= new UnityEvent<PieceColor>();
 
 
     //Unity calls this right when the game starts, there are a few built in functions
@@ -99,15 +103,41 @@ public class Game : MonoBehaviour
             Create(PieceType.Pawn,"black_pawn", 6, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 7, 6,PieceColor.Black, Team.Enemy) });
 
             heroColor=PieceColor.White;
-        //Set all piece positions on the positions board
+
         for (int i = 0; i < playerBlack.Count; i++)
         {
-            SetPosition((GameObject)playerBlack[i]);
-            SetPosition((GameObject)playerWhite[i]);
+            var blackPieceObj = (GameObject)playerBlack[i];
+            var blackPiece=blackPieceObj.GetComponent<Chessman>();
+            var whitePieceObj = (GameObject)playerWhite[i];
+            var whitePiece=whitePieceObj.GetComponent<Chessman>();            
+            startingPositions.Add(blackPieceObj, new BoardPosition(blackPiece.xBoard,blackPiece.yBoard));
+            startingPositions.Add(whitePieceObj, new BoardPosition(whitePiece.xBoard,whitePiece.yBoard));
+
         }
+        //Set all piece positions on the positions board
+        ResetBoard();
+        
         SetWhiteTurn();
         opponent.StartUp();
         opponent.color=PieceColor.Black;
+    }
+
+    public void ResetBoard(){
+        playerWhite.Clear();
+        playerBlack.Clear();
+        Array.Clear(positions, 0, positions.Length);
+        foreach (GameObject key in startingPositions.Keys)
+        {   
+            if(key.GetComponent<Chessman>().color==PieceColor.Black)
+                playerBlack.Add(key);
+            else if (key.GetComponent<Chessman>().color==PieceColor.White)
+                playerWhite.Add(key);
+            key.SetActive(true);
+            
+            SetPosition(key,startingPositions[key].x,startingPositions[key].y); 
+            key.GetComponent<Chessman>().SetCoords();
+        }
+        SetWhiteTurn();
     }
 
     public GameObject Create(PieceType type, string name, int x, int y, PieceColor color, Team team)
@@ -177,6 +207,14 @@ public class Game : MonoBehaviour
         positions[cm.GetXBoard(), cm.GetYBoard()] = obj;
     }
 
+    public void SetPosition(GameObject obj, int x, int y)
+    {
+        Chessman cm = obj.GetComponent<Chessman>();
+        cm.xBoard=x;
+        cm.yBoard=y;
+        SetPosition(obj);
+    }
+
     public void SetPositionEmpty(int x, int y)
     {
         positions[x, y] = null;
@@ -187,7 +225,7 @@ public class Game : MonoBehaviour
         return positions[x, y];
     }
 
-public GameObject[,] GetPositions()
+    public GameObject[,] GetPositions()
     {
         return positions;
     }
@@ -230,13 +268,13 @@ public GameObject[,] GetPositions()
     }
     public void Update()
     {
-        if (gameOver == true && Input.GetMouseButtonDown(0))
+        /* if (gameOver == true && Input.GetMouseButtonDown(0))
         {
             gameOver = false;
 
             //Using UnityEngine.SceneManagement is needed here
             SceneManager.LoadScene("Game"); //Restarts the game by loading the scene over again
-        }
+        } */
 
         if(selectedCard && selectedPiece){
             if(!applyingAbility)
@@ -252,6 +290,7 @@ public GameObject[,] GetPositions()
         audioSource.clip = ability;
         audioSource.Play();
         yield return new WaitForSeconds(waitTime);
+        RewardStatManager._instance.SetAndShowStats(selectedPiece);
         ClearCard();
         ClearPiece(); 
         applyingAbility=false;
@@ -473,6 +512,7 @@ public GameObject[,] GetPositions()
         yield return new WaitForSeconds(waitTime);
         if(totalAttackPower>=totalDefensePower){
             if (attackedPiece.type==PieceType.King){
+                movingPiece.DestroyMovePlates();
                 EndGame();
                 yield break;
             }
@@ -485,7 +525,7 @@ public GameObject[,] GetPositions()
             //Debug.Log("Setting capture tone");
             audioSource.clip = capture; 
             BattlePanel._instance.SetAndShowResults("Capture!");   
-            Destroy(attackedPiece.gameObject);
+            attackedPiece.gameObject.SetActive(false);
             AttackCleanUp(movingPiece);
             OnPieceCaptured.Invoke(movingPiece);  // Trigger the event
               
@@ -554,11 +594,14 @@ public GameObject[,] GetPositions()
         
         Debug.Log("Creating Cards");
         GameObject obj;
+        List<Ability> shuffledcards = AllAbilities.OrderBy(_ => rng.Next()).ToList();
         for(int i=0; i<3;i++){
             Vector2 localPosition = new Vector2(i+i, 2);
             obj = Instantiate(card, localPosition, Quaternion.identity);
-            int s = Random.Range (0, AllAbilities.Count);
-            obj.GetComponent<Card>().ability = AllAbilities[s].Clone();
+            //AllAbilities.Sort();
+            //int s = Random.Range (0, AllAbilities.Count);
+            
+            obj.GetComponent<Card>().ability = shuffledcards[i].Clone();
             cards.Add(obj);
         }
         
@@ -602,6 +645,8 @@ public GameObject[,] GetPositions()
     private void EndGame(){
         BattlePanel._instance.HideResults();   
         BattlePanel._instance.HideStats();
-        SceneManager.LoadScene(0);
+        ResetBoard();
+        InventoryManager._instance.OpenInventory();
+        //SceneManager.LoadScene(0);
     }
 }

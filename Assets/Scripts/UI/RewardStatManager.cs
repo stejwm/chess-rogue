@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 //using UnityEngine.UIElements;
@@ -14,6 +15,9 @@ public class RewardStatManager : MonoBehaviour
     public Text info;
     public Text pieceName;
     public Image image;
+    public GameObject abilityUI;
+    public Chessman piece;
+    public GameObject infoBox;
     // Start is called before the first frame update
     void Awake()
     {
@@ -34,9 +38,12 @@ public class RewardStatManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //transform.position=Input.mousePosition;
     }
     public void SetAndShowStats(Chessman piece){
+        foreach(Transform child in infoBox.transform)
+        {
+            Destroy(child.gameObject);
+        }
         gameObject.SetActive(true);
         this.attack.text="attack: "+piece.attack;
         this.defense.text="defense: "+piece.defense;
@@ -44,7 +51,17 @@ public class RewardStatManager : MonoBehaviour
         this.info.text=piece.info;
         this.pieceName.text=piece.name;
         this.image.sprite=piece.GetComponent<SpriteRenderer>().sprite;
+        this.piece=piece;
+        StartCoroutine(SetAbilities(piece));
+        
 
+    }
+    public IEnumerator SetAbilities(Chessman piece){
+        yield return null;
+        foreach (var ability in piece.abilities)
+        {
+            Instantiate(abilityUI, infoBox.transform);
+        }
     }
 
     public void HideStats(){

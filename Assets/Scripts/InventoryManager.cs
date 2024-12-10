@@ -10,7 +10,7 @@ public class InventoryManager : MonoBehaviour
     public ArrayList myPieces;
 
     //current turn
-    private InventoryManager _instance;
+    public static InventoryManager _instance;
 
 
     void Awake()

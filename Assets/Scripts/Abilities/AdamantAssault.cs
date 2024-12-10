@@ -7,6 +7,7 @@ public class AdamantAssault : Ability
 {
     private Chessman piece;
     MovementProfile startingProfile;
+    bool alreadyBounced = false;
     
     public AdamantAssault() : base("Adamant Assault", "Automatically trigger second attack after being bounced") {}
 
@@ -35,10 +36,12 @@ public class AdamantAssault : Ability
     public void Assault(Chessman attacker, Chessman defender, bool isBounceReduced)
     {   
         game.PlayerTurn();
-        if (attacker == piece)
+        if (attacker == piece && !alreadyBounced)
         {
             game.ExecuteTurn(attacker, defender.xBoard, defender.yBoard);
-            
+            alreadyBounced=true;
+        }else{
+            alreadyBounced=false;
         }
     }
 }

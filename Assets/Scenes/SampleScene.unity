@@ -2081,19 +2081,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1027058665}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 411228120}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OpenInventory
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1027058665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2516,7 +2504,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 118, y: 107.71063}
+  m_AnchoredPosition: {x: 118, y: 107.710846}
   m_SizeDelta: {x: -1567.02, y: -215.43}
   m_Pivot: {x: 0.000000034458935, y: 0.000000027939677}
 --- !u!114 &1185444666
@@ -2575,6 +2563,9 @@ MonoBehaviour:
   info: {fileID: 1411108590}
   pieceName: {fileID: 2069130228}
   image: {fileID: 173573189}
+  abilityUI: {fileID: 8528562668185041283, guid: ab6deb4e1ac7ed843941e8d259f6ca86, type: 3}
+  piece: {fileID: 0}
+  infoBox: {fileID: 1411108588}
 --- !u!1 &1261800680
 GameObject:
   m_ObjectHideFlags: 0
@@ -3812,6 +3803,7 @@ GameObject:
   - component: {fileID: 1411108589}
   - component: {fileID: 1411108591}
   - component: {fileID: 1411108590}
+  - component: {fileID: 1411108592}
   m_Layer: 5
   m_Name: InfoBox
   m_TagString: Untagged
@@ -3880,6 +3872,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411108588}
   m_CullTransparentMesh: 1
+--- !u!114 &1411108592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411108588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 20
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 100, y: 100}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &1512679411
 GameObject:
   m_ObjectHideFlags: 0
