@@ -57,9 +57,9 @@ public class InventoryManager : MonoBehaviour
             }
             
         }
-        var selectedPieceObj= (GameObject)myPieces[0];
-        var selectedPiece= selectedPieceObj.GetComponent<Chessman>();
-        game.PieceSelected(selectedPiece);
+        //var selectedPieceObj= (GameObject)myPieces[0];
+        //var selectedPiece= selectedPieceObj.GetComponent<Chessman>();
+        //game.PieceSelected(selectedPiece);
     }
 
     public void CloseInventory(){
