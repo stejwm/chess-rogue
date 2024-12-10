@@ -138,6 +138,7 @@ public class Game : MonoBehaviour
             SetPosition(key,startingPositions[key].x,startingPositions[key].y); 
             key.GetComponent<Chessman>().SetCoords();
         }
+        gameOver=false;
         SetWhiteTurn();
     }
 
@@ -269,13 +270,6 @@ public class Game : MonoBehaviour
     }
     public void Update()
     {
-        /* if (gameOver == true && Input.GetMouseButtonDown(0))
-        {
-            gameOver = false;
-
-            //Using UnityEngine.SceneManagement is needed here
-            SceneManager.LoadScene("Game"); //Restarts the game by loading the scene over again
-        } */
 
         if(selectedCard && selectedPiece){
             if(!applyingAbility)
@@ -296,17 +290,6 @@ public class Game : MonoBehaviour
         ClearPiece(); 
         applyingAbility=false;
         yield break;
-    }
-    
-    public void Winner(string playerWinner)
-    {
-        gameOver = true;
-
-        //Using UnityEngine.UI is needed here
-        GameObject.FindGameObjectWithTag("WinnerText").GetComponent<Text>().enabled = true;
-        GameObject.FindGameObjectWithTag("WinnerText").GetComponent<Text>().text = playerWinner + " is the winner";
-
-        GameObject.FindGameObjectWithTag("RestartText").GetComponent<Text>().enabled = true;
     }
 
     public void HandleMove(Chessman piece, int x, int y, bool attack){
@@ -459,7 +442,8 @@ public class Game : MonoBehaviour
         defendingUnits.Clear();
         attackingUnits.Clear();
         //Switch Current Player
-        NextTurn();
+        if(!gameOver)
+            NextTurn();
     }
 
     private IEnumerator ShowBattlePanel(Chessman movingPiece, Chessman attackedPiece){
@@ -514,7 +498,9 @@ public class Game : MonoBehaviour
         if(totalAttackPower>=totalDefensePower){
             
             Debug.Log(movingPiece.name + " captures "+ attackedPiece.name);
-            
+            if (attackedPiece.type==PieceType.King){
+                gameOver=true;
+            }
             if (playerBlack.Contains(attackedPiece.gameObject))
                 playerBlack.Remove(attackedPiece.gameObject);
             if(playerWhite.Contains(attackedPiece.gameObject))
@@ -525,7 +511,7 @@ public class Game : MonoBehaviour
             attackedPiece.gameObject.SetActive(false);
             AttackCleanUp(movingPiece);
             OnPieceCaptured.Invoke(movingPiece);  // Trigger the event
-            if (attackedPiece.type==PieceType.King){
+            if (gameOver){
                 EndGame();
                 yield break;
             }
