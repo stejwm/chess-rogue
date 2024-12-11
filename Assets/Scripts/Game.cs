@@ -12,6 +12,13 @@ using UnityEngine.UIElements;
 using System.Linq;
 using Rand= System.Random;
 
+
+public enum ScreenState
+{
+    MainGameboard,
+    RewardScreen,
+    PrisonersMarket
+}
 public class Game : MonoBehaviour
 {
     //Reference from Unity IDE
@@ -31,12 +38,12 @@ public class Game : MonoBehaviour
     public AudioClip ability;
     public float waitTime;
     public bool isInInventory;
-    public bool isInMarket;
     public List<Ability> AllAbilities; // Drag-and-drop ScriptableObject assets here in the Inspector
     public PlayerAgent opponent;
     public bool isBounceReduced;
     public bool readyForOpponent;
     Dictionary<GameObject, BoardPosition> startingPositions = new Dictionary<GameObject, BoardPosition>();
+    public ScreenState state = ScreenState.MainGameboard;
     private static Rand rng = new Rand();
 
 
@@ -142,7 +149,9 @@ public class Game : MonoBehaviour
 
     public void OpenMarket(){
         MarketManager._instance.OpenMarket();
+        this.state=ScreenState.PrisonersMarket;
     }
+
     public void SetBoardActive(){
         foreach (GameObject key in startingPositions.Keys)
         {  

@@ -12,6 +12,7 @@ public class MarketManager : MonoBehaviour
     public ArrayList myPieces= new ArrayList();
     public ArrayList opponentCapturedPieces = new ArrayList();
     public ArrayList opponentPieces = new ArrayList();
+    public List<Chessman> selectedPieces = new List<Chessman>();
 
 
     //current turn
@@ -41,7 +42,6 @@ public class MarketManager : MonoBehaviour
         var controller = GameObject.FindGameObjectWithTag("GameController");
         var game = controller.GetComponent<Game>();
 
-        game.isInMarket=true;
         Debug.Log("opening market");
         gameObject.SetActive(true);
 
@@ -140,12 +140,17 @@ public class MarketManager : MonoBehaviour
             }
             
         }
-        game.isInMarket=false;
         game.SetBoardActive();
         InventoryManager._instance.OpenInventory();
         gameObject.SetActive(false);
         
         
+    }
+
+    public void AddPiece(Chessman piece){
+        selectedPieces.Add(piece);
+        SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
+        sprite.color = Color.green;
     }
 
 

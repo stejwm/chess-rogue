@@ -163,11 +163,23 @@ public abstract class Chessman : MonoBehaviour
 
      private void OnMouseDown()
     {
-        if(controller.GetComponent<Game>().isInInventory){
-            controller.GetComponent<Game>().PieceSelected(this);
+        switch (controller.GetComponent<Game>().state)
+        {
+            case ScreenState.MainGameboard:
+                HandleMainGameboardClick();
+                break;
+
+            case ScreenState.RewardScreen:
+                HandleRewardScreenClick();
+                break;
+
+            case ScreenState.PrisonersMarket:
+                HandlePrisonersMarketClick();
+                break;
         }
-        else{    
-            Debug.Log(this.name+ " piece clicked");
+    } 
+    public void HandleMainGameboardClick(){
+        Debug.Log(this.name+ " piece clicked");
             if (!controller.GetComponent<Game>().IsGameOver() && isValidForAttack)
             {
                 //Remove all moveplates relating to previously selected piece
@@ -178,8 +190,15 @@ public abstract class Chessman : MonoBehaviour
                 validMoves=GetValidMoves();
                 DisplayValidMoves();
             }
-        }
-    } 
+    }
+
+    public void HandleRewardScreenClick(){        
+        controller.GetComponent<Game>().PieceSelected(this);
+    }
+
+    public void HandlePrisonersMarketClick(){        
+        MarketManager._instance.AddPiece(this);
+    }
 
     public void DestroyMovePlates()
     {
