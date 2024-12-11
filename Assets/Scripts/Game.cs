@@ -31,6 +31,7 @@ public class Game : MonoBehaviour
     public AudioClip ability;
     public float waitTime;
     public bool isInInventory;
+    public bool isInMarket;
     public List<Ability> AllAbilities; // Drag-and-drop ScriptableObject assets here in the Inspector
     public PlayerAgent opponent;
     public bool isBounceReduced;
@@ -133,13 +134,25 @@ public class Game : MonoBehaviour
                 playerBlack.Add(key);
             else if (piece.color==PieceColor.White)
                 playerWhite.Add(key);
-            key.SetActive(true);
-            piece.ResetBonuses();
             SetPosition(key,startingPositions[key].x,startingPositions[key].y); 
             key.GetComponent<Chessman>().SetCoords();
         }
-        gameOver=false;
-        SetWhiteTurn();
+        
+    }
+
+    public void OpenMarket(){
+        MarketManager._instance.OpenMarket();
+    }
+    public void SetBoardActive(){
+        foreach (GameObject key in startingPositions.Keys)
+        {  
+            Chessman piece = key.GetComponent<Chessman>();
+            key.SetActive(true);
+            piece.ResetBonuses();
+            gameOver=false;
+            SetWhiteTurn();
+        }
+        
     }
 
     public GameObject Create(PieceType type, string name, int x, int y, PieceColor color, Team team)
@@ -633,7 +646,8 @@ public class Game : MonoBehaviour
         BattlePanel._instance.HideResults();   
         BattlePanel._instance.HideStats();
         ResetBoard();
-        InventoryManager._instance.OpenInventory();
+        OpenMarket();
+        //InventoryManager._instance.OpenInventory();
         //SceneManager.LoadScene(0);
     }
 }
