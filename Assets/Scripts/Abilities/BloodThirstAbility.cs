@@ -23,6 +23,7 @@ public class BloodThirstAbility : Ability
         //Debug.Log(game==null);
 
         game.OnPieceCaptured.AddListener(Thirst);
+        game.OnGameEnd.AddListener(ResetMoveProfile);
         //Debug.Log("Blood Thirst ability applied, subscribed to OnAttackTriggered");
     }
 
@@ -64,5 +65,9 @@ public class BloodThirstAbility : Ability
         }
 
         
+    }
+
+    private void ResetMoveProfile(PieceColor color){
+        piece.moveProfile=startingProfile;
     }
 }

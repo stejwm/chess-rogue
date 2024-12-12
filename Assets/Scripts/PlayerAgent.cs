@@ -23,6 +23,7 @@ public class PlayerAgent : Agent
         Debug.Log("Starting up agent");
         controller = GameObject.FindGameObjectWithTag("GameController");
         game = controller.GetComponent<Game>();
+        
         game.OnGameEnd.AddListener(GameEnd);
         game.OnPieceCaptured.AddListener(CaptureReward);
         game.OnPieceBounced.AddListener(BounceReward);
@@ -31,9 +32,16 @@ public class PlayerAgent : Agent
             pieces=game.playerWhite;
         else
             pieces=game.playerBlack;
-
+        
         GenerateMoveCommandDictionary();
 
+    }
+
+    public void ShutDown(){
+        moveCommands.Clear();
+        game.OnGameEnd.RemoveListener(GameEnd);
+        game.OnPieceCaptured.RemoveListener(CaptureReward);
+        game.OnPieceBounced.RemoveListener(BounceReward);
     }
     public void GenerateMoveCommandDictionary()
     {

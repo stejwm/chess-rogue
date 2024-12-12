@@ -82,6 +82,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
         game.isInInventory=false;
+        game.state = ScreenState.MainGameboard;
         gameObject.SetActive(false);
     }
 

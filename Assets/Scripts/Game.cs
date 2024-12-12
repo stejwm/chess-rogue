@@ -45,6 +45,8 @@ public class Game : MonoBehaviour
     Dictionary<GameObject, BoardPosition> startingPositions = new Dictionary<GameObject, BoardPosition>();
     public ScreenState state = ScreenState.MainGameboard;
     private static Rand rng = new Rand();
+    public int playerCoins = 0;
+    public int playerBlood = 0;
 
 
     //Matrices needed, positions of each of the GameObjects
@@ -97,20 +99,9 @@ public class Game : MonoBehaviour
     //that Unity can call for you
     public void Start()
     {
-        playerWhite = new ArrayList(new GameObject[] { Create(PieceType.Rook,"white_rook", 0, 0,PieceColor.White, Team.Hero), Create(PieceType.Knight,"white_knight", 1, 0,PieceColor.White, Team.Hero),
-            Create(PieceType.Bishop,"white_bishop", 2, 0,PieceColor.White, Team.Hero), Create(PieceType.Queen,"white_queen", 3, 0,PieceColor.White, Team.Hero), Create(PieceType.King,"white_king", 4, 0,PieceColor.White, Team.Hero),
-            Create(PieceType.Bishop,"white_bishop", 5, 0,PieceColor.White, Team.Hero), Create(PieceType.Knight,"white_knight", 6, 0,PieceColor.White, Team.Hero), Create(PieceType.Rook,"white_rook", 7, 0,PieceColor.White, Team.Hero),
-            Create(PieceType.Pawn,"white_pawn", 0, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 1, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 2, 1,PieceColor.White, Team.Hero),
-            Create(PieceType.Pawn,"white_pawn", 3, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 4, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 5, 1,PieceColor.White, Team.Hero),
-            Create(PieceType.Pawn,"white_pawn", 6, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 7, 1,PieceColor.White, Team.Hero) });
-        playerBlack = new ArrayList(new GameObject[] { Create(PieceType.Rook,"black_rook", 0, 7,PieceColor.Black, Team.Enemy), Create(PieceType.Knight,"black_knight",1,7,PieceColor.Black, Team.Enemy),
-            Create(PieceType.Bishop,"black_bishop",2,7,PieceColor.Black, Team.Enemy), Create(PieceType.Queen,"black_queen",3,7,PieceColor.Black, Team.Enemy), Create(PieceType.King,"black_king",4,7,PieceColor.Black, Team.Enemy),
-            Create(PieceType.Bishop,"black_bishop",5,7,PieceColor.Black, Team.Enemy), Create(PieceType.Knight,"black_knight",6,7,PieceColor.Black, Team.Enemy), Create(PieceType.Rook,"black_rook",7,7,PieceColor.Black, Team.Enemy),
-            Create(PieceType.Pawn,"black_pawn", 0, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 1, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 2, 6,PieceColor.Black, Team.Enemy),
-            Create(PieceType.Pawn,"black_pawn", 3, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 4, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 5, 6,PieceColor.Black, Team.Enemy),
-            Create(PieceType.Pawn,"black_pawn", 6, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 7, 6,PieceColor.Black, Team.Enemy) });
-
-            heroColor=PieceColor.White;
+        CreateWhitePieces();
+        CreateBlackPieces();
+        heroColor=PieceColor.White;
 
         for (int i = 0; i < playerBlack.Count; i++)
         {
@@ -130,19 +121,40 @@ public class Game : MonoBehaviour
         opponent.color=PieceColor.Black;
     }
 
+    public void CreateBlackPieces(){
+        playerBlack = new ArrayList(new GameObject[] { Create(PieceType.Rook,"black_rook", 0, 7,PieceColor.Black, Team.Enemy), Create(PieceType.Knight,"black_knight",1,7,PieceColor.Black, Team.Enemy),
+            Create(PieceType.Bishop,"black_bishop",2,7,PieceColor.Black, Team.Enemy), Create(PieceType.Queen,"black_queen",3,7,PieceColor.Black, Team.Enemy), Create(PieceType.King,"black_king",4,7,PieceColor.Black, Team.Enemy),
+            Create(PieceType.Bishop,"black_bishop",5,7,PieceColor.Black, Team.Enemy), Create(PieceType.Knight,"black_knight",6,7,PieceColor.Black, Team.Enemy), Create(PieceType.Rook,"black_rook",7,7,PieceColor.Black, Team.Enemy),
+            Create(PieceType.Pawn,"black_pawn", 0, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 1, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 2, 6,PieceColor.Black, Team.Enemy),
+            Create(PieceType.Pawn,"black_pawn", 3, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 4, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 5, 6,PieceColor.Black, Team.Enemy),
+            Create(PieceType.Pawn,"black_pawn", 6, 6,PieceColor.Black, Team.Enemy), Create(PieceType.Pawn,"black_pawn", 7, 6,PieceColor.Black, Team.Enemy) });
+    }
+
+    public void CreateWhitePieces(){
+        playerWhite = new ArrayList(new GameObject[] { Create(PieceType.Rook,"white_rook", 0, 0,PieceColor.White, Team.Hero), Create(PieceType.Knight,"white_knight", 1, 0,PieceColor.White, Team.Hero),
+            Create(PieceType.Bishop,"white_bishop", 2, 0,PieceColor.White, Team.Hero), Create(PieceType.Queen,"white_queen", 3, 0,PieceColor.White, Team.Hero), Create(PieceType.King,"white_king", 4, 0,PieceColor.White, Team.Hero),
+            Create(PieceType.Bishop,"white_bishop", 5, 0,PieceColor.White, Team.Hero), Create(PieceType.Knight,"white_knight", 6, 0,PieceColor.White, Team.Hero), Create(PieceType.Rook,"white_rook", 7, 0,PieceColor.White, Team.Hero),
+            Create(PieceType.Pawn,"white_pawn", 0, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 1, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 2, 1,PieceColor.White, Team.Hero),
+            Create(PieceType.Pawn,"white_pawn", 3, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 4, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 5, 1,PieceColor.White, Team.Hero),
+            Create(PieceType.Pawn,"white_pawn", 6, 1,PieceColor.White, Team.Hero), Create(PieceType.Pawn,"white_pawn", 7, 1,PieceColor.White, Team.Hero) });
+        
+    }
+
     public void ResetBoard(){
         playerWhite.Clear();
         playerBlack.Clear();
         Array.Clear(positions, 0, positions.Length);
         foreach (GameObject key in startingPositions.Keys)
         {   
-            Chessman piece = key.GetComponent<Chessman>();
-            if(piece.color==PieceColor.Black)
-                playerBlack.Add(key);
-            else if (piece.color==PieceColor.White)
-                playerWhite.Add(key);
-            SetPosition(key,startingPositions[key].x,startingPositions[key].y); 
-            key.GetComponent<Chessman>().SetCoords();
+            if(key){
+                Chessman piece = key.GetComponent<Chessman>();
+                if(piece.color==PieceColor.Black)
+                    playerBlack.Add(key);
+                else if (piece.color==PieceColor.White)
+                    playerWhite.Add(key);
+                SetPosition(key,startingPositions[key].x,startingPositions[key].y); 
+                key.GetComponent<Chessman>().SetCoords();
+            }
         }
         
     }
@@ -155,12 +167,47 @@ public class Game : MonoBehaviour
     public void SetBoardActive(){
         foreach (GameObject key in startingPositions.Keys)
         {  
-            Chessman piece = key.GetComponent<Chessman>();
-            key.SetActive(true);
-            piece.ResetBonuses();
-            gameOver=false;
-            SetWhiteTurn();
+            if(key){
+                Chessman piece = key.GetComponent<Chessman>();
+                key.SetActive(true);
+                piece.ResetBonuses();
+                gameOver=false;
+                SetWhiteTurn();
+            }
         }
+        
+    }
+
+    public void NewOpponent(){
+        opponent.ShutDown();
+        ArrayList opponentPieces;
+        if (heroColor == PieceColor.White){
+            opponentPieces=playerBlack;
+        }
+        else{
+            opponentPieces=playerWhite;
+        }
+
+        foreach (GameObject obj in opponentPieces)
+        {
+            startingPositions.Remove(obj);
+            Destroy(obj);
+        }
+        if (heroColor == PieceColor.White){
+            CreateBlackPieces();
+            opponentPieces=playerBlack;
+        }
+        else{
+            CreateWhitePieces();
+            opponentPieces=playerWhite;
+        }
+        
+        foreach (GameObject obj in opponentPieces)
+        {
+            startingPositions.Add(obj, new BoardPosition(obj.GetComponent<Chessman>().xBoard, obj.GetComponent<Chessman>().yBoard));
+        }
+        ResetBoard();
+        opponent.StartUp();
         
     }
 
@@ -534,6 +581,7 @@ public class Game : MonoBehaviour
             AttackCleanUp(movingPiece);
             OnPieceCaptured.Invoke(movingPiece);  // Trigger the event
             if (gameOver){
+                OnGameEnd.Invoke(movingPiece.color);
                 EndGame();
                 yield break;
             }
