@@ -18,6 +18,7 @@ public class Assassin : Ability
         piece.info += " " + abilityName;
         game.OnAttack.AddListener(AddBonus);
         game.OnAttackEnd.AddListener(RemoveBonus);
+        piece.releaseCost+=20;
 
     }
 

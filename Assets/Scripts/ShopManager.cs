@@ -4,10 +4,16 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
     public ArrayList myPieces;
+
+    public Game game;
+    public GameObject controller;
+    public TMP_Text bloodText;
+    public TMP_Text coinText;
 
     //current turn
     private ShopManager _instance;

@@ -171,6 +171,33 @@ public class MarketManager : MonoBehaviour
         selectedPieces.Clear();
     }
 
+    public void ReturnMyPieces(){
+        foreach (GameObject obj in myCapturedPieces){
+            Chessman piece = obj.GetComponent<Chessman>();
+            if (selectedPieces.Contains(piece)){
+                game.playerCoins-= piece.releaseCost;
+                SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
+                sprite.color = Color.white;
+                obj.SetActive(false);
+            }
+            else{
+                game.startingPositions.Remove(obj);
+                myPieces.Remove(obj);
+                Destroy(obj);
+            }
+        }
+        if(game.heroColor==PieceColor.White){
+            game.playerWhite=myPieces;
+            game.playerBlack=opponentPieces;
+        }
+        else{
+            game.playerBlack=myPieces;
+            game.playerWhite=opponentPieces;
+        }
+        coinText.text = ": "+game.playerCoins;
+        selectedPieces.Clear();
+    }
+
     public void KillPieces(){
         
         foreach (Chessman item in selectedPieces)

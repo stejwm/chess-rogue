@@ -19,6 +19,7 @@ public class Monk : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         game.OnMove.AddListener(AddBonus);
+        piece.releaseCost+=10;
         //game.OnGameEnd.AddListener(RemoveBonus);
 
     }

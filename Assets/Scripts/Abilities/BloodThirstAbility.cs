@@ -24,6 +24,7 @@ public class BloodThirstAbility : Ability
 
         game.OnPieceCaptured.AddListener(Thirst);
         game.OnGameEnd.AddListener(ResetMoveProfile);
+        piece.releaseCost+=20;
         //Debug.Log("Blood Thirst ability applied, subscribed to OnAttackTriggered");
     }
 

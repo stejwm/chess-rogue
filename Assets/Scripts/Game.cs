@@ -42,7 +42,7 @@ public class Game : MonoBehaviour
     public PlayerAgent opponent;
     public bool isBounceReduced;
     public bool readyForOpponent;
-    Dictionary<GameObject, BoardPosition> startingPositions = new Dictionary<GameObject, BoardPosition>();
+    public Dictionary<GameObject, BoardPosition> startingPositions = new Dictionary<GameObject, BoardPosition>();
     public ScreenState state = ScreenState.MainGameboard;
     private static Rand rng = new Rand();
     public int playerCoins = 0;

@@ -16,6 +16,7 @@ public class IronResolve : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         game.OnPieceBounced.AddListener(AddBonus);
+        piece.releaseCost+=10;
     }
 
     public override void Remove(Chessman piece)

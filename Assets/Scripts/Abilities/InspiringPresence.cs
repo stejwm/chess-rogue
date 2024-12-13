@@ -16,6 +16,7 @@ public class InspiringPresence : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         game.OnSupportAdded.AddListener(CheckForResult);
+        piece.releaseCost+=10;
     }
 
     public override void Remove(Chessman piece)

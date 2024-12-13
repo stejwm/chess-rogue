@@ -16,6 +16,7 @@ public class IncreasingStrike : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         game.OnPieceCaptured.AddListener(AddBonus);
+        piece.releaseCost+=15;
     }
 
     public override void Remove(Chessman piece)
