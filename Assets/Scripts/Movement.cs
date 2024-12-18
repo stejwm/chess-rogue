@@ -155,6 +155,22 @@ public static class Movement
     }
 
 
+    public static List<BoardPosition> AllOpenSquares(){
+        controller = GameObject.FindGameObjectWithTag("GameController");
+        Game sc = controller.GetComponent<Game>();
+        List<BoardPosition> thisValidMoves = new List<BoardPosition>();
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {   
+                if(sc.GetPosition(i,j)==null)
+                thisValidMoves.Add(new BoardPosition(i,j));
+            }
+        }
+        return thisValidMoves;
+    }
+
+
     public static List<BoardPosition> LineMovePlate(Chessman piece, int xIncrement, int yIncrement, int xBoard, int yBoard)
     {
         controller = GameObject.FindGameObjectWithTag("GameController");

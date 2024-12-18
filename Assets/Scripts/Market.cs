@@ -18,6 +18,8 @@ public class MarketManager : MonoBehaviour
     public GameObject controller;
     public TMP_Text bloodText;
     public TMP_Text coinText;
+    public int totalCost;
+    public PieceColor selectedColor = PieceColor.None;
 
 
     //current turn
@@ -46,7 +48,7 @@ public class MarketManager : MonoBehaviour
 
     public void OpenMarket(){
         
-
+        totalCost=0;
         Debug.Log("opening market");
         gameObject.SetActive(true);
 
@@ -113,6 +115,7 @@ public class MarketManager : MonoBehaviour
         var game = controller.GetComponent<Game>();
         game.ClearCard();
         game.ClearPiece();*/
+        selectedColor = PieceColor.None;
         if(opponentCapturedPieces.Count>0)
         foreach (GameObject piece in opponentCapturedPieces)
         {
@@ -211,15 +214,28 @@ public class MarketManager : MonoBehaviour
     }
 
     public void AddPiece(Chessman piece){
+        if(selectedPieces.Count==0)
+            selectedColor= PieceColor.None;
+        if(selectedColor == PieceColor.None)
+            selectedColor= piece.color;
+        if(totalCost+piece.releaseCost>game.playerCoins && piece.color==game.heroColor && !selectedPieces.Contains(piece))
+            return;
+        if(piece.color != selectedColor)
+            return;
+
         if(selectedPieces.Contains(piece)){
             selectedPieces.Remove(piece);
             SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
             sprite.color = Color.white;
+            if(piece.color==game.heroColor)
+                totalCost-=piece.releaseCost;
         }
         else{
             selectedPieces.Add(piece);
             SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
             sprite.color = Color.green;
+            if(piece.color==game.heroColor)
+                totalCost+=piece.releaseCost;
         }
     }
 
