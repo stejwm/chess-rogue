@@ -211,6 +211,7 @@ public class Game : MonoBehaviour
             //Debug.Log(piece.name);
             piece.SetActive(true);
             Chessman cm = piece.GetComponent<Chessman>();
+            piece.GetComponent<Chessman>().ResetBonuses();
             currentMatch.MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);        
         }
     }

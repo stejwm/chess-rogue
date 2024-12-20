@@ -53,24 +53,28 @@ public class ChessMatch
         foreach (GameObject piece in white.pieces)
         {
             piece.SetActive(true);
+            piece.GetComponent<Chessman>().ResetBonuses();
             Chessman cm = piece.GetComponent<Chessman>();
             MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);
         }
         foreach (GameObject piece in black.pieces)
         {
             piece.SetActive(true);
+            piece.GetComponent<Chessman>().ResetBonuses();
             Chessman cm = piece.GetComponent<Chessman>();
             MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);        
         }
         foreach (GameObject piece in white.capturedPieces)
         {
             piece.SetActive(true);
+            piece.GetComponent<Chessman>().ResetBonuses();
             Chessman cm = piece.GetComponent<Chessman>();
             MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);        
         }
         foreach (GameObject piece in black.capturedPieces)
         {
             piece.SetActive(true);
+            piece.GetComponent<Chessman>().ResetBonuses();
             Chessman cm = piece.GetComponent<Chessman>();
             MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);        
         }
