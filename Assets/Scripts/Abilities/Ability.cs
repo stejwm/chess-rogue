@@ -10,7 +10,6 @@ public abstract class Ability : ScriptableObject
 
     public abstract void Apply(Chessman piece);
     public abstract void Remove(Chessman piece);
-    protected Game game;
 
     protected Ability(string name, string description)
     {

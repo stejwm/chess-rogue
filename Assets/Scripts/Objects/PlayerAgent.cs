@@ -13,25 +13,18 @@ using UnityEngine.SceneManagement;
 
 public class PlayerAgent : Agent
 {
-    Game game;
-    GameObject controller;
-    public ArrayList pieces;
+    public List<GameObject> pieces;
     public PieceColor color;
+    //public ChessMatch currentMatch;
     public Dictionary<int,MoveCommand> moveCommands=new Dictionary<int, MoveCommand>();
 
     public void StartUp(){
         Debug.Log("Starting up agent");
-        controller = GameObject.FindGameObjectWithTag("GameController");
-        game = controller.GetComponent<Game>();
         
-        game.OnGameEnd.AddListener(GameEnd);
-        game.OnPieceCaptured.AddListener(CaptureReward);
-        game.OnPieceBounced.AddListener(BounceReward);
+        Game._instance.OnGameEnd.AddListener(GameEnd);
+        Game._instance.OnPieceCaptured.AddListener(CaptureReward);
+        Game._instance.OnPieceBounced.AddListener(BounceReward);
         
-        if(color == PieceColor.White)
-            pieces=game.playerWhite;
-        else
-            pieces=game.playerBlack;
         
         GenerateMoveCommandDictionary();
 
@@ -39,9 +32,9 @@ public class PlayerAgent : Agent
 
     public void ShutDown(){
         moveCommands.Clear();
-        game.OnGameEnd.RemoveListener(GameEnd);
-        game.OnPieceCaptured.RemoveListener(CaptureReward);
-        game.OnPieceBounced.RemoveListener(BounceReward);
+        Game._instance.OnGameEnd.RemoveListener(GameEnd);
+        Game._instance.OnPieceCaptured.RemoveListener(CaptureReward);
+        Game._instance.OnPieceBounced.RemoveListener(BounceReward);
     }
     public void GenerateMoveCommandDictionary()
     {
@@ -82,17 +75,13 @@ public class PlayerAgent : Agent
         var selectedMoveCommandIndex = actions.DiscreteActions[0];
         //Debug.Log("branch 0: "+selectedMoveCommandIndex);
         MoveCommand selectedMoveCommand = GetMoveCommandFromIndex(selectedMoveCommandIndex);
-        game.ExecuteTurn(selectedMoveCommand.piece, selectedMoveCommand.x, selectedMoveCommand.y);
+        Game._instance.currentMatch.ExecuteTurn(selectedMoveCommand.piece, selectedMoveCommand.x, selectedMoveCommand.y);
         
     }
 
     public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
         Debug.Log("Starting Masking");
-        if(color == PieceColor.White)
-            pieces=game.playerWhite;
-        else
-            pieces=game.playerBlack;
         List<int> validIndexes = new List<int>();
         Debug.Log("movecommands count="+moveCommands.Count);
         Debug.Log("pieces count="+pieces.Count);
@@ -132,10 +121,10 @@ public class PlayerAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        for (int k = 0; k < game.GetPositions().GetLength(0); k++){
-            for (int l = 0; l < game.GetPositions().GetLength(1); l++){
-                if(game.GetPositions()[k, l] !=null){
-                    GameObject item = game.GetPositions()[k, l];
+        for (int k = 0; k < Game._instance.currentMatch.GetPositions().GetLength(0); k++){
+            for (int l = 0; l < Game._instance.currentMatch.GetPositions().GetLength(1); l++){
+                if(Game._instance.currentMatch.GetPositions()[k, l] !=null){
+                    GameObject item = Game._instance.currentMatch.GetPositions()[k, l];
                     Chessman piece = item.GetComponent<Chessman>();
                     sensor.AddOneHotObservation((int)piece.type, 7);
                     sensor.AddOneHotObservation((int)piece.color, 3);

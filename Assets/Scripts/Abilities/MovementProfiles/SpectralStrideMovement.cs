@@ -30,7 +30,7 @@ public class SpectralStrideMovement : MovementProfile
             while (sc.PositionOnBoard(currentX, currentY))
             {
                 // Check if the position is blocked by an ally
-                var occupyingPiece = sc.GetPosition(currentX, currentY);
+                var occupyingPiece = Game._instance.currentMatch.GetPieceAtPosition(currentX, currentY);
                 if (occupyingPiece != null)
                 {
                     var occupyingChessman = occupyingPiece.GetComponent<Chessman>();

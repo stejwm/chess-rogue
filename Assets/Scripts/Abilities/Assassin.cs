@@ -12,19 +12,17 @@ public class Assassin : Ability
 
     public override void Apply(Chessman piece)
     {
-        GameObject controller = GameObject.FindGameObjectWithTag("GameController");
-        game = controller.GetComponent<Game>();
         this.piece = piece;
         piece.info += " " + abilityName;
-        game.OnAttack.AddListener(AddBonus);
-        game.OnAttackEnd.AddListener(RemoveBonus);
+        Game._instance.OnAttack.AddListener(AddBonus);
+        Game._instance.OnAttackEnd.AddListener(RemoveBonus);
         piece.releaseCost+=20;
 
     }
 
     public override void Remove(Chessman piece)
     {
-        game.OnAttack.RemoveListener(AddBonus); 
+        Game._instance.OnAttack.RemoveListener(AddBonus); 
 
     }
     public void AddBonus(Chessman attacker, int support){

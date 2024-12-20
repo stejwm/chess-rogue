@@ -14,17 +14,17 @@ public static class Movement
         if (sc.PositionOnBoard(x, y))
         {
             
-            if (sc.GetPosition(x, y) == null)
+            if (Game._instance.currentMatch.GetPieceAtPosition(x, y) == null)
             {
                 validMoves.Add(new BoardPosition(x,y));
             }
 
-            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().color != piece.color)
+            if (sc.PositionOnBoard(x + 1, y) && Game._instance.currentMatch.GetPieceAtPosition(x + 1, y) != null && Game._instance.currentMatch.GetPieceAtPosition(x + 1, y).GetComponent<Chessman>().color != piece.color)
             {
                 validMoves.Add(new BoardPosition(x+1,y));
             }
 
-            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().color != piece.color)
+            if (sc.PositionOnBoard(x - 1, y) && Game._instance.currentMatch.GetPieceAtPosition(x - 1, y) != null && Game._instance.currentMatch.GetPieceAtPosition(x - 1, y).GetComponent<Chessman>().color != piece.color)
             {
                 validMoves.Add(new BoardPosition(x-1,y));
             }
@@ -105,7 +105,7 @@ public static class Movement
 
     private static bool IsFriendlyPieceAtPosition(Game sc, Chessman piece, int x, int y)
     {
-        var otherPiece = sc.GetPosition(x, y); // Get the piece at the given position
+        var otherPiece = Game._instance.currentMatch.GetPieceAtPosition(x, y); // Get the piece at the given position
         return otherPiece != null && otherPiece.GetComponent<Chessman>().color == piece.color;
     }
 
@@ -163,7 +163,7 @@ public static class Movement
         {
             for (int j = 0; j < 8; j++)
             {   
-                if(sc.GetPosition(i,j)==null)
+                if(Game._instance.currentMatch.GetPieceAtPosition(i,j)==null)
                 thisValidMoves.Add(new BoardPosition(i,j));
             }
         }
@@ -179,13 +179,13 @@ public static class Movement
         int x = xBoard + xIncrement;
         int y = yBoard + yIncrement;
         
-        while (sc.PositionOnBoard(x, y) && sc.GetPosition(x, y) == null)
+        while (sc.PositionOnBoard(x, y) && Game._instance.currentMatch.GetPieceAtPosition(x, y) == null)
         {
             validMoves.Add(new BoardPosition(x,y));
             x += xIncrement;
             y += yIncrement;
         }
-        if (sc.PositionOnBoard(x, y) && sc.GetPosition(x, y).GetComponent<Chessman>().color != piece.color)
+        if (sc.PositionOnBoard(x, y) && Game._instance.currentMatch.GetPieceAtPosition(x, y).GetComponent<Chessman>().color != piece.color)
         {
             validMoves.Add(new BoardPosition(x,y));
         }
@@ -202,11 +202,11 @@ public static class Movement
         int x = xBoard + xIncrement;
         int y = yBoard + yIncrement;
         
-        while (sc.PositionOnBoard(x, y) && sc.GetPosition(x, y))
+        while (sc.PositionOnBoard(x, y) && Game._instance.currentMatch.GetPieceAtPosition(x, y))
         {
-            if(sc.GetPosition(x, y)==null)
+            if(Game._instance.currentMatch.GetPieceAtPosition(x, y)==null)
                 validMoves.Add(new BoardPosition(x,y));
-            else if (sc.PositionOnBoard(x, y) && sc.GetPosition(x, y).GetComponent<Chessman>().color != piece.color)
+            else if (sc.PositionOnBoard(x, y) && Game._instance.currentMatch.GetPieceAtPosition(x, y).GetComponent<Chessman>().color != piece.color)
             {
                 validMoves.Add(new BoardPosition(x,y));
                 break;
@@ -227,7 +227,7 @@ public static class Movement
         int x = xBoard + xIncrement;
         int y = yBoard + yIncrement;
         
-        while (sc.PositionOnBoard(x, y) && sc.GetPosition(x, y) == null)
+        while (sc.PositionOnBoard(x, y) && Game._instance.currentMatch.GetPieceAtPosition(x, y) == null)
         {
             validMoves.Add(new BoardPosition(x,y));
             x += xIncrement;

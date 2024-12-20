@@ -11,17 +11,15 @@ public class IncreasingStrike : Ability
 
     public override void Apply(Chessman piece)
     {
-        GameObject controller = GameObject.FindGameObjectWithTag("GameController");
-        game = controller.GetComponent<Game>();
         this.piece = piece;
         piece.info += " " + abilityName;
-        game.OnPieceCaptured.AddListener(AddBonus);
+        Game._instance.OnPieceCaptured.AddListener(AddBonus);
         piece.releaseCost+=15;
     }
 
     public override void Remove(Chessman piece)
     {
-        game.OnMove.RemoveListener(AddBonus); 
+        Game._instance.OnMove.RemoveListener(AddBonus); 
 
     }
     public void AddBonus(Chessman attacker){

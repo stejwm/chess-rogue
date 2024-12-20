@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,14 +31,15 @@ public enum PieceType
 }
 public abstract class Chessman : MonoBehaviour
 {
-    //References to objects in our Unity Scene
-    public GameObject controller;
     public GameObject movePlate;
 
     //Position for this Chesspiece on the Board
     //The correct position will be set later
     public int xBoard = -1;
     public int yBoard = -1;
+    public Player owner;
+
+    public BoardPosition startingPosition;
     public MovementProfile moveProfile;
     protected Sprite sprite;
 
@@ -87,11 +89,8 @@ public abstract class Chessman : MonoBehaviour
     }
     public void Activate()
     {
-        //Get the game controller
-        controller = GameObject.FindGameObjectWithTag("GameController");
-
         //Take the instantiated location and adjust transform
-        SetCoords();
+        UpdateUIPosition();
 
         //Choose correct sprite based on piece's name
         switch (this.name)
@@ -118,7 +117,7 @@ public abstract class Chessman : MonoBehaviour
         this.supportBonus=0;
     }
 
-    public void SetCoords()
+    public void UpdateUIPosition()
     {
         //Get the board value in order to convert to xy coords
         float x = xBoard;
@@ -165,9 +164,9 @@ public abstract class Chessman : MonoBehaviour
 
      private void OnMouseDown()
     {
-        switch (controller.GetComponent<Game>().state)
+        switch (Game._instance.state)
         {
-            case ScreenState.MainGameboard:
+            case ScreenState.ActiveMatch:
                 HandleMainGameboardClick();
                 break;
 
@@ -182,7 +181,7 @@ public abstract class Chessman : MonoBehaviour
     } 
     public void HandleMainGameboardClick(){
         Debug.Log(this.name+ " piece clicked");
-            if (!controller.GetComponent<Game>().IsGameOver() && isValidForAttack)
+            if (isValidForAttack)
             {
                 //Remove all moveplates relating to previously selected piece
                 DestroyMovePlates();
@@ -195,7 +194,7 @@ public abstract class Chessman : MonoBehaviour
     }
 
     public void HandleRewardScreenClick(){        
-        controller.GetComponent<Game>().PieceSelected(this);
+        Game._instance.PieceSelected(this);
     }
 
     public void HandlePrisonersMarketClick(){        
@@ -286,14 +285,13 @@ public abstract class Chessman : MonoBehaviour
     }  */
 
     public List<BoardPosition> DisplayValidMoves(){
-        Game sc = controller.GetComponent<Game>();
         List<BoardPosition> theseValidMoves=new List<BoardPosition>();
 
         foreach (var coordinate in validMoves)
         {
-            if (sc.PositionOnBoard(coordinate.x, coordinate.y))
+            if (Game._instance.PositionOnBoard(coordinate.x, coordinate.y))
             {
-                GameObject cp = sc.GetPosition(coordinate.x, coordinate.y);
+                GameObject cp = Game._instance.currentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
                 if (cp == null)
                 {
                     MovePlateSpawn(coordinate.x, coordinate.y);
@@ -310,14 +308,13 @@ public abstract class Chessman : MonoBehaviour
     }
 
     public List<BoardPosition>GetAllValidMoves(){
-        Game sc = controller.GetComponent<Game>();
         List<BoardPosition> theseValidMoves=new List<BoardPosition>();
 
         foreach (var coordinate in validMoves)
         {
-            if (sc.PositionOnBoard(coordinate.x, coordinate.y))
+            if (Game._instance.PositionOnBoard(coordinate.x, coordinate.y))
             {
-                GameObject cp = sc.GetPosition(coordinate.x, coordinate.y);
+                GameObject cp = Game._instance.currentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
                 if (cp == null)
                 {
                     theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
@@ -332,10 +329,9 @@ public abstract class Chessman : MonoBehaviour
     }
      public void PointMovePlate(int x, int y)
     {
-        Game sc = controller.GetComponent<Game>();
-        if (sc.PositionOnBoard(x, y))
+        if (Game._instance.PositionOnBoard(x, y))
         {
-            GameObject cp = sc.GetPosition(x, y);
+            GameObject cp = Game._instance.currentMatch.GetPieceAtPosition(x, y);
 
             if (cp == null)
             {

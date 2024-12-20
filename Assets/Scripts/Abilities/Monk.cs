@@ -14,11 +14,9 @@ public class Monk : Ability
 
     public override void Apply(Chessman piece)
     {
-        GameObject controller = GameObject.FindGameObjectWithTag("GameController");
-        game = controller.GetComponent<Game>();
         this.piece = piece;
         piece.info += " " + abilityName;
-        game.OnMove.AddListener(AddBonus);
+        Game._instance.OnMove.AddListener(AddBonus);
         piece.releaseCost+=10;
         //game.OnGameEnd.AddListener(RemoveBonus);
 
@@ -26,7 +24,7 @@ public class Monk : Ability
 
     public override void Remove(Chessman piece)
     {
-        game.OnMove.RemoveListener(AddBonus); 
+        Game._instance.OnMove.RemoveListener(AddBonus); 
 
     }
     public void AddBonus(Chessman movedPiece){

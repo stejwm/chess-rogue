@@ -11,23 +11,21 @@ public class InspiringPresence : Ability
 
     public override void Apply(Chessman piece)
     {
-        GameObject controller = GameObject.FindGameObjectWithTag("GameController");
-        game = controller.GetComponent<Game>();
         this.piece = piece;
         piece.info += " " + abilityName;
-        game.OnSupportAdded.AddListener(CheckForResult);
+        Game._instance.OnSupportAdded.AddListener(CheckForResult);
         piece.releaseCost+=10;
     }
 
     public override void Remove(Chessman piece)
     {
-        game.OnSupportAdded.RemoveListener(CheckForResult); 
+        Game._instance.OnSupportAdded.RemoveListener(CheckForResult); 
 
     }
     public void CheckForResult(Chessman supporter){
         if(supporter==piece){
-            game.OnPieceCaptured.AddListener(IsCapture);
-            game.OnPieceBounced.AddListener(IsBounce);
+            Game._instance.OnPieceCaptured.AddListener(IsCapture);
+            Game._instance.OnPieceBounced.AddListener(IsBounce);
         }
     }
 
@@ -35,13 +33,13 @@ public class InspiringPresence : Ability
         if(attacker.team==piece.team)
             AddBonus();
 
-        game.OnPieceCaptured.RemoveListener(IsCapture);
+        Game._instance.OnPieceCaptured.RemoveListener(IsCapture);
     }
     public void IsBounce(Chessman attacker, Chessman defender, bool isBounceReduced){
         if(defender.team==piece.team)
             AddBonus();
 
-        game.OnPieceBounced.RemoveListener(IsBounce);
+        Game._instance.OnPieceBounced.RemoveListener(IsBounce);
     }
     public void AddBonus(){
             piece.support+=1;

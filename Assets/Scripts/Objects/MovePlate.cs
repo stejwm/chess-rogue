@@ -35,9 +35,7 @@ public class MovePlate : MonoBehaviour
 
     public void OnMouseUp()
     {
-        controller = GameObject.FindGameObjectWithTag("GameController");
-        controller.GetComponent<Game>().HandleMove(reference.GetComponent<Chessman>(), matrixX, matrixY, attack);
-            
+        Game._instance.currentMatch.ExecuteTurn(reference.GetComponent<Chessman>(), matrixX, matrixY);
     }
     
 

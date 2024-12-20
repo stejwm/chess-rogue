@@ -11,17 +11,15 @@ public class IronResolve : Ability
 
     public override void Apply(Chessman piece)
     {
-        GameObject controller = GameObject.FindGameObjectWithTag("GameController");
-        game = controller.GetComponent<Game>();
         this.piece = piece;
         piece.info += " " + abilityName;
-        game.OnPieceBounced.AddListener(AddBonus);
+        Game._instance.OnPieceBounced.AddListener(AddBonus);
         piece.releaseCost+=10;
     }
 
     public override void Remove(Chessman piece)
     {
-        game.OnPieceBounced.RemoveListener(AddBonus); 
+        Game._instance.OnPieceBounced.RemoveListener(AddBonus); 
 
     }
     public void AddBonus(Chessman attacker, Chessman defender, bool isBounceReduced){

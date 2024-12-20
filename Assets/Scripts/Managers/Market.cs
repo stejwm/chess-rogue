@@ -9,12 +9,11 @@ using UnityEngine.UI;
 
 public class MarketManager : MonoBehaviour
 {
-    public ArrayList myCapturedPieces= new ArrayList();
-    public ArrayList myPieces= new ArrayList();
-    public ArrayList opponentCapturedPieces = new ArrayList();
-    public ArrayList opponentPieces = new ArrayList();
+    public List<GameObject> myCapturedPieces= new List<GameObject>();
+    //public List<GameObject> myPieces= new List<GameObject>();
+    public List<GameObject> opponentCapturedPieces = new List<GameObject>();
+    //public List<GameObject> opponentPieces = new List<GameObject>();
     public List<Chessman> selectedPieces = new List<Chessman>();
-    public Game game;
     public GameObject controller;
     public TMP_Text bloodText;
     public TMP_Text coinText;
@@ -42,8 +41,6 @@ public class MarketManager : MonoBehaviour
     public void Start()
     {
         gameObject.SetActive(false);
-        controller = GameObject.FindGameObjectWithTag("GameController");
-        game = controller.GetComponent<Game>();
     }
 
     public void OpenMarket(){
@@ -52,43 +49,21 @@ public class MarketManager : MonoBehaviour
         Debug.Log("opening market");
         gameObject.SetActive(true);
 
-        if(game.heroColor==PieceColor.White){
-            myPieces=game.playerWhite;
-            opponentPieces=game.playerBlack;
-        }
-        else{
-            myPieces=game.playerBlack;
-            opponentPieces=game.playerWhite;
-        }
-        foreach (GameObject obj in myPieces)
-        {
-            if (!obj.activeSelf){
-                Debug.Log(obj.name);
-                obj.SetActive(true);
-                myCapturedPieces.Add(obj);
-            }
-        }
-        foreach (GameObject obj in opponentPieces)
-        {
-            if (!obj.activeSelf){
-                Debug.Log(obj.name);
-                obj.SetActive(true);
-                opponentCapturedPieces.Add(obj);
-            }
-        }
+        myCapturedPieces=Game._instance.hero.capturedPieces;
+        opponentCapturedPieces= Game._instance.opponent.capturedPieces;
+
+        Game._instance.opponent.pieces.AddRange(myCapturedPieces);
+
         /* var controller = GameObject.FindGameObjectWithTag("GameController");
         var game = controller.GetComponent<Game>(); */
+        Debug.Log("captured pieces count "+myCapturedPieces.Count);
         if(myCapturedPieces.Count>0)
         foreach (GameObject piece in myCapturedPieces)
-        {
+        {   
+            piece.SetActive(true);
             if (piece.GetComponent<SpriteRenderer>())
             {
-                //Fetch the SpriteRenderer from the selected GameObject
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                //Change the sorting layer to the name you specify in the TextField
-                //Changes to Default if the name you enter doesn't exist
-                //rend.sortingLayerName = m_Name.stringValue;
-                //Change the order (or priority) of the layer
                 rend.sortingOrder = 5;
             }
             
@@ -96,14 +71,10 @@ public class MarketManager : MonoBehaviour
         if(opponentCapturedPieces.Count>0)
         foreach (GameObject piece in opponentCapturedPieces)
         {
+            piece.SetActive(true);
             if (piece.GetComponent<SpriteRenderer>())
             {
-                //Fetch the SpriteRenderer from the selected GameObject
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                //Change the sorting layer to the name you specify in the TextField
-                //Changes to Default if the name you enter doesn't exist
-                //rend.sortingLayerName = m_Name.stringValue;
-                //Change the order (or priority) of the layer
                 rend.sortingOrder = 5;
             }
             
@@ -111,10 +82,6 @@ public class MarketManager : MonoBehaviour
     }
 
     public void CloseMarket(){
-        /* var controller = GameObject.FindGameObjectWithTag("GameController");
-        var game = controller.GetComponent<Game>();
-        game.ClearCard();
-        game.ClearPiece();*/
         selectedColor = PieceColor.None;
         if(opponentCapturedPieces.Count>0)
         foreach (GameObject piece in opponentCapturedPieces)
@@ -122,12 +89,7 @@ public class MarketManager : MonoBehaviour
             if(piece){
                 if (piece.GetComponent<SpriteRenderer>())
                 {
-                    //Fetch the SpriteRenderer from the selected GameObject
                     SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                    //Change the sorting layer to the name you specify in the TextField
-                    //Changes to Default if the name you enter doesn't exist
-                    //rend.sortingLayerName = m_Name.stringValue;
-                    //Change the order (or priority) of the layer
                     rend.sortingOrder = 1;
                 }
             }
@@ -139,24 +101,17 @@ public class MarketManager : MonoBehaviour
             if(piece){
                 if (piece.GetComponent<SpriteRenderer>())
                 {
-                    //Fetch the SpriteRenderer from the selected GameObject
                     SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                    //Change the sorting layer to the name you specify in the TextField
-                    //Changes to Default if the name you enter doesn't exist
-                    //rend.sortingLayerName = m_Name.stringValue;
-                    //Change the order (or priority) of the layer
                     rend.sortingOrder = 1;
                 }
             }
             
         }
-        game.SetBoardActive();
-        game.state=ScreenState.RewardScreen;
+        Game._instance.state=ScreenState.RewardScreen;
         myCapturedPieces.Clear();
         opponentCapturedPieces.Clear();
         selectedPieces.Clear();
-        InventoryManager._instance.OpenInventory();
-        game.NewOpponent();
+        Game._instance.OpenReward();
         gameObject.SetActive(false);
         
         
@@ -165,39 +120,31 @@ public class MarketManager : MonoBehaviour
     public void ReleasePieces(){
         foreach (Chessman item in selectedPieces)
         {
-            game.playerCoins+= item.releaseCost;
+            Game._instance.hero.playerCoins+= item.releaseCost;
             SpriteRenderer sprite= item.GetComponent<SpriteRenderer>();
             sprite.color = Color.white;
             item.gameObject.SetActive(false);
         }
-        coinText.text = ": "+game.playerCoins;
+        coinText.text = ": "+ Game._instance.hero.playerCoins;
         selectedPieces.Clear();
     }
 
     public void ReturnMyPieces(){
-        foreach (GameObject obj in myCapturedPieces){
+        foreach (GameObject obj in opponentCapturedPieces){
             Chessman piece = obj.GetComponent<Chessman>();
             if (selectedPieces.Contains(piece)){
-                game.playerCoins-= piece.releaseCost;
+                Game._instance.hero.playerCoins-= piece.releaseCost;
                 SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
                 sprite.color = Color.white;
                 obj.SetActive(false);
+                Game._instance.hero.pieces.Add(obj);
             }
             else{
-                game.startingPositions.Remove(obj);
-                myPieces.Remove(obj);
+                Game._instance.hero.pieces.Remove(obj);
                 Destroy(obj);
             }
         }
-        if(game.heroColor==PieceColor.White){
-            game.playerWhite=myPieces;
-            game.playerBlack=opponentPieces;
-        }
-        else{
-            game.playerBlack=myPieces;
-            game.playerWhite=opponentPieces;
-        }
-        coinText.text = ": "+game.playerCoins;
+        coinText.text = ": "+Game._instance.hero.playerCoins;
         selectedPieces.Clear();
     }
 
@@ -205,20 +152,21 @@ public class MarketManager : MonoBehaviour
         
         foreach (Chessman item in selectedPieces)
         {
-            game.playerBlood+= item.blood;
-            opponentCapturedPieces.Remove(item);
+            Game._instance.hero.playerBlood+= item.blood;
+            myCapturedPieces.Remove(item.gameObject);
             item.gameObject.SetActive(false);
         }
-        bloodText.text = ": "+game.playerBlood;
+        bloodText.text = ": "+Game._instance.hero.playerBlood;
         selectedPieces.Clear();
     }
 
     public void AddPiece(Chessman piece){
-        if(selectedPieces.Count==0)
-            selectedColor= PieceColor.None;
-        if(selectedColor == PieceColor.None)
+        if(selectedPieces.Count==0 || selectedColor == PieceColor.None)
             selectedColor= piece.color;
-        if(totalCost+piece.releaseCost>game.playerCoins && piece.color==game.heroColor && !selectedPieces.Contains(piece))
+        //Debug.Log(piece.name);
+        //Debug.Log(Game._instance.hero.playerCoins);
+        //Debug.Log(selectedPieces.Count);
+        if(totalCost+piece.releaseCost>Game._instance.hero.playerCoins && piece.color==Game._instance.heroColor && !selectedPieces.Contains(piece))
             return;
         if(piece.color != selectedColor)
             return;
@@ -227,14 +175,14 @@ public class MarketManager : MonoBehaviour
             selectedPieces.Remove(piece);
             SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
             sprite.color = Color.white;
-            if(piece.color==game.heroColor)
+            if(piece.color==Game._instance.heroColor)
                 totalCost-=piece.releaseCost;
         }
         else{
             selectedPieces.Add(piece);
             SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
             sprite.color = Color.green;
-            if(piece.color==game.heroColor)
+            if(piece.color==Game._instance.heroColor)
                 totalCost+=piece.releaseCost;
         }
     }

@@ -14,8 +14,6 @@ public class AdamantAssault : Ability
 
     public override void Apply(Chessman piece)
     {
-        GameObject controller = GameObject.FindGameObjectWithTag("GameController");
-        game = controller.GetComponent<Game>();
         //startingProfile=piece.moveProfile;
         this.piece = piece;
         piece.info += " " + abilityName;
@@ -23,26 +21,38 @@ public class AdamantAssault : Ability
         //game.OnPieceCaptured += Thirst;
         //Debug.Log(game==null);
 
-        game.OnPieceBounced.AddListener(Assault);
+        Game._instance.OnPieceBounced.AddListener(Assault);
+        Game._instance.OnPieceCaptured.AddListener(EndAssault);
     }
 
     public override void Remove(Chessman piece)
     {
 
         //game.OnPieceCaptured -= Thirst;
-        game.OnPieceBounced.RemoveListener(Assault);  // Unsubscribe from the event
+        Game._instance.OnPieceBounced.RemoveListener(Assault);  // Unsubscribe from the event
 
     }
 
     public void Assault(Chessman attacker, Chessman defender, bool isBounceReduced)
     {   
-        game.PlayerTurn();
+        
+        
         if (attacker == piece && !alreadyBounced)
         {
-            game.ExecuteTurn(attacker, defender.xBoard, defender.yBoard);
+            Debug.Log("turn override");
+            Game._instance.currentMatch.turnOverride =true;
+            //Game._instance.currentMatch.PlayerTurn();
+            Game._instance.currentMatch.ExecuteTurn(attacker, defender.xBoard, defender.yBoard);
             alreadyBounced=true;
-        }else{
+        }else if(attacker==piece){
             alreadyBounced=false;
+            Game._instance.currentMatch.turnOverride =false;
+        }
+    }
+    public void EndAssault(Chessman attacker){
+        if(attacker==piece){
+            alreadyBounced=false;
+            Game._instance.currentMatch.turnOverride =false;
         }
     }
 }
