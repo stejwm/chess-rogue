@@ -29,11 +29,22 @@ public class MapManager : MonoBehaviour
 
     public void OpenMap(){
         gameObject.SetActive(true);
+        Game._instance.isInMenu=true;
     }
 
     public void CloseMap(){
+        Game._instance.isInMenu=false;
         Game._instance.CloseMap();
         gameObject.SetActive(false);
+    }
+
+    public void NextMatch(){
+        CloseMap();
+        Game._instance.NextMatch();
+    }
+    public void OpenShop(){
+        CloseMap();
+        Game._instance.OpenShop();
     }
 
 

@@ -32,6 +32,7 @@ public enum PieceType
 public abstract class Chessman : MonoBehaviour
 {
     public GameObject movePlate;
+    //public EventSystem eventSystem;
 
     //Position for this Chesspiece on the Board
     //The correct position will be set later
@@ -164,6 +165,11 @@ public abstract class Chessman : MonoBehaviour
 
      private void OnMouseDown()
     {
+        Debug.Log("Piece clicked");
+        if (Game._instance.isInMenu)
+        {
+            return;
+        }
         switch (Game._instance.state)
         {
             case ScreenState.ActiveMatch:
@@ -176,6 +182,9 @@ public abstract class Chessman : MonoBehaviour
 
             case ScreenState.PrisonersMarket:
                 HandlePrisonersMarketClick();
+                break;
+            case ScreenState.ShopScreen:
+                HandleShopClick();
                 break;
         }
     } 
@@ -195,6 +204,9 @@ public abstract class Chessman : MonoBehaviour
 
     public void HandleRewardScreenClick(){        
         Game._instance.PieceSelected(this);
+    }
+    public void HandleShopClick(){        
+        ShopStatManager._instance.SetAndShowStats(this);
     }
 
     public void HandlePrisonersMarketClick(){        

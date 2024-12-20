@@ -8,15 +8,12 @@ using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
-    public ArrayList myPieces;
-
-    public Game game;
-    public GameObject controller;
+    public List<GameObject> myPieces;
     public TMP_Text bloodText;
     public TMP_Text coinText;
 
     //current turn
-    private ShopManager _instance;
+    public static ShopManager _instance;
 
 
     void Awake()
@@ -39,55 +36,40 @@ public class ShopManager : MonoBehaviour
     }
 
     public void OpenShop(){
-        Debug.Log("opening shop");
+        //Game._instance.isInMenu=false;
         gameObject.SetActive(true);
-        /* var controller = GameObject.FindGameObjectWithTag("GameController");
-        var game = controller.GetComponent<Game>(); */
-        /* if(game.heroColor==PieceColor.White)
-            myPieces=game.playerWhite;
-        else
-            myPieces=game.playerBlack;
+        UpdateCurrency();
+        myPieces=Game._instance.hero.pieces;
 
         foreach (GameObject piece in myPieces)
         {
             if (piece.GetComponent<SpriteRenderer>())
             {
-                //Fetch the SpriteRenderer from the selected GameObject
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                //Change the sorting layer to the name you specify in the TextField
-                //Changes to Default if the name you enter doesn't exist
-                //rend.sortingLayerName = m_Name.stringValue;
-                //Change the order (or priority) of the layer
                 rend.sortingOrder = 5;
             }
             
         }
-        var selectedPieceObj= (GameObject)myPieces[0];
-        var selectedPiece= selectedPieceObj.GetComponent<Chessman>();
-        game.PieceSelected(selectedPiece); */
+    }
+    public void UpdateCurrency(){
+        bloodText.text = ": "+Game._instance.hero.playerBlood;
+        coinText.text = ": "+Game._instance.hero.playerCoins;
     }
 
     public void CloseShop(){
-        
-        /* var controller = GameObject.FindGameObjectWithTag("GameController");
-        var game = controller.GetComponent<Game>();
-        game.ClearCard();
-        game.ClearPiece();
         foreach (GameObject piece in myPieces)
         {
             if (piece.GetComponent<SpriteRenderer>())
             {
-                //Fetch the SpriteRenderer from the selected GameObject
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                //Change the sorting layer to the name you specify in the TextField
-                //Changes to Default if the name you enter doesn't exist
-                //rend.sortingLayerName = m_Name.stringValue;
-                //Change the order (or priority) of the layer
                 rend.sortingOrder = 1;
             }
-        } */
+        }
+        Game._instance.CloseShop();
         gameObject.SetActive(false);
     }
+
+    
 
 
 }

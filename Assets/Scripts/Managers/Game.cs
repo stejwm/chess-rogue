@@ -20,6 +20,7 @@ public enum ScreenState
     PrisonersMarket,
     ActiveMatch,
     Map,
+    ShopScreen,
 }
 public class Game : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class Game : MonoBehaviour
     private List<GameObject> cards = new List<GameObject>();
     private Chessman selectedPiece;
     private bool applyingAbility=false;
+    public bool isInMenu =false;
 
 
 
@@ -201,10 +203,14 @@ public class Game : MonoBehaviour
     }
 
     public void CloseMap(){
-        level++;
-        IncreaseDifficultyMatch();
+        state=ScreenState.MainGameboard;
     }
 
+    public void OpenShop(){
+        //ResetPlayerPieces();
+        state=ScreenState.ShopScreen;
+        ShopManager._instance.OpenShop();
+    }
     public void ResetPlayerPieces(){
         foreach (GameObject piece in hero.pieces)
         {
@@ -216,6 +222,10 @@ public class Game : MonoBehaviour
         }
     }
 
+    public void NextMatch(){
+        level++;
+        IncreaseDifficultyMatch();
+    }
     public void IncreaseDifficultyMatch(){
         state=ScreenState.ActiveMatch;
         opponent.DestroyPieces();
@@ -239,5 +249,14 @@ public class Game : MonoBehaviour
                 }
             }
         NewMatch();
+    }
+
+    public void CloseShop(){
+        state=ScreenState.MainGameboard;
+        OpenMap();
+    }
+    public void OpenMap(){
+        MapManager._instance.OpenMap();
+        this.state=ScreenState.Map;
     }
 }

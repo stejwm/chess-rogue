@@ -48,7 +48,8 @@ public class MarketManager : MonoBehaviour
         totalCost=0;
         Debug.Log("opening market");
         gameObject.SetActive(true);
-
+        bloodText.text = ": "+Game._instance.hero.playerBlood;
+        coinText.text = ": "+Game._instance.hero.playerCoins;
         myCapturedPieces=Game._instance.hero.capturedPieces;
         opponentCapturedPieces= Game._instance.opponent.capturedPieces;
 
@@ -83,29 +84,31 @@ public class MarketManager : MonoBehaviour
 
     public void CloseMarket(){
         selectedColor = PieceColor.None;
+        opponentCapturedPieces = Game._instance.opponent.capturedPieces;
         if(opponentCapturedPieces.Count>0)
         foreach (GameObject piece in opponentCapturedPieces)
         {
-            if(piece){
+            /* if(piece){
                 if (piece.GetComponent<SpriteRenderer>())
                 {
                     SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                     rend.sortingOrder = 1;
                 }
-            }
+            } */
+            Destroy(piece);
             
         }
         if(myCapturedPieces.Count>0)
         foreach (GameObject piece in myCapturedPieces)
         {
-            if(piece){
+            /* if(piece){
                 if (piece.GetComponent<SpriteRenderer>())
                 {
                     SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                     rend.sortingOrder = 1;
                 }
-            }
-            
+            } */
+            Destroy(piece);
         }
         Game._instance.state=ScreenState.RewardScreen;
         myCapturedPieces.Clear();
@@ -140,6 +143,7 @@ public class MarketManager : MonoBehaviour
                 Game._instance.hero.pieces.Add(obj);
             }
             else{
+                Game._instance.opponent.capturedPieces.Remove(obj);
                 Game._instance.hero.pieces.Remove(obj);
                 Destroy(obj);
             }
