@@ -25,11 +25,11 @@ public class Assassin : Ability
         Game._instance.OnAttack.RemoveListener(AddBonus); 
 
     }
-    public void AddBonus(Chessman attacker, int support){
-        if (attacker==piece && support==0)
+    public void AddBonus(Chessman attacker, int support, bool isAttacking){
+        if (attacker==piece && support==0 && isAttacking)
             piece.attackBonus+=5;
     }
-    public void RemoveBonus(Chessman attacker, int support){
+    public void RemoveBonus(Chessman attacker, Chessman defender, int support, int defenseSupport){
         if (attacker==piece && support==0)
             piece.attackBonus-=5;
     }

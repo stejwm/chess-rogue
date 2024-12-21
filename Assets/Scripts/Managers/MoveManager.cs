@@ -40,6 +40,7 @@ public class MoveManager: MonoBehaviour
         }
     }
     public void HandleMove(Chessman piece, int x, int y){
+        
         Chessman movingPiece = piece;
         
         Game._instance.OnMove.Invoke(piece);
@@ -55,6 +56,8 @@ public class MoveManager: MonoBehaviour
             match.MovePiece(movingPiece, x,y);
             movingPiece.DestroyMovePlates();
             match.NextTurn();
+            Game._instance.isInMenu=false;
+
         }
     }
     public void HandleAttack(Chessman movingPiece, Chessman attackedPiece){
@@ -114,7 +117,7 @@ public class MoveManager: MonoBehaviour
                 }
             }
         }
-        Game._instance.OnAttack.Invoke(targetPiece, supportPower); 
+        Game._instance.OnAttack.Invoke(targetPiece, supportPower, isAttacking); 
         yield return new WaitForSeconds(Game._instance.waitTime);
         if(isAttacking){
             baseAttack=targetPiece.CalculateAttack();
@@ -146,8 +149,8 @@ public class MoveManager: MonoBehaviour
 
         StartCoroutine(ShowBattlePanel(movingPiece, attackedPiece));
     }
-    private void AttackCleanUp(Chessman movingPiece){
-        Game._instance.OnAttackEnd.Invoke(movingPiece, attackSupport); 
+    private void AttackCleanUp(Chessman movingPiece, Chessman attackedPiece){
+        Game._instance.OnAttackEnd.Invoke(movingPiece, attackedPiece, attackSupport, defenseSupport); 
         //Move reference chess piece to this position
         match.MovePiece(movingPiece, targetedX, targetedY);
         movingPiece.DestroyMovePlates();
@@ -164,6 +167,8 @@ public class MoveManager: MonoBehaviour
         readyForCleanup=false;
         defendingUnits.Clear();
         attackingUnits.Clear();
+        Game._instance.isInMenu=false;
+
         if(!gameOver)
             StartCoroutine(CallNextTurn());
         
@@ -238,7 +243,7 @@ public class MoveManager: MonoBehaviour
             BattlePanel._instance.SetAndShowResults("Capture!");   
             attackedPiece.gameObject.SetActive(false);
             movingPiece.owner.capturedPieces.Add(attackedPiece.gameObject);
-            AttackCleanUp(movingPiece);
+            AttackCleanUp(movingPiece, attackedPiece);
             Game._instance.OnPieceCaptured.Invoke(movingPiece);  // Trigger the event
             if (gameOver){
                 Game._instance.OnGameEnd.Invoke(movingPiece.color);
@@ -271,7 +276,7 @@ public class MoveManager: MonoBehaviour
             //Debug.Log("Setting bounce tone");
             Game._instance.audioSource.clip = Game._instance.bounce;
             BattlePanel._instance.SetAndShowResults("Bounce!"); 
-            AttackCleanUp(movingPiece);
+            AttackCleanUp(movingPiece, attackedPiece);
             Game._instance.OnPieceBounced.Invoke(movingPiece, attackedPiece, isBounceReduced);
 
             

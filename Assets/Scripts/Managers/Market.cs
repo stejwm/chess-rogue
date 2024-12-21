@@ -143,11 +143,10 @@ public class MarketManager : MonoBehaviour
                 Game._instance.hero.pieces.Add(obj);
             }
             else{
-                Game._instance.opponent.capturedPieces.Remove(obj);
-                Game._instance.hero.pieces.Remove(obj);
                 Destroy(obj);
             }
         }
+        Game._instance.opponent.capturedPieces.Clear();
         coinText.text = ": "+Game._instance.hero.playerCoins;
         selectedPieces.Clear();
     }

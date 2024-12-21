@@ -35,6 +35,11 @@ public class MovePlate : MonoBehaviour
 
     public void OnMouseUp()
     {
+        if (Game._instance.isInMenu)
+        {
+            Debug.Log("double click returning");
+            return;
+        }
         Game._instance.currentMatch.ExecuteTurn(reference.GetComponent<Chessman>(), matrixX, matrixY);
     }
     

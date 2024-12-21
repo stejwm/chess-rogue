@@ -32,6 +32,7 @@ public class ChessMatch
     }
 
     public void ExecuteTurn(Chessman piece, int x, int y){
+        Game._instance.isInMenu=true;
         MoveManager._instance.Set(this, piece,x,y);
         MoveManager._instance.HandleMove(piece,x,y);
     }

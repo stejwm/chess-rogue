@@ -168,6 +168,7 @@ public abstract class Chessman : MonoBehaviour
         Debug.Log("Piece clicked");
         if (Game._instance.isInMenu)
         {
+            Debug.Log("illegal click");
             return;
         }
         switch (Game._instance.state)
