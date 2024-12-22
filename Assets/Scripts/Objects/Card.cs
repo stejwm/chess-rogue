@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Card : MonoBehaviour
 {
     public GameObject controller;
     public Ability ability;
+
+    public TMP_Text title;
+    public TMP_Text effect;
+
+    public Sprite front;
 
     public Card(Ability ability)
     {
@@ -17,12 +23,25 @@ public class Card : MonoBehaviour
         target.AddAbility(ability.Clone());
     }
 
+    public void Awake(){
+        Canvas canvas =GetComponentInChildren<Canvas>();
+         //GetComponent<Canvas>();
+        canvas.sortingLayerName="Board Layer";
+        canvas.sortingOrder=6;
+    }
+
     void OnMouseDown(){
         controller = GameObject.FindGameObjectWithTag("GameController");
         controller.GetComponent<Game>().CardSelected(this);
     }
     void OnMouseOver(){
-        this.GetComponent<SpriteRenderer>().sprite=ability.sprite;
+        FlipCard();
 
+    }
+
+    private void FlipCard(){
+        this.GetComponent<SpriteRenderer>().sprite=front;
+        effect.text= ability.description;
+        title.text= ability.abilityName;
     }
 }
