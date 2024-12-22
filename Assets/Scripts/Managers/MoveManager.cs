@@ -117,7 +117,7 @@ public class MoveManager: MonoBehaviour
                 }
             }
         }
-        Game._instance.OnAttack.Invoke(targetPiece, supportPower, isAttacking); 
+        Game._instance.OnAttack.Invoke(targetPiece, supportPower, isAttacking, new BoardPosition(targetedX, targetedY)); 
         yield return new WaitForSeconds(Game._instance.waitTime);
         if(isAttacking){
             baseAttack=targetPiece.CalculateAttack();

@@ -63,7 +63,7 @@ public class Game : MonoBehaviour
 
     //Events
     public UnityEvent<Chessman> OnPieceCaptured = new UnityEvent<Chessman>();
-    public UnityEvent<Chessman,int, bool> OnAttack = new UnityEvent<Chessman,int, bool>();
+    public UnityEvent<Chessman,int, bool, BoardPosition> OnAttack = new UnityEvent<Chessman,int, bool, BoardPosition>();
     public UnityEvent<Chessman, Chessman, int, int> OnAttackEnd = new UnityEvent<Chessman, Chessman, int, int>();
     public UnityEvent<Chessman> OnMove = new UnityEvent<Chessman>();
     public UnityEvent<Chessman, Chessman, bool> OnPieceBounced = new UnityEvent<Chessman,Chessman, bool>();
