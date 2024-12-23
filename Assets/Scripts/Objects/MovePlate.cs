@@ -13,8 +13,7 @@ public class MovePlate : MonoBehaviour
     
     //The Chesspiece that was tapped to create this MovePlate
     GameObject reference = null;
-    public float waitTime = .1f;
-
+    
     //Location on the board
     int matrixX;
     int matrixY;

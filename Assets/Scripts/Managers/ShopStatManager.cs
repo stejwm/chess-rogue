@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class ShopStatManager : MonoBehaviour
     public Text attack;
     public Text defense;
     public Text support;
+    public TMP_Text value;
     public Text info;
     public Text pieceName;
     public Image image;
@@ -66,6 +68,7 @@ public class ShopStatManager : MonoBehaviour
         this.support.text="support: "+piece.support;
         this.info.text=piece.info;
         this.pieceName.text=piece.name;
+        this.value.text=": "+piece.releaseCost;
         this.image.sprite=piece.GetComponent<SpriteRenderer>().sprite;
     }
     public IEnumerator SetAbilities(Chessman piece){
