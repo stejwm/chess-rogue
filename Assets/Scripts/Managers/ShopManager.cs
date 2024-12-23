@@ -12,6 +12,8 @@ public class ShopManager : MonoBehaviour
     public TMP_Text bloodText;
     public TMP_Text coinText;
 
+    private List<GameObject> pieces = new List<GameObject>();
+
     //current turn
     public static ShopManager _instance;
 
@@ -50,13 +52,32 @@ public class ShopManager : MonoBehaviour
             }
             
         }
+        CreatePieces();
     }
+
+    public void CreatePieces(){
+        GameObject obj;
+        for(int i=0; i<3;i++){
+            Vector2 localPosition = new Vector2(i, 2);
+            obj = PieceFactory._instance.CreateRandomPiece();
+            obj.transform.position=localPosition;
+            Chessman cm = obj.GetComponent<Chessman>();
+            cm.xBoard=4+i;
+            cm.yBoard = 5;
+            cm.UpdateUIPosition();
+            SpriteRenderer rend = obj.GetComponent<SpriteRenderer>();
+            rend.sortingOrder = 5;
+            pieces.Add(obj);
+        }
+    }
+
     public void UpdateCurrency(){
         bloodText.text = ": "+Game._instance.hero.playerBlood;
         coinText.text = ": "+Game._instance.hero.playerCoins;
     }
 
     public void CloseShop(){
+        ShopStatManager._instance.HideStats();
         foreach (GameObject piece in myPieces)
         {
             if (piece.GetComponent<SpriteRenderer>())
@@ -64,6 +85,10 @@ public class ShopManager : MonoBehaviour
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 1;
             }
+        }
+        foreach (GameObject piece in pieces)
+        {
+            Destroy(piece);
         }
         Game._instance.CloseShop();
         gameObject.SetActive(false);

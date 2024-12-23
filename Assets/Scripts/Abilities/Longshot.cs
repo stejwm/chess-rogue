@@ -28,7 +28,9 @@ public class Longshot : Ability
 
     }
     public void AddBonus(Chessman cm, int support, bool isAttacking, BoardPosition targetedPosition){
+        Debug.Log("starting position: "+cm.xBoard+","+cm.yBoard + " attacking position "+targetedPosition.x+","+targetedPosition.y);
         if (cm==piece && isAttacking && (!Enumerable.Range(cm.xBoard-5,cm.xBoard+5).Contains(targetedPosition.x) ||!Enumerable.Range(cm.yBoard-5,cm.yBoard+5).Contains(targetedPosition.y))){
+            //Debug.Log("Range);
             piece.attackBonus+=5;
             bonusAdded=true;
         }

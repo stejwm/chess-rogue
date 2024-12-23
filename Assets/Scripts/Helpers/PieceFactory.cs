@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class PieceFactory : MonoBehaviour
 {
@@ -103,5 +104,13 @@ public class PieceFactory : MonoBehaviour
             case PieceType.Pawn: return pawn;
             default: return null;
         }
+    }
+
+    public GameObject CreateRandomPiece(){
+        Array values = Enum.GetValues(typeof(PieceType));
+        System.Random random = new System.Random();
+        PieceType randPieceType = (PieceType)values.GetValue(random.Next(values.Length-1));
+        string pieceName = (Game._instance.heroColor+"_"+randPieceType).ToLower();
+        return Create(randPieceType,pieceName,-1,-1,Game._instance.heroColor,Team.Hero,null);
     }
 }

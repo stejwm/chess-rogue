@@ -18,6 +18,7 @@ public class ShopStatManager : MonoBehaviour
     public GameObject abilityUI;
     public Chessman piece;
     public GameObject infoBox;
+    public GameObject purchase;
     [SerializeField] GameObject PopUpCanvas;
 
     // Start is called before the first frame update
@@ -39,9 +40,8 @@ public class ShopStatManager : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    public void Purchase(){
+
     }
     public void SetAndShowStats(Chessman piece){
         PopUpCanvas.SetActive(true);
@@ -52,6 +52,11 @@ public class ShopStatManager : MonoBehaviour
         }
         gameObject.SetActive(true);
         this.piece=piece;
+        if (piece.owner == null){
+            purchase.SetActive(true);
+        }else{
+            purchase.SetActive(false);
+        }
         updateStats();
         StartCoroutine(SetAbilities(piece));
     }
