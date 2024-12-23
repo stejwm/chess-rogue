@@ -94,6 +94,17 @@ public abstract class Chessman : MonoBehaviour
         UpdateUIPosition();
 
         //Choose correct sprite based on piece's name
+        if (this.name.Contains("black_pawn"))
+        {
+            this.GetComponent<SpriteRenderer>().sprite = black_pawn;
+            player = "black";
+        }
+        else if (this.name.Contains("white_pawn"))
+        {
+            this.GetComponent<SpriteRenderer>().sprite = white_pawn;
+            player = "white";
+        }
+        else
         switch (this.name)
         {
             case "black_queen": this.GetComponent<SpriteRenderer>().sprite = black_queen; player = "black"; break;
@@ -132,6 +143,7 @@ public abstract class Chessman : MonoBehaviour
         x += -3.33f;
         y += -3.33f;
 
+        //Debug.Log("positions: "+x+","+y);
         //Set actual unity values
         this.transform.position = new Vector3(x, y, -1.0f);
     }
@@ -165,10 +177,8 @@ public abstract class Chessman : MonoBehaviour
 
      private void OnMouseDown()
     {
-        Debug.Log("Piece clicked");
         if (Game._instance.isInMenu)
         {
-            Debug.Log("illegal click");
             return;
         }
         switch (Game._instance.state)

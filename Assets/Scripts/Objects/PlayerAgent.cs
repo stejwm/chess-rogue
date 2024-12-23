@@ -20,7 +20,6 @@ public class PlayerAgent : Agent
 
     public void StartUp(){
         Debug.Log("Starting up agent");
-        
         Game._instance.OnGameEnd.AddListener(GameEnd);
         Game._instance.OnPieceCaptured.AddListener(CaptureReward);
         Game._instance.OnPieceBounced.AddListener(BounceReward);
@@ -71,20 +70,21 @@ public class PlayerAgent : Agent
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-        Debug.Log("Action Recieved attempting to execute move");
+        
         var selectedMoveCommandIndex = actions.DiscreteActions[0];
         //Debug.Log("branch 0: "+selectedMoveCommandIndex);
         MoveCommand selectedMoveCommand = GetMoveCommandFromIndex(selectedMoveCommandIndex);
+        Debug.Log("Action Recieved attempting to execute move from "+ BoardPosition.ConvertToChessNotation(selectedMoveCommand.piece.xBoard, selectedMoveCommand.piece.yBoard)+" to "+BoardPosition.ConvertToChessNotation(selectedMoveCommand.x, selectedMoveCommand.y));
         Game._instance.currentMatch.ExecuteTurn(selectedMoveCommand.piece, selectedMoveCommand.x, selectedMoveCommand.y);
         
     }
 
     public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
-        Debug.Log("Starting Masking");
+        //Debug.Log("Starting Masking");
         List<int> validIndexes = new List<int>();
-        Debug.Log("movecommands count="+moveCommands.Count);
-        Debug.Log("pieces count="+pieces.Count);
+        //Debug.Log("movecommands count="+moveCommands.Count);
+        //Debug.Log("pieces count="+pieces.Count);
         foreach(KeyValuePair<int, MoveCommand> entry in moveCommands)
         {
             //Debug.Log(entry.Value);

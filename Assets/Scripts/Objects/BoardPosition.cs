@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,5 +17,22 @@ public class BoardPosition
     }
     public BoardPosition GetPosition(){
         return this;
+    }
+    public static string ConvertToChessNotation(int x, int y)
+    {
+        // Ensure x and y are within the chessboard range
+        if (x < 0 || x > 7 || y < 0 || y > 7)
+        {
+            throw new Exception("x and y must be within the range 0 to 7.");
+        }
+
+        // Convert x to file (a-h)
+        char file = (char)('a' + x);
+
+        // Convert y to rank (1-8)
+        int rank = y + 1;
+
+        // Combine file and rank into chess notation
+        return $"{file}{rank}";
     }
 }

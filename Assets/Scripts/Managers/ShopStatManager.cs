@@ -23,7 +23,6 @@ public class ShopStatManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Debug.Log("awake!");
         if(_instance !=null && _instance !=this){
             Destroy(this.gameObject);
         }
@@ -73,7 +72,6 @@ public class ShopStatManager : MonoBehaviour
     }
 
     public void AttackUp(){
-        Debug.Log("Adding attack, blood at "+Game._instance.hero.playerBlood);
         if (Game._instance.hero.playerBlood >=1){
             piece.attack+=1;
             Game._instance.hero.playerBlood -=1;

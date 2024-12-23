@@ -129,7 +129,6 @@ public class Game : MonoBehaviour
     }
     public void CardSelected(Card card){
         SpriteRenderer sprite;
-        Debug.Log("Card selected");
         if (selectedCard != null){
             sprite= selectedCard.GetComponent<SpriteRenderer>();
             sprite.color = Color.white;
@@ -147,8 +146,6 @@ public class Game : MonoBehaviour
         
     }
     public void CreateCards(){
-        
-        Debug.Log("Creating Cards");
         GameObject obj;
         List<Ability> shuffledcards = AllAbilities.OrderBy(_ => rng.Next()).ToList();
         for(int i=0; i<3;i++){

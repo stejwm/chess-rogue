@@ -55,7 +55,8 @@ public class PieceFactory : MonoBehaviour
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
-            pieces.Add(Create(PieceType.Pawn, $"{prefix}_pawn", i, pawnRow, color, team, owner));
+            char file = (char)('a' + i);
+            pieces.Add(Create(PieceType.Pawn, $"{prefix}_pawn_{file}", i, pawnRow, color, team, owner));
         }
 
         // Add pieces to appropriate player list

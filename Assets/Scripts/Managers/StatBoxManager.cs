@@ -17,7 +17,6 @@ public class StatBoxManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Debug.Log("awake!");
         if(_instance !=null && _instance !=this){
             Destroy(this.gameObject);
         }

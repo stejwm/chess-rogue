@@ -46,7 +46,7 @@ public class MarketManager : MonoBehaviour
     public void OpenMarket(){
         
         totalCost=0;
-        Debug.Log("opening market");
+        //Debug.Log("Opening market");
         gameObject.SetActive(true);
         bloodText.text = ": "+Game._instance.hero.playerBlood;
         coinText.text = ": "+Game._instance.hero.playerCoins;
@@ -57,7 +57,6 @@ public class MarketManager : MonoBehaviour
 
         /* var controller = GameObject.FindGameObjectWithTag("GameController");
         var game = controller.GetComponent<Game>(); */
-        Debug.Log("captured pieces count "+myCapturedPieces.Count);
         if(myCapturedPieces.Count>0)
         foreach (GameObject piece in myCapturedPieces)
         {   

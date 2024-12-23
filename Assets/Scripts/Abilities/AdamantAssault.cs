@@ -39,20 +39,20 @@ public class AdamantAssault : Ability
         
         if (attacker == piece && !alreadyBounced)
         {
-            Debug.Log("turn override");
-            Game._instance.currentMatch.turnOverride =true;
+            Debug.Log("Overriding turn for adamant assault");
+            Game._instance.currentMatch.AdamantAssaultOverride =true;
             //Game._instance.currentMatch.PlayerTurn();
             Game._instance.currentMatch.ExecuteTurn(attacker, defender.xBoard, defender.yBoard);
             alreadyBounced=true;
         }else if(attacker==piece){
             alreadyBounced=false;
-            Game._instance.currentMatch.turnOverride =false;
+            Game._instance.currentMatch.AdamantAssaultOverride =false;
         }
     }
     public void EndAssault(Chessman attacker){
         if(attacker==piece){
             alreadyBounced=false;
-            Game._instance.currentMatch.turnOverride =false;
+            Game._instance.currentMatch.AdamantAssaultOverride =false;
         }
     }
 }

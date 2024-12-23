@@ -57,6 +57,7 @@ public class MoveManager: MonoBehaviour
             movingPiece.DestroyMovePlates();
             match.NextTurn();
             Game._instance.isInMenu=false;
+            
 
         }
     }
@@ -72,15 +73,9 @@ public class MoveManager: MonoBehaviour
             defendingUnits = new ArrayList(match.black.pieces);
             attackingUnits = new ArrayList(match.white.pieces);
         }
-        /* Debug.Log("All Black Pieces: ");
-        foreach( GameObject piece in playerBlack) {
-            Debug.Log(piece.name);
-        }
-        Debug.Log("All Defending units: ");
-        foreach( GameObject piece in defendingUnits) {
-            Debug.Log(piece.name);
-        } */
+
         //Calculate attacking support first
+        Debug.Log("Running support check for attacking pieces");
         StartCoroutine(AddSupport(movingPiece, attackedPiece, true));
     }
 
@@ -128,25 +123,18 @@ public class MoveManager: MonoBehaviour
             totalDefensePower = baseDefense+supportPower;
             defenseSupport=supportPower;
         }
-        Debug.Log("Ready for battle panel?: "+ readyForCleanup);
         if(readyForCleanup){
             RunBattlePanel(movingPiece, attackedPiece);
             yield break;
         }
         readyForCleanup=true;
-        Debug.Log("Running support check on other pieces.");
+        Debug.Log("Running support check for defending pieces");
         yield return StartCoroutine(AddSupport(movingPiece, attackedPiece, false));
         
     }
     
     private void RunBattlePanel(Chessman movingPiece, Chessman attackedPiece){
-        Debug.Log("Starting Battle Panel");
-
-        //if (attackedPiece.name == "white_king") Winner("black");
-        //if (attackedPiece.name == "black_king") Winner("white");
-
-        
-
+        //Debug.Log("Starting Battle Panel");
         StartCoroutine(ShowBattlePanel(movingPiece, attackedPiece));
     }
     private void AttackCleanUp(Chessman movingPiece, Chessman attackedPiece){
@@ -230,7 +218,7 @@ public class MoveManager: MonoBehaviour
         yield return new WaitForSeconds(Game._instance.waitTime);
         if(totalAttackPower>=totalDefensePower){
             
-            Debug.Log(movingPiece.name + " captures "+ attackedPiece.name);
+            Debug.Log(movingPiece.name + " captures "+ attackedPiece.name +" on "+ BoardPosition.ConvertToChessNotation(targetedX, targetedY));
             if (attackedPiece.type==PieceType.King){
                 gameOver=true;
             }
@@ -254,7 +242,7 @@ public class MoveManager: MonoBehaviour
               
         }
         else{
-            Debug.Log(movingPiece.name + " failed to capture "+ attackedPiece.name);
+            Debug.Log(movingPiece.name + " failed to capture "+ attackedPiece.name +" on "+ BoardPosition.ConvertToChessNotation(targetedX, targetedY));
             isBounceReduced=false;
 
             //Reset attacked pieces position if capture failed 

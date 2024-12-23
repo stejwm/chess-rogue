@@ -37,7 +37,6 @@ public class MovePlate : MonoBehaviour
     {
         if (Game._instance.isInMenu)
         {
-            Debug.Log("double click returning");
             return;
         }
         Game._instance.currentMatch.ExecuteTurn(reference.GetComponent<Chessman>(), matrixX, matrixY);

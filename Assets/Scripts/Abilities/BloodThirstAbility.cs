@@ -45,8 +45,8 @@ public class BloodThirstAbility : Ability
 
     private void EnableSecondAttack()
     {   
-        Debug.Log("turn override");
-        Game._instance.currentMatch.turnOverride =true;
+        Debug.Log("Overriding turn for bloodthirst");
+        Game._instance.currentMatch.BloodThirstOverride =true;
         Game._instance.currentMatch.PlayerTurn();
         List<GameObject> pieces;
         piece.moveProfile = new AttackOnlyMovement(startingProfile);
@@ -64,7 +64,7 @@ public class BloodThirstAbility : Ability
             thirsting=false;
             Debug.Log("No valid attack found, thirst over");
             piece.moveProfile=startingProfile;
-            Game._instance.currentMatch.turnOverride =false;
+            Game._instance.currentMatch.BloodThirstOverride =false;
             Game._instance.currentMatch.NextTurn();
         }
 
@@ -72,11 +72,11 @@ public class BloodThirstAbility : Ability
     }
 
     private void EndThirst(Chessman attackingPiece, Chessman defendingPiece, bool isBounceReduced){
-            Debug.Log("bounced, thirst over");
             if(attackingPiece==piece && thirsting){
+                Debug.Log("Bounced, thirst over");
                 thirsting=false;
                 piece.moveProfile=startingProfile;
-                Game._instance.currentMatch.turnOverride =false;
+                Game._instance.currentMatch.BloodThirstOverride =false;
                 //Game._instance.currentMatch.NextTurn();
             }
     }

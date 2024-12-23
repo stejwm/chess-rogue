@@ -7,6 +7,7 @@ using System.Linq;
 public class Longshot : Ability
 {
     private Chessman piece;
+    private bool bonusAdded;
     
     public Longshot() : base("Longshot", "+5 attack if piece attacks from 5 or more squares away") {}
 
@@ -27,12 +28,16 @@ public class Longshot : Ability
 
     }
     public void AddBonus(Chessman cm, int support, bool isAttacking, BoardPosition targetedPosition){
-        if (cm==piece && isAttacking && (!Enumerable.Range(cm.xBoard-5,cm.xBoard+5).Contains(targetedPosition.x) ||!Enumerable.Range(cm.yBoard-5,cm.yBoard+5).Contains(targetedPosition.y)))
+        if (cm==piece && isAttacking && (!Enumerable.Range(cm.xBoard-5,cm.xBoard+5).Contains(targetedPosition.x) ||!Enumerable.Range(cm.yBoard-5,cm.yBoard+5).Contains(targetedPosition.y))){
             piece.attackBonus+=5;
+            bonusAdded=true;
+        }
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
-        if (defender==piece && defenseSupport==0)
+        if (bonusAdded){
             piece.attackBonus-=5;
+            bonusAdded=false;
+        }
     }
 
 }

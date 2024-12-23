@@ -12,7 +12,8 @@ public class ChessMatch
     public Player white;
     public Player black;
     private GameObject[,] positions = new GameObject[8, 8];
-    public bool turnOverride = false;
+    public bool AdamantAssaultOverride = false;
+    public bool BloodThirstOverride = false;
 
 
     public ChessMatch(Player white, Player black)
@@ -108,8 +109,8 @@ public class ChessMatch
 
     public void NextTurn()
     {
-        Debug.Log("IsTurnOverride? "+turnOverride);
-        if(turnOverride)
+        //Debug.Log("IsTurnOverride? "+turnOverride);
+        if(BloodThirstOverride || AdamantAssaultOverride)
             return;
         if (currentPlayer == PieceColor.White)
         {
@@ -138,6 +139,7 @@ public class ChessMatch
         piece.yBoard = y;
         positions[x,y] = piece.gameObject;
         piece.UpdateUIPosition();
+        Debug.Log(piece.name + " moved to "+ BoardPosition.ConvertToChessNotation(x,y));
     } 
 
     public void PlayerTurn(){
