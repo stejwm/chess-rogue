@@ -11,22 +11,34 @@ public static class Movement
         controller = GameObject.FindGameObjectWithTag("GameController");
         var validMoves = new List<BoardPosition>();
         Game sc = controller.GetComponent<Game>();
+
         if (sc.PositionOnBoard(x, y))
         {
-            
+            // Check if the pawn can move one space forward
             if (Game._instance.currentMatch.GetPieceAtPosition(x, y) == null)
             {
-                validMoves.Add(new BoardPosition(x,y));
+                validMoves.Add(new BoardPosition(x, y));
+
+                // Check if the pawn can move two spaces forward (only if it hasn't moved yet)
+                if (piece is Pawn pawn && !pawn.HasMovedBefore())
+                {
+                    int twoStepY = piece.color == PieceColor.White ? y + 1 : y - 1;
+                    if (sc.PositionOnBoard(x, twoStepY) && Game._instance.currentMatch.GetPieceAtPosition(x, twoStepY) == null)
+                    {
+                        validMoves.Add(new BoardPosition(x, twoStepY));
+                    }
+                }
             }
 
+            // Check for diagonal captures
             if (sc.PositionOnBoard(x + 1, y) && Game._instance.currentMatch.GetPieceAtPosition(x + 1, y) != null && Game._instance.currentMatch.GetPieceAtPosition(x + 1, y).GetComponent<Chessman>().color != piece.color)
             {
-                validMoves.Add(new BoardPosition(x+1,y));
+                validMoves.Add(new BoardPosition(x + 1, y));
             }
 
             if (sc.PositionOnBoard(x - 1, y) && Game._instance.currentMatch.GetPieceAtPosition(x - 1, y) != null && Game._instance.currentMatch.GetPieceAtPosition(x - 1, y).GetComponent<Chessman>().color != piece.color)
             {
-                validMoves.Add(new BoardPosition(x-1,y));
+                validMoves.Add(new BoardPosition(x - 1, y));
             }
         }
         return validMoves;
@@ -238,3 +250,4 @@ public static class Movement
         
     } 
 }
+

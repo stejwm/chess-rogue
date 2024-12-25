@@ -413,6 +413,32 @@ public abstract class Chessman : MonoBehaviour
     } 
 
     private void OnMouseEnter(){
+        if (Game._instance.isInMenu)
+        {
+            return;
+        }
+
+        // Example with SpriteRenderer
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            // Perform operations with spriteRenderer
+        }
+        else
+        {
+            Debug.LogWarning("SpriteRenderer is not attached to this GameObject.");
+        }
+
+        // Check if other objects are null before using them
+        if (Game._instance != null && Game._instance.state == ScreenState.ActiveMatch)
+        {
+            // Your logic here
+        }
+        else
+        {
+            Debug.LogWarning("Game instance or state is null.");
+        }
+
         var sprite = this.GetComponent<SpriteRenderer>().sprite;
         if(team==Team.Hero)
             StatBoxManager._instance.SetAndShowStats(CalculateAttack(),CalculateDefense(),CalculateSupport(),info,name, sprite);
