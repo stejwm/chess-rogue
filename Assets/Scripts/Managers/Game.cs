@@ -87,10 +87,6 @@ public class Game : MonoBehaviour
         hero.Initialize();
         opponent.Initialize();
         NewMatch();
-        //ResetBoard();
-        //SetWhiteTurn();
-        //opponent.StartUp();
-        //opponent.color=PieceColor.Black;
     }
 
     public void OpenMarket(){
