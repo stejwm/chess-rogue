@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -38,49 +39,102 @@ public class ChessMatch
         MoveManager._instance.HandleMove(piece,x,y);
     }
     public void UpdateBoard(){
+        // First clear all positions
+        for (int x = 0; x < 8; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                positions[x, y] = null;
+            }
+        }
+
+        // Then update with current piece positions
         foreach (GameObject piece in white.pieces)
         {
-            Chessman cm = piece.GetComponent<Chessman>();
-            positions[cm.xBoard,cm.yBoard]=piece; 
+            if (piece.activeSelf)
+            {
+                Chessman cm = piece.GetComponent<Chessman>();
+                positions[cm.xBoard, cm.yBoard] = piece;
+            }
         }
         foreach (GameObject piece in black.pieces)
         {
-            Chessman cm = piece.GetComponent<Chessman>();
-            positions[cm.xBoard,cm.yBoard]=piece; 
+            if (piece.activeSelf)
+            {
+                Chessman cm = piece.GetComponent<Chessman>();
+                positions[cm.xBoard, cm.yBoard] = piece;
+            }
         }
-        
     }
 
-    public void ResetBoard(){
-        foreach (GameObject piece in white.pieces)
+    public void ResetBoard()
+    {
+        // Clear the board first
+        for (int x = 0; x < 8; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                positions[x, y] = null;
+            }
+        }
+
+        // Reset and move white pieces
+        foreach (GameObject piece in white.pieces.ToList())
         {
             piece.SetActive(true);
-            piece.GetComponent<Chessman>().ResetBonuses();
-            Chessman cm = piece.GetComponent<Chessman>();
-            MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);
+            var cm = piece.GetComponent<Chessman>();
+            cm.ResetBonuses();
+            cm.xBoard = cm.startingPosition.x;
+            cm.yBoard = cm.startingPosition.y;
+            positions[cm.xBoard, cm.yBoard] = piece;
+            cm.UpdateUIPosition();
         }
-        foreach (GameObject piece in black.pieces)
+
+        // Reset and move black pieces
+        foreach (GameObject piece in black.pieces.ToList())
         {
             piece.SetActive(true);
-            piece.GetComponent<Chessman>().ResetBonuses();
-            Chessman cm = piece.GetComponent<Chessman>();
-            MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);        
+            var cm = piece.GetComponent<Chessman>();
+            cm.ResetBonuses();
+            cm.xBoard = cm.startingPosition.x;
+            cm.yBoard = cm.startingPosition.y;
+            positions[cm.xBoard, cm.yBoard] = piece;
+            cm.UpdateUIPosition();
         }
-        foreach (GameObject piece in white.capturedPieces)
+
+        // Handle captured pieces
+        foreach (GameObject piece in white.capturedPieces.ToList())
         {
             piece.SetActive(true);
-            piece.GetComponent<Chessman>().ResetBonuses();
-            Chessman cm = piece.GetComponent<Chessman>();
-            MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);        
+            var cm = piece.GetComponent<Chessman>();
+            cm.ResetBonuses();
+            cm.xBoard = cm.startingPosition.x;
+            cm.yBoard = cm.startingPosition.y;
+            positions[cm.xBoard, cm.yBoard] = piece;
+            cm.UpdateUIPosition();
+            white.pieces.Add(piece);
         }
-        foreach (GameObject piece in black.capturedPieces)
+        white.capturedPieces.Clear();
+
+        foreach (GameObject piece in black.capturedPieces.ToList())
         {
             piece.SetActive(true);
-            piece.GetComponent<Chessman>().ResetBonuses();
-            Chessman cm = piece.GetComponent<Chessman>();
-            MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);        
+            var cm = piece.GetComponent<Chessman>();
+            cm.ResetBonuses();
+            cm.xBoard = cm.startingPosition.x;
+            cm.yBoard = cm.startingPosition.y;
+            positions[cm.xBoard, cm.yBoard] = piece;
+            cm.UpdateUIPosition();
+            black.pieces.Add(piece);
         }
-        
+        black.capturedPieces.Clear();
+
+        // Make sure all pieces are properly initialized
+        foreach (GameObject piece in white.pieces.Concat(black.pieces))
+        {
+            var cm = piece.GetComponent<Chessman>();
+            cm.isValidForAttack = true;
+        }
     }
 
     public void SetWhiteTurn(){
@@ -134,12 +188,45 @@ public class ChessMatch
         positions[x, y] = null;
     }
 
-    public void MovePiece(Chessman piece, int x, int y){
+    public void MovePiece(Chessman piece, int x, int y)
+    {
+        // Clear the piece's old position first
+        if (piece.xBoard >= 0 && piece.yBoard >= 0)
+        {
+            SetPositionEmpty(piece.xBoard, piece.yBoard);
+        }
+
+        // Check for castling
+        if (piece is King && !piece.hasMoved && Math.Abs(x - piece.xBoard) == 2)
+        {
+            bool isKingside = x > piece.xBoard;
+            int rookStartX = isKingside ? piece.xBoard + 3 : piece.xBoard - 4;
+            int rookEndX = isKingside ? x - 1 : x + 1;
+
+            var rookObj = GetPieceAtPosition(rookStartX, piece.yBoard);
+            if (rookObj != null)
+            {
+                var rook = rookObj.GetComponent<Chessman>();
+                SetPositionEmpty(rookStartX, piece.yBoard);
+                rook.xBoard = rookEndX;
+                rook.yBoard = piece.yBoard;
+                positions[rookEndX, piece.yBoard] = rook.gameObject;
+                rook.UpdateUIPosition();
+                rook.hasMoved = true;
+            }
+        }
+
+        // Move the piece
         piece.xBoard = x;
         piece.yBoard = y;
         positions[x,y] = piece.gameObject;
         piece.UpdateUIPosition();
-        Debug.Log(piece.name + " moved to "+ BoardPosition.ConvertToChessNotation(x,y));
+
+        // Handle pawn movement
+        if (piece is Pawn pawn)
+        {
+            pawn.OnMove();
+        }
     } 
 
     public void PlayerTurn(){

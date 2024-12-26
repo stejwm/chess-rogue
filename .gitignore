@@ -72,5 +72,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# Ignore ML-Agents timers
-/Assets/ML-Agents/Timers/MainMenu_timers.json
+# ML-Agents Timers
+/[Aa]ssets/ML-Agents/Timers/*_timers.json

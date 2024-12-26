@@ -44,6 +44,8 @@ public abstract class Chessman : MonoBehaviour
     public MovementProfile moveProfile;
     protected Sprite sprite;
 
+    public bool hasMoved = false;
+
     public int attack = 1;
     public int defense = 1;
     public int support = 1;
@@ -123,10 +125,12 @@ public abstract class Chessman : MonoBehaviour
         
         
     }
-    public void ResetBonuses(){
-        this.attackBonus=0;
-        this.defenseBonus=0;
-        this.supportBonus=0;
+    public virtual void ResetBonuses()
+    {
+        attackBonus = 0;
+        defenseBonus = 0;
+        supportBonus = 0;
+        hasMoved = false;
     }
 
     public void UpdateUIPosition()
@@ -412,38 +416,23 @@ public abstract class Chessman : MonoBehaviour
         mpScript.SetCoords(matrixX, matrixY);
     } 
 
-    private void OnMouseEnter(){
-        if (Game._instance.isInMenu)
+    private void OnMouseEnter()
+    {
+        // First check if Game._instance exists
+        if (Game._instance == null || Game._instance.isInMenu)
         {
             return;
         }
 
-        // Example with SpriteRenderer
-        var spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null)
+        // Only proceed if we're in an active match
+        if (Game._instance.state == ScreenState.ActiveMatch)
         {
-            // Perform operations with spriteRenderer
+            var spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                // Perform operations with spriteRenderer
+            }
         }
-        else
-        {
-            Debug.LogWarning("SpriteRenderer is not attached to this GameObject.");
-        }
-
-        // Check if other objects are null before using them
-        if (Game._instance != null && Game._instance.state == ScreenState.ActiveMatch)
-        {
-            // Your logic here
-        }
-        else
-        {
-            Debug.LogWarning("Game instance or state is null.");
-        }
-
-        var sprite = this.GetComponent<SpriteRenderer>().sprite;
-        if(team==Team.Hero)
-            StatBoxManager._instance.SetAndShowStats(CalculateAttack(),CalculateDefense(),CalculateSupport(),info,name, sprite);
-        else if(team == Team.Enemy)
-            EnemyStatBoxManager._instance.SetAndShowStats(CalculateAttack(),CalculateDefense(),CalculateSupport(),info,name, sprite);
     }
 
     private void OnMouseExit(){

@@ -16,11 +16,6 @@ public class Pawn : Chessman
     public override List<BoardPosition> GetValidMoves()
     {
         var validMoves = moveProfile.GetValidMoves(this);
-        // Call OnMove when a move is executed
-        if (validMoves.Count > 0)
-        {
-            OnMove();
-        }
         return validMoves;
     }
 
@@ -29,9 +24,15 @@ public class Pawn : Chessman
     // Method to check if the pawn has moved before
     public bool HasMovedBefore() => hasMovedBefore;
 
-    // Call this method when the pawn moves
+    // Call this method when the pawn actually moves
     public void OnMove()
     {
         hasMovedBefore = true;
+    }
+
+    public override void ResetBonuses()
+    {
+        base.ResetBonuses();
+        hasMovedBefore = false;
     }
 }

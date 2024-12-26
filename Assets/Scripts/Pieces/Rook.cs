@@ -11,5 +11,9 @@ public class Rook : Chessman
     }
     public override List<BoardPosition> GetValidMoves() => moveProfile.GetValidMoves(this);
     public override List<BoardPosition> GetValidSupportMoves() => moveProfile.GetValidSupportMoves(this);
-    
+    public override void ResetBonuses()
+    {
+        base.ResetBonuses();
+        hasMoved = false;  // Reset castling eligibility
+    }
 }
