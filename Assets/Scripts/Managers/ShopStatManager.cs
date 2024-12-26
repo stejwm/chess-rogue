@@ -43,7 +43,10 @@ public class ShopStatManager : MonoBehaviour
     }
 
     public void Purchase(){
-
+        //piece.startingPosition = new BoardPosition()
+        Game._instance.hero.pieces.Add(piece.gameObject);
+        piece.owner=Game._instance.hero;
+        ShopManager._instance.pieces.Remove(piece.gameObject);
     }
     public void SetAndShowStats(Chessman piece){
         PopUpCanvas.SetActive(true);

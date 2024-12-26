@@ -2897,13 +2897,14 @@ MonoBehaviour:
   attack: {fileID: 1529724553}
   defense: {fileID: 1344259385}
   support: {fileID: 1601468199}
+  value: {fileID: 568950582}
   info: {fileID: 6832475}
   pieceName: {fileID: 448967887}
   image: {fileID: 645245342}
   abilityUI: {fileID: 8528562668185041283, guid: ab6deb4e1ac7ed843941e8d259f6ca86, type: 3}
   piece: {fileID: 0}
   infoBox: {fileID: 6832472}
-  purchase: {fileID: 30594764}
+  purchase: {fileID: 1806177362}
   PopUpCanvas: {fileID: 1749834651}
 --- !u!1 &515939851
 GameObject:
@@ -5759,7 +5760,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 118, y: 107.71411}
+  m_AnchoredPosition: {x: 118, y: 107.7142}
   m_SizeDelta: {x: -1567.02, y: -215.43}
   m_Pivot: {x: 0.000000034458935, y: 0.000000027939677}
 --- !u!114 &1185444666
@@ -9716,7 +9717,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000038147, y: -100.33}
+  m_AnchoredPosition: {x: 0, y: -100.33}
   m_SizeDelta: {x: 103.48, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1806177364

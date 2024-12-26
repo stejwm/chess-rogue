@@ -12,7 +12,7 @@ public class ShopManager : MonoBehaviour
     public TMP_Text bloodText;
     public TMP_Text coinText;
 
-    private List<GameObject> pieces = new List<GameObject>();
+    public List<GameObject> pieces = new List<GameObject>();
 
     //current turn
     public static ShopManager _instance;
