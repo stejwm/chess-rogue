@@ -11,22 +11,34 @@ public static class Movement
         controller = GameObject.FindGameObjectWithTag("GameController");
         var validMoves = new List<BoardPosition>();
         Game sc = controller.GetComponent<Game>();
+
         if (sc.PositionOnBoard(x, y))
         {
-            
+            // Check if the pawn can move one space forward
             if (Game._instance.currentMatch.GetPieceAtPosition(x, y) == null)
             {
-                validMoves.Add(new BoardPosition(x,y));
+                validMoves.Add(new BoardPosition(x, y));
+
+                // Check if the pawn can move two spaces forward (only if it hasn't moved yet)
+                if (piece is Pawn pawn && !pawn.HasMovedBefore())
+                {
+                    int twoStepY = piece.color == PieceColor.White ? y + 1 : y - 1;
+                    if (sc.PositionOnBoard(x, twoStepY) && Game._instance.currentMatch.GetPieceAtPosition(x, twoStepY) == null)
+                    {
+                        validMoves.Add(new BoardPosition(x, twoStepY));
+                    }
+                }
             }
 
+            // Check for diagonal captures
             if (sc.PositionOnBoard(x + 1, y) && Game._instance.currentMatch.GetPieceAtPosition(x + 1, y) != null && Game._instance.currentMatch.GetPieceAtPosition(x + 1, y).GetComponent<Chessman>().color != piece.color)
             {
-                validMoves.Add(new BoardPosition(x+1,y));
+                validMoves.Add(new BoardPosition(x + 1, y));
             }
 
             if (sc.PositionOnBoard(x - 1, y) && Game._instance.currentMatch.GetPieceAtPosition(x - 1, y) != null && Game._instance.currentMatch.GetPieceAtPosition(x - 1, y).GetComponent<Chessman>().color != piece.color)
             {
-                validMoves.Add(new BoardPosition(x-1,y));
+                validMoves.Add(new BoardPosition(x - 1, y));
             }
         }
         return validMoves;
@@ -74,6 +86,23 @@ public static class Movement
         return validMoves;
     }   
 
+    private static bool CanCastle(Chessman piece, bool isKingside)
+    {
+        int direction = isKingside ? 1 : -1;
+        int squares = isKingside ? 2 : 3;
+
+        // Check if squares between king and rook are empty
+        for (int i = 1; i <= squares; i++)
+        {
+            int x = piece.xBoard + (i * direction);
+            if (Game._instance.currentMatch.GetPieceAtPosition(x, piece.yBoard) != null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static List<BoardPosition> ValidKingMoves(Chessman piece, int xBoard, int yBoard)
     {
         controller = GameObject.FindGameObjectWithTag("GameController");
@@ -90,12 +119,36 @@ public static class Movement
             new BoardPosition(xBoard + 1, yBoard + 1)
         };
         
+        // Add castling moves
+        if (!piece.hasMoved)
+        {
+            // Kingside castling
+            var kingsideRook = Game._instance.currentMatch.GetPieceAtPosition(xBoard + 3, yBoard)?.GetComponent<Chessman>();
+            if (kingsideRook != null && kingsideRook is Rook && !kingsideRook.hasMoved)
+            {
+                if (CanCastle(piece, true))
+                {
+                    validMoves.Add(new BoardPosition(xBoard + 2, yBoard));
+                }
+            }
+
+            // Queenside castling
+            var queensideRook = Game._instance.currentMatch.GetPieceAtPosition(xBoard - 4, yBoard)?.GetComponent<Chessman>();
+            if (queensideRook != null && queensideRook is Rook && !queensideRook.hasMoved)
+            {
+                if (CanCastle(piece, false))
+                {
+                    validMoves.Add(new BoardPosition(xBoard - 2, yBoard));
+                }
+            }
+        }
+
         validMoves = validMoves.Where(pos =>
-        IsWithinBounds(sc, pos.x, pos.y) &&          // Check if within board boundaries
-        !IsFriendlyPieceAtPosition(sc, piece, pos.x, pos.y) // Check if not occupied by a friendly piece
+            IsWithinBounds(sc, pos.x, pos.y) &&          
+            !IsFriendlyPieceAtPosition(sc, piece, pos.x, pos.y)
         ).ToList();
 
-    return validMoves;
+        return validMoves;
     } 
 
     private static bool IsWithinBounds(Game sc, int x, int y)
@@ -179,19 +232,27 @@ public static class Movement
         int x = xBoard + xIncrement;
         int y = yBoard + yIncrement;
         
-        while (sc.PositionOnBoard(x, y) && Game._instance.currentMatch.GetPieceAtPosition(x, y) == null)
+        while (sc.PositionOnBoard(x, y))
         {
-            validMoves.Add(new BoardPosition(x,y));
+            var pieceAtPosition = Game._instance.currentMatch.GetPieceAtPosition(x, y);
+            if (pieceAtPosition == null)
+            {
+                validMoves.Add(new BoardPosition(x, y));
+            }
+            else if (pieceAtPosition.GetComponent<Chessman>().color != piece.color)
+            {
+                validMoves.Add(new BoardPosition(x, y));
+                break;  // Stop at enemy piece
+            }
+            else
+            {
+                break;  // Stop at friendly piece
+            }
             x += xIncrement;
             y += yIncrement;
         }
-        if (sc.PositionOnBoard(x, y) && Game._instance.currentMatch.GetPieceAtPosition(x, y).GetComponent<Chessman>().color != piece.color)
-        {
-            validMoves.Add(new BoardPosition(x,y));
-        }
-
-        return validMoves;
         
+        return validMoves;
     } 
 
     public static List<BoardPosition> UnhinderedSelfLineMovePlate(Chessman piece, int xIncrement, int yIncrement, int xBoard, int yBoard)
@@ -202,22 +263,27 @@ public static class Movement
         int x = xBoard + xIncrement;
         int y = yBoard + yIncrement;
         
-        while (sc.PositionOnBoard(x, y) && Game._instance.currentMatch.GetPieceAtPosition(x, y))
+        while (sc.PositionOnBoard(x, y))
         {
-            if(Game._instance.currentMatch.GetPieceAtPosition(x, y)==null)
-                validMoves.Add(new BoardPosition(x,y));
-            else if (sc.PositionOnBoard(x, y) && Game._instance.currentMatch.GetPieceAtPosition(x, y).GetComponent<Chessman>().color != piece.color)
+            var pieceAtPosition = Game._instance.currentMatch.GetPieceAtPosition(x, y);
+            if (pieceAtPosition == null)
             {
-                validMoves.Add(new BoardPosition(x,y));
+                validMoves.Add(new BoardPosition(x, y));
+            }
+            else if (pieceAtPosition.GetComponent<Chessman>().color != piece.color)
+            {
+                validMoves.Add(new BoardPosition(x, y));
+                break;
+            }
+            else
+            {
                 break;
             }
             x += xIncrement;
             y += yIncrement;
         }
         
-
         return validMoves;
-        
     } 
     public static List<BoardPosition> LineMovePlateNoCapture(Chessman piece, int xIncrement, int yIncrement, int xBoard, int yBoard)
     {
@@ -238,3 +304,4 @@ public static class Movement
         
     } 
 }
+
