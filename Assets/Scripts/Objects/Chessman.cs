@@ -60,7 +60,6 @@ public abstract class Chessman : MonoBehaviour
     public List<Ability> abilities;
     public bool isValidForAttack =false;
     public Vector3 gridOrigin;
-    public float cellSize =1f; //.95f
 
     //public AbilityManager abilityManager; 
 
@@ -136,8 +135,8 @@ public abstract class Chessman : MonoBehaviour
         float y = yBoard;
 
         //Adjust by variable offset
-        x *= .95f;
-        y *= .95f;
+        x *= .96f;
+        y *= .96f;
 
         //Add constants (pos 0,0)
         x += -3.33f;
@@ -175,42 +174,30 @@ public abstract class Chessman : MonoBehaviour
         //abilityManager.AddAbility(ability, this);
     }
 
-     private void OnMouseDown()
+    private void OnMouseDown()
     {
         if (Game._instance.isInMenu)
         {
             return;
         }
+        if (Game._instance.currentMatch !=null  && Game._instance.currentMatch.isSetUpPhase && Game._instance.hero.inventoryPieces.Contains(this.gameObject))
+        {
+            HandlePiecePlacement();
+            return;
+        }
         switch (Game._instance.state)
         {
-            case ScreenState.ActiveMatch:
-                HandleMainGameboardClick();
-                break;
-
             case ScreenState.RewardScreen:
                 HandleRewardScreenClick();
                 break;
-
             case ScreenState.PrisonersMarket:
                 HandlePrisonersMarketClick();
                 break;
             case ScreenState.ShopScreen:
                 HandleShopClick();
                 break;
+            default: break;
         }
-    } 
-    public void HandleMainGameboardClick(){
-        Debug.Log(this.name+ " piece clicked");
-            if (isValidForAttack)
-            {
-                //Remove all moveplates relating to previously selected piece
-                DestroyMovePlates();
-                validMoves.Clear();
-
-                //Create new MovePlates
-                validMoves=GetValidMoves();
-                DisplayValidMoves();
-            }
     }
 
     public void HandleRewardScreenClick(){        
@@ -224,7 +211,11 @@ public abstract class Chessman : MonoBehaviour
         MarketManager._instance.AddPiece(this);
     }
 
-    public void DestroyMovePlates()
+    public void HandlePiecePlacement(){        
+        BoardManager._instance.SelectPieceToPlace(this);
+    }
+
+    /* public void DestroyMovePlates()
     {
         //Destroy old MovePlates
         GameObject[] movePlates = GameObject.FindGameObjectsWithTag("MovePlate");
@@ -232,7 +223,7 @@ public abstract class Chessman : MonoBehaviour
         {
             Destroy(movePlates[i]); //Be careful with this function "Destroy" it is asynchronous
         }
-    }
+    } */
 
 /*      public List<Tuple<int,int>> GetValidMoves()
     {
@@ -317,12 +308,12 @@ public abstract class Chessman : MonoBehaviour
                 GameObject cp = Game._instance.currentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
                 if (cp == null)
                 {
-                    MovePlateSpawn(coordinate.x, coordinate.y);
+                    SetTileValidMove(coordinate.x, coordinate.y);
                     theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
                 }
                 else if (cp.GetComponent<Chessman>().player != player)
                 {
-                    MovePlateAttackSpawn(coordinate.x, coordinate.y);
+                    SetTileValidMove(coordinate.x, coordinate.y);
                     theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
                 }
             }
@@ -358,46 +349,29 @@ public abstract class Chessman : MonoBehaviour
 
             if (cp == null)
             {
-                MovePlateSpawn(x, y);
+                SetTileValidMove(x, y);
             }
             else if (cp.GetComponent<Chessman>().player != player)
             {
-                MovePlateAttackSpawn(x, y);
+                SetTileValidMove(x, y);
             }
         }
     } 
 
-     public void MovePlateSpawn(int matrixX, int matrixY)
+     public void SetTileValidMove(int x, int y)
     {
-        //Get the board value in order to convert to xy coords
-        float x = matrixX;
-        float y = matrixY;
-
-        //Adjust by variable offset
-        x *= .95f;
-        y *= .95f;
-
-        //Add constants (pos 0,0)
-        x += -3.33f;
-        y += -3.33f;
-
-        //Set actual unity values
-        GameObject mp = Instantiate(movePlate, new Vector3(x, y, -3.0f), Quaternion.identity);
-
-        MovePlate mpScript = mp.GetComponent<MovePlate>();
-        mpScript.SetReference(gameObject);
-        mpScript.SetCoords(matrixX, matrixY);
+        BoardManager._instance.SetActiveTile(this, new BoardPosition(x,y));
     } 
 
-     public void MovePlateAttackSpawn(int matrixX, int matrixY)
+     /* public void MovePlateAttackSpawn(int matrixX, int matrixY)
     {
         //Get the board value in order to convert to xy coords
         float x = matrixX;
         float y = matrixY;
 
         //Adjust by variable offset
-        x *= .95f;
-        y *= .95f;
+        x *= .96f;
+        y *= .96f;
 
         //Add constants (pos 0,0)
         x += -3.33f;
@@ -410,15 +384,15 @@ public abstract class Chessman : MonoBehaviour
         mpScript.attack = true;
         mpScript.SetReference(gameObject);
         mpScript.SetCoords(matrixX, matrixY);
-    } 
+    }  */
 
-    private void OnMouseEnter(){
+    /* private void OnMouseEnter(){
         var sprite = this.GetComponent<SpriteRenderer>().sprite;
         if(team==Team.Hero)
             StatBoxManager._instance.SetAndShowStats(CalculateAttack(),CalculateDefense(),CalculateSupport(),info,name, sprite);
         else if(team == Team.Enemy)
             EnemyStatBoxManager._instance.SetAndShowStats(CalculateAttack(),CalculateDefense(),CalculateSupport(),info,name, sprite);
-    }
+    } */
 
     private void OnMouseExit(){
         //StatBoxManager._instance.HideStats();

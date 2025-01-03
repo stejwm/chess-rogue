@@ -11,6 +11,7 @@ public abstract class Player: MonoBehaviour
     public int playerBlood = 0;
     public List<GameObject> pieces;
     public List<GameObject> capturedPieces = new List<GameObject>();
+    public List<GameObject> inventoryPieces = new List<GameObject>();
     public List<BoardPosition> openPositions = new List<BoardPosition>();
     public Player(List<GameObject> pieces)
     {

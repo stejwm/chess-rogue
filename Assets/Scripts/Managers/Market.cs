@@ -94,6 +94,8 @@ public class MarketManager : MonoBehaviour
                     rend.sortingOrder = 1;
                 }
             } */
+            Chessman cm = piece.GetComponent<Chessman>();
+            Game._instance.hero.openPositions.Add(cm.startingPosition);
             Destroy(piece);
             
         }
@@ -132,20 +134,19 @@ public class MarketManager : MonoBehaviour
     }
 
     public void ReturnMyPieces(){
-        foreach (GameObject obj in opponentCapturedPieces){
-            Chessman piece = obj.GetComponent<Chessman>();
+        foreach (Chessman piece in selectedPieces){
+            //Chessman piece = obj.GetComponent<Chessman>();
             if (selectedPieces.Contains(piece)){
                 Game._instance.hero.playerCoins-= piece.releaseCost;
                 SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
                 sprite.color = Color.white;
-                obj.SetActive(false);
-                Game._instance.hero.pieces.Add(obj);
-            }
-            else{
-                Destroy(obj);
+                piece.gameObject.SetActive(false);
+                Game._instance.hero.pieces.Add(piece.gameObject);
+                opponentCapturedPieces.Remove(piece.gameObject);
             }
         }
-        Game._instance.opponent.capturedPieces.Clear();
+        //Game._instance.opponent.capturedPieces.Clear();
+        totalCost=0;
         coinText.text = ": "+Game._instance.hero.playerCoins;
         selectedPieces.Clear();
     }

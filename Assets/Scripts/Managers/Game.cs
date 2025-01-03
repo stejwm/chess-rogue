@@ -252,4 +252,29 @@ public class Game : MonoBehaviour
         MapManager._instance.OpenMap();
         this.state=ScreenState.Map;
     }
+
+    public void toggleAllPieceColliders(bool active){
+        foreach (var piece in hero.pieces)
+        {
+            piece.GetComponent<BoxCollider2D>().enabled=active;
+        }
+        foreach (var piece in opponent.pieces)
+        {
+            piece.GetComponent<BoxCollider2D>().enabled=active;
+        }
+        foreach (var piece in hero.capturedPieces)
+        {
+            piece.GetComponent<BoxCollider2D>().enabled=active;
+        }
+        foreach (var piece in opponent.capturedPieces)
+        {
+            piece.GetComponent<BoxCollider2D>().enabled=active;
+        }
+    }
+    public void togglePieceColliders(List<GameObject> pieces, bool active){
+        foreach (var piece in pieces)
+        {
+            piece.GetComponent<BoxCollider2D>().enabled=active;
+        }
+    }
 }

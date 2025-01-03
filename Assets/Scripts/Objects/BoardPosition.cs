@@ -35,4 +35,20 @@ public class BoardPosition
         // Combine file and rank into chess notation
         return $"{file}{rank}";
     }
+
+    public override bool Equals(object obj)
+    {
+        var item = obj as BoardPosition;
+
+        if (item == null)
+        {
+            return false;
+        }
+
+        return this.x ==item.x && this.y == item.y;
+    }
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(x, y);
+    }
 }

@@ -43,11 +43,16 @@ public class ShopStatManager : MonoBehaviour
     }
 
     public void Purchase(){
-        //piece.startingPosition = new BoardPosition()
-        Game._instance.hero.pieces.Add(piece.gameObject);
-        piece.owner=Game._instance.hero;
-        piece.startingPosition = piece.owner.openPositions[0];
-        ShopManager._instance.pieces.Remove(piece.gameObject);
+        if(Game._instance.hero.playerCoins>=piece.releaseCost){
+            Game._instance.hero.playerCoins-=piece.releaseCost;
+            Game._instance.hero.inventoryPieces.Add(piece.gameObject);
+            piece.owner=Game._instance.hero;
+            //piece.startingPosition = piece.owner.openPositions[0];
+            ShopManager._instance.pieces.Remove(piece.gameObject);
+            piece.gameObject.SetActive(false);
+            ShopManager._instance.UpdateCurrency();
+            HideStats();
+        }
     }
     public void SetAndShowStats(Chessman piece){
         PopUpCanvas.SetActive(true);

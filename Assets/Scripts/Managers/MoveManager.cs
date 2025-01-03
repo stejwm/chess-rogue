@@ -54,7 +54,7 @@ public class MoveManager: MonoBehaviour
         }
         else{
             match.MovePiece(movingPiece, x,y);
-            movingPiece.DestroyMovePlates();
+            BoardManager._instance.ClearTiles();
             match.NextTurn();
             Game._instance.isInMenu=false;
             
@@ -141,7 +141,7 @@ public class MoveManager: MonoBehaviour
         Game._instance.OnAttackEnd.Invoke(movingPiece, attackedPiece, attackSupport, defenseSupport); 
         //Move reference chess piece to this position
         match.MovePiece(movingPiece, targetedX, targetedY);
-        movingPiece.DestroyMovePlates();
+        BoardManager._instance.ClearTiles();
 
         //reset all variables
         targetedX = -1;

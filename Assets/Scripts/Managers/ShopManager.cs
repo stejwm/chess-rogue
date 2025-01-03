@@ -86,6 +86,14 @@ public class ShopManager : MonoBehaviour
                 rend.sortingOrder = 1;
             }
         }
+        foreach (GameObject piece in Game._instance.hero.inventoryPieces)
+        {
+            if (piece.GetComponent<SpriteRenderer>())
+            {
+                SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
+                rend.sortingOrder = 1;
+            }
+        }
         foreach (GameObject piece in pieces)
         {
             Destroy(piece);

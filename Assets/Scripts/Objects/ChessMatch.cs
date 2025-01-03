@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,17 +16,56 @@ public class ChessMatch
     public bool AdamantAssaultOverride = false;
     public bool BloodThirstOverride = false;
 
+    public bool isSetUpPhase = true;
+    //[SerializeField] private GameObject tilePrefab;
+
 
     public ChessMatch(Player white, Player black)
     {
         this.white=white;
         this.black=black;
-        //playerWhite = white.pieces;
-        //playerBlack = black.pieces;
+        CreateTiles();
+        CheckInventory();
+        
+    }
+
+    public void StartMatch(){
+        isSetUpPhase=false;
+        Game._instance.toggleAllPieceColliders(false);
+        BoardManager._instance.toggleTileColliders(true);
         UpdateBoard();
         SetWhiteTurn();
     }
+    private void CreateTiles()
+    {
+        BoardManager._instance.CreateBoard();
+    }
+    private void DestroyTiles()
+    {
+        BoardManager._instance.DestroyBoard();
+    }
 
+    public void CheckInventory(){
+        UpdateBoard();
+        ResetPieces();
+        if (Game._instance.hero.inventoryPieces.Count>0){
+            int i = 0;
+            foreach (var obj in Game._instance.hero.inventoryPieces)
+            {
+                Chessman piece = obj.GetComponent<Chessman>();
+                obj.SetActive(true);
+                piece.xBoard=-4;
+                piece.yBoard=4-i; 
+                i++;
+                piece.UpdateUIPosition();
+            }
+            Game._instance.toggleAllPieceColliders(false);
+            Game._instance.togglePieceColliders(Game._instance.hero.inventoryPieces, true);
+        }
+        else{
+            StartMatch();
+        }
+    }
     public ChessMatch(Player white)
     {
         this.white=white;
@@ -51,7 +91,7 @@ public class ChessMatch
         
     }
 
-    public void ResetBoard(){
+    public void ResetPieces(){
         foreach (GameObject piece in white.pieces)
         {
             piece.SetActive(true);
@@ -148,11 +188,15 @@ public class ChessMatch
     public void EndGame(){
         BattlePanel._instance.HideResults();   
         BattlePanel._instance.HideStats();
-        ResetBoard();
+        ResetPieces();
+        DestroyTiles();
+        Game._instance.toggleAllPieceColliders(true);
+        BoardManager._instance.toggleTileColliders(false);
         Game._instance.EndMatch();
     }
     public GameObject[,] GetPositions()
     {
         return positions;
     }
+    
 }
