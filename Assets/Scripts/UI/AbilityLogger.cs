@@ -27,14 +27,14 @@ public class AbilityLogger : MonoBehaviour
         //gameObject.SetActive(false);
     }
 
-    public void LogAbilityUsage(string abilityName)
+    public void LogAbilityUsage(string abilityName, string message)
     {
         
         Debug.Log("Ability pop up started");
-        StartCoroutine(ShowAbilityAndLog(abilityName));
+        StartCoroutine(ShowAbilityAndLog(abilityName, message));
     }
 
-    private IEnumerator ShowAbilityAndLog(string abilityName)
+    private IEnumerator ShowAbilityAndLog(string abilityName, string message)
     {
         PopUpMenu.SetActive(true);
         PopUp.gameObject.SetActive(true);
@@ -46,7 +46,7 @@ public class AbilityLogger : MonoBehaviour
 
         // Wait for the feedback effect duration
         yield return new WaitForSeconds(feedbacks.TotalDuration);
-        AddLogMessage(abilityName);
+        AddLogMessage(abilityName + " "+ message);
         PopUp.gameObject.SetActive(false);
         PopUp.transform.position = startingPosition;
         PopUpMenu.SetActive(false);

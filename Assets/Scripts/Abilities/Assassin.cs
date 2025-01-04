@@ -27,7 +27,7 @@ public class Assassin : Ability
     }
     public void AddBonus(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
         if (attacker==piece && support==0 && isAttacking){
-            AbilityLogger._instance.LogAbilityUsage("Assassin");
+            AbilityLogger._instance.LogAbilityUsage("<color=white><gradient=\"AbilityGradient\">Assassin</gradient></color>", " "+piece.name+ " +5 attack");
             piece.attackBonus+=5;
         }
     }

@@ -1998,14 +1998,14 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
     topRight: {r: 1, g: 1, b: 1, a: 1}
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
+  m_fontColorGradientPreset: {fileID: 11400000, guid: b43a2c350605e0f4fa5e783ee1ecd2ee, type: 2}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
@@ -2014,8 +2014,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 90
+  m_fontSizeBase: 90
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2080,8 +2080,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000015259, y: -0.0000076293945}
-  m_SizeDelta: {x: 1236.85, y: 314.02}
+  m_AnchoredPosition: {x: -131.88, y: 28.74}
+  m_SizeDelta: {x: 1019.92, y: 360.19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &325784198
 GameObject:
@@ -4265,11 +4265,11 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 1, g: 0.14395238, b: 0, a: 1}
-    topRight: {r: 0.764151, g: 0.36319533, b: 0, a: 1}
-    bottomLeft: {r: 0.5943396, g: 0, b: 0, a: 1}
-    bottomRight: {r: 0.035467625, g: 0, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
+    topLeft: {r: 1, g: 0, b: 0.060963154, a: 1}
+    topRight: {r: 1, g: 0.17969947, b: 0.023584902, a: 1}
+    bottomLeft: {r: 1, g: 0.69389236, b: 0, a: 1}
+    bottomRight: {r: 1, g: 0.84313726, b: 0, a: 1}
+  m_fontColorGradientPreset: {fileID: 11400000, guid: b43a2c350605e0f4fa5e783ee1ecd2ee, type: 2}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
@@ -5153,7 +5153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 696.4, y: -257.4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!82 &845383710
@@ -6563,7 +6563,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 118, y: 107.71738}
+  m_AnchoredPosition: {x: 118, y: 107.71771}
   m_SizeDelta: {x: -1567.02, y: -215.43}
   m_Pivot: {x: 0.000000034458935, y: 0.000000027939677}
 --- !u!114 &1185444666
@@ -9435,7 +9435,7 @@ MonoBehaviour:
         RemapCurveZero: 0
         RemapCurveOne: 1
         Offset: 0
-        AnimateX: 0
+        AnimateX: 1
         AnimateScaleTweenX:
           MMTweenDefinitionType: 1
           MMTweenCurve: 4
@@ -9445,17 +9445,17 @@ MonoBehaviour:
             - serializedVersion: 3
               time: 0
               value: 1
-              inSlope: -0.9961853
-              outSlope: -0.9961853
+              inSlope: -0.7352257
+              outSlope: -0.7352257
               tangentMode: 34
               weightedMode: 0
               inWeight: 0
               outWeight: 0.33333334
             - serializedVersion: 3
-              time: 1
-              value: 0.0038146973
-              inSlope: -0.9961853
-              outSlope: -0.9961853
+              time: 0.9573485
+              value: 0.29613283
+              inSlope: -0.7352257
+              outSlope: -0.7352257
               tangentMode: 34
               weightedMode: 0
               inWeight: 0.33333334
@@ -9474,17 +9474,17 @@ MonoBehaviour:
             - serializedVersion: 3
               time: 0
               value: 1
-              inSlope: -1.0232089
-              outSlope: -1.0232089
+              inSlope: -0.7872344
+              outSlope: -0.7872344
               tangentMode: 34
               weightedMode: 0
               inWeight: 0
               outWeight: 0.33333334
             - serializedVersion: 3
-              time: 0.9750061
-              value: 0.0023651123
-              inSlope: -1.0232089
-              outSlope: -1.0232089
+              time: 0.8876343
+              value: 0.30122375
+              inSlope: -0.7872344
+              outSlope: -0.7872344
               tangentMode: 34
               weightedMode: 0
               inWeight: 0.33333334
@@ -10413,6 +10413,7 @@ GameObject:
   - component: {fileID: 1624334844}
   - component: {fileID: 1624334841}
   - component: {fileID: 1624334843}
+  - component: {fileID: 1624334847}
   m_Layer: 0
   m_Name: Controller
   m_TagString: GameController
@@ -10640,6 +10641,102 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 3801161196766568330, guid: 29247dbfcee26b34abdf6ba50314520d, type: 3}
   boardParent: {fileID: 1445530853}
+--- !u!82 &1624334847
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624334840}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 9f78c95ae24558241a14c1df9378524e, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.692
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1637328787
 GameObject:
   m_ObjectHideFlags: 0

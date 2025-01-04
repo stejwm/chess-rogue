@@ -68,8 +68,7 @@ public class BloodThirstAbility : Ability
             Game._instance.currentMatch.BloodThirstOverride =false;
             return;
         }
-        AbilityLogger._instance.LogAbilityUsage("Blood Thirst");
-
+        AbilityLogger._instance.LogAbilityUsage("<color=white><gradient=\"AbilityGradient\">Blood Thirst</gradient></color>",  " "+piece.name+" must attack again");
         
     }
 

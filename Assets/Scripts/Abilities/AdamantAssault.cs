@@ -40,7 +40,7 @@ public class AdamantAssault : Ability
         if (attacker == piece && !alreadyBounced)
         {
             Debug.Log("Overriding turn for adamant assault");
-            AbilityLogger._instance.LogAbilityUsage("Adamant Assault");
+            AbilityLogger._instance.LogAbilityUsage("<color=white><gradient=\"AbilityGradient\">Adamant Assault</gradient></color>", " "+piece.name+ " attacking again");
             Game._instance.currentMatch.AdamantAssaultOverride =true;
             //Game._instance.currentMatch.PlayerTurn();
             Game._instance.currentMatch.ExecuteTurn(attacker, defender.xBoard, defender.yBoard);

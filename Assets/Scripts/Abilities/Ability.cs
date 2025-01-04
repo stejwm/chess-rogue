@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public abstract class Ability : ScriptableObject
@@ -9,6 +10,7 @@ public abstract class Ability : ScriptableObject
     public Sprite sprite;
     public GameObject AbilityLoggerPrefab;
     public GameObject PopUpMenu;
+    public TMP_ColorGradient gradient;
 
     public abstract void Apply(Chessman piece);
     public abstract void Remove(Chessman piece);
