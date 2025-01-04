@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -60,6 +61,8 @@ public abstract class Chessman : MonoBehaviour
     public List<Ability> abilities;
     public bool isValidForAttack =false;
     public Vector3 gridOrigin;
+
+    public MMF_Player supportFloatingText;
 
     //public AbilityManager abilityManager; 
 
@@ -144,7 +147,11 @@ public abstract class Chessman : MonoBehaviour
 
         //Debug.Log("positions: "+x+","+y);
         //Set actual unity values
-        this.transform.position = new Vector3(x, y, -1.0f);
+        if(this.transform.position == new Vector3(x, y, -1.0f))
+            this.GetComponent<MMSpringPosition>().BumpRandom();
+        else
+            this.GetComponent<MMSpringPosition>().MoveTo(new Vector3(x, y, -1.0f));
+        //this.transform.position = ;
     }
 
     public int GetXBoard()
@@ -357,6 +364,10 @@ public abstract class Chessman : MonoBehaviour
             }
         }
     } 
+
+    public void showSupportFloatingText(){
+        supportFloatingText.PlayFeedbacks();
+    }
 
      public void SetTileValidMove(int x, int y)
     {

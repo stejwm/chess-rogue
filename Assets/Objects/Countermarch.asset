@@ -15,3 +15,4 @@ MonoBehaviour:
   abilityName: Countermarch
   description: Can move and attack backwards
   sprite: {fileID: 0}
+  AbilityLoggerPrefab: {fileID: 5392670513771970038, guid: 422e55fbf7be60a478189fa9520978a8, type: 3}

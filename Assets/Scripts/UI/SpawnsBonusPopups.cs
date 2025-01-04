@@ -50,7 +50,7 @@ public class SpawnsBonusPopups : MonoBehaviour
         _mainCamera = Camera.main;
     }
     
-    public BonusPopUp BonusAdded(int damage, Vector3 position)
+    public BonusPopUp BonusAdded(int damage, Vector3 position, float pitch)
     {
         // Convert world position to screen position
         Vector3 screenPosition = _mainCamera.WorldToScreenPoint(position);
@@ -67,13 +67,13 @@ public class SpawnsBonusPopups : MonoBehaviour
 
         // Spawn the popup at the calculated local position
         bool direction = screenPosition.x < Screen.width * 0.5f;
-        return SpawnBonusPopup(damage, localPosition, direction);
+        return SpawnBonusPopup(damage, localPosition, direction, pitch);
     }
     
-    private BonusPopUp SpawnBonusPopup(int damage, Vector3 position, bool direction)
+    private BonusPopUp SpawnBonusPopup(int damage, Vector3 position, bool direction, float pitch)
     {
         BonusPopUp damageLabel = _damageLabelPopupPool.Get();
-        damageLabel.Display(damage, position, direction);
+        damageLabel.Display(damage, position, direction, pitch);
         return damageLabel;
     }
     

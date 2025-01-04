@@ -188,6 +188,7 @@ public class ChessMatch
     public void EndGame(){
         BattlePanel._instance.HideResults();   
         BattlePanel._instance.HideStats();
+        LogManager._instance.ClearLogs();
         ResetPieces();
         DestroyTiles();
         Game._instance.toggleAllPieceColliders(true);

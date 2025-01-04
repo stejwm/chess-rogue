@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +13,9 @@ public class Card : MonoBehaviour
     public TMP_Text effect;
 
     public Sprite front;
+
+    public MMF_Player FlipPlayer;
+    public bool cardFlipped =false;
 
     public Card(Ability ability)
     {
@@ -40,8 +44,12 @@ public class Card : MonoBehaviour
     }
 
     private void FlipCard(){
-        this.GetComponent<SpriteRenderer>().sprite=front;
-        effect.text= ability.description;
-        title.text= ability.abilityName;
+        if (!cardFlipped){
+            FlipPlayer.PlayFeedbacks();
+            this.GetComponent<SpriteRenderer>().sprite=front;
+            effect.text= ability.description;
+            title.text= ability.abilityName;
+            cardFlipped=true;
+        }
     }
 }

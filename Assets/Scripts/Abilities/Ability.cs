@@ -7,6 +7,8 @@ public abstract class Ability : ScriptableObject
     public string abilityName;
     public string description;
     public Sprite sprite;
+    public GameObject AbilityLoggerPrefab;
+    public GameObject PopUpMenu;
 
     public abstract void Apply(Chessman piece);
     public abstract void Remove(Chessman piece);

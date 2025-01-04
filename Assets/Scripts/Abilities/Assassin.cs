@@ -26,8 +26,10 @@ public class Assassin : Ability
 
     }
     public void AddBonus(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
-        if (attacker==piece && support==0 && isAttacking)
+        if (attacker==piece && support==0 && isAttacking){
+            AbilityLogger._instance.LogAbilityUsage("Assassin");
             piece.attackBonus+=5;
+        }
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int support, int defenseSupport){
         if (attacker==piece && support==0)

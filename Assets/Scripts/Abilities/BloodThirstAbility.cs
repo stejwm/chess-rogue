@@ -45,7 +45,8 @@ public class BloodThirstAbility : Ability
 
     private void EnableSecondAttack()
     {   
-        Debug.Log("Overriding turn for bloodthirst");
+        Debug.Log("Blood Thirst");
+        
         Game._instance.currentMatch.BloodThirstOverride =true;
         Game._instance.currentMatch.PlayerTurn();
         List<GameObject> pieces;
@@ -65,8 +66,9 @@ public class BloodThirstAbility : Ability
             Debug.Log("No valid attack found, thirst over");
             piece.moveProfile=startingProfile;
             Game._instance.currentMatch.BloodThirstOverride =false;
-            Game._instance.currentMatch.NextTurn();
+            return;
         }
+        AbilityLogger._instance.LogAbilityUsage("Blood Thirst");
 
         
     }

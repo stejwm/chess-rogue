@@ -32,8 +32,6 @@ public class BonusPopUp : MonoBehaviour
         [SerializeField, Range(1, 30)] private int gizmoResolution = 20;
         private Vector3 _startingPositionForVisualization = Vector3.zero;
         public AudioSource audioSource;
-
-        public float waitTime = 0.5f;
         
         private SpawnsBonusPopups _poolManager;
 
@@ -96,13 +94,14 @@ public class BonusPopUp : MonoBehaviour
         //OrientCurveBasedOnDirection();
     }
 
-    public void Display(int bonus, Vector3 objPosition, bool direction){
+    public void Display(int bonus, Vector3 objPosition, bool direction, float pitch){
         transform.position = objPosition;
         _startingPositionForVisualization=objPosition;
         _direction=direction;
         bonusText.SetText("+"+bonus);
         bonusText.color= fontColor;
         bonusText.fontSize = fontSize;
+        audioSource.pitch=pitch;
         
 
         if(_moveCoroutine !=null)

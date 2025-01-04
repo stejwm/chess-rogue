@@ -31,6 +31,7 @@ public class Game : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip capture;
     public AudioClip bounce;
+    public AudioClip move;
     public AudioClip ability;
     public ChessMatch currentMatch;
     public int level=0;

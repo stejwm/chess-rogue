@@ -15,3 +15,4 @@ MonoBehaviour:
   abilityName: Adamant Assault
   description: Automatically trigger second attack after being bounced
   sprite: {fileID: 21300000, guid: bbb8773f8de1b9b4d878a59707b74ff8, type: 3}
+  AbilityLoggerPrefab: {fileID: 5392670513771970038, guid: 422e55fbf7be60a478189fa9520978a8, type: 3}

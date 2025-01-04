@@ -52,34 +52,34 @@ public class BattlePanel : MonoBehaviour
 
     }
 
-    public void SetAndShowHeroAttack(int attack){
-        SpawnsBonusPopups.Instance.BonusAdded(attack, this.heroAttack.transform.position);
+    public void SetAndShowHeroAttack(int attack, float pitch){
+        SpawnsBonusPopups.Instance.BonusAdded(attack, this.heroAttack.transform.position, pitch);
         this.heroAttack.text=this.heroAttack.text+attack;
         
     }
-    public void SetAndShowHeroSupport(int support){
-        SpawnsBonusPopups.Instance.BonusAdded(support, this.heroSupport.transform.position);
+    public void SetAndShowHeroSupport(int support, float pitch){
+        SpawnsBonusPopups.Instance.BonusAdded(support, this.heroSupport.transform.position,pitch);
         this.heroSupport.text="support: "+support;
         
     }
-    public void SetAndShowHeroTotal(int total){
-        SpawnsBonusPopups.Instance.BonusAdded(total, this.heroTotal.transform.position);
+    public void SetAndShowHeroTotal(int total, float pitch){
+        SpawnsBonusPopups.Instance.BonusAdded(total, this.heroTotal.transform.position,pitch);
         this.heroTotal.text="total: "+total;
         
     }
 
-    public void SetAndShowEnemyAttack(int attack){
-        SpawnsBonusPopups.Instance.BonusAdded(attack, this.enemyAttack.transform.position);
+    public void SetAndShowEnemyAttack(int attack, float pitch){
+        SpawnsBonusPopups.Instance.BonusAdded(attack, this.enemyAttack.transform.position,pitch);
         this.enemyAttack.text=attack+ this.enemyAttack.text;
         
     }
-    public void SetAndShowEnemySupport(int support){
-        var bonusPopUpInstance = SpawnsBonusPopups.Instance.BonusAdded(support, this.enemySupport.transform.position);        
+    public void SetAndShowEnemySupport(int support, float pitch){
+        var bonusPopUpInstance = SpawnsBonusPopups.Instance.BonusAdded(support, this.enemySupport.transform.position,pitch);        
         this.enemySupport.text=support+ this.enemySupport.text;
         
     }
-    public void SetAndShowEnemyTotal(int total){
-        SpawnsBonusPopups.Instance.BonusAdded(total, this.enemyTotal.transform.position);
+    public void SetAndShowEnemyTotal(int total, float pitch){
+        SpawnsBonusPopups.Instance.BonusAdded(total, this.enemyTotal.transform.position,pitch);
         this.enemyTotal.text=total+ this.enemyTotal.text;
         
     }
