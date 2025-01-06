@@ -121,7 +121,7 @@ public class MoveManager: MonoBehaviour
                     //Debug.Log("Spawned bonus for " + piece.name + " at position " + BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard));
                     LogManager._instance.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\">{BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} <color=green>+{pieceSupport}</color> on {BoardPosition.ConvertToChessNotation(targetedX, targetedY)}");
                     yield return new WaitForSeconds(Game._instance.waitTime/2);
-                    Game._instance.OnSupportAdded.Invoke(piece);
+                    Game._instance.OnSupportAdded.Invoke(piece, movingPiece, attackedPiece);
                     pitch+=.05f;
                     break;
                 }

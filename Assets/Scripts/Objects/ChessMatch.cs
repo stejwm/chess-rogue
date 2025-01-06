@@ -15,6 +15,7 @@ public class ChessMatch
     private GameObject[,] positions = new GameObject[8, 8];
     public bool AdamantAssaultOverride = false;
     public bool BloodThirstOverride = false;
+    public bool AvengingStrikeOverride = false;
 
     public bool isSetUpPhase = true;
     //[SerializeField] private GameObject tilePrefab;
@@ -150,7 +151,7 @@ public class ChessMatch
     public void NextTurn()
     {
         //Debug.Log("IsTurnOverride? "+turnOverride);
-        if(BloodThirstOverride || AdamantAssaultOverride)
+        if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride)
             return;
         if (currentPlayer == PieceColor.White)
         {

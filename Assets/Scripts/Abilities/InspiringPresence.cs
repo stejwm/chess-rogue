@@ -22,7 +22,7 @@ public class InspiringPresence : Ability
         Game._instance.OnSupportAdded.RemoveListener(CheckForResult); 
 
     }
-    public void CheckForResult(Chessman supporter){
+    public void CheckForResult(Chessman supporter, Chessman attacker, Chessman defender){
         if(supporter==piece){
             Game._instance.OnPieceCaptured.AddListener(IsCapture);
             Game._instance.OnPieceBounced.AddListener(IsBounce);
