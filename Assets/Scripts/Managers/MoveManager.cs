@@ -43,8 +43,6 @@ public class MoveManager: MonoBehaviour
         }
     }
     public void HandleMove(Chessman piece, int x, int y){
-        LogManager._instance.WriteLog("Moving " + piece.name + " at position " + BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)+" to "+ BoardPosition.ConvertToChessNotation(x, y));
-
         Chessman movingPiece = piece;
         
         Game._instance.OnMove.Invoke(piece);
@@ -59,9 +57,11 @@ public class MoveManager: MonoBehaviour
         if (match.GetPieceAtPosition(x,y)!=null)
         {
             Chessman attackedPiece = match.GetPieceAtPosition(x,y).GetComponent<Chessman>();
+            LogManager._instance.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"> {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} attacks <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(x, y)}");
             HandleAttack(movingPiece, attackedPiece);   
         }
         else{
+            LogManager._instance.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"> "+ BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)+" to "+ BoardPosition.ConvertToChessNotation(x, y));
             match.MovePiece(movingPiece, x,y);
             BoardManager._instance.ClearTiles();
             match.NextTurn();
@@ -112,13 +112,14 @@ public class MoveManager: MonoBehaviour
                 if (coordinate.x==targetedX && coordinate.y==targetedY){
                     supportPower+= piece.CalculateSupport();
                     Vector2 localPosition = new Vector2(2, 2);
-                    var bonusPopUpInstance= SpawnsBonusPopups.Instance.BonusAdded(piece.CalculateSupport(), localPosition, pitch);
+                    int pieceSupport =piece.CalculateSupport();
+                    var bonusPopUpInstance= SpawnsBonusPopups.Instance.BonusAdded(pieceSupport, localPosition, pitch);
                     RectTransform rt = bonusPopUpInstance.GetComponent<RectTransform>();
                     rt.position = pieceObject.transform.position; 
                     //piece.gameObject.GetComponent<MMFloatingTextMeshPro>().
                     //piece.showSupportFloatingText();
-                    Debug.Log("Spawned bonus for " + piece.name + " at position " + BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard));
-                    LogManager._instance.WriteLog("Support from " + piece.name + " at position " + BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard));
+                    //Debug.Log("Spawned bonus for " + piece.name + " at position " + BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard));
+                    LogManager._instance.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\">{BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} <color=green>+{pieceSupport}</color> on {BoardPosition.ConvertToChessNotation(targetedX, targetedY)}");
                     yield return new WaitForSeconds(Game._instance.waitTime/2);
                     Game._instance.OnSupportAdded.Invoke(piece);
                     pitch+=.05f;
@@ -251,6 +252,7 @@ public class MoveManager: MonoBehaviour
         if(totalAttackPower>=totalDefensePower){
             
             Debug.Log(movingPiece.name + " captures "+ attackedPiece.name +" on "+ BoardPosition.ConvertToChessNotation(targetedX, targetedY));
+            LogManager._instance.WriteLog($"<sprite=\"{movingPiece.color}{movingPiece.type}\" name=\"{movingPiece.color}{movingPiece.type}\"> captures <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(targetedX, targetedY)}");
             if (attackedPiece.type==PieceType.King){
                 gameOver=true;
             }
@@ -276,8 +278,9 @@ public class MoveManager: MonoBehaviour
               
         }
         else{
-            Debug.Log(movingPiece.name + " failed to capture "+ attackedPiece.name +" on "+ BoardPosition.ConvertToChessNotation(targetedX, targetedY));
-            LogManager._instance.WriteLog(movingPiece.name + " failed to capture "+ attackedPiece.name +" on "+ BoardPosition.ConvertToChessNotation(targetedX, targetedY));
+            //Debug.Log(movingPiece.name + " failed to capture "+ attackedPiece.name +" on "+ BoardPosition.ConvertToChessNotation(targetedX, targetedY));
+            //LogManager._instance.WriteLog(movingPiece.name + " failed to capture "+ attackedPiece.name +" on "+ BoardPosition.ConvertToChessNotation(targetedX, targetedY));
+            LogManager._instance.WriteLog($"<sprite=\"{movingPiece.color}{movingPiece.type}\" name=\"{movingPiece.color}{movingPiece.type}\"> failed to capture <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(targetedX, targetedY)}");
             isBounceReduced=false;
 
             //Reset attacked pieces position if capture failed 

@@ -87,16 +87,16 @@ public class Game : MonoBehaviour
         opponent.pieces = PieceFactory._instance.CreateBlackPieces(opponent);
         hero.Initialize();
         opponent.Initialize();
-        NewMatch();
+        NewMatch(hero, opponent);
     }
 
     public void OpenMarket(){
         MarketManager._instance.OpenMarket();
         this.state=ScreenState.PrisonersMarket;
     }
-    public void NewMatch(){
+    public void NewMatch(Player white, Player black){
         state = ScreenState.ActiveMatch;
-        currentMatch = new ChessMatch(hero, opponent);
+        currentMatch = new ChessMatch(white, black);
     }
 
     public bool PositionOnBoard(int x, int y)
@@ -242,7 +242,7 @@ public class Game : MonoBehaviour
                         break;
                 }
             }
-        NewMatch();
+        NewMatch(hero, opponent);
     }
 
     public void CloseShop(){
