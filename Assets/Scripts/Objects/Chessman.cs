@@ -73,8 +73,8 @@ public abstract class Chessman : MonoBehaviour
     private string player;
 
     //References to all the possible Sprites that this Chesspiece could be
-    public Sprite black_queen, black_knight, black_bishop, black_king, black_rook, black_pawn;
-    public Sprite white_queen, white_knight, white_bishop, white_king, white_rook, white_pawn;
+    public Sprite blackSprite;
+    public Sprite whiteSprite;
 
     public abstract List<BoardPosition> GetValidMoves();
     public abstract List<BoardPosition> GetValidSupportMoves();
@@ -94,33 +94,10 @@ public abstract class Chessman : MonoBehaviour
     {
         //Take the instantiated location and adjust transform
         UpdateUIPosition();
-
-        //Choose correct sprite based on piece's name
-        if (this.name.Contains("black_pawn"))
+        switch (this.color)
         {
-            this.GetComponent<SpriteRenderer>().sprite = black_pawn;
-            player = "black";
-        }
-        else if (this.name.Contains("white_pawn"))
-        {
-            this.GetComponent<SpriteRenderer>().sprite = white_pawn;
-            player = "white";
-        }
-        else
-        switch (this.name)
-        {
-            case "black_queen": this.GetComponent<SpriteRenderer>().sprite = black_queen; player = "black"; break;
-            case "black_knight": this.GetComponent<SpriteRenderer>().sprite = black_knight; player = "black"; break;
-            case "black_bishop": this.GetComponent<SpriteRenderer>().sprite = black_bishop; player = "black"; break;
-            case "black_king": this.GetComponent<SpriteRenderer>().sprite = black_king; player = "black"; break;
-            case "black_rook": this.GetComponent<SpriteRenderer>().sprite = black_rook; player = "black"; break;
-            case "black_pawn": this.GetComponent<SpriteRenderer>().sprite = black_pawn; player = "black"; break;
-            case "white_queen": this.GetComponent<SpriteRenderer>().sprite = white_queen; player = "white"; break;
-            case "white_knight": this.GetComponent<SpriteRenderer>().sprite = white_knight; player = "white"; break;
-            case "white_bishop": this.GetComponent<SpriteRenderer>().sprite = white_bishop; player = "white"; break;
-            case "white_king": this.GetComponent<SpriteRenderer>().sprite = white_king; player = "white"; break;
-            case "white_rook": this.GetComponent<SpriteRenderer>().sprite = white_rook; player = "white"; break;
-            case "white_pawn": this.GetComponent<SpriteRenderer>().sprite = white_pawn; player = "white"; break;
+            case PieceColor.White: this.GetComponent<SpriteRenderer>().sprite = whiteSprite; player = "white"; break;
+            case PieceColor.Black: this.GetComponent<SpriteRenderer>().sprite = blackSprite; player = "black"; break;
         }
         
         

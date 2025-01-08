@@ -36,22 +36,4 @@ public class LeagueOfAssassins : AIPlayer
                 }
             }
     }
-
-    public override void MakeMove(ChessMatch match)
-    {
-        StartCoroutine(Move());
-        
-    }
-
-    public IEnumerator Move(){
-        yield return new WaitForSeconds(Game._instance.waitTime);
-        agent.RequestDecision();
-    }
-
-    public override void DestroyPieces(){
-       
-        base.DestroyPieces(); // Call the base class logic to destroy pieces.
-        agent.ShutDown();         // Additional AI-specific logic.
-    
-    }
 }

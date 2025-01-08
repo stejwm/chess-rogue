@@ -165,18 +165,8 @@ MonoBehaviour:
   isValidForAttack: 0
   gridOrigin: {x: 0, y: 0, z: 0}
   supportFloatingText: {fileID: 0}
-  black_queen: {fileID: 21300000, guid: 8a261e5b4469e144e92e1a37de996771, type: 3}
-  black_knight: {fileID: 21300000, guid: b973ff1fa6772124c9761f1f74d89d78, type: 3}
-  black_bishop: {fileID: 21300000, guid: 29c9a6637c780b94d9a73a31c6b62944, type: 3}
-  black_king: {fileID: 21300000, guid: 7db68db4e15369546b0a4e136b4019fd, type: 3}
-  black_rook: {fileID: 21300000, guid: 9b3a8def97a273344adf69f19b3310ee, type: 3}
-  black_pawn: {fileID: 21300000, guid: 31e69f421abf29b44b6301d5fcc517e3, type: 3}
-  white_queen: {fileID: 21300000, guid: a149743de083b7341a378e1b75108661, type: 3}
-  white_knight: {fileID: 21300000, guid: 330415107dccd2c44a188544ec70ccd7, type: 3}
-  white_bishop: {fileID: 21300000, guid: b20999c50b9d03f488d8824b11242727, type: 3}
-  white_king: {fileID: 21300000, guid: 932c4135832f4eb409a8d4c843e1fe81, type: 3}
-  white_rook: {fileID: 21300000, guid: 5d89dbdcb8b95094ca30d1370c26bb51, type: 3}
-  white_pawn: {fileID: 21300000, guid: ac7f21bcfe372d742978a85bd1043959, type: 3}
+  blackSprite: {fileID: 21300000, guid: 8a261e5b4469e144e92e1a37de996771, type: 3}
+  whiteSprite: {fileID: 21300000, guid: a149743de083b7341a378e1b75108661, type: 3}
 --- !u!114 &7058401800989171895
 MonoBehaviour:
   m_ObjectHideFlags: 0

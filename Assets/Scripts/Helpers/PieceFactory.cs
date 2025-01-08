@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEditor.Experimental.GraphView;
 
 public class PieceFactory : MonoBehaviour
 {
@@ -38,6 +39,28 @@ public class PieceFactory : MonoBehaviour
     public List<GameObject> CreateBlackRookArmy(Player owner)
     {
         return CreateRookArmy(PieceColor.Black, Team.Enemy, owner);
+    }
+
+    public List<GameObject> CreateKnightsOfTheRoundTable(Player owner){
+        PieceColor color = PieceColor.Black;
+        Team team = Team.Enemy;
+        string prefix = color == PieceColor.White ? "white" : "black";
+        int backRow = color == PieceColor.White ? 0 : 7;
+        int pawnRow = color == PieceColor.White ? 1 : 6;
+        List<GameObject> pieces = new List<GameObject>();
+
+        var names = new List<string>{"Kay", "Percival", "Bedivere", "Arthur", "Lancelot", "Gawain", "Gaheris", "Gareth", "Agravain", "Mordred", "Tristan", "Palamedes"};
+        for (int i=0; i<11; i++){
+            if(i<6)
+                if(names[i].Equals("Arthur"))
+                    pieces.Add(Create(PieceType.King, $"{names[i]}", i+1, backRow, color, team, owner));
+                else
+                    pieces.Add(Create(PieceType.Knight, $"{names[i]}", i+1, backRow, color, team, owner));
+            else{
+                pieces.Add(Create(PieceType.Knight, $"{names[i]}", i-5, pawnRow, color, team, owner));
+            }
+        }
+        return pieces;
     }
 
     public List<GameObject> CreateAbilityPiecesBlack(Player owner, Ability ability){

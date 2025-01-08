@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1785384077500849511}
   - component: {fileID: 2371168884465115923}
   m_Layer: 0
-  m_Name: IronDefenders
+  m_Name: KnightsOfTheRoundTable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

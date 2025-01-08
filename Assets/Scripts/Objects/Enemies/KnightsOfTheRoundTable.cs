@@ -4,22 +4,22 @@ using Unity.MLAgents.Integrations.Match3;
 using UnityEngine;
 using Rand= System.Random;
 
-public class IronDefenders : AIPlayer
+public class KnightsOfTheRoundTable : AIPlayer
 {
     private static Rand rng = new Rand();
-    public IronDefenders(List<GameObject> pieces):base(pieces)
+    public KnightsOfTheRoundTable(List<GameObject> pieces):base(pieces)
     {
         this.pieces=pieces;
     }
     public override void Initialize()
     {   
-        pieces = PieceFactory._instance.CreateAbilityPiecesBlack(this, new IronResolve());
+        pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(this);
         agent.pieces=pieces;
         agent.StartUp();
     }
 
     public override void LevelUp(int level){
-        for (int i =0; i<level; i++)
+        for (int i =0; i<level*2; i++)
             foreach (GameObject piece in pieces)
             {
                 Chessman cm = piece.GetComponent<Chessman>();
@@ -35,23 +35,5 @@ public class IronDefenders : AIPlayer
                         break;
                 }
             }
-    }
-
-    public override void MakeMove(ChessMatch match)
-    {
-        StartCoroutine(Move());
-        
-    }
-
-    public IEnumerator Move(){
-        yield return new WaitForSeconds(Game._instance.waitTime);
-        agent.RequestDecision();
-    }
-
-    public override void DestroyPieces(){
-       
-        base.DestroyPieces(); // Call the base class logic to destroy pieces.
-        agent.ShutDown();         // Additional AI-specific logic.
-    
     }
 }

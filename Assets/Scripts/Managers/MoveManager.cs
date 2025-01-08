@@ -289,12 +289,14 @@ public class MoveManager: MonoBehaviour
             //update x and y coords with original location
             targetedX = movingPiece.GetXBoard();
             targetedY = movingPiece.GetYBoard();
-            if(attackedPiece.CalculateAttack()>0){
+            /* if(attackedPiece.CalculateAttack()>0){
                 attackedPiece.attackBonus-=1;
                 isBounceReduced =true;
-            }
+            } */
             if(attackedPiece.CalculateDefense()>0){
-                attackedPiece.defenseBonus-=1;
+                attackedPiece.defenseBonus-=movingPiece.CalculateAttack();
+                if(attackedPiece.CalculateDefense()<0)
+                    attackedPiece.defenseBonus+=Math.Abs(attackedPiece.CalculateDefense());
                 isBounceReduced =true;
             }
             //Debug.Log("Setting attacked piece Position back to: "+attackingPiece.xBoard+", "+attackedPiece)
