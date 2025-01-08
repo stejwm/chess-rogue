@@ -4,22 +4,21 @@ using Unity.MLAgents.Integrations.Match3;
 using UnityEngine;
 using Rand= System.Random;
 
-public class AIPlayer : Player
+public class LeagueOfAssassins : AIPlayer
 {
-    [SerializeField] protected PlayerAgent agent;
     private static Rand rng = new Rand();
-    public AIPlayer(List<GameObject> pieces):base(pieces)
+    public LeagueOfAssassins(List<GameObject> pieces):base(pieces)
     {
         this.pieces=pieces;
     }
     public override void Initialize()
     {   
-        pieces = PieceFactory._instance.CreateBlackPieces(this);
+        pieces = PieceFactory._instance.CreateAbilityPiecesBlack(this, new Assassin());
         agent.pieces=pieces;
         agent.StartUp();
     }
 
-    public virtual void LevelUp(int level){
+    public override void LevelUp(int level){
         for (int i =0; i<level; i++)
             foreach (GameObject piece in pieces)
             {

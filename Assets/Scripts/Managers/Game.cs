@@ -25,7 +25,7 @@ public enum ScreenState
 public class Game : MonoBehaviour
 {
     public Player hero;
-    public Player opponent;
+    public AIPlayer opponent;
     public GameObject card;
     public PieceColor heroColor;
     public AudioSource audioSource;
@@ -37,6 +37,8 @@ public class Game : MonoBehaviour
     public int level=0;
     public float waitTime;
     public List<Ability> AllAbilities; // Drag-and-drop ScriptableObject assets here in the Inspector
+
+    public List<GameObject> AllOpponents;
     //public PlayerAgent opponent;
     public ScreenState state = ScreenState.MainGameboard;
     private static Rand rng = new Rand();
@@ -81,10 +83,7 @@ public class Game : MonoBehaviour
     }
     public void Start()
     {
-        
-        hero.pieces = PieceFactory._instance.CreateWhitePieces(hero);
         heroColor=PieceColor.White;
-        opponent.pieces = PieceFactory._instance.CreateBlackPieces(opponent);
         hero.Initialize();
         opponent.Initialize();
         NewMatch(hero, opponent);
@@ -222,26 +221,13 @@ public class Game : MonoBehaviour
     }
     public void IncreaseDifficultyMatch(){
         state=ScreenState.ActiveMatch;
+        GameObject obj;
         opponent.DestroyPieces();
-
-        opponent.pieces=PieceFactory._instance.CreateBlackPieces(opponent);
+        List<GameObject> randomOpps = AllOpponents.OrderBy(_ => rng.Next()).ToList();
+        obj = Instantiate(randomOpps[0]);
+        opponent = obj.GetComponent<AIPlayer>();
         opponent.Initialize();
-        for (int i =0; i<level; i++)
-            foreach (GameObject piece in opponent.pieces)
-            {
-                Chessman cm = piece.GetComponent<Chessman>();
-                switch (rng.Next(3)){
-                    case 0:
-                        cm.defense+=1;
-                        break;
-                    case 1:
-                        cm.attack+=1;
-                        break;
-                    case 2:
-                        cm.support+=1;
-                        break;
-                }
-            }
+        opponent.LevelUp(level);
         NewMatch(hero, opponent);
     }
 

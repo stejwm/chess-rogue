@@ -418,6 +418,6 @@ public abstract class Chessman : MonoBehaviour
             return false;
         }
 
-        return this.name ==item.name && this.xBoard == item.xBoard && this.yBoard==item.yBoard;
+        return this.name ==item.name && this.xBoard == item.xBoard && this.yBoard==item.yBoard && this.startingPosition ==item.startingPosition;
     }
 }

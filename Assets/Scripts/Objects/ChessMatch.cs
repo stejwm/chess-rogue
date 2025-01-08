@@ -183,8 +183,8 @@ public class ChessMatch
         Debug.Log(piece.name + " moved to "+ BoardPosition.ConvertToChessNotation(x,y));
     } 
 
-    public void PlayerTurn(){
-        currentPlayer=Game._instance.heroColor;
+    public void MyTurn(PieceColor player){
+        currentPlayer=player;
     }
     public void EndGame(){
         BattlePanel._instance.HideResults();   

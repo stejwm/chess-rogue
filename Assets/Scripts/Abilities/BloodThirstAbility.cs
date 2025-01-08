@@ -48,7 +48,7 @@ public class BloodThirstAbility : Ability
         Debug.Log("Blood Thirst");
         
         Game._instance.currentMatch.BloodThirstOverride =true;
-        Game._instance.currentMatch.PlayerTurn();
+        Game._instance.currentMatch.MyTurn(piece.color);
         List<GameObject> pieces;
         piece.moveProfile = new AttackOnlyMovement(startingProfile);
         if (piece.color==PieceColor.White)
