@@ -52,7 +52,8 @@ public class AvengingStrike : Ability
             Debug.Log("Overriding turn for Avenging Strike");
             AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Avenging Strike</gradient></color>", "attacking");
             Game._instance.currentMatch.AvengingStrikeOverride =true;
-            Game._instance.currentMatch.MyTurn(piece.color);
+            if(Game._instance.currentMatch.BloodThirstOverride)
+                Game._instance.currentMatch.MyTurn(piece.color);
             Game._instance.currentMatch.ExecuteTurn(piece, targetPosition.x, targetPosition.y);
         }
     }
