@@ -25,12 +25,16 @@ public class ChessMatch
     {
         this.white=white;
         this.black=black;
-        CreateTiles();
+        //CreateTiles();
         CheckInventory();
         
     }
 
     public void StartMatch(){
+        var bleh = (AIPlayer)white;
+        var blah = (AIPlayer)black;
+        bleh.CreateMoveCommandDictionary();
+        blah.CreateMoveCommandDictionary();
         isSetUpPhase=false;
         Game._instance.toggleAllPieceColliders(false);
         BoardManager._instance.toggleTileColliders(true);
@@ -64,7 +68,7 @@ public class ChessMatch
             Game._instance.togglePieceColliders(Game._instance.hero.inventoryPieces, true);
         }
         else{
-            StartMatch();
+            //StartMatch();
         }
     }
     public ChessMatch(Player white)
@@ -151,7 +155,7 @@ public class ChessMatch
     public void NextTurn()
     {
         //Debug.Log("IsTurnOverride? "+turnOverride);
-        if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride)
+        if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride || Game._instance.pauseOverride)
             return;
         if (currentPlayer == PieceColor.White)
         {
@@ -167,7 +171,10 @@ public class ChessMatch
 
     public GameObject GetPieceAtPosition(int x, int y)
     {
-        return positions[x, y];
+        if(positions[x, y])
+            return positions[x, y];
+        else
+            return null;
     }
 
     public void SetPositionEmpty(int x, int y)
@@ -180,7 +187,6 @@ public class ChessMatch
         piece.yBoard = y;
         positions[x,y] = piece.gameObject;
         piece.UpdateUIPosition();
-        Debug.Log(piece.name + " moved to "+ BoardPosition.ConvertToChessNotation(x,y));
     } 
 
     public void MyTurn(PieceColor player){

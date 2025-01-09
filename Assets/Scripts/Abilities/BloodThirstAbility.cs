@@ -45,22 +45,18 @@ public class BloodThirstAbility : Ability
 
     private void EnableSecondAttack()
     {   
-        Debug.Log("Blood Thirst");
-        
         Game._instance.currentMatch.BloodThirstOverride =true;
-        Game._instance.currentMatch.MyTurn(piece.color);
+        
         List<GameObject> pieces;
         piece.moveProfile = new AttackOnlyMovement(startingProfile);
-        if (piece.color==PieceColor.White)
-            pieces=Game._instance.currentMatch.white.pieces;
-        else
-            pieces=Game._instance.currentMatch.black.pieces;
-
+        pieces = piece.owner.pieces;
         foreach (GameObject pieceObject in pieces)
         {
             pieceObject.GetComponent<Chessman>().isValidForAttack=false;
         }
         piece.isValidForAttack=true;
+        Debug.Log("Only thirster valid for attack");
+        Game._instance.currentMatch.MyTurn(piece.color);
         if (piece.moveProfile.GetValidMoves(piece).Count<=0){
             thirsting=false;
             Debug.Log("No valid attack found, thirst over");
@@ -69,7 +65,7 @@ public class BloodThirstAbility : Ability
             return;
         }
         AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Blood Thirst</gradient></color>",  " attack again");
-        
+        piece.owner.MakeMove(Game._instance.currentMatch);
     }
 
     private void EndThirst(Chessman attackingPiece, Chessman defendingPiece, bool isBounceReduced){

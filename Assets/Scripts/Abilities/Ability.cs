@@ -24,4 +24,16 @@ public abstract class Ability : ScriptableObject
     {
     return Instantiate(this);
     }
+
+    public override bool Equals(object obj)
+    {
+        var item = obj as Ability;
+
+        if (item == null)
+        {
+            return false;
+        }
+
+        return this.abilityName ==item.abilityName && this.description == item.description;
+    }
 }

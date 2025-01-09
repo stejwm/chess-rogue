@@ -25,7 +25,9 @@ public enum ScreenState
 public class Game : MonoBehaviour
 {
     public Player hero;
+    public AIPlayer white;
     public AIPlayer opponent;
+    public AIPlayer black;
     public GameObject card;
     public PieceColor heroColor;
     public AudioSource audioSource;
@@ -61,6 +63,8 @@ public class Game : MonoBehaviour
     private Chessman selectedPiece;
     private bool applyingAbility=false;
     public bool isInMenu =false;
+    public bool pauseOverride =false;
+    public bool pause =false;
 
 
 
@@ -83,10 +87,22 @@ public class Game : MonoBehaviour
     }
     public void Start()
     {
+        //Time.timeScale = 0.5f;
+        BoardManager._instance.CreateBoard();
         heroColor=PieceColor.White;
-        hero.Initialize();
-        opponent.Initialize();
-        NewMatch(hero, opponent);
+        black.Initialize();
+        white.Initialize();
+        level=rng.Next(10);
+        white.LevelUp(level);
+        black.LevelUp(level);
+        StartCoroutine(DelayedMatch());
+        
+    }
+    public IEnumerator DelayedMatch(){
+        yield return null;
+        white.RandomAbilities();
+        black.RandomAbilities();
+        NewMatch(white, black);
     }
 
     public void OpenMarket(){
@@ -96,6 +112,13 @@ public class Game : MonoBehaviour
     public void NewMatch(Player white, Player black){
         state = ScreenState.ActiveMatch;
         currentMatch = new ChessMatch(white, black);
+        currentMatch.StartMatch();
+    }
+
+    public void Pause(){
+        pauseOverride=!pauseOverride;
+        pause=true;
+
     }
 
     public bool PositionOnBoard(int x, int y)
@@ -109,6 +132,10 @@ public class Game : MonoBehaviour
         if(selectedCard && selectedPiece){
             if(!applyingAbility)
                 StartCoroutine(ApplyAbility(selectedPiece)); 
+        }
+        if(pause && !pauseOverride){
+            currentMatch.NextTurn();
+            pause=false;
         }
     }
     private IEnumerator ApplyAbility(Chessman target){

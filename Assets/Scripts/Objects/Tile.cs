@@ -102,7 +102,6 @@ public class Tile : MonoBehaviour
     }
 
     private void OnMouseDown(){
-        Debug.Log("Tile selected");
         if (Game._instance.isInMenu)
         {
             return;

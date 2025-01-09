@@ -23,9 +23,10 @@ public class PlayerAgent : Agent
         Game._instance.OnGameEnd.AddListener(GameEnd);
         Game._instance.OnPieceCaptured.AddListener(CaptureReward);
         Game._instance.OnPieceBounced.AddListener(BounceReward);
+        Game._instance.OnSupportAdded.AddListener(SupportReward);
         
         
-        GenerateMoveCommandDictionary();
+        
 
     }
 
@@ -35,30 +36,45 @@ public class PlayerAgent : Agent
         Game._instance.OnPieceCaptured.RemoveListener(CaptureReward);
         Game._instance.OnPieceBounced.RemoveListener(BounceReward);
     }
-    public void GenerateMoveCommandDictionary()
+    public void CreateMoveCommandDictionary(){
+        GenerateMoveCommandDictionary(color==PieceColor.White);
+    }
+    
+    public void GenerateMoveCommandDictionary(bool isPlayerWhite)
     {
-        //Debug.Log("Generating dictionary of all possible moves");
-        //Debug.Log(pieces==null);
+        Debug.Log("Generating Move Commands");
+        moveCommands.Clear(); // Clear the dictionary before generating new commands
+        int index = 0; // This will go from 0 to 1023
 
-        int index = 0;  // This will go from 0 to 1023
-        foreach (GameObject pieceObject in pieces)
+        // Loop through the first 3 rows from the player's perspective
+        for (int relativeY = 0; relativeY < 3; relativeY++) // relativeY: 0, 1, 2
         {
-            Chessman piece = pieceObject.GetComponent<Chessman>();
+            int actualY = isPlayerWhite ? relativeY : 7 - relativeY; // Adjust for color perspective
 
-            // Loop through all 64 positions on the board
-            for (int x = 0; x < 8; x++)  // x-coordinate (0 to 7)
+            for (int x = 0; x < 8; x++) // x-coordinate (columns)
             {
-                for (int y = 0; y < 8; y++)  // y-coordinate (0 to 7)
-                {
-                    // Create a MoveCommand for this piece and destination
-                    MoveCommand moveCommand = new MoveCommand(piece, x, y);
-                    moveCommands.Add(index, moveCommand);
+                Tile tile = BoardManager._instance.GetTileAt(x, actualY); // Get the tile at this position
+                Chessman piece = tile.getPiece(); // Get the piece on the tile (can be null)
 
-                    index++;  // Increment the index
+                // Loop through all 64 positions on the board for possible destinations
+                for (int destX = 0; destX < 8; destX++)
+                {
+                    for (int destY = 0; destY < 8; destY++)
+                    {
+                        // Adjust destination Y for perspective
+                        int adjustedDestY = isPlayerWhite ? destY : 7 - destY;
+
+                        // Create a MoveCommand for this piece and destination
+                        MoveCommand moveCommand = new MoveCommand(piece, destX, adjustedDestY);
+                        moveCommands.Add(index, moveCommand);
+
+                        index++; // Increment the index
+                    }
                 }
             }
         }
-        //Debug.Log("Move Dictionary generated. Count="+moveCommands.Count);
+
+        Debug.Log($"Move Dictionary generated. Count = {moveCommands.Count}");
     }
     public MoveCommand GetMoveCommandFromIndex(int index)
     {
@@ -90,6 +106,8 @@ public class PlayerAgent : Agent
             //Debug.Log(entry.Value);
             foreach(GameObject pieceObject in pieces){
                 Chessman selectedPiece = pieceObject.GetComponent<Chessman>();
+                if(!selectedPiece.isValidForAttack)
+                    continue;
                 selectedPiece.SetValidMoves();
                 var moves = selectedPiece.GetAllValidMoves();
                 //Debug.Log(moves.Count);
@@ -102,7 +120,6 @@ public class PlayerAgent : Agent
                     //Debug.Log("Test move: "+selectedPiece.name+" to "+testCommand.x+","+testCommand.y);
                     if(testCommand.Equals(entry.Value)){
                         validIndexes.Add(entry.Key);
-                        
                     }
                 }
             }
@@ -136,6 +153,7 @@ public class PlayerAgent : Agent
                     sensor.AddObservation(piece.defenseBonus);
                     sensor.AddObservation(piece.support);
                     sensor.AddObservation(piece.supportBonus);
+                    sensor.AddObservation(GetAbilityObservation(piece));
                 }
                 else{
                     sensor.AddOneHotObservation((int)PieceType.None, 7); // 7 categories
@@ -146,11 +164,24 @@ public class PlayerAgent : Agent
                     sensor.AddObservation(0);
                     sensor.AddObservation(0);
                     sensor.AddObservation(0);
+                    sensor.AddObservation(new float[64]);
                 }
             }
         }
             
         
+    }
+    public float[] GetAbilityObservation(Chessman piece)
+    {
+        float[] abilitiesObservation = new float[64];
+
+        foreach (Ability ability in piece.abilities)
+        {
+            int index = Game._instance.AllAbilities.IndexOf(ability);
+            abilitiesObservation[index] = 1; // Mark the ability as present
+        }
+
+        return abilitiesObservation;
     }
 
     public void GameEnd(PieceColor color){
@@ -169,12 +200,11 @@ public class PlayerAgent : Agent
     private IEnumerator ReloadScene()
     {
         yield return null; // Allow EndEpisode to complete
-        //SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void CaptureReward(Chessman attacker){
         if(attacker.color==color){
-            //Debug.Log("Capture +");
             SetReward(0.3f);
         }
         else{
@@ -182,11 +212,16 @@ public class PlayerAgent : Agent
         }
     }
 
+    public void SupportReward(Chessman supporter, Chessman attacker, Chessman defender){
+        if(supporter.color==color)
+            SetReward(0.05f);
+    }
+
     public void BounceReward(Chessman attacker, Chessman defender, bool didBounceReduce){
         if(attacker.color==color && didBounceReduce)
-            SetReward(0.1f);
+            SetReward(0.05f);
         else{
-            SetReward(-0.1f);
+            SetReward(-0.05f);
         }
     }
 }

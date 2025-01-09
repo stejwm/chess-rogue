@@ -37,23 +37,22 @@ public class AvengingStrike : Ability
     }
 
     public void EndAvenge(Chessman attacker, Chessman defender, bool isBounceReduced){
-        if(attacker==piece && readyToAvenge){
-            Game._instance.currentMatch.AvengingStrikeOverride =false;
-            readyToAvenge=false;
-        }
+        Game._instance.currentMatch.AvengingStrikeOverride =false;
+        readyToAvenge=false;
     }
 
     public void Avenge(Chessman attacker)
     {
         if(attacker==piece && readyToAvenge){
             Game._instance.currentMatch.AvengingStrikeOverride =false;
-            readyToAvenge=false;            
+            readyToAvenge=false;     
         }
         else if (readyToAvenge)
         {
             Debug.Log("Overriding turn for Avenging Strike");
             AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Avenging Strike</gradient></color>", "attacking");
             Game._instance.currentMatch.AvengingStrikeOverride =true;
+            Game._instance.currentMatch.MyTurn(piece.color);
             Game._instance.currentMatch.ExecuteTurn(piece, targetPosition.x, targetPosition.y);
         }
     }

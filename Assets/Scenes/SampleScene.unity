@@ -1724,6 +1724,107 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 201536730}
   m_CullTransparentMesh: 1
+--- !u!1 &240107098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 240107102}
+  - component: {fileID: 240107101}
+  - component: {fileID: 240107100}
+  - component: {fileID: 240107099}
+  m_Layer: 0
+  m_Name: Opponent (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &240107099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240107098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fc03b6fba6356e4eb093b143430f574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  pieces: []
+  color: 1
+--- !u!114 &240107100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240107098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    VectorObservationSize: 5120
+    NumStackedVectorObservations: 1
+    m_ActionSpec:
+      m_NumContinuousActions: 0
+      BranchSizes: 00060000
+    VectorActionSize: 00060000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 0
+    hasUpgradedBrainParametersWithActionSpec: 1
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 0
+  m_BehaviorType: 0
+  m_BehaviorName: BlackPlayerAI
+  TeamId: 1
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_ObservableAttributeHandling: 0
+--- !u!114 &240107101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240107098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bc3daba33f3b1d4d9cafc8a730a674a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCoins: 0
+  playerBlood: 0
+  pieces: []
+  capturedPieces: []
+  inventoryPieces: []
+  agent: {fileID: 240107099}
+  color: 1
+--- !u!4 &240107102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240107098}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.3863485, y: 1.1426044, z: -0.017811868}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &243620191
 GameObject:
   m_ObjectHideFlags: 0
@@ -3236,7 +3337,7 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
   pieces: []
-  color: 1
+  color: 0
 --- !u!114 &420987367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3250,20 +3351,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1024
+    VectorObservationSize: 5120
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
-      BranchSizes: 00040000
-    VectorActionSize: 00040000
+      BranchSizes: 00060000
+    VectorActionSize: 00060000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: ae5baaf6b0054d74d86fc8da6bc018bf, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 2
-  m_BehaviorName: My Behavior
-  TeamId: 1
+  m_BehaviorType: 0
+  m_BehaviorName: WhitePlayerAI
+  TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
   m_ObservableAttributeHandling: 0
@@ -3285,6 +3386,7 @@ MonoBehaviour:
   capturedPieces: []
   inventoryPieces: []
   agent: {fileID: 420987366}
+  color: 0
 --- !u!1 &448967885
 GameObject:
   m_ObjectHideFlags: 0
@@ -6338,7 +6440,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1027058665}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1624334841}
+        m_TargetAssemblyTypeName: Game, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1027058665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7235,7 +7349,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 118, y: 107.719574}
+  m_AnchoredPosition: {x: 118, y: 107.72073}
   m_SizeDelta: {x: -1567.02, y: -215.43}
   m_Pivot: {x: 0.000000034458935, y: 0.000000027939677}
 --- !u!114 &1185444666
@@ -11373,7 +11487,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hero: {fileID: 596672140}
+  white: {fileID: 420987368}
   opponent: {fileID: 420987368}
+  black: {fileID: 240107101}
   card: {fileID: 3186847924759451737, guid: 213abdc1572143548af75a7c41f77bd7, type: 3}
   heroColor: 0
   audioSource: {fileID: 1624334843}
@@ -11382,7 +11498,7 @@ MonoBehaviour:
   move: {fileID: 8300000, guid: d8d04c6f80a1140db85ede568dab1f51, type: 3}
   ability: {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
   level: 0
-  waitTime: 0.5
+  waitTime: 0.1
   AllAbilities:
   - {fileID: 11400000, guid: 251eef97baecfca4ba49005b2d01ae7c, type: 2}
   - {fileID: 11400000, guid: dab7e42cd63e2c64aa32df91f10aeac5, type: 2}
@@ -11411,6 +11527,8 @@ MonoBehaviour:
   baseAttack: 0
   baseDefense: 0
   isInMenu: 0
+  pauseOverride: 0
+  pause: 0
   OnPieceCaptured:
     m_PersistentCalls:
       m_Calls: []
@@ -15646,6 +15764,7 @@ SceneRoots:
   - {fileID: 411228119}
   - {fileID: 1895968343}
   - {fileID: 420987365}
+  - {fileID: 240107102}
   - {fileID: 1932296502}
   - {fileID: 1711020995}
   - {fileID: 596672141}

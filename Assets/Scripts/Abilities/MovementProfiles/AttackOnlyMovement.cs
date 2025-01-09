@@ -10,8 +10,6 @@ public class AttackOnlyMovement : MovementProfile
     Game game;
     public AttackOnlyMovement(MovementProfile old){
         oldProfile=old;
-        GameObject controller = GameObject.FindGameObjectWithTag("GameController");
-        game = controller.GetComponent<Game>();
     }
     public override List<BoardPosition> GetValidMoves(Chessman piece) {
         List<BoardPosition> moves = new List<BoardPosition>();

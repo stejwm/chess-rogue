@@ -8,15 +8,23 @@ public class AIPlayer : Player
 {
     [SerializeField] protected PlayerAgent agent;
     private static Rand rng = new Rand();
+    public PieceColor color;
     public AIPlayer(List<GameObject> pieces):base(pieces)
     {
         this.pieces=pieces;
     }
     public override void Initialize()
     {   
-        pieces = PieceFactory._instance.CreateBlackPieces(this);
+        if (color==PieceColor.White)
+            pieces = PieceFactory._instance.CreateWhitePieces(this);
+        else
+            pieces = PieceFactory._instance.CreateBlackPieces(this);
         agent.pieces=pieces;
         agent.StartUp();
+    }
+
+    public void CreateMoveCommandDictionary(){
+        agent.CreateMoveCommandDictionary();
     }
 
     public virtual void LevelUp(int level){
@@ -38,6 +46,18 @@ public class AIPlayer : Player
             }
     }
 
+    public virtual void RandomAbilities(){
+        
+        foreach (GameObject piece in pieces)
+        {
+            Chessman cm = piece.GetComponent<Chessman>();
+            int index = rng.Next(30);
+            if (Game._instance.AllAbilities.Count>index){
+                cm.AddAbility(Game._instance.AllAbilities[index].Clone());
+            }
+        }
+    }
+
     public override void MakeMove(ChessMatch match)
     {
         StartCoroutine(Move());
@@ -45,7 +65,7 @@ public class AIPlayer : Player
     }
 
     public IEnumerator Move(){
-        yield return new WaitForSeconds(Game._instance.waitTime);
+        yield return null;
         agent.RequestDecision();
     }
 

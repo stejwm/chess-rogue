@@ -84,7 +84,6 @@ public class MoveManager: MonoBehaviour
         }
 
         //Calculate attacking support first
-        Debug.Log("Running support check for attacking pieces");
         StartCoroutine(AddSupport(movingPiece, attackedPiece, true));
     }
 
@@ -143,7 +142,6 @@ public class MoveManager: MonoBehaviour
             yield break;
         }
         readyForCleanup=true;
-        Debug.Log("Running support check for defending pieces");
         yield return StartCoroutine(AddSupport(movingPiece, attackedPiece, false));
         
     }
@@ -251,7 +249,6 @@ public class MoveManager: MonoBehaviour
         yield return new WaitForSeconds(Game._instance.waitTime);
         if(totalAttackPower>=totalDefensePower){
             
-            Debug.Log(movingPiece.name + " captures "+ attackedPiece.name +" on "+ BoardPosition.ConvertToChessNotation(targetedX, targetedY));
             LogManager._instance.WriteLog($"<sprite=\"{movingPiece.color}{movingPiece.type}\" name=\"{movingPiece.color}{movingPiece.type}\"> captures <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(targetedX, targetedY)}");
             if (attackedPiece.type==PieceType.King){
                 gameOver=true;

@@ -38,6 +38,11 @@ public class BoardManager : MonoBehaviour
         tile.SetValidMove();
     }
 
+    public Tile GetTileAt(int x, int y){
+        //Debug.Log("X: "+x+" Y: "+y);
+        return tiles[new BoardPosition(x,y)];
+    }
+
     public void CreateBoard(){
 
         for(int i =0; i<8; i++){
