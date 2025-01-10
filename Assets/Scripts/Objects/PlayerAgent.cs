@@ -51,21 +51,24 @@ public class PlayerAgent : Agent
         {
             int actualY = isPlayerWhite ? relativeY : 7 - relativeY; // Adjust for color perspective
 
-            for (int x = 0; x < 8; x++) // x-coordinate (columns)
+            for (int relativeX = 0; relativeX < 8; relativeX++) // relativeX: 0 to 7
             {
-                Tile tile = BoardManager._instance.GetTileAt(x, actualY); // Get the tile at this position
+                int actualX = isPlayerWhite ? relativeX : 7 - relativeX; // Adjust for left-to-right perspective
+
+                Tile tile = BoardManager._instance.GetTileAt(actualX, actualY); // Get the tile at this position
                 Chessman piece = tile.getPiece(); // Get the piece on the tile (can be null)
 
                 // Loop through all 64 positions on the board for possible destinations
-                for (int destX = 0; destX < 8; destX++)
+                for (int destRelativeX = 0; destRelativeX < 8; destRelativeX++)
                 {
-                    for (int destY = 0; destY < 8; destY++)
+                    for (int destRelativeY = 0; destRelativeY < 8; destRelativeY++)
                     {
-                        // Adjust destination Y for perspective
-                        int adjustedDestY = isPlayerWhite ? destY : 7 - destY;
+                        // Adjust destination coordinates for perspective
+                        int adjustedDestX = isPlayerWhite ? destRelativeX : 7 - destRelativeX;
+                        int adjustedDestY = isPlayerWhite ? destRelativeY : 7 - destRelativeY;
 
                         // Create a MoveCommand for this piece and destination
-                        MoveCommand moveCommand = new MoveCommand(piece, destX, adjustedDestY);
+                        MoveCommand moveCommand = new MoveCommand(piece, adjustedDestX, adjustedDestY);
                         moveCommands.Add(index, moveCommand);
 
                         index++; // Increment the index

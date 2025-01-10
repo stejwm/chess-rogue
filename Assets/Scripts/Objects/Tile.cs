@@ -17,16 +17,18 @@ public class Tile : MonoBehaviour
     private void OnMouseEnter(){
         Chessman piece = getPiece();
         if(piece){
-        var sprite = piece.GetComponent<SpriteRenderer>().sprite;
-        if(piece.team==Team.Hero)
-            StatBoxManager._instance.SetAndShowStats(piece.CalculateAttack(),piece.CalculateDefense(),piece.CalculateSupport(),piece.info,piece.name, sprite);
-        else if(piece.team == Team.Enemy)
-            EnemyStatBoxManager._instance.SetAndShowStats(piece.CalculateAttack(),piece.CalculateDefense(),piece.CalculateSupport(),piece.info,piece.name, sprite);
+            var sprite = piece.GetComponent<SpriteRenderer>().sprite;
+            if(piece.team==Team.Hero)
+                StatBoxManager._instance.SetAndShowStats(piece.CalculateAttack(),piece.CalculateDefense(),piece.CalculateSupport(),piece.info,piece.name, sprite);
+            else if(piece.team == Team.Enemy)
+                EnemyStatBoxManager._instance.SetAndShowStats(piece.CalculateAttack(),piece.CalculateDefense(),piece.CalculateSupport(),piece.info,piece.name, sprite);
         }
     }
 
     public Chessman getPiece(){
-        GameObject obj = Game._instance.currentMatch.GetPieceAtPosition(position.x, position.y);
+        GameObject obj =null;
+        if (Game._instance.currentMatch!=null)
+            obj = Game._instance.currentMatch.GetPieceAtPosition(position.x, position.y);
         if(obj !=null)
             return obj.GetComponent<Chessman>();
         else

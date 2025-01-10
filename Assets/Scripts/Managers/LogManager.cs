@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using System.IO;
+using System;
 
 public class LogManager : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class LogManager : MonoBehaviour
     public TMP_Text LogText;
     [SerializeField] private ScrollRect scrollRect;
     public GameObject abilityTarget;
+    private string filePath;
 
     public void ScrollToBottom()
     {
@@ -32,12 +35,17 @@ public class LogManager : MonoBehaviour
             _instance=this;
         }
     }
+    void Start(){
+        filePath = Path.Combine("C:\\Users\\steve\\chess-rogue\\chess-rogue\\GameLogs", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")+".txt");
+    }
     public void WriteLog(string message)
     {
         ScrollToBottom();
         LogText.text += message + "\n";
         ScrollToBottom();
         LogText.text +="<color=#FFFFFF>--------------------------</color>\n";
+        File.AppendAllText(filePath, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss : ")+message + "\n");
+        File.AppendAllText(filePath, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss : ")+"<color=#FFFFFF>--------------------------</color>\n");
         if(abilityTarget.transform.localPosition.y>-380)
             abilityTarget.transform.localPosition = new Vector2 (abilityTarget.transform.localPosition.x, abilityTarget.transform.localPosition.y-70);
     }
