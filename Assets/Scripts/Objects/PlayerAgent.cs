@@ -206,7 +206,7 @@ public class PlayerAgent : Agent
         SceneManager.LoadScene(1);
     }
 
-    public void CaptureReward(Chessman attacker){
+    public void CaptureReward(Chessman attacker, Chessman defender){
         if(attacker.color==color){
             SetReward(0.3f);
         }

@@ -19,10 +19,10 @@ public class IncreasingStrike : Ability
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnMove.RemoveListener(AddBonus); 
+        Game._instance.OnPieceCaptured.RemoveListener(AddBonus); 
 
     }
-    public void AddBonus(Chessman attacker){
+    public void AddBonus(Chessman attacker, Chessman defender){
         if (attacker==piece){
             //Debug.Log("adding 1 bonus");
             piece.attack+=1;

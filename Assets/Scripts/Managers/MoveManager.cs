@@ -265,7 +265,7 @@ public class MoveManager: MonoBehaviour
             attackedPiece.gameObject.SetActive(false);
             movingPiece.owner.capturedPieces.Add(attackedPiece.gameObject);
             AttackCleanUp(movingPiece, attackedPiece);
-            Game._instance.OnPieceCaptured.Invoke(movingPiece);  // Trigger the event
+            Game._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);  // Trigger the event
             if (gameOver){
                 Game._instance.OnGameEnd.Invoke(movingPiece.color);
                 match.EndGame();

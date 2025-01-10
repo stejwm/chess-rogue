@@ -39,26 +39,32 @@ public class AvengingStrike : Ability
     public void EndAvenge(Chessman attacker, Chessman defender, bool isBounceReduced){
         Game._instance.currentMatch.AvengingStrikeOverride =false;
         readyToAvenge=false;
+        Game._instance.currentMatch.AvengerActive=false;
     }
 
-    public void Avenge(Chessman attacker)
+    public void Avenge(Chessman attacker, Chessman defender)
     {
         if(attacker==piece && readyToAvenge){
             Game._instance.currentMatch.AvengingStrikeOverride =false;
-            readyToAvenge=false;     
+            readyToAvenge=false; 
+            Game._instance.currentMatch.AvengerActive=false;    
         }
         else if (readyToAvenge)
         {
-            Debug.Log("Overriding turn for Avenging Strike");
+            Debug.Log("Avenging");
             AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Avenging Strike</gradient></color>", "attacking");
             Game._instance.currentMatch.AvengingStrikeOverride =true;
-            if(Game._instance.currentMatch.BloodThirstOverride)
+            if(Game._instance.currentMatch.BloodThirstOverride){
                 Game._instance.currentMatch.MyTurn(piece.color);
+                Debug.Log("Bloodthirst is active setting to avengers turn");
+            }
             Game._instance.currentMatch.ExecuteTurn(piece, targetPosition.x, targetPosition.y);
         }
     }
     public void Target(Chessman supporter, Chessman attacker, Chessman defender){
-        if(supporter==piece && defender.color==piece.color){
+        if(supporter==piece && defender.color==piece.color && !Game._instance.currentMatch.AvengerActive){
+            Game._instance.currentMatch.AvengerActive=true;
+            Debug.Log("Avenger activated");
             readyToAvenge=true;
             targetPosition = new BoardPosition(defender.xBoard, defender.yBoard);
         }

@@ -17,6 +17,8 @@ public class ChessMatch
     public bool BloodThirstOverride = false;
     public bool AvengingStrikeOverride = false;
 
+    public bool AvengerActive = false;
+
     public bool isSetUpPhase = true;
     //[SerializeField] private GameObject tilePrefab;
 
@@ -139,6 +141,7 @@ public class ChessMatch
             }
             
         white.MakeMove(this);
+        Debug.Log("Requested move from white");
     }
     public void SetBlackTurn(){
         foreach (GameObject item in black.pieces)
@@ -150,6 +153,7 @@ public class ChessMatch
             item.GetComponent<Chessman>().isValidForAttack=false;
         }
         black.MakeMove(this);
+        Debug.Log("Requested move from black");
     }
 
     public void NextTurn()

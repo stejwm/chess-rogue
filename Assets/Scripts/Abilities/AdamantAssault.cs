@@ -50,7 +50,7 @@ public class AdamantAssault : Ability
             Game._instance.currentMatch.AdamantAssaultOverride =false;
         }
     }
-    public void EndAssault(Chessman attacker){
+    public void EndAssault(Chessman attacker, Chessman defender){
         if(attacker==piece){
             alreadyBounced=false;
             Game._instance.currentMatch.AdamantAssaultOverride =false;

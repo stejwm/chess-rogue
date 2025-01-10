@@ -33,7 +33,7 @@ public class BloodThirstAbility : Ability
 
     }
 
-    public void Thirst(Chessman attacker)
+    public void Thirst(Chessman attacker, Chessman defender)
     {
         //Debug.Log("Thirsting");
         if (attacker == piece)
@@ -41,12 +41,20 @@ public class BloodThirstAbility : Ability
             thirsting=true;
             EnableSecondAttack();
         }
+        if(defender == piece){
+            List<GameObject> pieces;
+            pieces = piece.owner.pieces;
+            foreach (GameObject pieceObject in pieces)
+            {
+                pieceObject.GetComponent<Chessman>().isValidForAttack=true;
+            }
+        }
     }
 
     private void EnableSecondAttack()
     {   
         Game._instance.currentMatch.BloodThirstOverride =true;
-        
+        Debug.Log("Blood thirst activated");
         List<GameObject> pieces;
         piece.moveProfile = new AttackOnlyMovement(startingProfile);
         pieces = piece.owner.pieces;
@@ -55,11 +63,15 @@ public class BloodThirstAbility : Ability
             pieceObject.GetComponent<Chessman>().isValidForAttack=false;
         }
         piece.isValidForAttack=true;
-        Debug.Log("Only thirster valid for attack");
-        Game._instance.currentMatch.MyTurn(piece.color);
+        if(!Game._instance.currentMatch.AvengerActive){
+            Game._instance.currentMatch.MyTurn(piece.color);
+            Debug.Log("No avenging strike active setting thirsters turn again");
+        }
+        else{
+            Debug.Log("Avenger is active not setting thirsters turn yet");
+        }
         if (piece.moveProfile.GetValidMoves(piece).Count<=0){
             thirsting=false;
-            Debug.Log("No valid attack found, thirst over");
             piece.moveProfile=startingProfile;
             Game._instance.currentMatch.BloodThirstOverride =false;
             return;
