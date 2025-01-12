@@ -1,0 +1,87 @@
+{
+    "WhitePlayerAI": {
+        "checkpoints": [
+            {
+                "steps": 45863,
+                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-45863.onnx",
+                "reward": -0.5579545733264901,
+                "creation_time": 1736629128.525446,
+                "auxillary_file_paths": [
+                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-45863.pt"
+                ]
+            },
+            {
+                "steps": 56514,
+                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-56514.onnx",
+                "reward": -1.4124999716877937,
+                "creation_time": 1736634535.513315,
+                "auxillary_file_paths": [
+                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-56514.pt"
+                ]
+            },
+            {
+                "steps": 149757,
+                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-149757.onnx",
+                "reward": null,
+                "creation_time": 1736683453.3757663,
+                "auxillary_file_paths": [
+                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-149757.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 149757,
+            "file_path": "results\\ABILITIES\\WhitePlayerAI.onnx",
+            "reward": null,
+            "creation_time": 1736683453.3757663,
+            "auxillary_file_paths": [
+                "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-149757.pt"
+            ]
+        }
+    },
+    "BlackPlayerAI": {
+        "checkpoints": [
+            {
+                "steps": 45618,
+                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-45618.onnx",
+                "reward": -0.2780487972606973,
+                "creation_time": 1736629128.606075,
+                "auxillary_file_paths": [
+                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-45618.pt"
+                ]
+            },
+            {
+                "steps": 56237,
+                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-56237.onnx",
+                "reward": 0.1499999612569809,
+                "creation_time": 1736634535.5885563,
+                "auxillary_file_paths": [
+                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-56237.pt"
+                ]
+            },
+            {
+                "steps": 149091,
+                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-149091.onnx",
+                "reward": null,
+                "creation_time": 1736683453.4595435,
+                "auxillary_file_paths": [
+                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-149091.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 149091,
+            "file_path": "results\\ABILITIES\\BlackPlayerAI.onnx",
+            "reward": null,
+            "creation_time": 1736683453.4595435,
+            "auxillary_file_paths": [
+                "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-149091.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}
