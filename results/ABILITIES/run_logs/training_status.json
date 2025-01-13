@@ -27,15 +27,24 @@
                 "auxillary_file_paths": [
                     "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-149757.pt"
                 ]
+            },
+            {
+                "steps": 227661,
+                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-227661.onnx",
+                "reward": 0.33472219482064247,
+                "creation_time": 1736731017.7130728,
+                "auxillary_file_paths": [
+                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-227661.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 149757,
+            "steps": 227661,
             "file_path": "results\\ABILITIES\\WhitePlayerAI.onnx",
-            "reward": null,
-            "creation_time": 1736683453.3757663,
+            "reward": 0.33472219482064247,
+            "creation_time": 1736731017.7130728,
             "auxillary_file_paths": [
-                "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-149757.pt"
+                "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-227661.pt"
             ]
         }
     },
@@ -67,15 +76,24 @@
                 "auxillary_file_paths": [
                     "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-149091.pt"
                 ]
+            },
+            {
+                "steps": 226568,
+                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-226568.onnx",
+                "reward": -0.9821428704474654,
+                "creation_time": 1736731017.7999375,
+                "auxillary_file_paths": [
+                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-226568.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 149091,
+            "steps": 226568,
             "file_path": "results\\ABILITIES\\BlackPlayerAI.onnx",
-            "reward": null,
-            "creation_time": 1736683453.4595435,
+            "reward": -0.9821428704474654,
+            "creation_time": 1736731017.7999375,
             "auxillary_file_paths": [
-                "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-149091.pt"
+                "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-226568.pt"
             ]
         }
     },
