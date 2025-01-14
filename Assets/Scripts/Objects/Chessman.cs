@@ -124,11 +124,11 @@ public abstract class Chessman : MonoBehaviour
 
         //Debug.Log("positions: "+x+","+y);
         //Set actual unity values
-        if(this.transform.position == new Vector3(x, y, -1.0f))
+        /* if(this.transform.position == new Vector3(x, y, -1.0f))
             this.GetComponent<MMSpringPosition>().BumpRandom();
         else
-            this.GetComponent<MMSpringPosition>().MoveTo(new Vector3(x, y, -1.0f));
-        //this.transform.position = ;
+            this.GetComponent<MMSpringPosition>().MoveTo(new Vector3(x, y, -1.0f)); */
+        this.transform.position = new Vector3(x, y, -1.0f);
     }
 
     public int GetXBoard()

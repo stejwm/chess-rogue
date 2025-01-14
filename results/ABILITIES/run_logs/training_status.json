@@ -2,98 +2,116 @@
     "WhitePlayerAI": {
         "checkpoints": [
             {
-                "steps": 45863,
-                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-45863.onnx",
-                "reward": -0.5579545733264901,
-                "creation_time": 1736629128.525446,
+                "steps": 268075,
+                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-268075.onnx",
+                "reward": 0.13571430104119436,
+                "creation_time": 1736740498.5389316,
                 "auxillary_file_paths": [
-                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-45863.pt"
+                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-268075.pt"
                 ]
             },
             {
-                "steps": 56514,
-                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-56514.onnx",
-                "reward": -1.4124999716877937,
-                "creation_time": 1736634535.513315,
+                "steps": 268607,
+                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-268607.onnx",
+                "reward": -0.48000001907348633,
+                "creation_time": 1736740801.2531672,
                 "auxillary_file_paths": [
-                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-56514.pt"
+                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-268607.pt"
                 ]
             },
             {
-                "steps": 149757,
-                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-149757.onnx",
-                "reward": null,
-                "creation_time": 1736683453.3757663,
+                "steps": 269095,
+                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-269095.onnx",
+                "reward": -1.2833333909511566,
+                "creation_time": 1736741318.688252,
                 "auxillary_file_paths": [
-                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-149757.pt"
+                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-269095.pt"
                 ]
             },
             {
-                "steps": 227661,
-                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-227661.onnx",
-                "reward": 0.33472219482064247,
-                "creation_time": 1736731017.7130728,
+                "steps": 269116,
+                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-269116.onnx",
+                "reward": 2.3499999046325684,
+                "creation_time": 1736741551.6903782,
                 "auxillary_file_paths": [
-                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-227661.pt"
+                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-269116.pt"
+                ]
+            },
+            {
+                "steps": 455531,
+                "file_path": "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-455531.onnx",
+                "reward": -1.0666666734549735,
+                "creation_time": 1736797856.5535965,
+                "auxillary_file_paths": [
+                    "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-455531.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 227661,
+            "steps": 455531,
             "file_path": "results\\ABILITIES\\WhitePlayerAI.onnx",
-            "reward": 0.33472219482064247,
-            "creation_time": 1736731017.7130728,
+            "reward": -1.0666666734549735,
+            "creation_time": 1736797856.5535965,
             "auxillary_file_paths": [
-                "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-227661.pt"
+                "results\\ABILITIES\\WhitePlayerAI\\WhitePlayerAI-455531.pt"
             ]
         }
     },
     "BlackPlayerAI": {
         "checkpoints": [
             {
-                "steps": 45618,
-                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-45618.onnx",
-                "reward": -0.2780487972606973,
-                "creation_time": 1736629128.606075,
+                "steps": 266845,
+                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-266845.onnx",
+                "reward": -1.235714344041688,
+                "creation_time": 1736740498.6171787,
                 "auxillary_file_paths": [
-                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-45618.pt"
+                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-266845.pt"
                 ]
             },
             {
-                "steps": 56237,
-                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-56237.onnx",
-                "reward": 0.1499999612569809,
-                "creation_time": 1736634535.5885563,
+                "steps": 267375,
+                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-267375.onnx",
+                "reward": -0.65999995470047,
+                "creation_time": 1736740801.3284311,
                 "auxillary_file_paths": [
-                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-56237.pt"
+                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-267375.pt"
                 ]
             },
             {
-                "steps": 149091,
-                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-149091.onnx",
-                "reward": null,
-                "creation_time": 1736683453.4595435,
+                "steps": 267862,
+                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-267862.onnx",
+                "reward": 0.811111095878813,
+                "creation_time": 1736741318.7668,
                 "auxillary_file_paths": [
-                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-149091.pt"
+                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-267862.pt"
                 ]
             },
             {
-                "steps": 226568,
-                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-226568.onnx",
-                "reward": -0.9821428704474654,
-                "creation_time": 1736731017.7999375,
+                "steps": 267882,
+                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-267882.onnx",
+                "reward": -2.3499999046325684,
+                "creation_time": 1736741551.7742627,
                 "auxillary_file_paths": [
-                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-226568.pt"
+                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-267882.pt"
+                ]
+            },
+            {
+                "steps": 452715,
+                "file_path": "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-452715.onnx",
+                "reward": -0.08325001670047641,
+                "creation_time": 1736797856.6821768,
+                "auxillary_file_paths": [
+                    "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-452715.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 226568,
+            "steps": 452715,
             "file_path": "results\\ABILITIES\\BlackPlayerAI.onnx",
-            "reward": -0.9821428704474654,
-            "creation_time": 1736731017.7999375,
+            "reward": -0.08325001670047641,
+            "creation_time": 1736797856.6821768,
             "auxillary_file_paths": [
-                "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-226568.pt"
+                "results\\ABILITIES\\BlackPlayerAI\\BlackPlayerAI-452715.pt"
             ]
         }
     },

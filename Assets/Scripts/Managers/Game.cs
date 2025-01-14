@@ -65,6 +65,7 @@ public class Game : MonoBehaviour
     public bool isInMenu =false;
     public bool pauseOverride =false;
     public bool pause =false;
+    public bool endEpisode = false;
 
 
 

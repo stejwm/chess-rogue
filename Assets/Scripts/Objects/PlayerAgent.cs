@@ -17,6 +17,9 @@ public class PlayerAgent : Agent
     public PieceColor color;
     //public ChessMatch currentMatch;
     public Dictionary<int,MoveCommand> moveCommands=new Dictionary<int, MoveCommand>();
+    private List<MoveCommand> moveHistory = new List<MoveCommand>();
+
+    private const int MaxRepetitions = 8;
 
     public void StartUp(){
         Debug.Log("Starting up agent");
@@ -93,9 +96,28 @@ public class PlayerAgent : Agent
         var selectedMoveCommandIndex = actions.DiscreteActions[0];
         //Debug.Log("branch 0: "+selectedMoveCommandIndex);
         MoveCommand selectedMoveCommand = GetMoveCommandFromIndex(selectedMoveCommandIndex);
+
+        moveHistory.Add(selectedMoveCommand);
+        if (moveHistory.Count > MaxRepetitions)
+            moveHistory.RemoveAt(0);
+
+        // Check if the last few moves form a back-and-forth pattern
+        if (IsRepeatingPattern())
+        {
+            GameEnd(PieceColor.None);
+        }
+
         Debug.Log("Action Recieved attempting to execute move from "+ BoardPosition.ConvertToChessNotation(selectedMoveCommand.piece.xBoard, selectedMoveCommand.piece.yBoard)+" to "+BoardPosition.ConvertToChessNotation(selectedMoveCommand.x, selectedMoveCommand.y));
         Game._instance.currentMatch.ExecuteTurn(selectedMoveCommand.piece, selectedMoveCommand.x, selectedMoveCommand.y);
         
+    }
+
+    bool IsRepeatingPattern()
+    {
+        if (moveHistory.Count < MaxRepetitions)
+            return false;
+
+        return moveHistory[0] == moveHistory[2] && moveHistory[1] == moveHistory[3] && moveHistory[4] == moveHistory[6] && moveHistory[5] == moveHistory[7];
     }
 
     public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
@@ -189,14 +211,22 @@ public class PlayerAgent : Agent
 
     public void GameEnd(PieceColor color){
         if(this.color==color){
-            SetReward(1f);
+            SetReward(3f);
             Debug.Log(color+"Won ! Recieved 1 reward");
-            EndEpisode();
-            StartCoroutine(ReloadScene());
+            if (!Game._instance.endEpisode){
+                Game._instance.endEpisode = true;
+                EndEpisode();
+                StartCoroutine(ReloadScene());
+            }
         }
         else{
-            SetReward(-1f);
-            Debug.Log(color+"Lost ! Recieved -1 reward");
+            SetReward(-3f);
+            if (!Game._instance.endEpisode){
+                Game._instance.endEpisode = true;
+                EndEpisode();
+                StartCoroutine(ReloadScene());
+            }
+            Debug.Log(this.color+"Lost ! Recieved -1 reward");
         }
         
     }
@@ -208,10 +238,55 @@ public class PlayerAgent : Agent
 
     public void CaptureReward(Chessman attacker, Chessman defender){
         if(attacker.color==color){
-            SetReward(0.3f);
+            switch (defender.type)
+            {
+                case PieceType.Queen:
+                    SetReward(0.9f);
+                    break;
+                case PieceType.Knight:
+                    SetReward(0.3f);
+                    break;               
+                case PieceType.Bishop:
+                    SetReward(0.3f);               
+                    break;
+                case PieceType.King:
+                    SetReward(1f);              
+                    break;
+                case PieceType.Rook:
+                    SetReward(0.5f);               
+                    break;
+                case PieceType.Pawn:
+                    SetReward(0.1f);                
+                    break;
+                default:
+                    break;
+            
+            }
         }
         else{
-            SetReward(-0.3f);
+            switch (defender.type)
+            {
+                case PieceType.Queen:
+                    SetReward(-0.9f);
+                    break;
+                case PieceType.Knight:
+                    SetReward(-0.3f);
+                    break;               
+                case PieceType.Bishop:
+                    SetReward(-0.3f);               
+                    break;
+                case PieceType.King:
+                    SetReward(-1f);              
+                    break;
+                case PieceType.Rook:
+                    SetReward(-0.5f);               
+                    break;
+                case PieceType.Pawn:
+                    SetReward(-0.1f);                
+                    break;
+                default:
+                    break;  
+            }
         }
     }
 
