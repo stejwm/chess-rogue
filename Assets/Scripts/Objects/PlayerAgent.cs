@@ -168,6 +168,9 @@ public class PlayerAgent : Agent
                 if(Game._instance.currentMatch.GetPositions()[k, l] !=null){
                     GameObject item = Game._instance.currentMatch.GetPositions()[k, l];
                     Chessman piece = item.GetComponent<Chessman>();
+                    sensor.AddObservation(piece.xBoard);
+                    sensor.AddObservation(piece.yBoard);
+
                     sensor.AddOneHotObservation((int)piece.type, 7);
                     sensor.AddOneHotObservation((int)piece.color, 3);
 
@@ -181,14 +184,16 @@ public class PlayerAgent : Agent
                     sensor.AddObservation(GetAbilityObservation(piece));
                 }
                 else{
+                    sensor.AddObservation(-1);
+                    sensor.AddObservation(-1);
                     sensor.AddOneHotObservation((int)PieceType.None, 7); // 7 categories
                     sensor.AddOneHotObservation((int)PieceColor.None, 3);
-                    sensor.AddObservation(0);
-                    sensor.AddObservation(0);
-                    sensor.AddObservation(0);
-                    sensor.AddObservation(0);
-                    sensor.AddObservation(0);
-                    sensor.AddObservation(0);
+                    sensor.AddObservation(-1);
+                    sensor.AddObservation(-1);
+                    sensor.AddObservation(-1);
+                    sensor.AddObservation(-1);
+                    sensor.AddObservation(-1);
+                    sensor.AddObservation(-1);
                     sensor.AddObservation(new float[64]);
                 }
             }

@@ -14,11 +14,7 @@ public class AIPlayer : Player
         this.pieces=pieces;
     }
     public override void Initialize()
-    {   
-        if (color==PieceColor.White)
-            pieces = PieceFactory._instance.CreateWhitePieces(this);
-        else
-            pieces = PieceFactory._instance.CreateBlackPieces(this);
+    {
         agent.pieces=pieces;
         agent.StartUp();
     }

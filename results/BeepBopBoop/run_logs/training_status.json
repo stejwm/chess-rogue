@@ -1,0 +1,51 @@
+{
+    "RookArmy": {
+        "checkpoints": [
+            {
+                "steps": 0,
+                "file_path": "results\\BeepBopBoop\\RookArmy\\RookArmy-0.onnx",
+                "reward": null,
+                "creation_time": 1736909270.4324841,
+                "auxillary_file_paths": [
+                    "results\\BeepBopBoop\\RookArmy\\RookArmy-0.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 0,
+            "file_path": "results\\BeepBopBoop\\RookArmy.onnx",
+            "reward": null,
+            "creation_time": 1736909270.4324841,
+            "auxillary_file_paths": [
+                "results\\BeepBopBoop\\RookArmy\\RookArmy-0.pt"
+            ]
+        }
+    },
+    "KnightsOfTheRoundTable": {
+        "checkpoints": [
+            {
+                "steps": 0,
+                "file_path": "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-0.onnx",
+                "reward": null,
+                "creation_time": 1736909270.4960527,
+                "auxillary_file_paths": [
+                    "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-0.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 0,
+            "file_path": "results\\BeepBopBoop\\KnightsOfTheRoundTable.onnx",
+            "reward": null,
+            "creation_time": 1736909270.4960527,
+            "auxillary_file_paths": [
+                "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-0.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

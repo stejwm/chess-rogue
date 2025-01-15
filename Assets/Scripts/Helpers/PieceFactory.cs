@@ -36,15 +36,8 @@ public class PieceFactory : MonoBehaviour
         return CreatePiecesForColor(PieceColor.Black, Team.Enemy, owner);
     }
 
-    public List<GameObject> CreateBlackRookArmy(Player owner)
-    {
-        return CreateRookArmy(PieceColor.Black, Team.Enemy, owner);
-    }
 
-    public List<GameObject> CreateKnightsOfTheRoundTable(Player owner){
-        PieceColor color = PieceColor.Black;
-        Team team = Team.Enemy;
-        string prefix = color == PieceColor.White ? "white" : "black";
+    public List<GameObject> CreateKnightsOfTheRoundTable(Player owner, PieceColor color, Team team){
         int backRow = color == PieceColor.White ? 0 : 7;
         int pawnRow = color == PieceColor.White ? 1 : 6;
         List<GameObject> pieces = new List<GameObject>();
@@ -110,7 +103,7 @@ public class PieceFactory : MonoBehaviour
         } */
     }
 
-    private List<GameObject> CreateRookArmy(PieceColor color, Team team, Player owner)
+    public List<GameObject> CreateRookArmy(Player owner, PieceColor color, Team team)
     {
         string prefix = color == PieceColor.White ? "white" : "black";
         int backRow = color == PieceColor.White ? 0 : 7;

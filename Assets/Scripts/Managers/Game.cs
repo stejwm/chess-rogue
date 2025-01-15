@@ -91,6 +91,8 @@ public class Game : MonoBehaviour
         //Time.timeScale = 0.5f;
         BoardManager._instance.CreateBoard();
         heroColor=PieceColor.White;
+        white.pieces = PieceFactory._instance.CreateWhitePieces(white);
+        black.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(black, black.color, Team.Enemy);
         black.Initialize();
         white.Initialize();
         level=rng.Next(10);
@@ -102,7 +104,7 @@ public class Game : MonoBehaviour
     public IEnumerator DelayedMatch(){
         yield return null;
         white.RandomAbilities();
-        black.RandomAbilities();
+        //black.RandomAbilities();
         NewMatch(white, black);
     }
 
