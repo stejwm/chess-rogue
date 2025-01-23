@@ -24,10 +24,10 @@ public enum ScreenState
 }
 public class Game : MonoBehaviour
 {
-    public Player hero;
-    public AIPlayer white;
+    public AIPlayer hero;
+    //public AIPlayer white;
     public AIPlayer opponent;
-    public AIPlayer black;
+    //public AIPlayer black;
     public GameObject card;
     public PieceColor heroColor;
     public AudioSource audioSource;
@@ -91,28 +91,28 @@ public class Game : MonoBehaviour
         //Time.timeScale = 0.5f;
         BoardManager._instance.CreateBoard();
         heroColor=PieceColor.White;
-        white.pieces = PieceFactory._instance.CreateWhitePieces(white);
-        black.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(black, black.color, Team.Enemy);
-        black.Initialize();
-        white.Initialize();
+        opponent.pieces = PieceFactory._instance.CreatePiecesForColor(opponent.color, Team.Enemy, opponent);
+        hero.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(hero, hero.color, Team.Hero);
+        hero.Initialize();
+        opponent.Initialize();
         level=rng.Next(10);
-        white.LevelUp(level);
-        black.LevelUp(level);
+        opponent.LevelUp(level);
+        hero.LevelUp(level*2);
         StartCoroutine(DelayedMatch());
         
     }
     public IEnumerator DelayedMatch(){
         yield return null;
-        white.RandomAbilities();
+        opponent.RandomAbilities();
         //black.RandomAbilities();
-        NewMatch(white, black);
+        NewMatch(opponent, hero);
     }
 
     public void OpenMarket(){
         MarketManager._instance.OpenMarket();
         this.state=ScreenState.PrisonersMarket;
     }
-    public void NewMatch(Player white, Player black){
+    public void NewMatch(AIPlayer white, AIPlayer black){
         state = ScreenState.ActiveMatch;
         currentMatch = new ChessMatch(white, black);
         currentMatch.StartMatch();

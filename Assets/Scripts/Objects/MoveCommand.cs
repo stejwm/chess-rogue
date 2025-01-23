@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,11 @@ public class MoveCommand
             return false;
         }
 
-        return this.piece.Equals(item.piece) && this.x == item.x && this.y==item.y;
+        return Equals(piece, item.piece) && this.x == item.x && this.y==item.y;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(piece?.GetHashCode() ?? 0, this.x, this.y);
     }
 }

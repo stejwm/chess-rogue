@@ -9,9 +9,10 @@ public class ChessMatch
 {
     //public List<GameObject> playerWhite;
     //public List<GameObject> playerBlack;
-    public PieceColor currentPlayer;
-    public Player white;
-    public Player black;
+    public PieceColor currentPlayerColor;
+    public AIPlayer currentPlayer;
+    public AIPlayer white;
+    public AIPlayer black;
     private GameObject[,] positions = new GameObject[8, 8];
     public bool AdamantAssaultOverride = false;
     public bool BloodThirstOverride = false;
@@ -23,7 +24,7 @@ public class ChessMatch
     //[SerializeField] private GameObject tilePrefab;
 
 
-    public ChessMatch(Player white, Player black)
+    public ChessMatch(AIPlayer white, AIPlayer black)
     {
         this.white=white;
         this.black=black;
@@ -33,10 +34,8 @@ public class ChessMatch
     }
 
     public void StartMatch(){
-        var bleh = (AIPlayer)white;
-        var blah = (AIPlayer)black;
-        bleh.CreateMoveCommandDictionary();
-        blah.CreateMoveCommandDictionary();
+        white.CreateMoveCommandDictionary();
+        black.CreateMoveCommandDictionary();
         isSetUpPhase=false;
         Game._instance.toggleAllPieceColliders(false);
         BoardManager._instance.toggleTileColliders(true);
@@ -73,7 +72,7 @@ public class ChessMatch
             //StartMatch();
         }
     }
-    public ChessMatch(Player white)
+    public ChessMatch(AIPlayer white)
     {
         this.white=white;
         //playerWhite = white.pieces;
@@ -131,6 +130,7 @@ public class ChessMatch
     }
 
     public void SetWhiteTurn(){
+        currentPlayer=white;
         foreach (GameObject item in white.pieces)
             {
                 item.GetComponent<Chessman>().isValidForAttack=true;
@@ -143,6 +143,7 @@ public class ChessMatch
         white.MakeMove(this);
     }
     public void SetBlackTurn(){
+        currentPlayer=black;
         foreach (GameObject item in black.pieces)
         {
             item.GetComponent<Chessman>().isValidForAttack=true;
@@ -159,14 +160,16 @@ public class ChessMatch
         //Debug.Log("IsTurnOverride? "+turnOverride);
         if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride || Game._instance.pauseOverride)
             return;
-        if (currentPlayer == PieceColor.White)
+        if (currentPlayerColor == PieceColor.White)
         {
-            currentPlayer = PieceColor.Black;
+            currentPlayerColor = PieceColor.Black;
+            //currentPlayer=black;
             SetBlackTurn();
         }
         else
         {
-            currentPlayer = PieceColor.White;
+            currentPlayerColor = PieceColor.White;
+            //currentPlayer=white;
             SetWhiteTurn();
         }
     }
@@ -192,7 +195,7 @@ public class ChessMatch
     } 
 
     public void MyTurn(PieceColor player){
-        currentPlayer=player;
+        currentPlayerColor=player;
     }
     public void EndGame(){
         BattlePanel._instance.HideResults();   

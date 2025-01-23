@@ -9,6 +9,7 @@ public class AIPlayer : Player
     [SerializeField] protected PlayerAgent agent;
     private static Rand rng = new Rand();
     public PieceColor color;
+    
     public AIPlayer(List<GameObject> pieces):base(pieces)
     {
         this.pieces=pieces;
@@ -21,6 +22,13 @@ public class AIPlayer : Player
 
     public void CreateMoveCommandDictionary(){
         agent.CreateMoveCommandDictionary();
+    }
+
+    public void SetSelectedPiece(Chessman piece){
+        agent.selectedPiece=piece;
+    }
+    public void SetSelectedDestination(BoardPosition position){
+        agent.destinationPosition=position;
     }
 
     public virtual void LevelUp(int level){
@@ -54,6 +62,10 @@ public class AIPlayer : Player
         }
     }
 
+    public void RequestDecision(){
+        agent.RequestDecision();
+    }
+
     public override void MakeMove(ChessMatch match)
     {
         StartCoroutine(Move());
@@ -61,7 +73,7 @@ public class AIPlayer : Player
     }
 
     public IEnumerator Move(){
-        yield return null;
+        yield return new WaitForSeconds(Game._instance.waitTime);
         Debug.Log("Requested move from "+color);
         agent.RequestDecision();
     }

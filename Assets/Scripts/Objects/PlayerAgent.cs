@@ -17,7 +17,10 @@ public class PlayerAgent : Agent
     public PieceColor color;
     //public ChessMatch currentMatch;
     public Dictionary<int,MoveCommand> moveCommands=new Dictionary<int, MoveCommand>();
+    public Dictionary<MoveCommand,int> reverseMoveCommands=new Dictionary<MoveCommand, int>();
     private List<MoveCommand> moveHistory = new List<MoveCommand>();
+    public Chessman selectedPiece;
+    public BoardPosition destinationPosition;
 
     private const int MaxRepetitions = 8;
 
@@ -66,13 +69,16 @@ public class PlayerAgent : Agent
                 {
                     for (int destRelativeY = 0; destRelativeY < 8; destRelativeY++)
                     {
-                        // Adjust destination coordinates for perspective
+                         // Adjust destination coordinates for perspective
                         int adjustedDestX = isPlayerWhite ? destRelativeX : 7 - destRelativeX;
                         int adjustedDestY = isPlayerWhite ? destRelativeY : 7 - destRelativeY;
 
                         // Create a MoveCommand for this piece and destination
                         MoveCommand moveCommand = new MoveCommand(piece, adjustedDestX, adjustedDestY);
                         moveCommands.Add(index, moveCommand);
+                        if(piece!=null)
+                            reverseMoveCommands.Add(moveCommand, index);
+                        
 
                         index++; // Increment the index
                     }
@@ -81,6 +87,7 @@ public class PlayerAgent : Agent
         }
 
         Debug.Log($"Move Dictionary generated. Count = {moveCommands.Count}");
+        Debug.Log($"Reverse Move Dictionary generated. Count = {reverseMoveCommands.Count}");
     }
     public MoveCommand GetMoveCommandFromIndex(int index)
     {
@@ -94,6 +101,8 @@ public class PlayerAgent : Agent
     {
         
         var selectedMoveCommandIndex = actions.DiscreteActions[0];
+        if(selectedMoveCommandIndex == -1)
+            return;
         //Debug.Log("branch 0: "+selectedMoveCommandIndex);
         MoveCommand selectedMoveCommand = GetMoveCommandFromIndex(selectedMoveCommandIndex);
 
@@ -110,6 +119,29 @@ public class PlayerAgent : Agent
         Debug.Log("Action Recieved attempting to execute move from "+ BoardPosition.ConvertToChessNotation(selectedMoveCommand.piece.xBoard, selectedMoveCommand.piece.yBoard)+" to "+BoardPosition.ConvertToChessNotation(selectedMoveCommand.x, selectedMoveCommand.y));
         Game._instance.currentMatch.ExecuteTurn(selectedMoveCommand.piece, selectedMoveCommand.x, selectedMoveCommand.y);
         
+    }
+
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        var discreteActions = actionsOut.DiscreteActions;
+
+        // Ensure the player has selected both a piece and a destination
+        if (selectedPiece != null && destinationPosition != null)
+        {
+            // Map selected piece and destination to action space
+            Debug.Log("piece: "+selectedPiece.name+ " x: "+destinationPosition.x +" y: "+ destinationPosition.y);
+            var command = new MoveCommand(selectedPiece, destinationPosition.x, destinationPosition.y);
+            
+            discreteActions[0] = reverseMoveCommands[command];
+
+            // Reset selection after completing the action
+            selectedPiece = null;
+            destinationPosition = null;
+        }
+        else
+        {
+            discreteActions[0] = -1; 
+        }
     }
 
     bool IsRepeatingPattern()

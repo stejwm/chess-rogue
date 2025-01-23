@@ -1736,6 +1736,7 @@ GameObject:
   - component: {fileID: 240107101}
   - component: {fileID: 240107100}
   - component: {fileID: 240107099}
+  - component: {fileID: 240107103}
   m_Layer: 0
   m_Name: Opponent (1)
   m_TagString: Untagged
@@ -1761,6 +1762,7 @@ MonoBehaviour:
   MaxStep: 0
   pieces: []
   color: 1
+  selectedPiece: {fileID: 0}
 --- !u!114 &240107100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1783,9 +1785,9 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: cf2cceffbdf9db54ba5f6391bbd33d23, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: KnightsOfTheRoundTable
   TeamId: 1
   m_UseChildSensors: 1
@@ -1825,6 +1827,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &240107103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240107098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Record: 0
+  NumStepsToRecord: 0
+  DemonstrationName: KnightsOfTheRoundTable
+  DemonstrationDirectory: KnightDemos
 --- !u!1 &243620191
 GameObject:
   m_ObjectHideFlags: 0
@@ -3298,6 +3316,7 @@ GameObject:
   - component: {fileID: 420987368}
   - component: {fileID: 420987367}
   - component: {fileID: 420987366}
+  - component: {fileID: 420987369}
   m_Layer: 0
   m_Name: Opponent
   m_TagString: Untagged
@@ -3338,6 +3357,7 @@ MonoBehaviour:
   MaxStep: 0
   pieces: []
   color: 0
+  selectedPiece: {fileID: 0}
 --- !u!114 &420987367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3360,9 +3380,9 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: b5743fffa18ad634a89e0981b13bb190, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 1
   m_BehaviorName: StandardWhite
   TeamId: 0
   m_UseChildSensors: 1
@@ -3387,6 +3407,22 @@ MonoBehaviour:
   inventoryPieces: []
   agent: {fileID: 420987366}
   color: 0
+--- !u!114 &420987369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420987363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Record: 0
+  NumStepsToRecord: 0
+  DemonstrationName: StandardWhiteDemo
+  DemonstrationDirectory: Demos
 --- !u!1 &448967885
 GameObject:
   m_ObjectHideFlags: 0
@@ -7349,7 +7385,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 118, y: 107.72089}
+  m_AnchoredPosition: {x: 118, y: 107.72177}
   m_SizeDelta: {x: -1567.02, y: -215.43}
   m_Pivot: {x: 0.000000034458935, y: 0.000000027939677}
 --- !u!114 &1185444666
@@ -11486,10 +11522,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03049dea99ae9249bfb32b122e5ac40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hero: {fileID: 596672140}
-  white: {fileID: 420987368}
+  hero: {fileID: 240107101}
   opponent: {fileID: 420987368}
-  black: {fileID: 240107101}
   card: {fileID: 3186847924759451737, guid: 213abdc1572143548af75a7c41f77bd7, type: 3}
   heroColor: 0
   audioSource: {fileID: 1624334843}
@@ -11498,7 +11532,7 @@ MonoBehaviour:
   move: {fileID: 8300000, guid: d8d04c6f80a1140db85ede568dab1f51, type: 3}
   ability: {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
   level: 0
-  waitTime: 0.1
+  waitTime: 0.5
   AllAbilities:
   - {fileID: 11400000, guid: 251eef97baecfca4ba49005b2d01ae7c, type: 2}
   - {fileID: 11400000, guid: dab7e42cd63e2c64aa32df91f10aeac5, type: 2}

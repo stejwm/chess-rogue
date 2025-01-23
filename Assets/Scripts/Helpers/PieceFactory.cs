@@ -26,11 +26,6 @@ public class PieceFactory : MonoBehaviour
         }
     }
 
-    public List<GameObject> CreateWhitePieces(Player owner)
-    {
-        return CreatePiecesForColor(PieceColor.White, Team.Hero, owner);
-    }
-
     public List<GameObject> CreateBlackPieces(Player owner)
     {
         return CreatePiecesForColor(PieceColor.Black, Team.Enemy, owner);
@@ -64,7 +59,7 @@ public class PieceFactory : MonoBehaviour
         return pieces;
     }
 
-    private List<GameObject> CreatePiecesForColor(PieceColor color, Team team, Player owner)
+    public List<GameObject> CreatePiecesForColor(PieceColor color, Team team, Player owner)
     {
         string prefix = color == PieceColor.White ? "white" : "black";
         int backRow = color == PieceColor.White ? 0 : 7;

@@ -301,8 +301,8 @@ public class MoveManager: MonoBehaviour
             //Debug.Log("Setting bounce tone");
             Game._instance.audioSource.clip = Game._instance.bounce;
             BattlePanel._instance.SetAndShowResults("Bounce!"); 
-            //ResultFeedback.PlayFeedbacks();
-            //yield return new WaitForSeconds(ResultFeedback.TotalDuration);
+            ResultFeedback.PlayFeedbacks();
+            yield return new WaitForSeconds(ResultFeedback.TotalDuration);
             AttackCleanUp(movingPiece, attackedPiece);
             Game._instance.OnPieceBounced.Invoke(movingPiece, attackedPiece, isBounceReduced);
             

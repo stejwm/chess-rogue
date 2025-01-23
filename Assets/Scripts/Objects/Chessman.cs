@@ -395,6 +395,11 @@ public abstract class Chessman : MonoBehaviour
             return false;
         }
 
-        return this.name ==item.name && this.xBoard == item.xBoard && this.yBoard==item.yBoard && this.startingPosition ==item.startingPosition;
+        return this.name ==item.name && this.startingPosition ==item.startingPosition;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(this.name, this.startingPosition);
     }
 }

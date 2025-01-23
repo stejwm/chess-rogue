@@ -1,45 +1,117 @@
 {
-    "RookArmy": {
+    "StandardWhite": {
         "checkpoints": [
             {
-                "steps": 0,
-                "file_path": "results\\BeepBopBoop\\RookArmy\\RookArmy-0.onnx",
-                "reward": null,
-                "creation_time": 1736909270.4324841,
+                "steps": 503148,
+                "file_path": "results\\BeepBopBoop\\StandardWhite\\StandardWhite-503148.onnx",
+                "reward": -1.2793969804018586,
+                "creation_time": 1737028691.677758,
                 "auxillary_file_paths": [
-                    "results\\BeepBopBoop\\RookArmy\\RookArmy-0.pt"
+                    "results\\BeepBopBoop\\StandardWhite\\StandardWhite-503148.pt"
+                ]
+            },
+            {
+                "steps": 595625,
+                "file_path": "results\\BeepBopBoop\\StandardWhite\\StandardWhite-595625.onnx",
+                "reward": -0.9166666269302368,
+                "creation_time": 1737053691.5446107,
+                "auxillary_file_paths": [
+                    "results\\BeepBopBoop\\StandardWhite\\StandardWhite-595625.pt"
+                ]
+            },
+            {
+                "steps": 596162,
+                "file_path": "results\\BeepBopBoop\\StandardWhite\\StandardWhite-596162.onnx",
+                "reward": -1.5266665935516357,
+                "creation_time": 1737165007.5068383,
+                "auxillary_file_paths": [
+                    "results\\BeepBopBoop\\StandardWhite\\StandardWhite-596162.pt"
+                ]
+            },
+            {
+                "steps": 999983,
+                "file_path": "results\\BeepBopBoop\\StandardWhite\\StandardWhite-999983.onnx",
+                "reward": -1.3359374934225343,
+                "creation_time": 1737251254.4534698,
+                "auxillary_file_paths": [
+                    "results\\BeepBopBoop\\StandardWhite\\StandardWhite-999983.pt"
+                ]
+            },
+            {
+                "steps": 1344971,
+                "file_path": "results\\BeepBopBoop\\StandardWhite\\StandardWhite-1344971.onnx",
+                "reward": -2.0662087808352907,
+                "creation_time": 1737327311.8203166,
+                "auxillary_file_paths": [
+                    "results\\BeepBopBoop\\StandardWhite\\StandardWhite-1344971.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 0,
-            "file_path": "results\\BeepBopBoop\\RookArmy.onnx",
-            "reward": null,
-            "creation_time": 1736909270.4324841,
+            "steps": 1344971,
+            "file_path": "results\\BeepBopBoop\\StandardWhite.onnx",
+            "reward": -2.0662087808352907,
+            "creation_time": 1737327311.8203166,
             "auxillary_file_paths": [
-                "results\\BeepBopBoop\\RookArmy\\RookArmy-0.pt"
+                "results\\BeepBopBoop\\StandardWhite\\StandardWhite-1344971.pt"
             ]
         }
     },
     "KnightsOfTheRoundTable": {
         "checkpoints": [
             {
-                "steps": 0,
-                "file_path": "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-0.onnx",
-                "reward": null,
-                "creation_time": 1736909270.4960527,
+                "steps": 500005,
+                "file_path": "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-500005.onnx",
+                "reward": 0.500364925712347,
+                "creation_time": 1737028691.7501326,
                 "auxillary_file_paths": [
-                    "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-0.pt"
+                    "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-500005.pt"
+                ]
+            },
+            {
+                "steps": 591711,
+                "file_path": "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-591711.onnx",
+                "reward": 1.0607344331377644,
+                "creation_time": 1737053691.6489522,
+                "auxillary_file_paths": [
+                    "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-591711.pt"
+                ]
+            },
+            {
+                "steps": 592242,
+                "file_path": "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-592242.onnx",
+                "reward": 0.4666666348775228,
+                "creation_time": 1737165007.5746417,
+                "auxillary_file_paths": [
+                    "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-592242.pt"
+                ]
+            },
+            {
+                "steps": 999968,
+                "file_path": "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-999968.onnx",
+                "reward": 0.7304794034627202,
+                "creation_time": 1737252823.481408,
+                "auxillary_file_paths": [
+                    "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-999968.pt"
+                ]
+            },
+            {
+                "steps": 1335660,
+                "file_path": "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-1335660.onnx",
+                "reward": 0.4946236291159225,
+                "creation_time": 1737327311.9102244,
+                "auxillary_file_paths": [
+                    "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-1335660.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 0,
+            "steps": 1335660,
             "file_path": "results\\BeepBopBoop\\KnightsOfTheRoundTable.onnx",
-            "reward": null,
-            "creation_time": 1736909270.4960527,
+            "reward": 0.4946236291159225,
+            "creation_time": 1737327311.9102244,
             "auxillary_file_paths": [
-                "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-0.pt"
+                "results\\BeepBopBoop\\KnightsOfTheRoundTable\\KnightsOfTheRoundTable-1335660.pt"
             ]
         }
     },
