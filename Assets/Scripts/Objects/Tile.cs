@@ -128,10 +128,10 @@ public class Tile : MonoBehaviour
             BoardManager._instance.PlacePiece(reference, this);
         }
         else if(reference!=null && reference.isValidForAttack){
-            Game._instance.currentMatch.currentPlayer.SetSelectedPiece(reference);
+            /* Game._instance.currentMatch.currentPlayer.SetSelectedPiece(reference);
             Game._instance.currentMatch.currentPlayer.SetSelectedDestination(new BoardPosition(position.x, position.y));
-            Game._instance.currentMatch.currentPlayer.RequestDecision();
-            //Game._instance.currentMatch.ExecuteTurn(reference, position.x, position.y);
+            Game._instance.currentMatch.currentPlayer.RequestDecision(); */
+            Game._instance.currentMatch.ExecuteTurn(reference, position.x, position.y);
         }
         
     }

@@ -45,7 +45,7 @@ public class AbilityLogger : MonoBehaviour
             feedbacks.PlayFeedbacks();
 
         // Wait for the feedback effect duration
-        //yield return new WaitForSeconds(feedbacks.TotalDuration);
+        yield return new WaitForSeconds(feedbacks.TotalDuration);
         AddLogMessage(abilityName + " "+ message);
         PopUp.gameObject.SetActive(false);
         PopUp.transform.position = startingPosition;

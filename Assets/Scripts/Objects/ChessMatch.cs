@@ -10,9 +10,9 @@ public class ChessMatch
     //public List<GameObject> playerWhite;
     //public List<GameObject> playerBlack;
     public PieceColor currentPlayerColor;
-    public AIPlayer currentPlayer;
-    public AIPlayer white;
-    public AIPlayer black;
+    public Player currentPlayer;
+    public Player white;
+    public Player black;
     private GameObject[,] positions = new GameObject[8, 8];
     public bool AdamantAssaultOverride = false;
     public bool BloodThirstOverride = false;
@@ -24,7 +24,7 @@ public class ChessMatch
     //[SerializeField] private GameObject tilePrefab;
 
 
-    public ChessMatch(AIPlayer white, AIPlayer black)
+    public ChessMatch(Player white, Player black)
     {
         this.white=white;
         this.black=black;
@@ -41,10 +41,6 @@ public class ChessMatch
         BoardManager._instance.toggleTileColliders(true);
         UpdateBoard();
         SetWhiteTurn();
-    }
-    private void CreateTiles()
-    {
-        BoardManager._instance.CreateBoard();
     }
     private void DestroyTiles()
     {
@@ -69,7 +65,7 @@ public class ChessMatch
             Game._instance.togglePieceColliders(Game._instance.hero.inventoryPieces, true);
         }
         else{
-            //StartMatch();
+            StartMatch();
         }
     }
     public ChessMatch(AIPlayer white)

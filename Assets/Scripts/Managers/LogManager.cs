@@ -36,18 +36,18 @@ public class LogManager : MonoBehaviour
         }
     }
     void Start(){
-        //filePath = Path.Combine("C:\\Users\\steve\\chess-rogue\\chess-rogue\\GameLogs", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")+".txt");
+        filePath = Path.Combine("C:\\Users\\steve\\chess-rogue\\chess-rogue\\GameLogs", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")+".txt");
     }
     public void WriteLog(string message)
     {
-        //ScrollToBottom();
-        //LogText.text += message + "\n";
-        //ScrollToBottom();
-        //LogText.text +="<color=#FFFFFF>--------------------------</color>\n";
-        //File.AppendAllText(filePath, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss : ")+message + "\n");
-        //File.AppendAllText(filePath, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss : ")+"<color=#FFFFFF>--------------------------</color>\n");
-        //if(abilityTarget.transform.localPosition.y>-380)
-        //    abilityTarget.transform.localPosition = new Vector2 (abilityTarget.transform.localPosition.x, abilityTarget.transform.localPosition.y-70);
+        ScrollToBottom();
+        LogText.text += message + "\n";
+        ScrollToBottom();
+        LogText.text +="<color=#FFFFFF>--------------------------</color>\n";
+        File.AppendAllText(filePath, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss : ")+message + "\n");
+        File.AppendAllText(filePath, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss : ")+"<color=#FFFFFF>--------------------------</color>\n");
+        if(abilityTarget.transform.localPosition.y>-380)
+            abilityTarget.transform.localPosition = new Vector2 (abilityTarget.transform.localPosition.x, abilityTarget.transform.localPosition.y-70);
     }
     public void ClearLogs()
     {

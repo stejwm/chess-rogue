@@ -25,10 +25,12 @@ public class Merchant : Ability
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnAttack.RemoveListener(AddBonus); 
+        Game._instance.OnAttack.RemoveListener(AddBonus);
+        Game._instance.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
     public void AddBonus(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
+        attackBonus=0;
         if (attacker==piece && isAttacking){
             for (int i =0; i<piece.owner.playerCoins; i++){
                 if (rng.Next(1,11)<=1){

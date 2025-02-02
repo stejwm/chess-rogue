@@ -24,9 +24,9 @@ public enum ScreenState
 }
 public class Game : MonoBehaviour
 {
-    public AIPlayer hero;
+    public Player hero;
     //public AIPlayer white;
-    public AIPlayer opponent;
+    public Player opponent;
     //public AIPlayer black;
     public GameObject card;
     public PieceColor heroColor;
@@ -91,31 +91,22 @@ public class Game : MonoBehaviour
         //Time.timeScale = 0.5f;
         BoardManager._instance.CreateBoard();
         heroColor=PieceColor.White;
-        opponent.pieces = PieceFactory._instance.CreatePiecesForColor(opponent.color, Team.Enemy, opponent);
-        hero.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(hero, hero.color, Team.Hero);
+        opponent.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(opponent, opponent.color, Team.Enemy);
+        hero.pieces = PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
         hero.Initialize();
         opponent.Initialize();
-        level=rng.Next(10);
-        opponent.LevelUp(level);
-        hero.LevelUp(level*2);
-        StartCoroutine(DelayedMatch());
+        NewMatch(hero, opponent);
         
-    }
-    public IEnumerator DelayedMatch(){
-        yield return null;
-        opponent.RandomAbilities();
-        //black.RandomAbilities();
-        NewMatch(opponent, hero);
     }
 
     public void OpenMarket(){
         MarketManager._instance.OpenMarket();
         this.state=ScreenState.PrisonersMarket;
     }
-    public void NewMatch(AIPlayer white, AIPlayer black){
+    public void NewMatch(Player white, Player black){
         state = ScreenState.ActiveMatch;
         currentMatch = new ChessMatch(white, black);
-        currentMatch.StartMatch();
+        currentMatch.CheckInventory();
     }
 
     public void Pause(){
@@ -250,12 +241,11 @@ public class Game : MonoBehaviour
         IncreaseDifficultyMatch();
     }
     public void IncreaseDifficultyMatch(){
+        
         state=ScreenState.ActiveMatch;
-        GameObject obj;
         opponent.DestroyPieces();
-        List<GameObject> randomOpps = AllOpponents.OrderBy(_ => rng.Next()).ToList();
-        obj = Instantiate(randomOpps[0]);
-        opponent = obj.GetComponent<AIPlayer>();
+        BoardManager._instance.CreateBoard();
+        opponent.pieces = PieceFactory._instance.CreateRandomOpponentPieces(opponent);
         opponent.Initialize();
         opponent.LevelUp(level);
         NewMatch(hero, opponent);

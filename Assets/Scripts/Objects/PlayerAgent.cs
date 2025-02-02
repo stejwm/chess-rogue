@@ -41,6 +41,7 @@ public class PlayerAgent : Agent
         Game._instance.OnGameEnd.RemoveListener(GameEnd);
         Game._instance.OnPieceCaptured.RemoveListener(CaptureReward);
         Game._instance.OnPieceBounced.RemoveListener(BounceReward);
+        Game._instance.OnSupportAdded.RemoveListener(SupportReward);
     }
     public void CreateMoveCommandDictionary(){
         GenerateMoveCommandDictionary(color==PieceColor.White);
@@ -50,6 +51,7 @@ public class PlayerAgent : Agent
     {
         Debug.Log("Generating Move Commands");
         moveCommands.Clear(); // Clear the dictionary before generating new commands
+        reverseMoveCommands.Clear();
         int index = 0; // This will go from 0 to 1023
 
         // Loop through the first 3 rows from the player's perspective
@@ -252,16 +254,16 @@ public class PlayerAgent : Agent
             Debug.Log(color+"Won ! Recieved 1 reward");
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
-                EndEpisode();
-                StartCoroutine(ReloadScene());
+                //EndEpisode();
+                //StartCoroutine(ReloadScene());
             }
         }
         else{
             SetReward(-3f);
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
-                EndEpisode();
-                StartCoroutine(ReloadScene());
+                //EndEpisode();
+                //StartCoroutine(ReloadScene());
             }
             Debug.Log(this.color+"Lost ! Recieved -1 reward");
         }

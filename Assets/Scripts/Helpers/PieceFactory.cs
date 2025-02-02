@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEditor.Experimental.GraphView;
+using Rand= System.Random;
+
+
 
 public class PieceFactory : MonoBehaviour
 {
+     private static Rand rng = new Rand();
     public GameObject pawn;
     public GameObject knight;
     public GameObject bishop;
@@ -28,7 +32,7 @@ public class PieceFactory : MonoBehaviour
 
     public List<GameObject> CreateBlackPieces(Player owner)
     {
-        return CreatePiecesForColor(PieceColor.Black, Team.Enemy, owner);
+        return CreatePiecesForColor(owner, PieceColor.Black, Team.Enemy);
     }
 
 
@@ -59,7 +63,7 @@ public class PieceFactory : MonoBehaviour
         return pieces;
     }
 
-    public List<GameObject> CreatePiecesForColor(PieceColor color, Team team, Player owner)
+    public List<GameObject> CreatePiecesForColor(Player owner, PieceColor color, Team team)
     {
         string prefix = color == PieceColor.White ? "white" : "black";
         int backRow = color == PieceColor.White ? 0 : 7;
@@ -152,6 +156,22 @@ public class PieceFactory : MonoBehaviour
         cm.startingPosition = new BoardPosition(x,y);
         
         return obj;
+    }
+
+    public List<GameObject> CreateRandomOpponentPieces(Player opponent)
+    {
+        int rand = rng.Next(3);
+
+        switch(rand)
+        {
+            case 0:
+                return CreateKnightsOfTheRoundTable(opponent, opponent.color, Team.Enemy);
+            case 1:
+                return CreateRookArmy(opponent, opponent.color, Team.Enemy);
+            case 2:
+                return CreateAbilityPiecesBlack(opponent, new Assassin());
+        }
+        return null;
     }
 
     private GameObject GetPrefab(PieceType type)
