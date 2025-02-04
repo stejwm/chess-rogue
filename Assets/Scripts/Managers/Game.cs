@@ -236,16 +236,12 @@ public class Game : MonoBehaviour
         }
     }
 
-    public void NextMatch(){
+    public void NextMatch(EnemyType enemyType){
         level++;
-        IncreaseDifficultyMatch();
-    }
-    public void IncreaseDifficultyMatch(){
-        
         state=ScreenState.ActiveMatch;
         opponent.DestroyPieces();
         BoardManager._instance.CreateBoard();
-        opponent.pieces = PieceFactory._instance.CreateRandomOpponentPieces(opponent);
+        opponent.pieces = PieceFactory._instance.CreateOpponentPieces(opponent, enemyType);
         opponent.Initialize();
         opponent.LevelUp(level);
         NewMatch(hero, opponent);

@@ -29,7 +29,7 @@ public class MapNode : MonoBehaviour
         switch (nodeType)
         {
             case NodeType.Enemy:
-                MapManager._instance.SelectEnemyNode(this);
+                MapManager._instance.SelectEnemyNode(this, enemyType);
                 break;
             case NodeType.Shop:
                 MapManager._instance.SelectShopNode(this);

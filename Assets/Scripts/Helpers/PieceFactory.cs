@@ -140,6 +140,39 @@ public class PieceFactory : MonoBehaviour
             boardManager.AddStartingPosition(piece);
         } */
     }
+    public List<GameObject> CreateThievesGuild(Player owner, PieceColor color, Team team)
+    {
+        string prefix = color == PieceColor.White ? "white" : "black";
+        int backRow = color == PieceColor.White ? 0 : 7;
+        int pawnRow = color == PieceColor.White ? 1 : 6;
+        owner.playerCoins= UnityEngine.Random.Range(10,30);
+        // Create back row
+        List<GameObject> pieces = new List<GameObject> {
+            Create(PieceType.Rook, $"{prefix}_rook", 0, backRow, color, team, owner),
+            Create(PieceType.Knight, $"{prefix}_knight", 1, backRow, color, team, owner),
+            Create(PieceType.Bishop, $"{prefix}_bishop", 2, backRow, color, team, owner),
+            Create(PieceType.Queen, $"{prefix}_queen", 3, backRow, color, team, owner),
+            Create(PieceType.King, $"{prefix}_king", 4, backRow, color, team, owner),
+            Create(PieceType.Bishop, $"{prefix}_bishop", 5, backRow, color, team, owner),
+            Create(PieceType.Knight, $"{prefix}_knight", 6, backRow, color, team, owner),
+            Create(PieceType.Rook, $"{prefix}_rook", 7, backRow, color, team, owner)
+        };
+
+        foreach (var piece in pieces)
+        {
+            piece.GetComponent<Chessman>().AddAbility(new Merchant().Clone());
+        }
+        // Create pawns
+        for (int i = 0; i < 8; i++)
+        {
+            char file = (char)('a' + i);
+            var pawn = Create(PieceType.Pawn, $"{prefix}_pawn", i, pawnRow, color, team, owner);
+            pawn.GetComponent<Chessman>().AddAbility(new PickPocket().Clone());
+            pieces.Add(pawn);
+        }
+
+        return pieces;
+    }
     public GameObject Create(PieceType type, string name, int x, int y, PieceColor color, Team team, Player owner)
     {
         GameObject prefab = GetPrefab(type);
@@ -158,18 +191,20 @@ public class PieceFactory : MonoBehaviour
         return obj;
     }
 
-    public List<GameObject> CreateRandomOpponentPieces(Player opponent)
+    public List<GameObject> CreateOpponentPieces(Player opponent, EnemyType enemyType)
     {
         int rand = rng.Next(3);
 
-        switch(rand)
+        switch(enemyType)
         {
-            case 0:
+            case EnemyType.Knights:
                 return CreateKnightsOfTheRoundTable(opponent, opponent.color, Team.Enemy);
-            case 1:
+            case EnemyType.Fortress:
                 return CreateRookArmy(opponent, opponent.color, Team.Enemy);
-            case 2:
+            case EnemyType.Assassins:
                 return CreateAbilityPiecesBlack(opponent, new Assassin());
+            case EnemyType.Thieves:
+                return CreateThievesGuild(opponent, opponent.color, Team.Enemy);
         }
         return null;
     }

@@ -12,6 +12,7 @@ public enum EnemyType
     Knights,
     Fortress,
     Assassins,
+    Thieves,
 }
 
 

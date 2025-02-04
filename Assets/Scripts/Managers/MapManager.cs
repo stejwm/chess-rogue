@@ -48,10 +48,10 @@ public class MapManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void NextMatch()
+    public void NextMatch(EnemyType enemyType)
     {
         CloseMap();
-        Game._instance.NextMatch();
+        Game._instance.NextMatch(enemyType);
     }
 
     public void OpenShop()
@@ -60,7 +60,7 @@ public class MapManager : MonoBehaviour
         Game._instance.OpenShop();
     }
 
-    public void SelectEnemyNode(MapNode node)
+    public void SelectEnemyNode(MapNode node, EnemyType enemyType)
     {
         if (node.isCompleted)
         {
@@ -69,7 +69,7 @@ public class MapManager : MonoBehaviour
         }
 
         currentNode = node;
-        NextMatch();
+        NextMatch(enemyType);
         Debug.Log("Selected enemy node: " + node.nodeName);
         // Implement logic to start the match with the selected node's enemies
     }
@@ -203,6 +203,7 @@ public class MapManager : MonoBehaviour
                 {
                     if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance)
                     {
+                        Debug.Log("setting offset: "+offset+", firstPathOffset: "+firstPathYOffsets[index]+ ", secondPathOffset: "+secondPathYOffsets[index]);
                         yOffset = offset;
                         break;
                     }
@@ -236,6 +237,7 @@ public class MapManager : MonoBehaviour
                 {
                     if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance)
                     {
+                        Debug.Log("setting offset: "+offset+", firstPathOffset: "+firstPathYOffsets[index]+ ", secondPathOffset: "+secondPathYOffsets[index]);
                         yOffset = offset;
                         break;
                     }
