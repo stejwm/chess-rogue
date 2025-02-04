@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -62,43 +63,44 @@ public class MapManager : MonoBehaviour
 
     public void SelectEnemyNode(MapNode node, EnemyType enemyType)
     {
-        if (node.isCompleted)
+        if (node.isCompleted || !currentNode.connectedNodes.Contains(node))
         {
-            Debug.Log("Node already completed.");
+            Debug.Log("Node not legal");
             return;
         }
+        else{
 
-        currentNode = node;
-        NextMatch(enemyType);
-        Debug.Log("Selected enemy node: " + node.nodeName);
+            currentNode = node;
+            NextMatch(enemyType);
+            Debug.Log("Selected enemy node: " + node.nodeName);
+        }
         // Implement logic to start the match with the selected node's enemies
     }
 
     public void SelectShopNode(MapNode node)
     {
-        if (node.isCompleted)
+        if (node.isCompleted || !currentNode.connectedNodes.Contains(node))
         {
-            Debug.Log("Node already completed.");
+            Debug.Log("Node not legal");
             return;
         }
-
-        currentNode = node;
-        Debug.Log("Selected shop node: " + node.nodeName);
-        // Implement logic to open the shop
-        OpenShop();
+        else{
+            Debug.Log("Selected shop node: " + node.nodeName);
+            // Implement logic to open the shop
+            OpenShop();
+        }
     }
 
     public void SelectEncounterNode(MapNode node)
     {
-        if (node.isCompleted)
+        if (node.isCompleted || !currentNode.connectedNodes.Contains(node))
         {
-            Debug.Log("Node already completed.");
+            Debug.Log("Node not legal");
             return;
         }
-
-        currentNode = node;
-        Debug.Log("Selected encounter node: " + node.nodeName);
-        // Implement logic for the encounter
+        else{
+            Debug.Log("Selected encounter node: " + node.nodeName);
+        }
     }
 
     private void GenerateMap()
@@ -122,6 +124,7 @@ public class MapManager : MonoBehaviour
         startNode.nodeName = "Start Node";
         startNode.isCompleted = false;
         mapNodes.Add(startNode);
+        currentNode=startNode;
 
         // Generate the first path of nodes
         List<MapNode> firstPathNodes = new List<MapNode>();
@@ -199,9 +202,9 @@ public class MapManager : MonoBehaviour
             if (Mathf.Abs(yOffset - firstPathYOffsets[index]) < minVerticalDistance || Mathf.Abs(yOffset - secondPathYOffsets[index]) < minVerticalDistance)
             {
                 // If the random offset is invalid, pick a valid value
-                for (float offset = -maxYOffset; offset <= maxYOffset; offset += 0.2f)
+                for (float offset = firstPathYOffsets[index]; offset <= maxYOffset*2; offset += 0.2f)
                 {
-                    if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance)
+                    if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance/2 && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance/2)
                     {
                         Debug.Log("setting offset: "+offset+", firstPathOffset: "+firstPathYOffsets[index]+ ", secondPathOffset: "+secondPathYOffsets[index]);
                         yOffset = offset;
@@ -233,9 +236,9 @@ public class MapManager : MonoBehaviour
             if (Mathf.Abs(yOffset - firstPathYOffsets[index]) < minVerticalDistance || Mathf.Abs(yOffset - secondPathYOffsets[index]) < minVerticalDistance)
             {
                 // If the random offset is invalid, pick a valid value
-                for (float offset = -maxYOffset; offset <= maxYOffset; offset += 0.2f)
+                for (float offset = secondPathYOffsets[index]; offset <= -maxYOffset*2; offset += 0.2f)
                 {
-                    if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance)
+                    if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance/2 && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance/2)
                     {
                         Debug.Log("setting offset: "+offset+", firstPathOffset: "+firstPathYOffsets[index]+ ", secondPathOffset: "+secondPathYOffsets[index]);
                         yOffset = offset;
@@ -336,7 +339,7 @@ public class MapManager : MonoBehaviour
                 }
                 else if (secondPathNodes.Contains(node) || secondPathNodes.Contains(connectedNode))
                 {
-                    lineRenderer.color = Color.black;
+                    lineRenderer.color = Color.grey;
                 }
 
                 // Calculate control points for the Bezier curve
