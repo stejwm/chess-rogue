@@ -6,6 +6,16 @@ using UnityEngine;
 using UnityEngine.AI;
 using Rand= System.Random;
 
+
+public enum EnemyType
+{
+    Knights,
+    Fortress,
+    Assassins,
+}
+
+
+
 public abstract class Player: MonoBehaviour
 {
     public int playerCoins = 0;
