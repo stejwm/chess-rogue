@@ -26,6 +26,7 @@ public class Switchstance : Ability
     }
     public void Swap(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if (defender==piece || attacker==piece){
+            piece.effectsFeedback.PlayFeedbacks();
             int attack = piece.attack;
             int defense = piece.defense;
             int bonusAttack= piece.attackBonus;

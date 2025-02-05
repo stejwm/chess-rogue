@@ -52,6 +52,7 @@ public class AvengingStrike : Ability
         else if (readyToAvenge)
         {
             Debug.Log("Avenging");
+            piece.effectsFeedback.PlayFeedbacks();
             AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Avenging Strike</gradient></color>", "attacking");
             Game._instance.currentMatch.AvengingStrikeOverride =true;
             if(Game._instance.currentMatch.BloodThirstOverride){

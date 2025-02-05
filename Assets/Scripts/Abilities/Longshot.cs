@@ -31,6 +31,8 @@ public class Longshot : Ability
         //Debug.Log("starting position: "+cm.xBoard+","+cm.yBoard + " attacking position "+targetedPosition.x+","+targetedPosition.y);
         if (cm==piece && isAttacking && (!Enumerable.Range(cm.xBoard-4,8).Contains(targetedPosition.x) ||!Enumerable.Range(cm.yBoard-4,8).Contains(targetedPosition.y))){
             AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Longshot</gradient></color>", "<color=green>+5</color> attack");
+            piece.effectsFeedback.PlayFeedbacks();
+
             piece.attackBonus+=5;
             bonusAdded=true;
         }

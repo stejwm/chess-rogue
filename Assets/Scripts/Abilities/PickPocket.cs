@@ -31,6 +31,7 @@ public class PickPocket : Ability
     } */
     public void Steal(Chessman attacker, Chessman defender, bool isBounceReduced){
         if(attacker==piece){
+            piece.effectsFeedback.PlayFeedbacks();
             piece.owner.playerCoins+=2;
         }
     }

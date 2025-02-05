@@ -26,8 +26,10 @@ public class LoneGuard : Ability
 
     }
     public void AddBonus(Chessman cm, int support, bool isAttacking, BoardPosition targetedPosition){
-        if (cm==piece && support==0 && !isAttacking)
+        if (cm==piece && support==0 && !isAttacking){
+            piece.effectsFeedback.PlayFeedbacks();
             piece.defenseBonus+=5;
+        }
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if (defender==piece && defenseSupport==0)

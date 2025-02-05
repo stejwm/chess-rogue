@@ -24,6 +24,7 @@ public class IronResolve : Ability
     }
     public void AddBonus(Chessman attacker, Chessman defender, bool isBounceReduced){
         if (defender==piece){
+            piece.effectsFeedback.PlayFeedbacks();
             piece.defense+=1;
         }
     }

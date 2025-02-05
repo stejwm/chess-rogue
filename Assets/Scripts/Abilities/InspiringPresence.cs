@@ -36,7 +36,7 @@ public class InspiringPresence : Ability
     } */
     public void IsBounce(Chessman attacker, Chessman defender, bool isBounceReduced){
         if(defender.team==piece.team){
-            Debug.Log("Inspiring Presence");
+            piece.effectsFeedback.PlayFeedbacks();
             AddBonus();
         }
 

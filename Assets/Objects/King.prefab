@@ -215,7 +215,7 @@ MonoBehaviour:
         DebugActive: 0
         BoundSpriteRenderer: {fileID: 4242580932874723770}
         Mode: 0
-        Duration: 0.2
+        Duration: 1
         StartsOff: 1
         ResetShakerValuesAfterShake: 1
         ResetTargetValuesAfterShake: 1

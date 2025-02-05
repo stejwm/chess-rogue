@@ -29,6 +29,7 @@ public class Monk : Ability
     }
     public void AddBonus(Chessman movedPiece){
         if (movedPiece.color == piece.color && movedPiece!=piece){
+            piece.effectsFeedback.PlayFeedbacks();
             int s = Random.Range (0, 3);
             switch(s){
                 case 0: piece.attackBonus++; break;
