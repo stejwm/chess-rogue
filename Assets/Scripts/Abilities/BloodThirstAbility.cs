@@ -74,6 +74,7 @@ public class BloodThirstAbility : Ability
             return;
         Game._instance.currentMatch.BloodThirstOverride =true;
         Debug.Log("Blood thirst activated");
+        piece.effectsFeedback.PlayFeedbacks();
         List<GameObject> pieces;
         piece.moveProfile = new AttackOnlyMovement(startingProfile);
         pieces = piece.owner.pieces;
