@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 509265ec5ae048b40b217eb5898efb32
+guid: 53f346c29486b8541b668deee2310d4b
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,16 +123,16 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: White King Landing_Frame_0
     originalName: 
-    pivot: {x: 0.5, y: -0.28}
+    pivot: {x: 0.5, y: -0.2916667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
-      y: 174
-      width: 16
-      height: 25
-    spriteID: b5e1793d2a0f6004b91783b3c4d56345
+      y: 136
+      width: 14
+      height: 24
+    spriteID: 9bcd90c9ca56ae44db719193e9a17895
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -140,19 +140,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 40, y: 174}
+    uvTransform: {x: 40, y: 136}
   - name: White King Landing_Frame_1
     originalName: 
-    pivot: {x: 0.5, y: -0.28}
+    pivot: {x: 0.5, y: -0.2916667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
-      y: 207
-      width: 16
-      height: 25
-    spriteID: c704c624258fc094d8748f83ef2f8219
+      y: 168
+      width: 14
+      height: 24
+    spriteID: 0cc55f28cd7da6345bdd617fa49169ab
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -160,19 +160,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 40, y: 207}
+    uvTransform: {x: 40, y: 168}
   - name: White King Landing_Frame_2
     originalName: 
-    pivot: {x: 0.5, y: -0.28}
+    pivot: {x: 0.5, y: -0.2916667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 64
-      y: 4
-      width: 16
-      height: 25
-    spriteID: de21ed6c888ac854998317ca3c6bef3a
+      x: 40
+      y: 200
+      width: 14
+      height: 24
+    spriteID: 419da04b00c7b9d48be9f4142a4d4a3b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -180,19 +180,39 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 64, y: 4}
+    uvTransform: {x: 40, y: 200}
   - name: White King Landing_Frame_3
     originalName: 
-    pivot: {x: 0.5, y: -0.23076925}
+    pivot: {x: 0.5, y: -0.24}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 225
+      width: 14
+      height: 25
+    spriteID: 82c03e7af07b6094a83536b566641501
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 225}
+  - name: White King Landing_Frame_4
+    originalName: 
+    pivot: {x: 0.5, y: -0.24}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
       y: 4
-      width: 16
-      height: 26
-    spriteID: 5445d741464a27c43880c7d1d7c983c9
+      width: 14
+      height: 25
+    spriteID: 6a784805d18f0d34c9ac115f16c04645
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -201,38 +221,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 40, y: 4}
-  - name: White King Landing_Frame_4
-    originalName: 
-    pivot: {x: 0.5, y: -0.23076925}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 40
-      y: 38
-      width: 16
-      height: 26
-    spriteID: 8d50955b3b25d734d8188bc949864eb6
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 40, y: 38}
   - name: White King Landing_Frame_5
     originalName: 
-    pivot: {x: 0.5, y: -0.1923077}
+    pivot: {x: 0.5, y: -0.19999999}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
-      y: 72
-      width: 16
-      height: 26
-    spriteID: 49f339f45ee652840ad6fa6b72ac6e4b
+      y: 37
+      width: 14
+      height: 25
+    spriteID: 04a5046f98cd0eb4a974b0372309a001
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -240,19 +240,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 40, y: 72}
+    uvTransform: {x: 40, y: 37}
   - name: White King Landing_Frame_6
     originalName: 
-    pivot: {x: 0.5, y: -0.15384616}
+    pivot: {x: 0.5, y: -0.16}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
-      y: 106
-      width: 16
-      height: 26
-    spriteID: 13de295a53370cb4eae4c2f31ff68f70
+      y: 70
+      width: 14
+      height: 25
+    spriteID: 36e3e271b1fd877419b4c49d25e313e7
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -260,19 +260,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 40, y: 106}
+    uvTransform: {x: 40, y: 70}
   - name: White King Landing_Frame_7
     originalName: 
-    pivot: {x: 0.5, y: -0.15384616}
+    pivot: {x: 0.5, y: -0.16}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
-      y: 140
-      width: 16
-      height: 26
-    spriteID: bb61be1a7aa6493449350c6399f21e45
+      y: 103
+      width: 14
+      height: 25
+    spriteID: 3832557db1351264297fad94ddca0193
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -280,19 +280,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 40, y: 140}
+    uvTransform: {x: 40, y: 103}
   - name: White King Landing_Frame_8
     originalName: 
-    pivot: {x: 0.5, y: -0.15384616}
+    pivot: {x: 0.5, y: -0.16}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 198
+      y: 192
       width: 18
-      height: 26
-    spriteID: 599226ab9e3f9744c8328282d98bf709
+      height: 25
+    spriteID: 95992b95c6fac724781f99e1bbdcc6d8
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -300,48 +300,8 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 198}
+    uvTransform: {x: 4, y: 192}
   - name: White King Landing_Frame_9
-    originalName: 
-    pivot: {x: 0.5, y: -0.16}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 165
-      width: 20
-      height: 25
-    spriteID: c30694a4ee6853b4995b87096f7d80d6
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 165}
-  - name: White King Landing_Frame_10
-    originalName: 
-    pivot: {x: 0.5, y: -0.16}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 132
-      width: 24
-      height: 25
-    spriteID: 4c0c3b3b3b1e6f34599ae8675d8f136a
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 132}
-  - name: White King Landing_Frame_11
     originalName: 
     pivot: {x: 0.5, y: -0.16666667}
     alignment: 9
@@ -349,10 +309,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 37
-      width: 28
+      y: 160
+      width: 20
       height: 24
-    spriteID: dffff22d04334094883cfbbbf171d7df
+    spriteID: 2ce061723a4202f40aec9f83b8f8d14d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -360,8 +320,28 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 37}
-  - name: White King Landing_Frame_12
+    uvTransform: {x: 4, y: 160}
+  - name: White King Landing_Frame_10
+    originalName: 
+    pivot: {x: 0.5, y: -0.16666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 128
+      width: 24
+      height: 24
+    spriteID: dbb3d496ba6354843abbd00908043d0d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 128}
+  - name: White King Landing_Frame_11
     originalName: 
     pivot: {x: 0.5, y: -0.17391305}
     alignment: 9
@@ -369,10 +349,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 101
+      y: 36
       width: 28
       height: 23
-    spriteID: 338cc035000ffc74b916d46ceeee67f2
+    spriteID: 8cacd656a6f60ca4da21ace69e25edd1
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -380,8 +360,48 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 101}
+    uvTransform: {x: 4, y: 36}
+  - name: White King Landing_Frame_12
+    originalName: 
+    pivot: {x: 0.5, y: -0.18181819}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 98
+      width: 28
+      height: 22
+    spriteID: 9894425025d0a5c43b38c1dc8ce99b84
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 98}
   - name: White King Landing_Frame_13
+    originalName: 
+    pivot: {x: 0.5, y: -0.17391305}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 67
+      width: 28
+      height: 23
+    spriteID: 1938e9b6b8fe25a4fa4cb8ec96f43aa0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 67}
+  - name: White King Landing_Frame_14
     originalName: 
     pivot: {x: 0.5, y: -0.16666667}
     alignment: 9
@@ -389,30 +409,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 69
-      width: 28
-      height: 24
-    spriteID: 71fcd0d552545da439e2d69ca631e26e
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 69}
-  - name: White King Landing_Frame_14
-    originalName: 
-    pivot: {x: 0.5, y: -0.16}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
       y: 4
       width: 28
-      height: 25
-    spriteID: 97579a0d863442243b0a47d22b3234b2
+      height: 24
+    spriteID: 46cc947e6f952e745b76e79162a6617b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -423,16 +423,16 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: White King Landing_Frame_15
     originalName: 
-    pivot: {x: 0.5, y: -0.16}
+    pivot: {x: 0.5, y: -0.16666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 64
-      y: 37
-      width: 16
-      height: 25
-    spriteID: b549e165a4051fc4797e18c7f74dc749
+      x: 62
+      y: 4
+      width: 14
+      height: 24
+    spriteID: a636fee3e9a5d434bbdab5cad4c5abea
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -440,19 +440,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 64, y: 37}
+    uvTransform: {x: 62, y: 4}
   - name: White King Landing_Frame_16
     originalName: 
-    pivot: {x: 0.5, y: -0.16}
+    pivot: {x: 0.5, y: -0.16666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 64
-      y: 70
-      width: 16
-      height: 25
-    spriteID: af6815bd382604b4b88bad3285d0b76c
+      x: 62
+      y: 36
+      width: 14
+      height: 24
+    spriteID: b7a50cbcf9c6c624b8e2f669f40afd08
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -460,19 +460,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 64, y: 70}
+    uvTransform: {x: 62, y: 36}
   - name: White King Landing_Frame_17
     originalName: 
-    pivot: {x: 0.5, y: -0.16}
+    pivot: {x: 0.5, y: -0.16666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 64
-      y: 103
-      width: 16
-      height: 25
-    spriteID: 362a86869b737b5419a13fa64d459e16
+      x: 62
+      y: 68
+      width: 14
+      height: 24
+    spriteID: 40d5fee8ae7969d41ab7b12c1a9c64d7
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -480,7 +480,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 64, y: 103}
+    uvTransform: {x: 62, y: 68}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -494,74 +494,74 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 7
-        width: 16
-        height: 25
-      spriteId: b5e1793d2a0f6004b91783b3c4d56345
+        width: 14
+        height: 24
+      spriteId: 9bcd90c9ca56ae44db719193e9a17895
     - name: White King Landing_Frame_1
       frameIndex: 1
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 7
-        width: 16
-        height: 25
-      spriteId: c704c624258fc094d8748f83ef2f8219
+        width: 14
+        height: 24
+      spriteId: 0cc55f28cd7da6345bdd617fa49169ab
     - name: White King Landing_Frame_2
       frameIndex: 2
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 7
-        width: 16
-        height: 25
-      spriteId: de21ed6c888ac854998317ca3c6bef3a
+        width: 14
+        height: 24
+      spriteId: 419da04b00c7b9d48be9f4142a4d4a3b
     - name: White King Landing_Frame_3
       frameIndex: 3
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 6
-        width: 16
-        height: 26
-      spriteId: 5445d741464a27c43880c7d1d7c983c9
+        width: 14
+        height: 25
+      spriteId: 82c03e7af07b6094a83536b566641501
     - name: White King Landing_Frame_4
       frameIndex: 4
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 6
-        width: 16
-        height: 26
-      spriteId: 8d50955b3b25d734d8188bc949864eb6
+        width: 14
+        height: 25
+      spriteId: 6a784805d18f0d34c9ac115f16c04645
     - name: White King Landing_Frame_5
       frameIndex: 5
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 5
-        width: 16
-        height: 26
-      spriteId: 49f339f45ee652840ad6fa6b72ac6e4b
+        width: 14
+        height: 25
+      spriteId: 04a5046f98cd0eb4a974b0372309a001
     - name: White King Landing_Frame_6
       frameIndex: 6
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 16
-        height: 26
-      spriteId: 13de295a53370cb4eae4c2f31ff68f70
+        width: 14
+        height: 25
+      spriteId: 36e3e271b1fd877419b4c49d25e313e7
     - name: White King Landing_Frame_7
       frameIndex: 7
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 16
-        height: 26
-      spriteId: bb61be1a7aa6493449350c6399f21e45
+        width: 14
+        height: 25
+      spriteId: 3832557db1351264297fad94ddca0193
     - name: White King Landing_Frame_8
       frameIndex: 8
       additiveSortOrder: 0
@@ -569,8 +569,8 @@ ScriptedImporter:
         x: 7
         y: 4
         width: 18
-        height: 26
-      spriteId: 599226ab9e3f9744c8328282d98bf709
+        height: 25
+      spriteId: 95992b95c6fac724781f99e1bbdcc6d8
     - name: White King Landing_Frame_9
       frameIndex: 9
       additiveSortOrder: 0
@@ -578,8 +578,8 @@ ScriptedImporter:
         x: 6
         y: 4
         width: 20
-        height: 25
-      spriteId: c30694a4ee6853b4995b87096f7d80d6
+        height: 24
+      spriteId: 2ce061723a4202f40aec9f83b8f8d14d
     - name: White King Landing_Frame_10
       frameIndex: 10
       additiveSortOrder: 0
@@ -587,8 +587,8 @@ ScriptedImporter:
         x: 4
         y: 4
         width: 24
-        height: 25
-      spriteId: 4c0c3b3b3b1e6f34599ae8675d8f136a
+        height: 24
+      spriteId: dbb3d496ba6354843abbd00908043d0d
     - name: White King Landing_Frame_11
       frameIndex: 11
       additiveSortOrder: 0
@@ -596,8 +596,8 @@ ScriptedImporter:
         x: 2
         y: 4
         width: 28
-        height: 24
-      spriteId: dffff22d04334094883cfbbbf171d7df
+        height: 23
+      spriteId: 8cacd656a6f60ca4da21ace69e25edd1
     - name: White King Landing_Frame_12
       frameIndex: 12
       additiveSortOrder: 0
@@ -605,8 +605,8 @@ ScriptedImporter:
         x: 2
         y: 4
         width: 28
-        height: 23
-      spriteId: 338cc035000ffc74b916d46ceeee67f2
+        height: 22
+      spriteId: 9894425025d0a5c43b38c1dc8ce99b84
     - name: White King Landing_Frame_13
       frameIndex: 13
       additiveSortOrder: 0
@@ -614,8 +614,8 @@ ScriptedImporter:
         x: 2
         y: 4
         width: 28
-        height: 24
-      spriteId: 71fcd0d552545da439e2d69ca631e26e
+        height: 23
+      spriteId: 1938e9b6b8fe25a4fa4cb8ec96f43aa0
     - name: White King Landing_Frame_14
       frameIndex: 14
       additiveSortOrder: 0
@@ -623,35 +623,35 @@ ScriptedImporter:
         x: 2
         y: 4
         width: 28
-        height: 25
-      spriteId: 97579a0d863442243b0a47d22b3234b2
+        height: 24
+      spriteId: 46cc947e6f952e745b76e79162a6617b
     - name: White King Landing_Frame_15
       frameIndex: 15
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 16
-        height: 25
-      spriteId: b549e165a4051fc4797e18c7f74dc749
+        width: 14
+        height: 24
+      spriteId: a636fee3e9a5d434bbdab5cad4c5abea
     - name: White King Landing_Frame_16
       frameIndex: 16
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 16
-        height: 25
-      spriteId: af6815bd382604b4b88bad3285d0b76c
+        width: 14
+        height: 24
+      spriteId: b7a50cbcf9c6c624b8e2f669f40afd08
     - name: White King Landing_Frame_17
       frameIndex: 17
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 16
-        height: 25
-      spriteId: 362a86869b737b5419a13fa64d459e16
+        width: 14
+        height: 24
+      spriteId: 40d5fee8ae7969d41ab7b12c1a9c64d7
     linkedCells: []
     parentIndex: -1
   platformSettings: []

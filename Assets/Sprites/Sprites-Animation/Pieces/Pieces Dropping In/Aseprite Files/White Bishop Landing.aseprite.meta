@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0daabf3292a47b44299734afc0a8ff21
+guid: 41c3274bf39062843972ab96c8a95234
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -132,7 +132,7 @@ ScriptedImporter:
       y: 35
       width: 12
       height: 22
-    spriteID: fdb03a65cc448fa4098310cb7793c7ca
+    spriteID: 22592f76a690ba44888161e9f720fe5a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -152,7 +152,7 @@ ScriptedImporter:
       y: 4
       width: 12
       height: 23
-    spriteID: 5e7bc039533a92846852fc84a57aecd4
+    spriteID: eadff384ad79c2b45ad3d9e1964f7992
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -172,7 +172,7 @@ ScriptedImporter:
       y: 35
       width: 12
       height: 23
-    spriteID: 61923393f93836f4d9148f7af3151196
+    spriteID: 9e224c80c8ff2624e9eee8072bfb5a1b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -192,7 +192,7 @@ ScriptedImporter:
       y: 66
       width: 12
       height: 23
-    spriteID: 5bbc691949e341b4c88507e9dd9dcb56
+    spriteID: 07917d66df223f14680c30c1bf33096b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -212,7 +212,7 @@ ScriptedImporter:
       y: 97
       width: 12
       height: 23
-    spriteID: 2bd097792551cb7418ed76b80e02054b
+    spriteID: 040b56dc4dd0f784699d4fb9c35b7bd6
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -232,7 +232,7 @@ ScriptedImporter:
       y: 4
       width: 12
       height: 23
-    spriteID: 0b1b0f17494ab0b49b37a316a5dc0088
+    spriteID: 67e8bcb9db60a934bb064a2701ca7d78
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -252,7 +252,7 @@ ScriptedImporter:
       y: 65
       width: 12
       height: 22
-    spriteID: 1c8024b7c1e48304c8d1b9e77c60b225
+    spriteID: 7072c8aeaeafdf241ad4a69ed2f6c826
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -272,7 +272,7 @@ ScriptedImporter:
       y: 94
       width: 12
       height: 21
-    spriteID: f18b022b472d97f4ca559da5fbc68057
+    spriteID: afde308877634504aa17fcd94340fbd4
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -292,7 +292,7 @@ ScriptedImporter:
       y: 95
       width: 12
       height: 22
-    spriteID: 58efc967c03770845a4a5f7b3eb298b7
+    spriteID: b42c836ef9fa74c45a8d30da9398c1ee
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -312,7 +312,7 @@ ScriptedImporter:
       y: 4
       width: 12
       height: 22
-    spriteID: b3454a45d987d3448b0d69dfa136c7a8
+    spriteID: 39c5136a4a198d545bab92b417776ced
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -332,7 +332,7 @@ ScriptedImporter:
       y: 34
       width: 12
       height: 22
-    spriteID: 114dd14ec17af394996cdce40bd3428d
+    spriteID: 7e3a30a656a71d741b5dadc634ff3406
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -352,7 +352,7 @@ ScriptedImporter:
       y: 64
       width: 12
       height: 22
-    spriteID: 9c2daf9a69f0ca44b9e3d5c1c1e0fb7d
+    spriteID: b4ca318a71659bf479e4b1b249d1946d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -378,7 +378,7 @@ ScriptedImporter:
         y: 9
         width: 12
         height: 22
-      spriteId: fdb03a65cc448fa4098310cb7793c7ca
+      spriteId: 22592f76a690ba44888161e9f720fe5a
     - name: White Bishop Landing_Frame_1
       frameIndex: 1
       additiveSortOrder: 0
@@ -387,7 +387,7 @@ ScriptedImporter:
         y: 8
         width: 12
         height: 23
-      spriteId: 5e7bc039533a92846852fc84a57aecd4
+      spriteId: eadff384ad79c2b45ad3d9e1964f7992
     - name: White Bishop Landing_Frame_2
       frameIndex: 2
       additiveSortOrder: 0
@@ -396,7 +396,7 @@ ScriptedImporter:
         y: 7
         width: 12
         height: 23
-      spriteId: 61923393f93836f4d9148f7af3151196
+      spriteId: 9e224c80c8ff2624e9eee8072bfb5a1b
     - name: White Bishop Landing_Frame_3
       frameIndex: 3
       additiveSortOrder: 0
@@ -405,7 +405,7 @@ ScriptedImporter:
         y: 6
         width: 12
         height: 23
-      spriteId: 5bbc691949e341b4c88507e9dd9dcb56
+      spriteId: 07917d66df223f14680c30c1bf33096b
     - name: White Bishop Landing_Frame_4
       frameIndex: 4
       additiveSortOrder: 0
@@ -414,7 +414,7 @@ ScriptedImporter:
         y: 5
         width: 12
         height: 23
-      spriteId: 2bd097792551cb7418ed76b80e02054b
+      spriteId: 040b56dc4dd0f784699d4fb9c35b7bd6
     - name: White Bishop Landing_Frame_5
       frameIndex: 5
       additiveSortOrder: 0
@@ -423,7 +423,7 @@ ScriptedImporter:
         y: 4
         width: 12
         height: 23
-      spriteId: 0b1b0f17494ab0b49b37a316a5dc0088
+      spriteId: 67e8bcb9db60a934bb064a2701ca7d78
     - name: White Bishop Landing_Frame_6
       frameIndex: 6
       additiveSortOrder: 0
@@ -432,7 +432,7 @@ ScriptedImporter:
         y: 4
         width: 12
         height: 22
-      spriteId: 1c8024b7c1e48304c8d1b9e77c60b225
+      spriteId: 7072c8aeaeafdf241ad4a69ed2f6c826
     - name: White Bishop Landing_Frame_7
       frameIndex: 7
       additiveSortOrder: 0
@@ -441,7 +441,7 @@ ScriptedImporter:
         y: 4
         width: 12
         height: 21
-      spriteId: f18b022b472d97f4ca559da5fbc68057
+      spriteId: afde308877634504aa17fcd94340fbd4
     - name: White Bishop Landing_Frame_8
       frameIndex: 8
       additiveSortOrder: 0
@@ -450,7 +450,7 @@ ScriptedImporter:
         y: 4
         width: 12
         height: 22
-      spriteId: 58efc967c03770845a4a5f7b3eb298b7
+      spriteId: b42c836ef9fa74c45a8d30da9398c1ee
     - name: White Bishop Landing_Frame_9
       frameIndex: 9
       additiveSortOrder: 0
@@ -459,7 +459,7 @@ ScriptedImporter:
         y: 4
         width: 12
         height: 22
-      spriteId: b3454a45d987d3448b0d69dfa136c7a8
+      spriteId: 39c5136a4a198d545bab92b417776ced
     - name: White Bishop Landing_Frame_10
       frameIndex: 10
       additiveSortOrder: 0
@@ -468,7 +468,7 @@ ScriptedImporter:
         y: 4
         width: 12
         height: 22
-      spriteId: 114dd14ec17af394996cdce40bd3428d
+      spriteId: 7e3a30a656a71d741b5dadc634ff3406
     - name: White Bishop Landing_Frame_11
       frameIndex: 11
       additiveSortOrder: 0
@@ -477,7 +477,7 @@ ScriptedImporter:
         y: 4
         width: 12
         height: 22
-      spriteId: 9c2daf9a69f0ca44b9e3d5c1c1e0fb7d
+      spriteId: b4ca318a71659bf479e4b1b249d1946d
     linkedCells: []
     parentIndex: -1
   platformSettings: []

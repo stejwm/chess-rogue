@@ -185,11 +185,11 @@ public class MoveManager: MonoBehaviour
         pitch=1f;
         var attackVal = movingPiece.CalculateAttack();
         var supportVal= attackSupport;
-        var sprite = movingPiece.GetComponent<SpriteRenderer>().sprite;
+        var sprite = movingPiece.droppingSprite;
 
         var defendVal = attackedPiece.CalculateDefense();
         var defendSupportVal= defenseSupport;
-        var defendSprite = attackedPiece.GetComponent<SpriteRenderer>().sprite;
+        var defendSprite = attackedPiece.droppingSprite;
         //If hero is attacking
         if(movingPiece.team==Team.Hero){
             float scale=0.05f;

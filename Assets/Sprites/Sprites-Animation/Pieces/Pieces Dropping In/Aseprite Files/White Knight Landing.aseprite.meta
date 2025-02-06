@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 315034a4e4bec9e44b9524c720be8e43
+guid: 6db80dfbbf493ee4797f8a192cb5c0b5
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,16 +123,16 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: White Knight Landing_Frame_0
     originalName: 
-    pivot: {x: 0.53333336, y: -0.39130434}
+    pivot: {x: 0.53846157, y: -0.40909094}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 27
-      y: 36
-      width: 15
-      height: 23
-    spriteID: 149268e7753302a41bff2899f453c316
+      x: 25
+      y: 35
+      width: 13
+      height: 22
+    spriteID: ebb6e3ceca93eed4a8394aaef8626ef1
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -140,19 +140,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 27, y: 36}
+    uvTransform: {x: 25, y: 35}
   - name: White Knight Landing_Frame_1
     originalName: 
-    pivot: {x: 0.53333336, y: -0.33333334}
+    pivot: {x: 0.53846157, y: -0.3478261}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 15
-      height: 24
-    spriteID: 75cc6d514cb965342872ebc2f663b699
+      width: 13
+      height: 23
+    spriteID: 916089355db90434e99c5944e4de26af
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -163,16 +163,16 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: White Knight Landing_Frame_2
     originalName: 
-    pivot: {x: 0.53333336, y: -0.2916667}
+    pivot: {x: 0.53846157, y: -0.30434784}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 36
-      width: 15
-      height: 24
-    spriteID: fc6744937e3c6eb4cbf139a657985d2d
+      y: 35
+      width: 13
+      height: 23
+    spriteID: 38b3f14554acb5545a9f70fc36ea6a09
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -180,19 +180,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 36}
+    uvTransform: {x: 4, y: 35}
   - name: White Knight Landing_Frame_3
     originalName: 
-    pivot: {x: 0.53333336, y: -0.25}
+    pivot: {x: 0.53846157, y: -0.26086956}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 68
-      width: 15
-      height: 24
-    spriteID: a139798bad1c0b243a86c3115054a7b3
+      y: 66
+      width: 13
+      height: 23
+    spriteID: dcd69d448ec7f614bbc6d448c2f3fb6a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -200,19 +200,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 68}
+    uvTransform: {x: 4, y: 66}
   - name: White Knight Landing_Frame_4
     originalName: 
-    pivot: {x: 0.53333336, y: -0.20833334}
+    pivot: {x: 0.53846157, y: -0.21739131}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 100
-      width: 15
-      height: 24
-    spriteID: 09d722ff4bc471d41a12c914a0998fc2
+      y: 97
+      width: 13
+      height: 23
+    spriteID: fc75dd4b0ff311a43b6c2c6000365cf3
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -220,19 +220,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 100}
+    uvTransform: {x: 4, y: 97}
   - name: White Knight Landing_Frame_5
     originalName: 
-    pivot: {x: 0.53333336, y: -0.16666667}
+    pivot: {x: 0.53846157, y: -0.17391305}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 27
+      x: 25
       y: 4
-      width: 15
-      height: 24
-    spriteID: 5e2302da696765144a47072c52624c25
+      width: 13
+      height: 23
+    spriteID: 4df5fa6a59cdf214896b4c17a58b303b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -240,19 +240,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 27, y: 4}
+    uvTransform: {x: 25, y: 4}
   - name: White Knight Landing_Frame_6
     originalName: 
-    pivot: {x: 0.53333336, y: -0.17391305}
+    pivot: {x: 0.53846157, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 27
-      y: 67
-      width: 15
-      height: 23
-    spriteID: 44bd97b441ec8474eaf7d814e13f3a73
+      x: 25
+      y: 65
+      width: 13
+      height: 22
+    spriteID: ae53adedaafd2424bb44768759c652e1
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -260,19 +260,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 27, y: 67}
+    uvTransform: {x: 25, y: 65}
   - name: White Knight Landing_Frame_7
     originalName: 
-    pivot: {x: 0.53333336, y: -0.18181819}
+    pivot: {x: 0.53846157, y: -0.1904762}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 73
+      x: 67
       y: 4
-      width: 15
-      height: 22
-    spriteID: 17a0e5aec9ca47747b2c4d172235b053
+      width: 13
+      height: 21
+    spriteID: 4a69a0662f1aa074786b52cf8c64b370
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -280,19 +280,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 73, y: 4}
+    uvTransform: {x: 67, y: 4}
   - name: White Knight Landing_Frame_8
     originalName: 
-    pivot: {x: 0.53333336, y: -0.17391305}
+    pivot: {x: 0.53846157, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 27
-      y: 98
-      width: 15
-      height: 23
-    spriteID: 79a34e7ba1098de41ba43cc58f48250d
+      x: 25
+      y: 95
+      width: 13
+      height: 22
+    spriteID: 0d3aab739439502459afa6692d4f6a82
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -300,19 +300,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 27, y: 98}
+    uvTransform: {x: 25, y: 95}
   - name: White Knight Landing_Frame_9
     originalName: 
-    pivot: {x: 0.53333336, y: -0.17391305}
+    pivot: {x: 0.53846157, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 50
+      x: 46
       y: 4
-      width: 15
-      height: 23
-    spriteID: 1e807d308b1773b41ac13e5ba134d20a
+      width: 13
+      height: 22
+    spriteID: e57eb0b4914c28843913d3cefe14ff0b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -320,19 +320,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 50, y: 4}
+    uvTransform: {x: 46, y: 4}
   - name: White Knight Landing_Frame_10
     originalName: 
-    pivot: {x: 0.53333336, y: -0.17391305}
+    pivot: {x: 0.53846157, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 50
-      y: 35
-      width: 15
-      height: 23
-    spriteID: 8e5378bca40e27e4d90ef02f6082a24c
+      x: 46
+      y: 34
+      width: 13
+      height: 22
+    spriteID: 314465a8afddfc84a9ecab4f0d30265a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -340,19 +340,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 50, y: 35}
+    uvTransform: {x: 46, y: 34}
   - name: White Knight Landing_Frame_11
     originalName: 
-    pivot: {x: 0.53333336, y: -0.17391305}
+    pivot: {x: 0.53846157, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 50
-      y: 66
-      width: 15
-      height: 23
-    spriteID: 2e5d28db7dbe6d74499b501b7f192a1a
+      x: 46
+      y: 64
+      width: 13
+      height: 22
+    spriteID: 97aa9d4d941c12e4393cfc35a410fe3d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -360,19 +360,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 50, y: 66}
+    uvTransform: {x: 46, y: 64}
   - name: White Knight Landing_Frame_12
     originalName: 
-    pivot: {x: 0.53333336, y: -0.17391305}
+    pivot: {x: 0.53846157, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 50
-      y: 97
-      width: 15
-      height: 23
-    spriteID: e9b3a6f1f4bf6564da64961b57780083
+      x: 46
+      y: 94
+      width: 13
+      height: 22
+    spriteID: ead0ce5f1da3b9540b3160841035b74d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -380,7 +380,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 50, y: 97}
+    uvTransform: {x: 46, y: 94}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -394,119 +394,119 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 9
-        width: 15
-        height: 23
-      spriteId: 149268e7753302a41bff2899f453c316
+        width: 13
+        height: 22
+      spriteId: ebb6e3ceca93eed4a8394aaef8626ef1
     - name: White Knight Landing_Frame_1
       frameIndex: 1
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 8
-        width: 15
-        height: 24
-      spriteId: 75cc6d514cb965342872ebc2f663b699
+        width: 13
+        height: 23
+      spriteId: 916089355db90434e99c5944e4de26af
     - name: White Knight Landing_Frame_2
       frameIndex: 2
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 7
-        width: 15
-        height: 24
-      spriteId: fc6744937e3c6eb4cbf139a657985d2d
+        width: 13
+        height: 23
+      spriteId: 38b3f14554acb5545a9f70fc36ea6a09
     - name: White Knight Landing_Frame_3
       frameIndex: 3
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 6
-        width: 15
-        height: 24
-      spriteId: a139798bad1c0b243a86c3115054a7b3
+        width: 13
+        height: 23
+      spriteId: dcd69d448ec7f614bbc6d448c2f3fb6a
     - name: White Knight Landing_Frame_4
       frameIndex: 4
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 5
-        width: 15
-        height: 24
-      spriteId: 09d722ff4bc471d41a12c914a0998fc2
+        width: 13
+        height: 23
+      spriteId: fc75dd4b0ff311a43b6c2c6000365cf3
     - name: White Knight Landing_Frame_5
       frameIndex: 5
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 15
-        height: 24
-      spriteId: 5e2302da696765144a47072c52624c25
+        width: 13
+        height: 23
+      spriteId: 4df5fa6a59cdf214896b4c17a58b303b
     - name: White Knight Landing_Frame_6
       frameIndex: 6
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 15
-        height: 23
-      spriteId: 44bd97b441ec8474eaf7d814e13f3a73
+        width: 13
+        height: 22
+      spriteId: ae53adedaafd2424bb44768759c652e1
     - name: White Knight Landing_Frame_7
       frameIndex: 7
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 15
-        height: 22
-      spriteId: 17a0e5aec9ca47747b2c4d172235b053
+        width: 13
+        height: 21
+      spriteId: 4a69a0662f1aa074786b52cf8c64b370
     - name: White Knight Landing_Frame_8
       frameIndex: 8
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 15
-        height: 23
-      spriteId: 79a34e7ba1098de41ba43cc58f48250d
+        width: 13
+        height: 22
+      spriteId: 0d3aab739439502459afa6692d4f6a82
     - name: White Knight Landing_Frame_9
       frameIndex: 9
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 15
-        height: 23
-      spriteId: 1e807d308b1773b41ac13e5ba134d20a
+        width: 13
+        height: 22
+      spriteId: e57eb0b4914c28843913d3cefe14ff0b
     - name: White Knight Landing_Frame_10
       frameIndex: 10
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 15
-        height: 23
-      spriteId: 8e5378bca40e27e4d90ef02f6082a24c
+        width: 13
+        height: 22
+      spriteId: 314465a8afddfc84a9ecab4f0d30265a
     - name: White Knight Landing_Frame_11
       frameIndex: 11
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 15
-        height: 23
-      spriteId: 2e5d28db7dbe6d74499b501b7f192a1a
+        width: 13
+        height: 22
+      spriteId: 97aa9d4d941c12e4393cfc35a410fe3d
     - name: White Knight Landing_Frame_12
       frameIndex: 12
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 15
-        height: 23
-      spriteId: e9b3a6f1f4bf6564da64961b57780083
+        width: 13
+        height: 22
+      spriteId: ead0ce5f1da3b9540b3160841035b74d
     linkedCells: []
     parentIndex: -1
   platformSettings: []

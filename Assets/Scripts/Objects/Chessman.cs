@@ -43,6 +43,9 @@ public abstract class Chessman : MonoBehaviour
     public MovementProfile moveProfile;
     protected Sprite sprite;
 
+    public GameObject droppingSprite;
+    public GameObject attackingSprite;
+
     public int attack = 1;
     public int defense = 1;
     public int support = 1;

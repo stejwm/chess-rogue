@@ -123,15 +123,15 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: White Bishop Unmoving
     originalName: 
-    pivot: {x: 0.5, y: -0.17391305}
+    pivot: {x: 0.5, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 4
-      width: 14
-      height: 23
+      x: 74
+      y: 94
+      width: 12
+      height: 22
     spriteID: 0ded2296f46161549a317122a3a9d00e
     spriteBone: []
     spriteOutline: []
@@ -140,7 +140,387 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
+    uvTransform: {x: 74, y: 94}
+  - name: White Bishop Unmoving_Frame_1
+    originalName: 
+    pivot: {x: 0.53846157, y: -0.18181819}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 226
+      width: 13
+      height: 22
+    spriteID: 9a6432dbd6cc93f47b4fca6c313ea98c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 226}
+  - name: White Bishop Unmoving_Frame_2
+    originalName: 
+    pivot: {x: 0.53846157, y: -0.18181819}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 4
+      width: 13
+      height: 22
+    spriteID: f016c286b66a9c0459e290d3fb854c22
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 4}
+  - name: White Bishop Unmoving_Frame_3
+    originalName: 
+    pivot: {x: 0.625, y: -0.18181819}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 136
+      width: 16
+      height: 22
+    spriteID: aa5bcf6d10c36874d99f8e7fa7570450
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 136}
+  - name: White Bishop Unmoving_Frame_4
+    originalName: 
+    pivot: {x: 0.625, y: -0.18181819}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 166
+      width: 16
+      height: 22
+    spriteID: 7c1511f6d90346649874e730e103d830
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 166}
+  - name: White Bishop Unmoving_Frame_5
+    originalName: 
+    pivot: {x: 0.72727275, y: -0.16}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 4
+      width: 22
+      height: 25
+    spriteID: 01e4d0d4e64890847a7cdd22221ca0b7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 4}
+  - name: White Bishop Unmoving_Frame_6
+    originalName: 
+    pivot: {x: 0.72727275, y: -0.16}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 37
+      width: 22
+      height: 25
+    spriteID: ffd114e1dd628224fb4fb26c03c62643
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 37}
+  - name: White Bishop Unmoving_Frame_7
+    originalName: 
+    pivot: {x: 0.72727275, y: -0.15384616}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 106
+      width: 22
+      height: 26
+    spriteID: f20925afe126391478908a8734732ec6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 106}
+  - name: White Bishop Unmoving_Frame_8
+    originalName: 
+    pivot: {x: 0.72727275, y: -0.15384616}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 140
+      width: 22
+      height: 26
+    spriteID: fba5303df61c04542851c4ccb7c4e515
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 140}
+  - name: White Bishop Unmoving_Frame_9
+    originalName: 
+    pivot: {x: 0.72727275, y: -0.15384616}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 174
+      width: 22
+      height: 26
+    spriteID: 6a614a396b860b04a9622ec30a665f6d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 174}
+  - name: White Bishop Unmoving_Frame_10
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 32
+      height: 26
+    spriteID: 8a8ab5d34c8c5cb4cbb7fe5bda36cb94
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
+  - name: White Bishop Unmoving_Frame_11
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 38
+      width: 32
+      height: 26
+    spriteID: 04fd0efcbad64d344b896cda4a312a10
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 38}
+  - name: White Bishop Unmoving_Frame_12
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 72
+      width: 32
+      height: 26
+    spriteID: a78aac5d1efd02042bb51e9d0d65f332
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 72}
+  - name: White Bishop Unmoving_Frame_13
+    originalName: 
+    pivot: {x: 0.72727275, y: -0.15384616}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 208
+      width: 22
+      height: 26
+    spriteID: 370ee663eab96ec4180f0f7ad2c4ab46
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 208}
+  - name: White Bishop Unmoving_Frame_14
+    originalName: 
+    pivot: {x: 0.72727275, y: -0.16}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 70
+      width: 22
+      height: 25
+    spriteID: 4f5673b2d96c5f648bbb2fc468554bb9
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 70}
+  - name: White Bishop Unmoving_Frame_15
+    originalName: 
+    pivot: {x: 0.72727275, y: -0.16}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 103
+      width: 22
+      height: 25
+    spriteID: 5a1b9e124b965eb4aa6945b724773a65
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 103}
+  - name: White Bishop Unmoving_Frame_16
+    originalName: 
+    pivot: {x: 0.625, y: -0.18181819}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 196
+      width: 16
+      height: 22
+    spriteID: e05914916a1de9346851884a76b02d12
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 196}
+  - name: White Bishop Unmoving_Frame_17
+    originalName: 
+    pivot: {x: 0.53846157, y: -0.18181819}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 34
+      width: 13
+      height: 22
+    spriteID: ca497b2bd9fd1e6458c117bae3803307
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 34}
+  - name: White Bishop Unmoving_Frame_18
+    originalName: 
+    pivot: {x: 0.53846157, y: -0.18181819}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 64
+      width: 13
+      height: 22
+    spriteID: ea76ae7c436797f43b0fd8a51207abbd
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 64}
+  - name: White Bishop Unmoving_Frame_19
+    originalName: 
+    pivot: {x: 0.5, y: -0.18181819}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 124
+      width: 12
+      height: 22
+    spriteID: 4837b460a3c83334380e0a5978a91b8d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 124}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -150,15 +530,186 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: White Bishop Unmoving
+    - name: White Bishop Unmoving_Frame_0
       frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 10
+        y: 4
+        width: 12
+        height: 22
+      spriteId: 0ded2296f46161549a317122a3a9d00e
+    - name: White Bishop Unmoving_Frame_1
+      frameIndex: 1
       additiveSortOrder: 0
       cellRect:
         x: 9
         y: 4
-        width: 14
-        height: 23
-      spriteId: 0ded2296f46161549a317122a3a9d00e
+        width: 13
+        height: 22
+      spriteId: 9a6432dbd6cc93f47b4fca6c313ea98c
+    - name: White Bishop Unmoving_Frame_2
+      frameIndex: 2
+      additiveSortOrder: 0
+      cellRect:
+        x: 9
+        y: 4
+        width: 13
+        height: 22
+      spriteId: f016c286b66a9c0459e290d3fb854c22
+    - name: White Bishop Unmoving_Frame_3
+      frameIndex: 3
+      additiveSortOrder: 0
+      cellRect:
+        x: 6
+        y: 4
+        width: 16
+        height: 22
+      spriteId: aa5bcf6d10c36874d99f8e7fa7570450
+    - name: White Bishop Unmoving_Frame_4
+      frameIndex: 4
+      additiveSortOrder: 0
+      cellRect:
+        x: 6
+        y: 4
+        width: 16
+        height: 22
+      spriteId: 7c1511f6d90346649874e730e103d830
+    - name: White Bishop Unmoving_Frame_5
+      frameIndex: 5
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 4
+        width: 22
+        height: 25
+      spriteId: 01e4d0d4e64890847a7cdd22221ca0b7
+    - name: White Bishop Unmoving_Frame_6
+      frameIndex: 6
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 4
+        width: 22
+        height: 25
+      spriteId: ffd114e1dd628224fb4fb26c03c62643
+    - name: White Bishop Unmoving_Frame_7
+      frameIndex: 7
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 4
+        width: 22
+        height: 26
+      spriteId: f20925afe126391478908a8734732ec6
+    - name: White Bishop Unmoving_Frame_8
+      frameIndex: 8
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 4
+        width: 22
+        height: 26
+      spriteId: fba5303df61c04542851c4ccb7c4e515
+    - name: White Bishop Unmoving_Frame_9
+      frameIndex: 9
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 4
+        width: 22
+        height: 26
+      spriteId: 6a614a396b860b04a9622ec30a665f6d
+    - name: White Bishop Unmoving_Frame_10
+      frameIndex: 10
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 32
+        height: 26
+      spriteId: 8a8ab5d34c8c5cb4cbb7fe5bda36cb94
+    - name: White Bishop Unmoving_Frame_11
+      frameIndex: 11
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 32
+        height: 26
+      spriteId: 04fd0efcbad64d344b896cda4a312a10
+    - name: White Bishop Unmoving_Frame_12
+      frameIndex: 12
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 32
+        height: 26
+      spriteId: a78aac5d1efd02042bb51e9d0d65f332
+    - name: White Bishop Unmoving_Frame_13
+      frameIndex: 13
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 4
+        width: 22
+        height: 26
+      spriteId: 370ee663eab96ec4180f0f7ad2c4ab46
+    - name: White Bishop Unmoving_Frame_14
+      frameIndex: 14
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 4
+        width: 22
+        height: 25
+      spriteId: 4f5673b2d96c5f648bbb2fc468554bb9
+    - name: White Bishop Unmoving_Frame_15
+      frameIndex: 15
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 4
+        width: 22
+        height: 25
+      spriteId: 5a1b9e124b965eb4aa6945b724773a65
+    - name: White Bishop Unmoving_Frame_16
+      frameIndex: 16
+      additiveSortOrder: 0
+      cellRect:
+        x: 6
+        y: 4
+        width: 16
+        height: 22
+      spriteId: e05914916a1de9346851884a76b02d12
+    - name: White Bishop Unmoving_Frame_17
+      frameIndex: 17
+      additiveSortOrder: 0
+      cellRect:
+        x: 9
+        y: 4
+        width: 13
+        height: 22
+      spriteId: ca497b2bd9fd1e6458c117bae3803307
+    - name: White Bishop Unmoving_Frame_18
+      frameIndex: 18
+      additiveSortOrder: 0
+      cellRect:
+        x: 9
+        y: 4
+        width: 13
+        height: 22
+      spriteId: ea76ae7c436797f43b0fd8a51207abbd
+    - name: White Bishop Unmoving_Frame_19
+      frameIndex: 19
+      additiveSortOrder: 0
+      cellRect:
+        x: 10
+        y: 4
+        width: 12
+        height: 22
+      spriteId: 4837b460a3c83334380e0a5978a91b8d
     linkedCells: []
     parentIndex: -1
   platformSettings: []

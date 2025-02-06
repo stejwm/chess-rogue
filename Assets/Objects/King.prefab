@@ -433,6 +433,8 @@ MonoBehaviour:
   xBoard: -1
   yBoard: -1
   owner: {fileID: 0}
+  droppingSprite: {fileID: 5930552799114634911, guid: d451febe63df1fe47b49cfaaf81620ab, type: 3}
+  attackingSprite: {fileID: 0}
   attack: 1
   defense: 1
   support: 1
