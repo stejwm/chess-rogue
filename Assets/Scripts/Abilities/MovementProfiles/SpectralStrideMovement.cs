@@ -9,8 +9,11 @@ public class SpectralStrideMovement : MovementProfile
     public SpectralStrideMovement(MovementProfile oldMovementProfile){
         this.oldMovementProfile=oldMovementProfile;
     }
-    public override List<BoardPosition> GetValidMoves(Chessman piece) {
-        return GetSpectralStrideMoves(piece, piece.xBoard, piece.yBoard);
+    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
+        if(allowFriendlyCapture)
+            return GetSpectralStrideMoves(piece, piece.xBoard, piece.yBoard);
+        else
+            return Movement.RemoveFriendlyPieces(GetSpectralStrideMoves(piece, piece.xBoard, piece.yBoard), piece);
     }
     public List<BoardPosition> GetSpectralStrideMoves(Chessman piece, int xBoard, int yBoard)
     {

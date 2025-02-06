@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 public class KnightMovement : MovementProfile
 {
-    public override List<BoardPosition> GetValidMoves(Chessman piece) {
-        return Movement.ValidKnightMoves(piece,piece.xBoard,piece.yBoard);
+    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture=false) {
+        if (allowFriendlyCapture)
+            return Movement.ValidKnightMoves(piece,piece.xBoard,piece.yBoard);
+        else
+        return Movement.RemoveFriendlyPieces(Movement.ValidKnightMoves(piece,piece.xBoard,piece.yBoard),piece);
      }
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
         return Movement.ValidKnightMoves(piece,piece.xBoard,piece.yBoard);

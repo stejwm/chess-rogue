@@ -4,20 +4,18 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using Unity.VisualScripting;
 using UnityEngine;
-public class TravelersGraceMovement : MovementProfile
+public class BetrayerMovement : MovementProfile
 {
     MovementProfile oldProfile;
     Game game;
-    public TravelersGraceMovement(MovementProfile old){
+    public BetrayerMovement(MovementProfile old){
         oldProfile=old;
-        GameObject controller = GameObject.FindGameObjectWithTag("GameController");
-        game = controller.GetComponent<Game>();
     }
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture=false) {
-        return Movement.AllOpenSquares();
+    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
+        return oldProfile.GetValidMoves(piece, true);
      }
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
-        return oldProfile.GetValidSupportMoves(piece);
+        return new List<BoardPosition>();
     }
 
     public override List<Vector2Int> GetDirections(Chessman piece){

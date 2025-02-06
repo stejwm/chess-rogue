@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ScoutPawnMovement : MovementProfile
 {
-    public override List<BoardPosition> GetValidMoves(Chessman piece) {
+    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
         List<BoardPosition> validMoves = new List<BoardPosition>();
         validMoves.AddRange(Movement.ValidScoutMoves(piece,piece.xBoard,piece.yBoard));
 
@@ -12,8 +12,10 @@ public class ScoutPawnMovement : MovementProfile
             validMoves.AddRange(Movement.ValidPawnSupportMoves(piece,piece.xBoard,piece.yBoard+1));
         else
             validMoves.AddRange(Movement.ValidPawnSupportMoves(piece,piece.xBoard,piece.yBoard-1));
-        
-        return validMoves;
+        if (allowFriendlyCapture)
+            return validMoves;
+        else
+            return Movement.RemoveFriendlyPieces(validMoves,piece);
      }
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
         if(piece.color==PieceColor.White)

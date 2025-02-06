@@ -292,17 +292,17 @@ public abstract class Chessman : MonoBehaviour
         {
             if (Game._instance.PositionOnBoard(coordinate.x, coordinate.y))
             {
-                GameObject cp = Game._instance.currentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
-                if (cp == null)
+                //GameObject cp = Game._instance.currentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
+                //if (cp == null)
+                //{
+                    SetTileValidMove(coordinate.x, coordinate.y);
+                    theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
+                //}
+                 /* else if (cp.GetComponent<Chessman>().player != player)
                 {
                     SetTileValidMove(coordinate.x, coordinate.y);
                     theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
-                }
-                else if (cp.GetComponent<Chessman>().player != player)
-                {
-                    SetTileValidMove(coordinate.x, coordinate.y);
-                    theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
-                }
+                }  */
             }
         }
         return theseValidMoves;
