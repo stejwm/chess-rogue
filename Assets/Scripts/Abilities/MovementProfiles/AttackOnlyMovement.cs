@@ -11,16 +11,19 @@ public class AttackOnlyMovement : MovementProfile
     public AttackOnlyMovement(MovementProfile old){
         oldProfile=old;
     }
-    public override List<BoardPosition> GetValidMoves(Chessman piece) {
+    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
         List<BoardPosition> moves = new List<BoardPosition>();
         var StandardMoves =oldProfile.GetValidMoves(piece);
         foreach (var position in StandardMoves)
         {
-            if (Game._instance.currentMatch.GetPieceAtPosition(position.x,position.y)!=null && Game._instance.currentMatch.GetPieceAtPosition(position.x,position.y).GetComponent<Chessman>().team!=piece.team)
+            if (Game._instance.currentMatch.GetPieceAtPosition(position.x,position.y)!=null)
                 moves.Add(position);
         }
-        return moves;
-     }
+        if (allowFriendlyCapture)
+            return moves;
+        else
+            return Movement.RemoveFriendlyPieces(moves,piece);
+    }
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
         return oldProfile.GetValidSupportMoves(piece);
     }
