@@ -212,7 +212,7 @@ public class MapManager : MonoBehaviour
                     }
                 }
             }
-            Vector3 position = new Vector3(startX + index * xOffset, yOffset + verticalShift, 0); // Adjusted positions
+            Vector3 position = new Vector3(Random.Range(-.2f, 0.2f)+startX + index * xOffset, yOffset + verticalShift, 0); // Adjusted positions
             GameObject nodeObject = Instantiate(nodePrefab, position, Quaternion.identity, mapParent);
             MapNode mapNode = nodeObject.GetComponent<MapNode>();
             mapNode.nodeName = nodeType.ToString() + " Node";
@@ -246,7 +246,7 @@ public class MapManager : MonoBehaviour
                     }
                 }
             }
-            position = new Vector3(startX + index * xOffset, yOffset + verticalShift, 0); // Adjusted positions
+            position = new Vector3(Random.Range(-.2f, 0.2f)+startX + index * xOffset, yOffset + verticalShift, 0); // Adjusted positions
             nodeObject = Instantiate(nodePrefab, position, Quaternion.identity, mapParent);
             mapNode = nodeObject.GetComponent<MapNode>();
             mapNode.nodeName = nodeType.ToString() + " Node";
