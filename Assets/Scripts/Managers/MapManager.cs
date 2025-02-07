@@ -201,9 +201,14 @@ public class MapManager : MonoBehaviour
             float yOffset = Random.Range(-maxYOffset, maxYOffset); // Try a random vertical offset first
             if (Mathf.Abs(yOffset - firstPathYOffsets[index]) < minVerticalDistance || Mathf.Abs(yOffset - secondPathYOffsets[index]) < minVerticalDistance)
             {
-                // If the random offset is invalid, pick a valid value
-                for (float offset = firstPathYOffsets[index]; offset <= maxYOffset*2; offset += 0.2f)
+                float offset = firstPathYOffsets[index];
+                while (!(offset <= -maxYOffset*2 || offset>=maxYOffset*2))
                 {
+                    Debug.Log("First path Offset: "+offset);
+                    if(firstPathYOffsets[index]>secondPathYOffsets[index])
+                        offset+=0.2f;
+                    else
+                        offset-=0.2f;
                     if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance/2 && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance/2)
                     {
                         Debug.Log("setting offset: "+offset+", firstPathOffset: "+firstPathYOffsets[index]+ ", secondPathOffset: "+secondPathYOffsets[index]);
@@ -235,9 +240,14 @@ public class MapManager : MonoBehaviour
 
             if (Mathf.Abs(yOffset - firstPathYOffsets[index]) < minVerticalDistance || Mathf.Abs(yOffset - secondPathYOffsets[index]) < minVerticalDistance)
             {
-                // If the random offset is invalid, pick a valid value
-                for (float offset = secondPathYOffsets[index]; offset <= -maxYOffset*2; offset += 0.2f)
+                float offset = secondPathYOffsets[index];
+                while (!(offset <= -maxYOffset*2 || offset>=maxYOffset*2))
                 {
+                    Debug.Log("Second path Offset: "+offset);
+                    if(firstPathYOffsets[index]>secondPathYOffsets[index])
+                        offset-=0.2f;
+                    else
+                        offset+=0.2f;
                     if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance/2 && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance/2)
                     {
                         Debug.Log("setting offset: "+offset+", firstPathOffset: "+firstPathYOffsets[index]+ ", secondPathOffset: "+secondPathYOffsets[index]);
