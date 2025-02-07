@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c34ca82b1fc11964e8438e6c3e321f88
+guid: 0984324f32a636a4388cea242a633a76
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,18 +121,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: White Rook Landing_Frame_0
+  - name: White Pawn attacking_Frame_0
     originalName: 
-    pivot: {x: 0.5, y: -0.45000002}
+    pivot: {x: 0.5, y: -0.22222222}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 24
-      y: 33
+      x: 57
+      y: 4
       width: 12
-      height: 20
-    spriteID: 77c5ffafdd41aa643b73970ec5afbc7d
+      height: 18
+    spriteID: 831adb3a97641db48bdb71c139cb966e
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -140,19 +140,159 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 24, y: 33}
-  - name: White Rook Landing_Frame_1
+    uvTransform: {x: 57, y: 4}
+  - name: White Pawn attacking_Frame_1
     originalName: 
-    pivot: {x: 0.5, y: -0.3809524}
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 30
+      width: 12
+      height: 18
+    spriteID: 9f14d20ebe4904e4e8a431f61b81d904
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 30}
+  - name: White Pawn attacking_Frame_2
+    originalName: 
+    pivot: {x: 0.5, y: -0.23529412}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 56
+      width: 12
+      height: 17
+    spriteID: dbf3c4e04d226494992ee2ace6b8e304
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 56}
+  - name: White Pawn attacking_Frame_3
+    originalName: 
+    pivot: {x: 0.5, y: -0.23529412}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 81
+      width: 12
+      height: 17
+    spriteID: 548569c1e39504c449b898ecd4f2a615
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 81}
+  - name: White Pawn attacking_Frame_4
+    originalName: 
+    pivot: {x: 0.5, y: -0.23529412}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 57
+      y: 106
+      width: 12
+      height: 17
+    spriteID: 7a6747cba7f8d5e4fb94b4e1d539070c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 57, y: 106}
+  - name: White Pawn attacking_Frame_5
+    originalName: 
+    pivot: {x: 0.5, y: -0.23529412}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 77
+      y: 4
+      width: 12
+      height: 17
+    spriteID: 7f798d547f91d6a4797c7be3c5a81376
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 77, y: 4}
+  - name: White Pawn attacking_Frame_6
+    originalName: 
+    pivot: {x: 0.5714286, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 31
+      y: 58
+      width: 14
+      height: 18
+    spriteID: 1dbd10bfc118b694cb630382911d61c8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 31, y: 58}
+  - name: White Pawn attacking_Frame_7
+    originalName: 
+    pivot: {x: 0.40000004, y: -0.21052632}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 31
+      y: 31
+      width: 15
+      height: 19
+    spriteID: 699a770fc9b743a45bacf47c382ac259
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 31, y: 31}
+  - name: White Pawn attacking_Frame_8
+    originalName: 
+    pivot: {x: 0.31578946, y: -0.2}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 12
-      height: 21
-    spriteID: 4b558b6544f6d554389030e2b96184ec
+      width: 19
+      height: 20
+    spriteID: b82757166c7998440b824a12fb3ff53d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -161,98 +301,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
-  - name: White Rook Landing_Frame_2
+  - name: White Pawn attacking_Frame_9
     originalName: 
-    pivot: {x: 0.5, y: -0.33333334}
+    pivot: {x: 0.2631579, y: -0.3}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 33
-      width: 12
-      height: 21
-    spriteID: 847d1666bcc1d8844b85969b630b284c
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 33}
-  - name: White Rook Landing_Frame_3
-    originalName: 
-    pivot: {x: 0.5, y: -0.2857143}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 62
-      width: 12
-      height: 21
-    spriteID: 659e228eb855f8f4b8d4b15a029ad812
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 62}
-  - name: White Rook Landing_Frame_4
-    originalName: 
-    pivot: {x: 0.5, y: -0.23809524}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 91
-      width: 12
-      height: 21
-    spriteID: 6a7a6bd07167c844da529df36b4bb5ed
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 91}
-  - name: White Rook Landing_Frame_5
-    originalName: 
-    pivot: {x: 0.5, y: -0.1904762}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 24
-      y: 4
-      width: 12
-      height: 21
-    spriteID: 1ed5e4ca68f30984a8877e477f602648
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 24, y: 4}
-  - name: White Rook Landing_Frame_6
-    originalName: 
-    pivot: {x: 0.5, y: -0.2}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 24
-      y: 61
-      width: 12
+      y: 32
+      width: 19
       height: 20
-    spriteID: 5388771c19bcc6e469b149483c42e663
+    spriteID: 1485d103325477645a0fbb6b9439e9e4
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -260,19 +320,79 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 24, y: 61}
-  - name: White Rook Landing_Frame_7
+    uvTransform: {x: 4, y: 32}
+  - name: White Pawn attacking_Frame_10
     originalName: 
-    pivot: {x: 0.5, y: -0.21052632}
+    pivot: {x: 0.22222222, y: -0.4}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 64
+      x: 4
+      y: 87
+      width: 18
+      height: 20
+    spriteID: 7f367779e370eb9449130b84ab47255a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 87}
+  - name: White Pawn attacking_Frame_11
+    originalName: 
+    pivot: {x: 0.15789473, y: -0.5263158}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 60
+      width: 19
+      height: 19
+    spriteID: 97a495a92224ee4419d7803b164b51b5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 60}
+  - name: White Pawn attacking_Frame_12
+    originalName: 
+    pivot: {x: 0.16666667, y: -0.57894737}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 31
       y: 4
+      width: 18
+      height: 19
+    spriteID: e89fe021ec2d25a4f974ea2023c849ce
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 31, y: 4}
+  - name: White Pawn attacking_Frame_13
+    originalName: 
+    pivot: {x: 0.16666667, y: -0.6315789}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 31
+      y: 84
       width: 12
       height: 19
-    spriteID: fcd2efee398bd9847b464402ef8c4a36
+    spriteID: 235e326822efabf4c8e10373f97a5a7d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -280,233 +400,142 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 64, y: 4}
-  - name: White Rook Landing_Frame_8
-    originalName: 
-    pivot: {x: 0.5, y: -0.2}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 24
-      y: 89
-      width: 12
-      height: 20
-    spriteID: 74abd254c9cdc21459f2197f3221a262
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 24, y: 89}
-  - name: White Rook Landing_Frame_9
-    originalName: 
-    pivot: {x: 0.5, y: -0.2}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 44
-      y: 4
-      width: 12
-      height: 20
-    spriteID: e9b36e5b5dab2ca41a994c8fa87dcc88
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 44, y: 4}
-  - name: White Rook Landing_Frame_10
-    originalName: 
-    pivot: {x: 0.5, y: -0.2}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 44
-      y: 32
-      width: 12
-      height: 20
-    spriteID: 02e74da6783dce340ab0fb37dd6ab166
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 44, y: 32}
-  - name: White Rook Landing_Frame_11
-    originalName: 
-    pivot: {x: 0.5, y: -0.2}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 44
-      y: 60
-      width: 12
-      height: 20
-    spriteID: 713447b5404f2e941b021a0b26877113
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 44, y: 60}
-  - name: White Rook Landing_Frame_12
-    originalName: 
-    pivot: {x: 0.5, y: -0.2}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 44
-      y: 88
-      width: 12
-      height: 20
-    spriteID: c4cff586febbb4e488a2e2b439392642
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 44, y: 88}
+    uvTransform: {x: 31, y: 84}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 915499161
-    name: White Rook Landing
+    guid: -1589983517
+    name: White Pawn attacking
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: White Rook Landing_Frame_0
+    - name: White Pawn attacking_Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 10
-        y: 9
+        y: 4
         width: 12
-        height: 20
-      spriteId: 77c5ffafdd41aa643b73970ec5afbc7d
-    - name: White Rook Landing_Frame_1
+        height: 18
+      spriteId: 831adb3a97641db48bdb71c139cb966e
+    - name: White Pawn attacking_Frame_1
       frameIndex: 1
       additiveSortOrder: 0
       cellRect:
         x: 10
-        y: 8
+        y: 4
         width: 12
-        height: 21
-      spriteId: 4b558b6544f6d554389030e2b96184ec
-    - name: White Rook Landing_Frame_2
+        height: 18
+      spriteId: 9f14d20ebe4904e4e8a431f61b81d904
+    - name: White Pawn attacking_Frame_2
       frameIndex: 2
       additiveSortOrder: 0
       cellRect:
         x: 10
-        y: 7
+        y: 4
         width: 12
-        height: 21
-      spriteId: 847d1666bcc1d8844b85969b630b284c
-    - name: White Rook Landing_Frame_3
+        height: 17
+      spriteId: dbf3c4e04d226494992ee2ace6b8e304
+    - name: White Pawn attacking_Frame_3
       frameIndex: 3
       additiveSortOrder: 0
       cellRect:
         x: 10
-        y: 6
+        y: 4
         width: 12
-        height: 21
-      spriteId: 659e228eb855f8f4b8d4b15a029ad812
-    - name: White Rook Landing_Frame_4
+        height: 17
+      spriteId: 548569c1e39504c449b898ecd4f2a615
+    - name: White Pawn attacking_Frame_4
       frameIndex: 4
       additiveSortOrder: 0
       cellRect:
         x: 10
-        y: 5
+        y: 4
         width: 12
-        height: 21
-      spriteId: 6a7a6bd07167c844da529df36b4bb5ed
-    - name: White Rook Landing_Frame_5
+        height: 17
+      spriteId: 7a6747cba7f8d5e4fb94b4e1d539070c
+    - name: White Pawn attacking_Frame_5
       frameIndex: 5
       additiveSortOrder: 0
       cellRect:
         x: 10
         y: 4
         width: 12
-        height: 21
-      spriteId: 1ed5e4ca68f30984a8877e477f602648
-    - name: White Rook Landing_Frame_6
+        height: 17
+      spriteId: 7f798d547f91d6a4797c7be3c5a81376
+    - name: White Pawn attacking_Frame_6
       frameIndex: 6
       additiveSortOrder: 0
       cellRect:
-        x: 10
+        x: 8
         y: 4
-        width: 12
-        height: 20
-      spriteId: 5388771c19bcc6e469b149483c42e663
-    - name: White Rook Landing_Frame_7
+        width: 14
+        height: 18
+      spriteId: 1dbd10bfc118b694cb630382911d61c8
+    - name: White Pawn attacking_Frame_7
       frameIndex: 7
       additiveSortOrder: 0
       cellRect:
         x: 10
         y: 4
-        width: 12
+        width: 15
         height: 19
-      spriteId: fcd2efee398bd9847b464402ef8c4a36
-    - name: White Rook Landing_Frame_8
+      spriteId: 699a770fc9b743a45bacf47c382ac259
+    - name: White Pawn attacking_Frame_8
       frameIndex: 8
       additiveSortOrder: 0
       cellRect:
         x: 10
         y: 4
-        width: 12
+        width: 19
         height: 20
-      spriteId: 74abd254c9cdc21459f2197f3221a262
-    - name: White Rook Landing_Frame_9
+      spriteId: b82757166c7998440b824a12fb3ff53d
+    - name: White Pawn attacking_Frame_9
       frameIndex: 9
       additiveSortOrder: 0
       cellRect:
-        x: 10
-        y: 4
-        width: 12
+        x: 11
+        y: 6
+        width: 19
         height: 20
-      spriteId: e9b36e5b5dab2ca41a994c8fa87dcc88
-    - name: White Rook Landing_Frame_10
+      spriteId: 1485d103325477645a0fbb6b9439e9e4
+    - name: White Pawn attacking_Frame_10
       frameIndex: 10
       additiveSortOrder: 0
       cellRect:
-        x: 10
-        y: 4
-        width: 12
+        x: 12
+        y: 8
+        width: 18
         height: 20
-      spriteId: 02e74da6783dce340ab0fb37dd6ab166
-    - name: White Rook Landing_Frame_11
+      spriteId: 7f367779e370eb9449130b84ab47255a
+    - name: White Pawn attacking_Frame_11
       frameIndex: 11
       additiveSortOrder: 0
       cellRect:
-        x: 10
-        y: 4
-        width: 12
-        height: 20
-      spriteId: 713447b5404f2e941b021a0b26877113
-    - name: White Rook Landing_Frame_12
+        x: 13
+        y: 10
+        width: 19
+        height: 19
+      spriteId: 97a495a92224ee4419d7803b164b51b5
+    - name: White Pawn attacking_Frame_12
       frameIndex: 12
       additiveSortOrder: 0
       cellRect:
-        x: 10
-        y: 4
+        x: 13
+        y: 11
+        width: 18
+        height: 19
+      spriteId: e89fe021ec2d25a4f974ea2023c849ce
+    - name: White Pawn attacking_Frame_13
+      frameIndex: 13
+      additiveSortOrder: 0
+      cellRect:
+        x: 14
+        y: 12
         width: 12
-        height: 20
-      spriteId: c4cff586febbb4e488a2e2b439392642
+        height: 19
+      spriteId: 235e326822efabf4c8e10373f97a5a7d
     linkedCells: []
     parentIndex: -1
   platformSettings: []

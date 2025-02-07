@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Blood Offering
   description: +1 to all stats when a friendly piece is captured
-  sprite: {fileID: 0}
+  sprite: {fileID: 1044065575835123525, guid: 1a43706c2db379349b229c9c18ad022b, type: 3}
   AbilityLoggerPrefab: {fileID: 0}
   PopUpMenu: {fileID: 0}
   gradient: {fileID: 0}

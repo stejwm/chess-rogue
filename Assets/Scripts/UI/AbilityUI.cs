@@ -10,6 +10,7 @@ public class AbilityUI : MonoBehaviour
     public Ability ability;
     // Start is called before the first frame update
     public void SetIcon(Sprite sprite){
+        Debug.Log("Sprite: "+sprite);
         image.sprite=sprite;
     }
 }

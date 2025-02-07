@@ -11,8 +11,9 @@ public class StatBoxManager : MonoBehaviour
     public Text attack;
     public Text defense;
     public Text support;
-    public Text info;
     public Text pieceName;
+    public GameObject abilityBox;
+    public GameObject abilityUI;
     public Image image;
     // Start is called before the first frame update
     void Awake()
@@ -35,14 +36,23 @@ public class StatBoxManager : MonoBehaviour
     {
         //transform.position=Input.mousePosition;
     }
-    public void SetAndShowStats(int attack, int defense, int support, string info, string name, Sprite sprite){
+    public void SetAndShowStats(Chessman piece){
+        foreach (Transform child in abilityBox.transform)
+        {
+            Destroy(child.gameObject);
+        }
         gameObject.SetActive(true);
-        this.attack.text="attack: "+attack;
-        this.defense.text="defense: "+defense;
-        this.support.text="support: "+support;
-        this.info.text=info;
-        this.pieceName.text=name;
-        this.image.sprite=sprite;
+        this.attack.text="attack: "+piece.CalculateAttack();
+        this.defense.text="defense: "+piece.CalculateDefense();
+        this.support.text="support: "+piece.CalculateSupport();
+        
+        this.pieceName.text=piece.name;
+        this.image.sprite=piece.GetComponent<SpriteRenderer>().sprite;
+        foreach (var ability in piece.abilities)
+        {
+            var icon=Instantiate(abilityUI, abilityBox.transform);
+            icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+        }
 
     }
 
@@ -51,7 +61,7 @@ public class StatBoxManager : MonoBehaviour
         this.attack.text=string.Empty;
         this.defense.text=string.Empty;
         this.support.text=string.Empty;
-        this.info.text=string.Empty;
+        //this.info.text=string.Empty;
         this.pieceName.text=string.Empty;
         this.image.sprite=null;
     }

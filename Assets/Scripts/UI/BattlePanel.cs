@@ -43,12 +43,14 @@ public class BattlePanel : MonoBehaviour
         this.heroSupport.text="support: ";
         this.heroTotal.text="total: ";
         this.heroPieceName.text=name;
+        this.heroImage.transform.localPosition=new Vector3(-687,0,0);
         this.heroImage.GetComponent<SpriteRenderer>().sprite=sprite.GetComponent<SpriteRenderer>().sprite;
         this.heroImage.GetComponent<Animator>().runtimeAnimatorController=sprite.GetComponent<Animator>().runtimeAnimatorController;
         this.enemyAttack.text=" :defense";
         this.enemySupport.text=" :support";
         this.enemyTotal.text=" :total";
         this.enemyPieceName.text=enemyPieceName;
+        this.enemyImage.transform.localPosition=new Vector3(687,0,0);
         this.enemyImage.GetComponent<SpriteRenderer>().sprite=enemySprite.GetComponent<SpriteRenderer>().sprite;
         this.enemyImage.GetComponent<Animator>().runtimeAnimatorController=enemySprite.GetComponent<Animator>().runtimeAnimatorController;
 
@@ -92,12 +94,14 @@ public class BattlePanel : MonoBehaviour
         this.heroSupport.text="support: ";
         this.heroTotal.text="total: ";
         this.heroPieceName.text=name;
+        this.heroImage.transform.localPosition=new Vector3(-687,0,0);
         this.heroImage.GetComponent<SpriteRenderer>().sprite=sprite.GetComponent<SpriteRenderer>().sprite;
         this.heroImage.GetComponent<Animator>().runtimeAnimatorController=sprite.GetComponent<Animator>().runtimeAnimatorController;
         this.enemyAttack.text=" :attack";
         this.enemySupport.text=" :support";
         this.enemyTotal.text=" :total";
         this.enemyPieceName.text=enemyPieceName;
+        this.enemyImage.transform.localPosition=new Vector3(687,0,0);
         this.enemyImage.GetComponent<SpriteRenderer>().sprite=enemySprite.GetComponent<SpriteRenderer>().sprite;
         this.enemyImage.GetComponent<Animator>().runtimeAnimatorController=enemySprite.GetComponent<Animator>().runtimeAnimatorController;
 
@@ -111,6 +115,7 @@ public class BattlePanel : MonoBehaviour
     public void HideResults(){
         //gameObject.SetActive(true);
         this.result.text="";
+        result.gameObject.SetActive(false);
 
     }
 

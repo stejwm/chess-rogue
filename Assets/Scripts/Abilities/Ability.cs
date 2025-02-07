@@ -37,4 +37,14 @@ public abstract class Ability : ScriptableObject
 
         return this.abilityName ==item.abilityName && this.description == item.description;
     }
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 23 + (abilityName != null ? abilityName.GetHashCode() : 0);
+            hash = hash * 23 + (description != null ? description.GetHashCode() : 0);
+            return hash;
+        }
+    }
 }

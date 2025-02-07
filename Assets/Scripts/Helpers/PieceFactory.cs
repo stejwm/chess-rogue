@@ -160,14 +160,14 @@ public class PieceFactory : MonoBehaviour
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(new Merchant().Clone());
+            piece.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[15].Clone()); //Merchant ability
         }
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
             var pawn = Create(PieceType.Pawn, $"{prefix}_pawn", i, pawnRow, color, team, owner);
-            pawn.GetComponent<Chessman>().AddAbility(new PickPocket().Clone());
+            pawn.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[16].Clone()); //Pickpocket ability
             pieces.Add(pawn);
         }
 
@@ -202,7 +202,7 @@ public class PieceFactory : MonoBehaviour
             case EnemyType.Fortress:
                 return CreateRookArmy(opponent, opponent.color, Team.Enemy);
             case EnemyType.Assassins:
-                return CreateAbilityPiecesBlack(opponent, new Assassin());
+                return CreateAbilityPiecesBlack(opponent, Game._instance.AllAbilities[2].Clone()); //Assassin ability
             case EnemyType.Thieves:
                 return CreateThievesGuild(opponent, opponent.color, Team.Enemy);
         }

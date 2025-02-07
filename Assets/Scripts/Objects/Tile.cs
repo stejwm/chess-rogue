@@ -17,11 +17,10 @@ public class Tile : MonoBehaviour
     private void OnMouseEnter(){
         Chessman piece = getPiece();
         if(piece){
-            var sprite = piece.GetComponent<SpriteRenderer>().sprite;
             if(piece.team==Team.Hero)
-                StatBoxManager._instance.SetAndShowStats(piece.CalculateAttack(),piece.CalculateDefense(),piece.CalculateSupport(),piece.info,piece.name, sprite);
+                StatBoxManager._instance.SetAndShowStats(piece);
             else if(piece.team == Team.Enemy)
-                EnemyStatBoxManager._instance.SetAndShowStats(piece.CalculateAttack(),piece.CalculateDefense(),piece.CalculateSupport(),piece.info,piece.name, sprite);
+                EnemyStatBoxManager._instance.SetAndShowStats(piece);
         }
     }
 
