@@ -15,6 +15,7 @@ public class StatBoxManager : MonoBehaviour
     public GameObject abilityBox;
     public GameObject abilityUI;
     public Image image;
+    public bool lockView;
     // Start is called before the first frame update
     void Awake()
     {
@@ -31,27 +32,31 @@ public class StatBoxManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //transform.position=Input.mousePosition;
+    public void LockView(){
+        lockView=true;
+    }
+    public void UnlockView(){
+        lockView=false;
     }
     public void SetAndShowStats(Chessman piece){
-        foreach (Transform child in abilityBox.transform)
+        if(!lockView)
         {
-            Destroy(child.gameObject);
-        }
-        gameObject.SetActive(true);
-        this.attack.text="attack: "+piece.CalculateAttack();
-        this.defense.text="defense: "+piece.CalculateDefense();
-        this.support.text="support: "+piece.CalculateSupport();
-        
-        this.pieceName.text=piece.name;
-        this.image.sprite=piece.GetComponent<SpriteRenderer>().sprite;
-        foreach (var ability in piece.abilities)
-        {
-            var icon=Instantiate(abilityUI, abilityBox.transform);
-            icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+            foreach (Transform child in abilityBox.transform)
+            {
+                Destroy(child.gameObject);
+            }
+            gameObject.SetActive(true);
+            this.attack.text="attack: "+piece.CalculateAttack();
+            this.defense.text="defense: "+piece.CalculateDefense();
+            this.support.text="support: "+piece.CalculateSupport();
+            
+            this.pieceName.text=piece.name;
+            this.image.sprite=piece.GetComponent<SpriteRenderer>().sprite;
+            foreach (var ability in piece.abilities)
+            {
+                var icon=Instantiate(abilityUI, abilityBox.transform);
+                icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+            }
         }
 
     }

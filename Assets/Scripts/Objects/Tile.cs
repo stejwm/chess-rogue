@@ -110,10 +110,17 @@ public class Tile : MonoBehaviour
         if(!isValidMove && !Game._instance.currentMatch.isSetUpPhase){
             BoardManager._instance.ClearTiles();
             var piece =getPiece();
-            if(piece!=null && piece.isValidForAttack && piece.owner==Game._instance.hero)
+            if(piece!=null && piece.isValidForAttack && piece.owner==Game._instance.hero){
+                StatBoxManager._instance.UnlockView();
                 piece.validMoves.Clear();
                 piece.validMoves=piece.GetValidMoves();
                 piece.DisplayValidMoves();
+                StatBoxManager._instance.SetAndShowStats(piece);
+                StatBoxManager._instance.LockView();
+            }
+            else{
+                StatBoxManager._instance.UnlockView();
+            }
         }
         
         
