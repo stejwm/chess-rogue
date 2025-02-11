@@ -183,7 +183,7 @@ public class PieceFactory : MonoBehaviour
         cm.owner = owner;
         cm.color = color;
         cm.team = team;
-        cm.name = name;
+        cm.name = NameDatabase.GetRandomName();
         cm.SetXBoard(x);
         cm.SetYBoard(y);
         cm.startingPosition = new BoardPosition(x,y);

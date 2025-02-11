@@ -89,6 +89,7 @@ public class Game : MonoBehaviour
     public void Start()
     {
         //Time.timeScale = 0.5f;
+        NameDatabase.LoadNames();
         BoardManager._instance.CreateBoard();
         heroColor=PieceColor.White;
         opponent.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(opponent, opponent.color, Team.Enemy);
