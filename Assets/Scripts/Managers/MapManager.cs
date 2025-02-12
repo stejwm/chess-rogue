@@ -14,7 +14,8 @@ public class MapManager : MonoBehaviour
     public MapNode currentNode;
     public GameObject nodePrefab; // Prefab for the node UI element
     public Transform mapParent; // Parent transform to hold the nodes
-    public GameObject linePrefab; // Prefab for the UILineRenderer
+    public GameObject linePrefab;
+    public Sprite shopSprite; 
     private Dictionary<int, MapNode> firstPathAdditionalNodes = new Dictionary<int, MapNode>();
     private Dictionary<int, MapNode> secondPathAdditionalNodes = new Dictionary<int, MapNode>();
 
@@ -223,7 +224,8 @@ public class MapManager : MonoBehaviour
             mapNode.nodeName = nodeType.ToString() + " Node";
             mapNode.isCompleted = false;
             mapNode.nodeType = nodeType;
-
+            if(nodeType==NodeType.Shop)
+                mapNode.nodeImage.sprite = shopSprite;
             mapNodes.Add(mapNode);
             firstPathNodes.Add(mapNode);
             firstPathAdditionalNodes.Add(index, mapNode);
@@ -262,7 +264,8 @@ public class MapManager : MonoBehaviour
             mapNode.nodeName = nodeType.ToString() + " Node";
             mapNode.isCompleted = false;
             mapNode.nodeType = nodeType;
-
+            if(nodeType==NodeType.Shop)
+                mapNode.nodeImage.sprite = shopSprite;
             // Set the color of the node to black
             mapNode.nodeImage.color = Color.black;
 

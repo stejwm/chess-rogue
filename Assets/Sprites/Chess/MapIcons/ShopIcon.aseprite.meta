@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: edf89abb8f3415c40afebc475805b0d7
+guid: 08d5152dc07f9a24ea9944415bb817c2
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,18 +121,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: DefenseIcon
+  - name: ShopIcon
     originalName: 
-    pivot: {x: 0.5, y: -0.11111111}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 28
-      height: 27
-    spriteID: 9bf21b533de9f184984523fb3c8cbdee
+      width: 32
+      height: 30
+    spriteID: 6bab7a4a97af8bb4c958527f111dfdf4
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,21 +144,21 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 244390205
-    name: DefenseIcon
+    guid: 149712835
+    name: ShopIcon
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: DefenseIcon
+    - name: ShopIcon
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 2
-        y: 3
-        width: 28
-        height: 27
-      spriteId: 9bf21b533de9f184984523fb3c8cbdee
+        x: 0
+        y: 0
+        width: 32
+        height: 30
+      spriteId: 6bab7a4a97af8bb4c958527f111dfdf4
     linkedCells: []
     parentIndex: -1
   platformSettings: []

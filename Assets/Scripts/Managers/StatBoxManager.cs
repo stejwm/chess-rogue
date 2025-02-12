@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 //using UnityEngine.UIElements;
@@ -8,9 +9,9 @@ public class StatBoxManager : MonoBehaviour
 {
     
     public static StatBoxManager _instance;
-    public Text attack;
-    public Text defense;
-    public Text support;
+    public TMP_Text attack;
+    public TMP_Text defense;
+    public TMP_Text support;
     public Text pieceName;
     public GameObject abilityBox;
     public GameObject abilityUI;
@@ -46,9 +47,9 @@ public class StatBoxManager : MonoBehaviour
                 Destroy(child.gameObject);
             }
             gameObject.SetActive(true);
-            this.attack.text="attack: "+piece.CalculateAttack();
-            this.defense.text="defense: "+piece.CalculateDefense();
-            this.support.text="support: "+piece.CalculateSupport();
+            this.attack.text="<sprite name=\"sword\">: "+piece.CalculateAttack();
+            this.defense.text="<sprite name=\"shield\">: "+piece.CalculateDefense();
+            this.support.text="<sprite name=\"cross\">: "+piece.CalculateSupport();
             
             this.pieceName.text=piece.name;
             this.image.sprite=piece.GetComponent<SpriteRenderer>().sprite;

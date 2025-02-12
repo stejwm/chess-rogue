@@ -129,10 +129,50 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 4
+      y: 77
       width: 22
       height: 22
     spriteID: 9d82a447f426cce4ab46f6baa1a3f584
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 77}
+  - name: AttackIcon_Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: -0.033333335}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 39
+      width: 20
+      height: 30
+    spriteID: 93f85e371c8d250448c87a6b8ea019a0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 39}
+  - name: AttackIcon_Frame_2
+    originalName: 
+    pivot: {x: 0.5, y: -0.11111111}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 28
+      height: 27
+    spriteID: e3fbb6c4c22e98d4d8060b3dc14c8f09
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -150,7 +190,7 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: AttackIcon
+    - name: AttackIcon_Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -159,6 +199,24 @@ ScriptedImporter:
         width: 22
         height: 22
       spriteId: 9d82a447f426cce4ab46f6baa1a3f584
+    - name: AttackIcon_Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 6
+        y: 1
+        width: 20
+        height: 30
+      spriteId: 93f85e371c8d250448c87a6b8ea019a0
+    - name: AttackIcon_Frame_2
+      frameIndex: 2
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 3
+        width: 28
+        height: 27
+      spriteId: e3fbb6c4c22e98d4d8060b3dc14c8f09
     linkedCells: []
     parentIndex: -1
   platformSettings: []
