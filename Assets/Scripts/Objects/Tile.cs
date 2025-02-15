@@ -13,6 +13,7 @@ public class Tile : MonoBehaviour
 
     private Chessman reference;
     private bool isValidMove = false;
+    private bool isLightTile;
 
     private void OnMouseEnter(){
         Chessman piece = getPiece();
@@ -32,6 +33,13 @@ public class Tile : MonoBehaviour
             return obj.GetComponent<Chessman>();
         else
             return null;
+    }
+
+    public PieceColor GetColor(){
+        if (isLightTile)
+            return PieceColor.White;
+        else
+            return PieceColor.Black;
     }
 
     public void Initialize(BoardPosition boardPosition){
@@ -58,7 +66,7 @@ public class Tile : MonoBehaviour
         //Set actual unity values
         this.transform.position = new Vector3(x, y, -1.0f);
 
-        bool isLightTile = (position.x + position.y) % 2 == 0; // Even sum for light, odd for dark
+        isLightTile = (position.x + position.y) % 2 == 0; // Even sum for light, odd for dark
 
     // Get the SpriteRenderer component
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();

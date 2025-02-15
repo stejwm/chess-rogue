@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEditor.U2D.Aseprite;
 
 public class TileFactory : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class TileFactory : MonoBehaviour
     public GameObject boardParent;
     public static TileFactory _instance;
     //private BoardManager boardManager;
-
+    private Tile[,] tiles = new Tile[8,8];
     private void Awake()
     {
         if(_instance !=null && _instance !=this){
@@ -35,7 +36,12 @@ public class TileFactory : MonoBehaviour
 
         // Initialize the tile
         tile.Initialize(boardPosition);
+        tiles[boardPosition.x,boardPosition.y]=tile;
 
         return tile;
+    }
+
+    public Tile GetTile(int x, int y){
+        return tiles[x,y];
     }
 }

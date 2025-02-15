@@ -27,7 +27,7 @@ public class Monk : Ability
         Game._instance.OnMove.RemoveListener(AddBonus); 
 
     }
-    public void AddBonus(Chessman movedPiece){
+    public void AddBonus(Chessman movedPiece, BoardPosition targetPosition){
         if (movedPiece.color == piece.color && movedPiece!=piece){
             piece.effectsFeedback.PlayFeedbacks();
             int s = Random.Range (0, 3);

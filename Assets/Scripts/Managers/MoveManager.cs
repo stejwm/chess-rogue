@@ -45,7 +45,7 @@ public class MoveManager: MonoBehaviour
     public void HandleMove(Chessman piece, int x, int y){
         Chessman movingPiece = piece;
         
-        Game._instance.OnMove.Invoke(piece);
+        Game._instance.OnMove.Invoke(piece, new BoardPosition(x,y));
         //Set the Chesspiece's original location to be empty
         match.SetPositionEmpty(movingPiece.xBoard, movingPiece.yBoard);
         Game._instance.audioSource.clip = Game._instance.move; 
