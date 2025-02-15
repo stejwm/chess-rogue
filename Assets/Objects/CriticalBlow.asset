@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b97e103a79d0f664e913cc88c31fd3e5, type: 3}
-  m_Name: Merchant
+  m_Script: {fileID: 11500000, guid: 4b532ee7f3375024089914d6a67ffa4a, type: 3}
+  m_Name: CriticalBlow
   m_EditorClassIdentifier: 
-  abilityName: Merchant
-  description: 10% chance of +1 attack per coin owned
-  sprite: {fileID: 4463075361857580378, guid: f1c4dc8e5d729064b97cc7768b94aedd, type: 3}
+  abilityName: Critical Blow
+  description: 10% chance of x2 attack
+  sprite: {fileID: 0}
   AbilityLoggerPrefab: {fileID: 0}
   PopUpMenu: {fileID: 0}
   gradient: {fileID: 0}
