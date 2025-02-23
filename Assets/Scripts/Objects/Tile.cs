@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour
     private bool isValidMove = false;
     private bool isLightTile;
     [SerializeField] private Material bloodMat;
+    [SerializeField] List<Texture2D> bloodTextures;
 
     private void OnMouseEnter(){
         Chessman piece = getPiece();
@@ -50,8 +51,14 @@ public class Tile : MonoBehaviour
 
     public void SetBloodTile(){
         
+        Texture2D randomBloodTexture = bloodTextures[UnityEngine.Random.Range(0, bloodTextures.Count)];
+        
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.material=bloodMat;
+        spriteRenderer.material.SetFloat("_RandomRotation", UnityEngine.Random.Range(0f, 360f));
+        spriteRenderer.material.SetTexture("_BloodTex", randomBloodTexture);
+        //spriteRenderer.material.EnableKeyword("_RandomRotation");
+        
     }
 
     public void SetUIPosition(){
