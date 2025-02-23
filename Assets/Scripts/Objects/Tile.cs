@@ -14,6 +14,7 @@ public class Tile : MonoBehaviour
     private Chessman reference;
     private bool isValidMove = false;
     private bool isLightTile;
+    [SerializeField] private Material bloodMat;
 
     private void OnMouseEnter(){
         Chessman piece = getPiece();
@@ -45,6 +46,12 @@ public class Tile : MonoBehaviour
     public void Initialize(BoardPosition boardPosition){
         position = boardPosition;
         SetUIPosition();
+    }
+
+    public void SetBloodTile(){
+        
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.material=bloodMat;
     }
 
     public void SetUIPosition(){

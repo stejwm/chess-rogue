@@ -248,7 +248,7 @@ public class MoveManager: MonoBehaviour
 
         yield return new WaitForSeconds(Game._instance.waitTime);
         if(totalAttackPower>=totalDefensePower){
-            
+            BoardManager._instance.GetTileAt(targetedX, targetedY).SetBloodTile();
             LogManager._instance.WriteLog($"<sprite=\"{movingPiece.color}{movingPiece.type}\" name=\"{movingPiece.color}{movingPiece.type}\"> captures <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(targetedX, targetedY)}");
             if (attackedPiece.type==PieceType.King){
                 gameOver=true;

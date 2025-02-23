@@ -93,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightTileSprite: {fileID: 21300000, guid: 928842a64368b44499288b6ca52dafe3, type: 3}
   darkTileSprite: {fileID: 21300000, guid: e990edf418e8a584e9c03ed38c412af0, type: 3}
+  bloodMat: {fileID: 2100000, guid: d0249aae1367553419f923fc2a733fcf, type: 2}
 --- !u!212 &8368877625244928845
 SpriteRenderer:
   m_ObjectHideFlags: 0
