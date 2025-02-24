@@ -39,6 +39,7 @@ public class Game : MonoBehaviour
     public int level=0;
     public float waitTime;
     public List<Ability> AllAbilities; // Drag-and-drop ScriptableObject assets here in the Inspector
+    public List<KingsOrder> AllOrders;
 
     public List<GameObject> AllOpponents;
     //public PlayerAgent opponent;
@@ -66,6 +67,7 @@ public class Game : MonoBehaviour
     public bool pauseOverride =false;
     public bool pause =false;
     public bool endEpisode = false;
+    public bool tileSelect = false;
 
 
 
@@ -159,6 +161,7 @@ public class Game : MonoBehaviour
         selectedCard = null;
         foreach (var card in cards)
         {
+            if(card!=null)
             Destroy(card);
         }
         
@@ -219,6 +222,12 @@ public class Game : MonoBehaviour
 
     public void CloseMap(){
         state=ScreenState.MainGameboard;
+    }
+
+    public void OpenArmyManagement(){
+        //ResetPlayerPieces();
+        state=ScreenState.ShopScreen;
+        ArmyManager._instance.OpenShop();
     }
 
     public void OpenShop(){

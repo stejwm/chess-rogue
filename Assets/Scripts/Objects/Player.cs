@@ -26,6 +26,7 @@ public abstract class Player: MonoBehaviour
     public List<GameObject> capturedPieces = new List<GameObject>();
     public List<GameObject> inventoryPieces = new List<GameObject>();
     public List<BoardPosition> openPositions = new List<BoardPosition>();
+    public List<KingsOrder> orders = new List<KingsOrder>();
     private static Rand rng = new Rand();
     public Player(List<GameObject> pieces)
     {

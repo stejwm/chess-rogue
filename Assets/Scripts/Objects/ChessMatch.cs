@@ -34,6 +34,7 @@ public class ChessMatch
     }
 
     public void StartMatch(){
+        KingsOrderManager._instance.Setup();
         white.CreateMoveCommandDictionary();
         black.CreateMoveCommandDictionary();
         isSetUpPhase=false;
@@ -137,6 +138,15 @@ public class ChessMatch
             }
             
         white.MakeMove(this);
+    }
+
+    public void SetPiecesValidForAttack(Player player){
+        Debug.Log(player.pieces.Count);
+        foreach (GameObject item in player.pieces)
+        {
+            item.GetComponent<Chessman>().isValidForAttack=true;
+        }
+
     }
     public void SetBlackTurn(){
         currentPlayer=black;

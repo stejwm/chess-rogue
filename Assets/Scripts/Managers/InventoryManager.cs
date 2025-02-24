@@ -51,7 +51,7 @@ public class InventoryManager : MonoBehaviour
         Game._instance.ClearPiece();
         foreach (GameObject piece in myPieces)
         {
-            if (piece.GetComponent<SpriteRenderer>())
+            if (piece !=null && piece.GetComponent<SpriteRenderer>())
             {
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 1;

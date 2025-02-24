@@ -8,6 +8,7 @@ public class Card : MonoBehaviour
 {
     public GameObject controller;
     public Ability ability;
+    public KingsOrder order;
 
     public TMP_Text title;
     public TMP_Text effect;
@@ -16,6 +17,7 @@ public class Card : MonoBehaviour
 
     public MMF_Player FlipPlayer;
     public bool cardFlipped =false;
+    public GameObject price;
 
     public Card(Ability ability)
     {
@@ -35,8 +37,10 @@ public class Card : MonoBehaviour
     }
 
     void OnMouseDown(){
-        controller = GameObject.FindGameObjectWithTag("GameController");
-        controller.GetComponent<Game>().CardSelected(this);
+        if(ability!=null)
+            Game._instance.GetComponent<Game>().CardSelected(this);
+        else
+            Game._instance.hero.orders.Add(order);
     }
     void OnMouseOver(){
         FlipCard();
@@ -47,9 +51,17 @@ public class Card : MonoBehaviour
         if (!cardFlipped){
             FlipPlayer.PlayFeedbacks();
             this.GetComponent<SpriteRenderer>().sprite=front;
-            effect.text= ability.description;
-            title.text= ability.abilityName;
+            if(ability!=null){
+                effect.text= ability.description;
+                title.text= ability.abilityName;
+            }else if(order!=null){
+                effect.text= order.Description;
+                title.text= order.Name;
+            }
             cardFlipped=true;
         }
+    }
+    public void ShowPrice(){
+        price.SetActive(true);
     }
 }

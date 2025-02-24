@@ -13,6 +13,7 @@ public class BoardManager : MonoBehaviour
 
     //current turn
     public static BoardManager _instance;
+    public BoardPosition selectedPosition;
 
 
     void Awake()

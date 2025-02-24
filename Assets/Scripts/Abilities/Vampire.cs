@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 public class Vampire : Ability
 {
     private Chessman piece;
-    private int bonus;
+    private int bonus=0;
     
     public Vampire() : base("Vampire", "+1 to all stats on dark squares, -1 to all stats on light squares. Ability is added to any piece that is attacked") {}
 
@@ -26,23 +27,30 @@ public class Vampire : Ability
 
     }
     public void AddBonus(Chessman mover, BoardPosition targetPosition){
+        int currentBonus=bonus;
         if (mover==piece){
             Debug.Log("Vamp position:" +piece.xBoard + piece.yBoard);
-            if(TileFactory._instance.GetTile(targetPosition.x, targetPosition.y).GetColor()==PieceColor.Black){
+            if(BoardManager._instance.GetTileAt(targetPosition.x, targetPosition.y).GetColor()==PieceColor.Black){
                 bonus=1;
             }else{
                 bonus=-1;
             }
-            piece.attackBonus+=bonus;
-            piece.defenseBonus+=bonus;
-            piece.supportBonus+=bonus;
+            if(currentBonus!=bonus && currentBonus!=0){
+                piece.attackBonus+=bonus*2;
+                piece.defenseBonus+=bonus*2;
+                piece.supportBonus+=bonus*2;
+            }
+            else if(currentBonus==0){
+                piece.attackBonus+=bonus;
+                piece.defenseBonus+=bonus;
+                piece.supportBonus+=bonus;
+            }
         }
-        bonus=0;
     }
 
     public void SuckBlood(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if(attacker==piece){
-            Game._instance.AllAbilities[20].Clone().Apply(defender);
+            defender.AddAbility(Game._instance.AllAbilities[20].Clone());
         }
     }
 

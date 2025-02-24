@@ -62,6 +62,12 @@ public class MapManager : MonoBehaviour
         Game._instance.OpenShop();
     }
 
+    public void OpenArmyManagement()
+    {
+        CloseMap();
+        Game._instance.OpenArmyManagement();
+    }
+
     public void SelectEnemyNode(MapNode node, EnemyType enemyType)
     {
         if (node.isCompleted || !currentNode.connectedNodes.Contains(node))

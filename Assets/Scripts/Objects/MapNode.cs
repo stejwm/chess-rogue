@@ -35,7 +35,7 @@ public class MapNode : MonoBehaviour
                 MapManager._instance.SelectShopNode(this);
                 break;
             case NodeType.Encounter:
-                MapManager._instance.SelectEncounterNode(this);
+                MapManager._instance.SelectShopNode(this);
                 break;
         }
     }

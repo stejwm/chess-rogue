@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-
+using System.Linq;
+using Rand= System.Random;
 public class ShopManager : MonoBehaviour
 {
     public List<GameObject> myPieces;
@@ -16,6 +17,9 @@ public class ShopManager : MonoBehaviour
 
     //current turn
     public static ShopManager _instance;
+    private static Rand rng = new Rand();
+    private List<GameObject> cards = new List<GameObject>();
+    private List<GameObject> orders = new List<GameObject>();
 
 
     void Awake()
@@ -53,6 +57,39 @@ public class ShopManager : MonoBehaviour
             
         }
         CreatePieces();
+        CreateCards();
+        CreateOrders();
+    }
+
+    public void CreateCards(){
+        GameObject obj;
+        List<Ability> shuffledcards = Game._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
+        for(int i=0; i<3;i++){
+            Vector2 localPosition = new Vector2(i+i-4, 2);
+            obj = Instantiate(Game._instance.card, localPosition, Quaternion.identity);
+            //AllAbilities.Sort();
+            //int s = Random.Range (0, AllAbilities.Count);
+            
+            obj.GetComponent<Card>().ability = shuffledcards[i].Clone();
+            cards.Add(obj);
+            obj.GetComponent<Card>().ShowPrice();
+        }
+        
+    }
+    public void CreateOrders(){
+        GameObject obj;
+        List<KingsOrder> shuffledcards = Game._instance.AllOrders.OrderBy(_ => rng.Next()).ToList();
+        for(int i=0; i<1;i++){
+            Vector2 localPosition = new Vector2(i+i+3, 2);
+            obj = Instantiate(Game._instance.card, localPosition, Quaternion.identity);
+            //AllAbilities.Sort();
+            //int s = Random.Range (0, AllAbilities.Count);
+            orders.Add(obj);
+            obj.GetComponent<Card>().order = shuffledcards[i].Clone();
+            cards.Add(obj);
+            obj.GetComponent<Card>().ShowPrice();
+        }
+        
     }
 
     public void CreatePieces(){
@@ -62,13 +99,29 @@ public class ShopManager : MonoBehaviour
             obj = PieceFactory._instance.CreateRandomPiece();
             obj.transform.position=localPosition;
             Chessman cm = obj.GetComponent<Chessman>();
-            cm.xBoard=4+i;
-            cm.yBoard = 5;
+            cm.xBoard=2+i;
+            cm.yBoard = 3;
             cm.UpdateUIPosition();
             SpriteRenderer rend = obj.GetComponent<SpriteRenderer>();
             rend.sortingOrder = 5;
             pieces.Add(obj);
         }
+    }
+    public void ClearCards(){
+        foreach (var card in cards)
+        {
+            if(card!=null)
+            Destroy(card);
+        }
+        
+    }
+    public void ClearOrders(){
+        foreach (var order in orders)
+        {
+            if(order!=null)
+                Destroy(order);
+        }
+        
     }
 
     public void UpdateCurrency(){
@@ -78,9 +131,11 @@ public class ShopManager : MonoBehaviour
 
     public void CloseShop(){
         ShopStatManager._instance.HideStats();
+        ClearCards();
+        ClearOrders();
         foreach (GameObject piece in myPieces)
         {
-            if (piece.GetComponent<SpriteRenderer>())
+            if (piece != null && piece.GetComponent<SpriteRenderer>())
             {
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 1;
@@ -88,7 +143,7 @@ public class ShopManager : MonoBehaviour
         }
         foreach (GameObject piece in Game._instance.hero.inventoryPieces)
         {
-            if (piece.GetComponent<SpriteRenderer>())
+            if (piece != null &&  piece.GetComponent<SpriteRenderer>())
             {
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 1;
@@ -96,7 +151,8 @@ public class ShopManager : MonoBehaviour
         }
         foreach (GameObject piece in pieces)
         {
-            Destroy(piece);
+            if(piece != null)
+                Destroy(piece);
         }
         Game._instance.CloseShop();
         gameObject.SetActive(false);

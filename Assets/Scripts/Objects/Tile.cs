@@ -80,7 +80,7 @@ public class Tile : MonoBehaviour
         //Set actual unity values
         this.transform.position = new Vector3(x, y, -1.0f);
 
-        isLightTile = (position.x + position.y) % 2 == 0; // Even sum for light, odd for dark
+        isLightTile = !((position.x + position.y) % 2 == 0); // Even sum for light, odd for dark
 
     // Get the SpriteRenderer component
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -125,11 +125,15 @@ public class Tile : MonoBehaviour
     }
 
     private void OnMouseDown(){
-        if (Game._instance.isInMenu)
+        if (Game._instance.tileSelect)
+        {
+            BoardManager._instance.selectedPosition= this.position;
+        }
+        else if (Game._instance.isInMenu)
         {
             return;
         }
-        if(!isValidMove && !Game._instance.currentMatch.isSetUpPhase){
+        else if(!isValidMove && !Game._instance.currentMatch.isSetUpPhase){
             BoardManager._instance.ClearTiles();
             var piece =getPiece();
             if(piece!=null && piece.isValidForAttack && piece.owner==Game._instance.hero){

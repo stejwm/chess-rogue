@@ -48,9 +48,9 @@ public class ShopStatManager : MonoBehaviour
             Game._instance.hero.inventoryPieces.Add(piece.gameObject);
             piece.owner=Game._instance.hero;
             //piece.startingPosition = piece.owner.openPositions[0];
-            ShopManager._instance.pieces.Remove(piece.gameObject);
+            ArmyManager._instance.pieces.Remove(piece.gameObject);
             piece.gameObject.SetActive(false);
-            ShopManager._instance.UpdateCurrency();
+            ArmyManager._instance.UpdateCurrency();
             HideStats();
         }
     }
@@ -95,6 +95,7 @@ public class ShopStatManager : MonoBehaviour
             Game._instance.hero.playerBlood -=1;
         }
         updateStats();
+        ArmyManager._instance.UpdateCurrency();
         ShopManager._instance.UpdateCurrency();
     }
 
@@ -104,6 +105,7 @@ public class ShopStatManager : MonoBehaviour
             Game._instance.hero.playerBlood -=1;
         }
         updateStats();
+        ArmyManager._instance.UpdateCurrency();
         ShopManager._instance.UpdateCurrency();
     }
 
@@ -113,6 +115,7 @@ public class ShopStatManager : MonoBehaviour
             Game._instance.hero.playerBlood -=1;
         }
         updateStats();
+        ArmyManager._instance.UpdateCurrency();
         ShopManager._instance.UpdateCurrency();
     }
 
