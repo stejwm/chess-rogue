@@ -9,11 +9,13 @@ public abstract class KingsOrder : ScriptableObject
     public string Name;
     public string Description;
     public Sprite sprite;
+    public int Cost = 15;
     public abstract IEnumerator Use();
     protected KingsOrder(string name, string description)
     {
         Name = name;
         Description = description;
+        Cost=15;
     }
     public KingsOrder Clone()
     {

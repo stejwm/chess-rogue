@@ -183,6 +183,9 @@ public abstract class Chessman : MonoBehaviour
             case ScreenState.ShopScreen:
                 HandleShopClick();
                 break;
+            case ScreenState.ManagementScreen:
+                HandleManagementClick();
+                break;
             default: break;
         }
     }
@@ -191,6 +194,9 @@ public abstract class Chessman : MonoBehaviour
         Game._instance.PieceSelected(this);
     }
     public void HandleShopClick(){        
+        Game._instance.PieceSelected(this);
+    }
+    public void HandleManagementClick(){        
         ShopStatManager._instance.SetAndShowStats(this);
     }
 

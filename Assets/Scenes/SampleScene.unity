@@ -8355,7 +8355,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 117.99982, y: 107.727905}
+  m_AnchoredPosition: {x: 117.99982, y: 107.72812}
   m_SizeDelta: {x: -1567.02, y: -215.43}
   m_Pivot: {x: 0.000000034458935, y: 0.000000027939677}
 --- !u!114 &1185444666
@@ -9484,7 +9484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1355541490
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11943,6 +11943,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.00024986267
       objectReference: {fileID: 0}
+    - target: {fileID: 4930913638384925968, guid: 213abdc1572143548af75a7c41f77bd7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930913638384925968, guid: 213abdc1572143548af75a7c41f77bd7, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1431253717
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2195177698316095680, guid: 213abdc1572143548af75a7c41f77bd7, type: 3}
     m_RemovedGameObjects:
@@ -12700,7 +12708,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0006838929}
+  m_AnchoredPosition: {x: 0, y: 0.00001912902}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1625896021
@@ -12945,7 +12953,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1895968344}
         m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
-        m_MethodName: OpenArmyManagement
+        m_MethodName: OpenShop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

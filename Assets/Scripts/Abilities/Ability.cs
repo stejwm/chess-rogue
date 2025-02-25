@@ -9,6 +9,7 @@ public abstract class Ability : ScriptableObject
     public string abilityName;
     public string description;
     public Sprite sprite;
+    public int Cost = 10;
 
     public abstract void Apply(Chessman piece);
     public abstract void Remove(Chessman piece);
@@ -17,6 +18,7 @@ public abstract class Ability : ScriptableObject
     {
         abilityName = name;
         this.description = description;
+        Cost=10;
     }
     public Ability Clone()
     {

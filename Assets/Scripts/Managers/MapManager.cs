@@ -205,25 +205,25 @@ public class MapManager : MonoBehaviour
             {
                 index = Random.Range(1, 10);
             }
-            float yOffset = Random.Range(-maxYOffset, maxYOffset); // Try a random vertical offset first
-            if (Mathf.Abs(yOffset - firstPathYOffsets[index]) < minVerticalDistance || Mathf.Abs(yOffset - secondPathYOffsets[index]) < minVerticalDistance)
+            float yOffset = 0.0f;
+            //if (Mathf.Abs(yOffset - firstPathYOffsets[index]) < minVerticalDistance || Mathf.Abs(yOffset - secondPathYOffsets[index]) < minVerticalDistance)
+            //{
+            float offset = firstPathYOffsets[index];
+            while (!(offset <= -maxYOffset*2 || offset>=maxYOffset*2))
             {
-                float offset = firstPathYOffsets[index];
-                while (!(offset <= -maxYOffset*2 || offset>=maxYOffset*2))
+                Debug.Log("First path Offset: "+offset);
+                if(firstPathYOffsets[index]>secondPathYOffsets[index])
+                    offset+=0.2f;
+                else
+                    offset-=0.2f;
+                if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance/2 && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance/2)
                 {
-                    Debug.Log("First path Offset: "+offset);
-                    if(firstPathYOffsets[index]>secondPathYOffsets[index])
-                        offset+=0.2f;
-                    else
-                        offset-=0.2f;
-                    if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance/2 && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance/2)
-                    {
-                        Debug.Log("setting offset: "+offset+", firstPathOffset: "+firstPathYOffsets[index]+ ", secondPathOffset: "+secondPathYOffsets[index]);
-                        yOffset = offset;
-                        break;
-                    }
+                    Debug.Log("setting offset: "+offset+", firstPathOffset: "+firstPathYOffsets[index]+ ", secondPathOffset: "+secondPathYOffsets[index]);
+                    yOffset = offset;
+                    break;
                 }
             }
+            //}
             Vector3 position = new Vector3(Random.Range(-.2f, 0.2f)+startX + index * xOffset, yOffset + verticalShift, 0); // Adjusted positions
             GameObject nodeObject = Instantiate(nodePrefab, position, Quaternion.identity, mapParent);
             MapNode mapNode = nodeObject.GetComponent<MapNode>();
@@ -244,26 +244,23 @@ public class MapManager : MonoBehaviour
             {
                 index = Random.Range(1, 10);
             }
-            yOffset = Random.Range(-maxYOffset, maxYOffset); // Try a random vertical offset first
-
-            if (Mathf.Abs(yOffset - firstPathYOffsets[index]) < minVerticalDistance || Mathf.Abs(yOffset - secondPathYOffsets[index]) < minVerticalDistance)
+            
+            offset = secondPathYOffsets[index];
+            while (!(offset <= -maxYOffset*2 || offset>=maxYOffset*2))
             {
-                float offset = secondPathYOffsets[index];
-                while (!(offset <= -maxYOffset*2 || offset>=maxYOffset*2))
+                Debug.Log("Second path Offset: "+offset);
+                if(firstPathYOffsets[index]>secondPathYOffsets[index])
+                    offset-=0.2f;
+                else
+                    offset+=0.2f;
+                if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance/2 && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance/2)
                 {
-                    Debug.Log("Second path Offset: "+offset);
-                    if(firstPathYOffsets[index]>secondPathYOffsets[index])
-                        offset-=0.2f;
-                    else
-                        offset+=0.2f;
-                    if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance/2 && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance/2)
-                    {
-                        Debug.Log("setting offset: "+offset+", firstPathOffset: "+firstPathYOffsets[index]+ ", secondPathOffset: "+secondPathYOffsets[index]);
-                        yOffset = offset;
-                        break;
-                    }
+                    Debug.Log("setting offset: "+offset+", firstPathOffset: "+firstPathYOffsets[index]+ ", secondPathOffset: "+secondPathYOffsets[index]);
+                    yOffset = offset;
+                    break;
                 }
             }
+            
             position = new Vector3(Random.Range(-.2f, 0.2f)+startX + index * xOffset, yOffset + verticalShift, 0); // Adjusted positions
             nodeObject = Instantiate(nodePrefab, position, Quaternion.identity, mapParent);
             mapNode = nodeObject.GetComponent<MapNode>();

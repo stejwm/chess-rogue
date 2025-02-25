@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Card : MonoBehaviour
@@ -12,6 +13,7 @@ public class Card : MonoBehaviour
 
     public TMP_Text title;
     public TMP_Text effect;
+    public TMP_Text cost;
 
     public Sprite front;
 
@@ -34,13 +36,24 @@ public class Card : MonoBehaviour
          //GetComponent<Canvas>();
         canvas.sortingLayerName="Board Layer";
         canvas.sortingOrder=6;
+        HidePrice();
     }
 
     void OnMouseDown(){
-        if(ability!=null)
+        if(ability != null && price.activeSelf && Game._instance.hero.playerCoins>=ability.Cost){
+            Game._instance.hero.playerCoins-=ability.Cost;
+            Game._instance.GetComponent<Game>().CardSelected(this);
+            ShopManager._instance.UpdateCurrency();
+        }
+        else if(ability!=null && !price.activeSelf)
             Game._instance.GetComponent<Game>().CardSelected(this);
         else
-            Game._instance.hero.orders.Add(order);
+            if(order != null && Game._instance.hero.playerCoins>=order.Cost){
+                Game._instance.hero.orders.Add(order);
+                Game._instance.hero.playerCoins-=order.Cost;
+                ShopManager._instance.UpdateCurrency();
+                Destroy(this.gameObject);
+            }
     }
     void OnMouseOver(){
         FlipCard();
@@ -62,6 +75,13 @@ public class Card : MonoBehaviour
         }
     }
     public void ShowPrice(){
+        if(ability!=null)
+            cost.text=":"+ability.Cost.ToString();
+        if(order!=null)
+            cost.text=":"+order.Cost.ToString();
         price.SetActive(true);
+    }
+    public void HidePrice(){
+        price.SetActive(false);
     }
 }

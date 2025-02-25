@@ -21,6 +21,7 @@ public enum ScreenState
     ActiveMatch,
     Map,
     ShopScreen,
+    ManagementScreen
 }
 public class Game : MonoBehaviour
 {
@@ -142,6 +143,7 @@ public class Game : MonoBehaviour
         audioSource.Play();
         yield return new WaitForSeconds(waitTime);
         RewardStatManager._instance.SetAndShowStats(selectedPiece);
+        Destroy(selectedCard.gameObject);
         ClearCard();
         ClearPiece(); 
         applyingAbility=false;
@@ -149,13 +151,23 @@ public class Game : MonoBehaviour
     }
     public void CardSelected(Card card){
         SpriteRenderer sprite;
-        if (selectedCard != null){
+        if (selectedCard != null && selectedCard == card){
             sprite= selectedCard.GetComponent<SpriteRenderer>();
             sprite.color = Color.white;
+            selectedCard=null;
         }
-        selectedCard = card;
-        sprite = selectedCard.GetComponent<SpriteRenderer>();
-        sprite.color = Color.green;
+        else if(selectedCard != null && selectedCard != card){
+            sprite= selectedCard.GetComponent<SpriteRenderer>();
+            sprite.color = Color.white;
+            selectedCard = card;
+            sprite = selectedCard.GetComponent<SpriteRenderer>();
+            sprite.color = Color.green;
+        }
+        else{
+            selectedCard = card;
+            sprite = selectedCard.GetComponent<SpriteRenderer>();
+            sprite.color = Color.green;
+        }
     }
     public void ClearCard(){
         selectedCard = null;
@@ -183,14 +195,25 @@ public class Game : MonoBehaviour
     public void PieceSelected(Chessman piece){
         SpriteRenderer sprite;
         Debug.Log(piece.name+" selected");
-        if (selectedPiece != null){
+        if (selectedPiece != null && selectedPiece == piece){
             sprite= selectedPiece.GetComponent<SpriteRenderer>();
             sprite.color = Color.white;
+            selectedPiece=null;
         }
-        selectedPiece = piece;
-        sprite = selectedPiece.GetComponent<SpriteRenderer>();
-        sprite.color = Color.green;
-        RewardStatManager._instance.SetAndShowStats(piece);
+        else if(selectedPiece != null && selectedPiece != piece){
+            sprite= selectedPiece.GetComponent<SpriteRenderer>();
+            sprite.color = Color.white;
+            selectedPiece = piece;
+            sprite = selectedPiece.GetComponent<SpriteRenderer>();
+            sprite.color = Color.green;
+            RewardStatManager._instance.SetAndShowStats(piece);
+        }
+        else{
+            selectedPiece = piece;
+            sprite = selectedPiece.GetComponent<SpriteRenderer>();
+            sprite.color = Color.green;
+            RewardStatManager._instance.SetAndShowStats(piece);
+        }
     }
     public void ClearPiece(){
         SpriteRenderer sprite;
@@ -226,8 +249,14 @@ public class Game : MonoBehaviour
 
     public void OpenArmyManagement(){
         //ResetPlayerPieces();
-        state=ScreenState.ShopScreen;
+        state=ScreenState.ManagementScreen;
         ArmyManager._instance.OpenShop();
+    }
+
+    public void CloseArmyManagement(){
+        //ResetPlayerPieces();
+        state=ScreenState.Map;
+        OpenMap();
     }
 
     public void OpenShop(){
@@ -258,7 +287,7 @@ public class Game : MonoBehaviour
     }
 
     public void CloseShop(){
-        state=ScreenState.MainGameboard;
+        state=ScreenState.Map;
         OpenMap();
     }
     public void OpenMap(){

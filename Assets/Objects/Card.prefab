@@ -449,8 +449,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
   ability: {fileID: 0}
+  order: {fileID: 0}
   title: {fileID: 4171346253507884447}
   effect: {fileID: 985453881502054971}
+  cost: {fileID: 5713109710302699702}
   front: {fileID: 21300000, guid: fd7c597ed20ede74685f5cec04564428, type: 3}
   FlipPlayer: {fileID: 8049959902687354676}
   cardFlipped: 0
@@ -844,7 +846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1699582179876435807
 RectTransform:
   m_ObjectHideFlags: 0
