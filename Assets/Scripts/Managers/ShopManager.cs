@@ -79,7 +79,7 @@ public class ShopManager : MonoBehaviour
     public void CreateOrders(){
         GameObject obj;
         List<KingsOrder> shuffledcards = Game._instance.AllOrders.OrderBy(_ => rng.Next()).ToList();
-        for(int i=0; i<1;i++){
+        for(int i=0; i<2;i++){
             Vector2 localPosition = new Vector2(i+i+3, 2);
             obj = Instantiate(Game._instance.card, localPosition, Quaternion.identity);
             //AllAbilities.Sort();
@@ -130,7 +130,7 @@ public class ShopManager : MonoBehaviour
     }
 
     public void CloseShop(){
-        ShopStatManager._instance.HideStats();
+        ManagementStatManager._instance.HideStats();
         ClearCards();
         ClearOrders();
         foreach (GameObject piece in myPieces)

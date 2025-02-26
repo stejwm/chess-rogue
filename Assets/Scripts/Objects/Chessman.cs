@@ -197,7 +197,7 @@ public abstract class Chessman : MonoBehaviour
         Game._instance.PieceSelected(this);
     }
     public void HandleManagementClick(){        
-        ShopStatManager._instance.SetAndShowStats(this);
+        ManagementStatManager._instance.SetAndShowStats(this);
     }
 
     public void HandlePrisonersMarketClick(){        
@@ -383,13 +383,10 @@ public abstract class Chessman : MonoBehaviour
         mpScript.SetCoords(matrixX, matrixY);
     }  */
 
-    /* private void OnMouseEnter(){
-        var sprite = this.GetComponent<SpriteRenderer>().sprite;
-        if(team==Team.Hero)
-            StatBoxManager._instance.SetAndShowStats(CalculateAttack(),CalculateDefense(),CalculateSupport(),info,name, sprite);
-        else if(team == Team.Enemy)
-            EnemyStatBoxManager._instance.SetAndShowStats(CalculateAttack(),CalculateDefense(),CalculateSupport(),info,name, sprite);
-    } */
+    private void OnMouseEnter(){
+        RewardStatManager._instance.SetAndShowStats(this);
+        ShopStatManager._instance.SetAndShowStats(this);
+    } 
 
     private void OnMouseExit(){
         //StatBoxManager._instance.HideStats();
