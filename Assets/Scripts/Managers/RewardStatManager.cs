@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 //using UnityEngine.UIElements;
@@ -9,15 +9,14 @@ public class RewardStatManager : MonoBehaviour
 {
     
     public static RewardStatManager _instance;
-    public Text attack;
-    public Text defense;
-    public Text support;
-    public Text info;
+    public TMP_Text attack;
+    public TMP_Text defense;
+    public TMP_Text support;
     public Text pieceName;
-    public Image image;
+    public GameObject abilityBox;
     public GameObject abilityUI;
-    public Chessman piece;
-    public GameObject infoBox;
+    public Image image;
+    public bool lockView;
     // Start is called before the first frame update
     void Awake()
     {
@@ -34,34 +33,33 @@ public class RewardStatManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    public void LockView(){
+        lockView=true;
+    }
+    public void UnlockView(){
+        lockView=false;
     }
     public void SetAndShowStats(Chessman piece){
-        foreach(Transform child in infoBox.transform)
+        if(!lockView)
         {
-            Destroy(child.gameObject);
+            foreach (Transform child in abilityBox.transform)
+            {
+                Destroy(child.gameObject);
+            }
+            gameObject.SetActive(true);
+            this.attack.text="<sprite name=\"sword\">: "+piece.CalculateAttack();
+            this.defense.text="<sprite name=\"shield\">: "+piece.CalculateDefense();
+            this.support.text="<sprite name=\"cross\">: "+piece.CalculateSupport();
+            
+            this.pieceName.text=piece.name;
+            this.image.sprite=piece.GetComponent<SpriteRenderer>().sprite;
+            foreach (var ability in piece.abilities)
+            {
+                var icon=Instantiate(abilityUI, abilityBox.transform);
+                icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+            }
         }
-        gameObject.SetActive(true);
-        this.attack.text="attack: "+piece.attack;
-        this.defense.text="defense: "+piece.defense;
-        this.support.text="support: "+piece.support;
-        this.info.text=piece.info;
-        this.pieceName.text=piece.name;
-        this.image.sprite=piece.GetComponent<SpriteRenderer>().sprite;
-        this.piece=piece;
-        StartCoroutine(SetAbilities(piece));
-        
 
-    }
-    public IEnumerator SetAbilities(Chessman piece){
-        yield return null;
-        foreach (var ability in piece.abilities)
-        {
-            var icon=Instantiate(abilityUI, infoBox.transform);
-            icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
-        }
     }
 
     public void HideStats(){
@@ -69,7 +67,7 @@ public class RewardStatManager : MonoBehaviour
         this.attack.text=string.Empty;
         this.defense.text=string.Empty;
         this.support.text=string.Empty;
-        this.info.text=string.Empty;
+        //this.info.text=string.Empty;
         this.pieceName.text=string.Empty;
         this.image.sprite=null;
     }

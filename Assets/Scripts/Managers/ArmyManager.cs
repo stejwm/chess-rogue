@@ -77,7 +77,7 @@ public class ArmyManager : MonoBehaviour
     }
 
     public void CloseShop(){
-        ShopStatManager._instance.HideStats();
+        ManagementStatManager._instance.HideStats();
         foreach (GameObject piece in myPieces)
         {
             if (piece.GetComponent<SpriteRenderer>())
