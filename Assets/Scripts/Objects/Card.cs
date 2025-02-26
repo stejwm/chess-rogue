@@ -40,13 +40,9 @@ public class Card : MonoBehaviour
     }
 
     void OnMouseDown(){
-        if(ability != null && price.activeSelf && Game._instance.hero.playerCoins>=ability.Cost){
-            Game._instance.hero.playerCoins-=ability.Cost;
+        if(ability != null){
             Game._instance.GetComponent<Game>().CardSelected(this);
-            ShopManager._instance.UpdateCurrency();
         }
-        else if(ability!=null && !price.activeSelf)
-            Game._instance.GetComponent<Game>().CardSelected(this);
         else
             if(order != null && Game._instance.hero.playerCoins>=order.Cost){
                 Game._instance.hero.orders.Add(order);

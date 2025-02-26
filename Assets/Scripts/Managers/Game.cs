@@ -11,6 +11,7 @@ using Unity.VisualScripting;
 using UnityEngine.UIElements;
 using System.Linq;
 using Rand= System.Random;
+using MoreMountains.Feedbacks;
 
 
 public enum ScreenState
@@ -137,6 +138,16 @@ public class Game : MonoBehaviour
         }
     }
     private IEnumerator ApplyAbility(Chessman target){
+        if(selectedCard.price.activeSelf){
+            if(selectedCard.ability.Cost>hero.playerCoins){
+                selectedCard.GetComponent<MMSpringPosition>().BumpRandom();
+                selectedCard=null;
+                selectedPiece=null;
+                yield break;
+            }
+            hero.playerCoins-=selectedCard.ability.Cost;
+            ShopManager._instance.UpdateCurrency();
+        }
         applyingAbility=true;
         selectedCard.Use(target);
         audioSource.clip = ability;
