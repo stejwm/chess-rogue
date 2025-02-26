@@ -16,6 +16,4 @@ MonoBehaviour:
   description: Swap attack and defense values on every interaction (Attacking or
     Defending)
   sprite: {fileID: 0}
-  AbilityLoggerPrefab: {fileID: 0}
-  PopUpMenu: {fileID: 0}
-  gradient: {fileID: 0}
+  Cost: 8

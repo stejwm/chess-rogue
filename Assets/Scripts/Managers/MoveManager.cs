@@ -259,6 +259,8 @@ public class MoveManager: MonoBehaviour
                 match.white.pieces.Remove(attackedPiece.gameObject);
             //Debug.Log("Setting capture tone");
             Game._instance.audioSource.clip = Game._instance.capture; 
+            Game._instance.audioSource.pitch=pitch;
+            //Game._instance.audioSource.Play();
             BattlePanel._instance.SetAndShowResults("Capture!");
             ResultFeedback.PlayFeedbacks();
             yield return new WaitForSeconds(ResultFeedback.TotalDuration);
@@ -301,6 +303,8 @@ public class MoveManager: MonoBehaviour
             match.MovePiece(attackedPiece, attackedPiece.xBoard, attackedPiece.yBoard);
             //Debug.Log("Setting bounce tone");
             Game._instance.audioSource.clip = Game._instance.bounce;
+            Game._instance.audioSource.pitch=pitch;
+            //Game._instance.audioSource.Play();
             BattlePanel._instance.SetAndShowResults("Bounce!"); 
             ResultFeedback.PlayFeedbacks();
             yield return new WaitForSeconds(ResultFeedback.TotalDuration);
@@ -313,8 +317,7 @@ public class MoveManager: MonoBehaviour
         }
         
         //Debug.Log("Playing audio");
-        Game._instance.audioSource.pitch=pitch;
-        Game._instance.audioSource.Play();
+        
         yield return new WaitForSeconds(Game._instance.waitTime);
         
         BattlePanel._instance.HideResults();   

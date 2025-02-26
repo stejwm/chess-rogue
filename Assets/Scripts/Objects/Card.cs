@@ -41,14 +41,23 @@ public class Card : MonoBehaviour
 
     void OnMouseDown(){
         if(ability != null){
-            Game._instance.GetComponent<Game>().CardSelected(this);
+            if(Game._instance.hero.playerCoins>=ability.Cost || !price.activeSelf){
+                Game._instance.GetComponent<Game>().CardSelected(this);
+            }
+            else{
+                this.GetComponent<MMSpringPosition>().BumpRandom();
+            }
         }
         else
-            if(order != null && Game._instance.hero.playerCoins>=order.Cost){
-                Game._instance.hero.orders.Add(order);
-                Game._instance.hero.playerCoins-=order.Cost;
-                ShopManager._instance.UpdateCurrency();
-                Destroy(this.gameObject);
+            if(order != null){
+                if(Game._instance.hero.playerCoins>=order.Cost){
+                    Game._instance.hero.orders.Add(order);
+                    Game._instance.hero.playerCoins-=order.Cost;
+                    ShopManager._instance.UpdateCurrency();
+                    Destroy(this.gameObject);
+                }else{
+                    this.GetComponent<MMSpringPosition>().BumpRandom();
+                }
             }
     }
     void OnMouseOver(){

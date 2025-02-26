@@ -16,4 +16,4 @@ MonoBehaviour:
   description: Permanently gain +1 to support every time you successfully support
     a piece
   sprite: {fileID: 21300000, guid: 2bcb8606c4613484eaab8b3f6d0d0e96, type: 3}
-  AbilityLoggerPrefab: {fileID: 5392670513771970038, guid: 422e55fbf7be60a478189fa9520978a8, type: 3}
+  Cost: 15

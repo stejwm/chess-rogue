@@ -15,6 +15,4 @@ MonoBehaviour:
   abilityName: Blood Thirst
   description: Attack again after capturing if possible.
   sprite: {fileID: -7488207628762978027, guid: 298e4d8a3cf49084ebc5febaf42db16d, type: 3}
-  AbilityLoggerPrefab: {fileID: 5392670513771970038, guid: 422e55fbf7be60a478189fa9520978a8, type: 3}
-  PopUpMenu: {fileID: 0}
-  gradient: {fileID: 0}
+  Cost: 15

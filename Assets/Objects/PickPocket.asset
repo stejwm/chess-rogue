@@ -15,6 +15,4 @@ MonoBehaviour:
   abilityName: Pickpocket
   description: Get +2 coins when this piece is bounced
   sprite: {fileID: 4552134719307402070, guid: 1e9724fd823a3534c990fbe14606eabc, type: 3}
-  AbilityLoggerPrefab: {fileID: 0}
-  PopUpMenu: {fileID: 0}
-  gradient: {fileID: 0}
+  Cost: 8

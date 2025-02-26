@@ -15,6 +15,4 @@ MonoBehaviour:
   abilityName: Longshot
   description: +5 attack if piece attacks from 5 or more squares away
   sprite: {fileID: 5797555737352298209, guid: 517c4c4704454a24685d874946909bce, type: 3}
-  AbilityLoggerPrefab: {fileID: 5392670513771970038, guid: 422e55fbf7be60a478189fa9520978a8, type: 3}
-  PopUpMenu: {fileID: 0}
-  gradient: {fileID: 0}
+  Cost: 8

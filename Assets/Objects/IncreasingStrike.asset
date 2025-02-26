@@ -15,6 +15,4 @@ MonoBehaviour:
   abilityName: Increasing Strike
   description: Permanently gain +1 to attack for every capture
   sprite: {fileID: -1752959765298073396, guid: 3a9526cbbee91a945a23de02fed73726, type: 3}
-  AbilityLoggerPrefab: {fileID: 5392670513771970038, guid: 422e55fbf7be60a478189fa9520978a8, type: 3}
-  PopUpMenu: {fileID: 0}
-  gradient: {fileID: 0}
+  Cost: 15

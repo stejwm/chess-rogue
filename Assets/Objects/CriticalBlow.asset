@@ -15,6 +15,4 @@ MonoBehaviour:
   abilityName: Critical Blow
   description: 10% chance of x2 attack
   sprite: {fileID: 0}
-  AbilityLoggerPrefab: {fileID: 0}
-  PopUpMenu: {fileID: 0}
-  gradient: {fileID: 0}
+  Cost: 8

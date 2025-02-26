@@ -15,4 +15,4 @@ MonoBehaviour:
   abilityName: Travelers Grace
   description: Piece can move through it's own pieces according to it's typical movement
   sprite: {fileID: 0}
-  AbilityLoggerPrefab: {fileID: 5392670513771970038, guid: 422e55fbf7be60a478189fa9520978a8, type: 3}
+  Cost: 8

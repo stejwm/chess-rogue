@@ -15,6 +15,4 @@ MonoBehaviour:
   abilityName: Avenging Strike
   description: Automatically trigger attack if supported piece was captured
   sprite: {fileID: 0}
-  AbilityLoggerPrefab: {fileID: 0}
-  PopUpMenu: {fileID: 0}
-  gradient: {fileID: 0}
+  Cost: 8

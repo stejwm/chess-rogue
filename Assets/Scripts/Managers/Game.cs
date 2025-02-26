@@ -141,6 +141,8 @@ public class Game : MonoBehaviour
         if(selectedCard.price.activeSelf){
             if(selectedCard.ability.Cost>hero.playerCoins){
                 selectedCard.GetComponent<MMSpringPosition>().BumpRandom();
+                selectedCard.GetComponent<SpriteRenderer>().color = Color.white;
+                selectedPiece.GetComponent<SpriteRenderer>().color = Color.white;
                 selectedCard=null;
                 selectedPiece=null;
                 yield break;
