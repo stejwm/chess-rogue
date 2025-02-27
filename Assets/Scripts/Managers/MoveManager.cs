@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 
 public class MoveManager: MonoBehaviour
@@ -252,6 +253,8 @@ public class MoveManager: MonoBehaviour
             LogManager._instance.WriteLog($"<sprite=\"{movingPiece.color}{movingPiece.type}\" name=\"{movingPiece.color}{movingPiece.type}\"> captures <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(targetedX, targetedY)}");
             if (attackedPiece.type==PieceType.King){
                 gameOver=true;
+                if(attackedPiece.team==Team.Hero)
+                    SceneManager.LoadScene(0);
             }
             if (match.black.pieces.Contains(attackedPiece.gameObject))
                 match.black.pieces.Remove(attackedPiece.gameObject);

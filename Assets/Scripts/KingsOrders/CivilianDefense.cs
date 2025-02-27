@@ -28,9 +28,19 @@ public class CivilianDefense : KingsOrder
                 
             }
         }
+        Game._instance.OnGameEnd.AddListener(RemoveCivilians);
         Game._instance.togglePieceColliders(civilians, false);
         Game._instance.currentMatch.SetPiecesValidForAttack(hero);
         Debug.Log("Pieces created");
+    }
+
+    public void RemoveCivilians(PieceColor color){
+        foreach (var piece in civilians)
+        {
+            Game._instance.currentMatch.black.capturedPieces.Remove(piece);
+            Game._instance.hero.pieces.Remove(piece);
+            Destroy(piece);
+        }
     }
 
 }
