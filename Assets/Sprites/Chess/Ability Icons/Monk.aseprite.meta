@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f1c4dc8e5d729064b97cc7768b94aedd
+guid: 9cdb04ee48b67ff4da8ca46c395aa522
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,7 +121,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Merchant
+  - name: Monk
     originalName: 
     pivot: {x: 0.5, y: 0}
     alignment: 9
@@ -132,7 +132,7 @@ ScriptedImporter:
       y: 4
       width: 32
       height: 32
-    spriteID: 9e3a3ddd1ec3c3b4299554c31c41ee19
+    spriteID: 7421fec0024dce647bc89864522b17e3
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,13 +144,13 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 760108930
-    name: Merchant
+    guid: 419098831
+    name: Monk
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Merchant
+    - name: Monk
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -158,7 +158,7 @@ ScriptedImporter:
         y: 0
         width: 32
         height: 32
-      spriteId: 9e3a3ddd1ec3c3b4299554c31c41ee19
+      spriteId: 7421fec0024dce647bc89864522b17e3
     linkedCells: []
     parentIndex: -1
   platformSettings: []

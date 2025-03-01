@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f1c4dc8e5d729064b97cc7768b94aedd
+guid: 383612421a13f8c43af6b66c3faabf03
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,7 +121,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Merchant
+  - name: Vampire
     originalName: 
     pivot: {x: 0.5, y: 0}
     alignment: 9
@@ -132,7 +132,7 @@ ScriptedImporter:
       y: 4
       width: 32
       height: 32
-    spriteID: 9e3a3ddd1ec3c3b4299554c31c41ee19
+    spriteID: bdf4ea825c8fb6245b21cdc7c1bb2310
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,13 +144,13 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 760108930
-    name: Merchant
+    guid: -1647631248
+    name: Vampire
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Merchant
+    - name: Vampire
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -158,7 +158,7 @@ ScriptedImporter:
         y: 0
         width: 32
         height: 32
-      spriteId: 9e3a3ddd1ec3c3b4299554c31c41ee19
+      spriteId: bdf4ea825c8fb6245b21cdc7c1bb2310
     linkedCells: []
     parentIndex: -1
   platformSettings: []

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Monk
   description: Gain +1 to random stat for each turn piece does not move
-  sprite: {fileID: 21300000, guid: f857972e2a4c63540a25571b664db3bf, type: 3}
+  sprite: {fileID: -763251562599900308, guid: 9cdb04ee48b67ff4da8ca46c395aa522, type: 3}
   Cost: 15

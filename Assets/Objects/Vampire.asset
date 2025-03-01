@@ -15,5 +15,5 @@ MonoBehaviour:
   abilityName: Vampire
   description: +1 to all stats on dark squares, -1 to all stats on light squares.
     Ability is added to any piece that is attacked
-  sprite: {fileID: 0}
+  sprite: {fileID: -6706551144356255671, guid: 383612421a13f8c43af6b66c3faabf03, type: 3}
   Cost: 10
