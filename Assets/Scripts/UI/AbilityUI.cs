@@ -13,4 +13,15 @@ public class AbilityUI : MonoBehaviour
         Debug.Log("Sprite: "+sprite);
         image.sprite=sprite;
     }
+
+    void OnMouseEnter()
+    {
+        Debug.Log("Over Ability");
+        AbilityInfoManager._instance.SetAndShowAbilityInfo(this);
+    }
+    void OnMouseExit()
+    {
+        Debug.Log("Over Ability");
+        AbilityInfoManager._instance.HideStats();
+    }
 }

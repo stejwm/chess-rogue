@@ -84,8 +84,9 @@ public class ManagementStatManager : MonoBehaviour
         yield return null;
         foreach (var ability in piece.abilities)
         {
-            var icon = Instantiate(abilityUI, infoBox.transform);
+            var icon=Instantiate(abilityUI, infoBox.transform);
             icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+            icon.GetComponent<AbilityUI>().ability=ability;
         }
     }
 

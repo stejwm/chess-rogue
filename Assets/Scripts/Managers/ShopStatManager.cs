@@ -57,6 +57,8 @@ public class ShopStatManager : MonoBehaviour
             {
                 var icon=Instantiate(abilityUI, abilityBox.transform);
                 icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+                icon.GetComponent<AbilityUI>().ability=ability;
+
             }
         }
 

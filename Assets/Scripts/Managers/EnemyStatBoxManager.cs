@@ -52,8 +52,8 @@ public class EnemyStatBoxManager : MonoBehaviour
         foreach (var ability in piece.abilities)
         {
             var icon=Instantiate(abilityUI, abilityBox.transform);
-            Debug.Log(ability.sprite);
             icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+            icon.GetComponent<AbilityUI>().ability=ability;
         }
 
     }
