@@ -32,6 +32,8 @@ public class InventoryManager : MonoBehaviour
     public void OpenInventory(){
         gameObject.SetActive(true);
         Game._instance.togglePieceColliders(Game._instance.opponent.pieces, false);
+        Game._instance.togglePieceColliders(Game._instance.hero.pieces, true);
+
         Game._instance.CreateCards();
         myPieces=Game._instance.hero.pieces;
 

@@ -54,6 +54,9 @@ public class MarketManager : MonoBehaviour
         opponentCapturedPieces= Game._instance.opponent.capturedPieces;
 
         Game._instance.opponent.pieces.AddRange(myCapturedPieces);
+        Game._instance.toggleAllPieceColliders(false);
+        Game._instance.togglePieceColliders(myCapturedPieces, true);
+        Game._instance.togglePieceColliders(opponentCapturedPieces, true);
 
         /* var controller = GameObject.FindGameObjectWithTag("GameController");
         var game = controller.GetComponent<Game>(); */
@@ -87,13 +90,6 @@ public class MarketManager : MonoBehaviour
         if(opponentCapturedPieces.Count>0)
         foreach (GameObject piece in opponentCapturedPieces)
         {
-            /* if(piece){
-                if (piece.GetComponent<SpriteRenderer>())
-                {
-                    SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                    rend.sortingOrder = 1;
-                }
-            } */
             Chessman cm = piece.GetComponent<Chessman>();
             Game._instance.hero.openPositions.Add(cm.startingPosition);
             Destroy(piece);
@@ -102,19 +98,13 @@ public class MarketManager : MonoBehaviour
         if(myCapturedPieces.Count>0)
         foreach (GameObject piece in myCapturedPieces)
         {
-            /* if(piece){
-                if (piece.GetComponent<SpriteRenderer>())
-                {
-                    SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                    rend.sortingOrder = 1;
-                }
-            } */
             Destroy(piece);
         }
         Game._instance.state=ScreenState.RewardScreen;
         myCapturedPieces.Clear();
         opponentCapturedPieces.Clear();
         selectedPieces.Clear();
+
         Game._instance.OpenReward();
         gameObject.SetActive(false);
         
@@ -143,9 +133,11 @@ public class MarketManager : MonoBehaviour
                 piece.gameObject.SetActive(false);
                 Game._instance.hero.pieces.Add(piece.gameObject);
                 opponentCapturedPieces.Remove(piece.gameObject);
+                myCapturedPieces.Remove(piece.gameObject);
+                Game._instance.opponent.pieces.Remove(piece.gameObject);
+
             }
         }
-        //Game._instance.opponent.capturedPieces.Clear();
         totalCost=0;
         coinText.text = ": "+Game._instance.hero.playerCoins;
         selectedPieces.Clear();
