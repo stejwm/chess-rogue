@@ -48,7 +48,7 @@ public class ManagementStatManager : MonoBehaviour
             Game._instance.hero.inventoryPieces.Add(piece.gameObject);
             piece.owner=Game._instance.hero;
             //piece.startingPosition = piece.owner.openPositions[0];
-            ArmyManager._instance.pieces.Remove(piece.gameObject);
+            ShopManager._instance.pieces.Remove(piece.gameObject);
             piece.gameObject.SetActive(false);
             ArmyManager._instance.UpdateCurrency();
             HideStats();

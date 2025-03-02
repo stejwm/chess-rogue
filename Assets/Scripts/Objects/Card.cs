@@ -40,6 +40,10 @@ public class Card : MonoBehaviour
     }
 
     void OnMouseDown(){
+        if (Game._instance.isInMenu)
+        {
+            return;
+        }
         if(ability != null){
             if(Game._instance.hero.playerCoins>=ability.Cost || !price.activeSelf){
                 Game._instance.GetComponent<Game>().CardSelected(this);
@@ -61,6 +65,10 @@ public class Card : MonoBehaviour
             }
     }
     void OnMouseOver(){
+        if (Game._instance.isInMenu)
+        {
+            return;
+        }
         FlipCard();
 
     }

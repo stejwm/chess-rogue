@@ -17,6 +17,8 @@ public class ChessMatch
     public bool AdamantAssaultOverride = false;
     public bool BloodThirstOverride = false;
     public bool AvengingStrikeOverride = false;
+    
+    public int reward = 40;
 
     public bool AvengerActive = false;
 
@@ -58,7 +60,7 @@ public class ChessMatch
                 Chessman piece = obj.GetComponent<Chessman>();
                 obj.SetActive(true);
                 piece.xBoard=-4;
-                piece.yBoard=4-i; 
+                piece.yBoard=3-i; 
                 i++;
                 piece.UpdateUIPosition();
             }
@@ -177,6 +179,8 @@ public class ChessMatch
             currentPlayerColor = PieceColor.White;
             //currentPlayer=white;
             SetWhiteTurn();
+            if(reward>0)
+                reward-=2;
         }
     }
 
@@ -211,6 +215,7 @@ public class ChessMatch
         DestroyTiles();
         Game._instance.toggleAllPieceColliders(true);
         BoardManager._instance.toggleTileColliders(false);
+        white.playerCoins+=reward;
         Game._instance.EndMatch();
     }
     public GameObject[,] GetPositions()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using TMPro;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "RescueMission", menuName = "KingsOrders/RescueMission")]
@@ -13,13 +14,21 @@ public class RescueMission : KingsOrder
     public override IEnumerator Use(){
         Player hero = Game._instance.hero;
         Game._instance.tileSelect=true;
+        bool gotSomething=false;
         foreach (var piece in Game._instance.currentMatch.black.capturedPieces)
         {
             if(BoardManager._instance.GetTileAt(piece.GetComponent<Chessman>().xBoard, piece.GetComponent<Chessman>().yBoard).getPiece()==null){
                 piece.SetActive(true);
                 piece.GetComponent<SpriteRenderer>().color=Color.red;
+                gotSomething=true;
             }
             Game._instance.togglePieceColliders(Game._instance.currentMatch.black.capturedPieces, false);
+        }
+        if(!gotSomething){
+            Debug.Log("breaking");
+            Game._instance.currentMatch.SetPiecesValidForAttack(hero);
+            Game._instance.tileSelect=false;
+            yield break;
         }
         yield return new WaitUntil(() => BoardManager._instance.selectedPosition !=null);
         Game._instance.tileSelect=false;

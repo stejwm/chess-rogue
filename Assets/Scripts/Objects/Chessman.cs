@@ -5,6 +5,7 @@ using MoreMountains.Feedbacks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public enum Team
 {
@@ -188,19 +189,26 @@ public abstract class Chessman : MonoBehaviour
                 break;
             default: break;
         }
+
     }
 
     public void HandleRewardScreenClick(){        
         Game._instance.PieceSelected(this);
     }
-    public void HandleShopClick(){        
-        Game._instance.PieceSelected(this);
+    public void HandleShopClick(){   
+        if(this.owner==null) 
+            ManagementStatManager._instance.SetAndShowStats(this);     
+        else 
+            if (Game._instance.selectedCard==null)
+                ManagementStatManager._instance.SetAndShowStats(this); 
+            else
+                Game._instance.PieceSelected(this);
     }
     public void HandleManagementClick(){        
         ManagementStatManager._instance.SetAndShowStats(this);
     }
 
-    public void HandlePrisonersMarketClick(){        
+    public void HandlePrisonersMarketClick(){   
         MarketManager._instance.AddPiece(this);
     }
 
@@ -384,8 +392,13 @@ public abstract class Chessman : MonoBehaviour
     }  */
 
     private void OnMouseEnter(){
+        if (Game._instance.isInMenu)
+        {
+            return;
+        }
         RewardStatManager._instance.SetAndShowStats(this);
         ShopStatManager._instance.SetAndShowStats(this);
+        MarketStatManager._instance.SetAndShowStats(this);
     } 
 
     private void OnMouseExit(){
@@ -408,4 +421,6 @@ public abstract class Chessman : MonoBehaviour
     {
         return HashCode.Combine(this.name, this.startingPosition);
     }
+
+    
 }

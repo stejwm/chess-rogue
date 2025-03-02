@@ -61,7 +61,7 @@ public class Game : MonoBehaviour
     public static Game _instance;
 
     //Variables for selecting cards
-    private Card selectedCard;
+    public Card selectedCard;
     private List<GameObject> cards = new List<GameObject>();
     private Chessman selectedPiece;
     private bool applyingAbility=false;

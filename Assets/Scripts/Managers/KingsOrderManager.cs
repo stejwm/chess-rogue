@@ -51,8 +51,9 @@ public class KingsOrderManager : MonoBehaviour
         }
         else{
             order= Game._instance.hero.orders[0];
+            UpdateCardUI();
         }
-        UpdateCardUI();
+        
         
     }
 
