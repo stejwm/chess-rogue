@@ -49,14 +49,17 @@ public class DialogueManager : MonoBehaviour
     public void NextDialogue(){
         HideButton();
         dialogueIndex++;
-        if(dialogue.messages.Count<=dialogueIndex)
+        if(dialogue.messages.Count<=dialogueIndex){
             gameObject.SetActive(false);
+            Game._instance.isInMenu=false;
+        }
         else{
             ShowDialogue(dialogue.messages[dialogueIndex]);
         }
     }
 
     public void StartDialogue(Dialogue dialogue){
+        Game._instance.isInMenu=true;
         dialogueIndex=0;
         this.dialogue=dialogue;
         ShowDialogue(dialogue.messages[dialogueIndex]);
