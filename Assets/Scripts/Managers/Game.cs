@@ -42,6 +42,7 @@ public class Game : MonoBehaviour
     public float waitTime;
     public List<Ability> AllAbilities; // Drag-and-drop ScriptableObject assets here in the Inspector
     public List<KingsOrder> AllOrders;
+    public List<Dialogue> AllDialogues;
 
     public List<GameObject> AllOpponents;
     //public PlayerAgent opponent;
@@ -95,6 +96,7 @@ public class Game : MonoBehaviour
         //Time.timeScale = 0.5f;
         NameDatabase.LoadNames();
         BoardManager._instance.CreateBoard();
+        DialogueManager._instance.StartDialogue(AllDialogues[0]);
         heroColor=PieceColor.White;
         opponent.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(opponent, opponent.color, Team.Enemy);
         hero.pieces = PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);

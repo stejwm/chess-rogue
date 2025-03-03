@@ -46,3 +46,6 @@ TagManager:
   - name: Board Layer
     uniqueID: 1431253717
     locked: 1
+  - name: Dialogue
+    uniqueID: 4194663367
+    locked: 0
