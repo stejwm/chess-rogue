@@ -86,7 +86,7 @@ public class ShopManager : MonoBehaviour
             //int s = Random.Range (0, AllAbilities.Count);
             orders.Add(obj);
             obj.GetComponent<Card>().order = shuffledcards[i].Clone();
-            cards.Add(obj);
+            //cards.Add(obj);
             obj.GetComponent<Card>().ShowPrice();
         }
         
@@ -122,6 +122,11 @@ public class ShopManager : MonoBehaviour
                 Destroy(order);
         }
         
+    }
+
+    public void RerollAbilities(){
+        ClearCards();
+        CreateCards();
     }
 
     public void UpdateCurrency(){
