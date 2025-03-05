@@ -13,7 +13,7 @@ public class AbilityInfoManager : MonoBehaviour
     public static AbilityInfoManager _instance;
     [SerializeField] private TMP_Text info;
     [SerializeField] private GameObject PopUpCanvas;
-    private bool PopUpCanvasAlreadyActive = false;
+    private bool PopUpCanvasAlreadyActive;
 
     private Camera _mainCamera;
     // Start is called before the first frame update

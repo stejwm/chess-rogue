@@ -40,21 +40,29 @@ public class KingsOrderManager : MonoBehaviour
     }
 
     void OnMouseDown(){
+        
+        
+        StartCoroutine(UseAndHandleUI());
+        
+        
+    }
+    IEnumerator UseAndHandleUI()
+    {
         int index = Game._instance.hero.orders.IndexOf(order);
 
         Game._instance.hero.orders.Remove(order);
-        
-        StartCoroutine(order.Use());
-        if (index==0){
-            parent.SetActive(false);
-            order=null;
+        yield return StartCoroutine(order.Use()); // Wait for King's Order effect
+
+        if (index == 0)
+        {
+            parent.SetActive(false); // Now deactivate it *after* the coroutine finishes
+            order = null;
         }
-        else{
-            order= Game._instance.hero.orders[0];
+        else
+        {
+            order = Game._instance.hero.orders[0];
             UpdateCardUI();
         }
-        
-        
     }
 
     public void UpdateCardUI(){

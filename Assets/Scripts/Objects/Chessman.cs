@@ -62,7 +62,6 @@ public abstract class Chessman : MonoBehaviour
     public PieceType type;
     public List<Ability> abilities;
     public bool isValidForAttack =false;
-    public Vector3 gridOrigin;
 
     public MMF_Player supportFloatingText;
 
@@ -196,6 +195,7 @@ public abstract class Chessman : MonoBehaviour
         Game._instance.PieceSelected(this);
     }
     public void HandleShopClick(){   
+        Debug.Log("pressed in shop");
         if(this.owner==null) 
             ManagementStatManager._instance.SetAndShowStats(this);     
         else 

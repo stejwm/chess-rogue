@@ -38,7 +38,7 @@ public class ManagementStatManager : MonoBehaviour
         Cursor.visible=true;
         
         gameObject.SetActive(false);
-        PopUpCanvas.SetActive(false);
+        //PopUpCanvas.SetActive(false);
         
     }
 
@@ -55,6 +55,7 @@ public class ManagementStatManager : MonoBehaviour
         }
     }
     public void SetAndShowStats(Chessman piece){
+        Debug.Log("Showing management stats");
         PopUpCanvas.SetActive(true);
         Game._instance.isInMenu=true;
         foreach(Transform child in infoBox.transform)
@@ -121,6 +122,7 @@ public class ManagementStatManager : MonoBehaviour
     }
 
     public void HideStats(){
+        Debug.Log("Hiding management");
         gameObject.SetActive(false);
         Game._instance.isInMenu=false;
         this.attack.text=string.Empty;
