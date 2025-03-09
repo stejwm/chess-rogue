@@ -173,6 +173,40 @@ public class PieceFactory : MonoBehaviour
 
         return pieces;
     }
+
+    public List<GameObject> CreateDarkCult(Player owner, PieceColor color, Team team)
+    {
+        string prefix = color == PieceColor.White ? "white" : "black";
+        int backRow = color == PieceColor.White ? 0 : 7;
+        int pawnRow = color == PieceColor.White ? 1 : 6;
+        owner.playerCoins= UnityEngine.Random.Range(10,30);
+        // Create back row
+        List<GameObject> pieces = new List<GameObject> {
+            Create(PieceType.Rook, $"{prefix}_rook", 0, backRow, color, team, owner),
+            Create(PieceType.Knight, $"{prefix}_knight", 1, backRow, color, team, owner),
+            Create(PieceType.Bishop, $"{prefix}_bishop", 2, backRow, color, team, owner),
+            Create(PieceType.Queen, $"{prefix}_queen", 3, backRow, color, team, owner),
+            Create(PieceType.King, $"{prefix}_king", 4, backRow, color, team, owner),
+            Create(PieceType.Bishop, $"{prefix}_bishop", 5, backRow, color, team, owner),
+            Create(PieceType.Knight, $"{prefix}_knight", 6, backRow, color, team, owner),
+            Create(PieceType.Rook, $"{prefix}_rook", 7, backRow, color, team, owner)
+        };
+
+        foreach (var piece in pieces)
+        {
+            piece.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[17].Clone()); //Blood offering ability
+        }
+        // Create pawns
+        for (int i = 0; i < 8; i++)
+        {
+            char file = (char)('a' + i);
+            var pawn = Create(PieceType.Pawn, $"{prefix}_pawn", i, pawnRow, color, team, owner);
+            pawn.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[20].Clone()); //Vampire ability
+            pieces.Add(pawn);
+        }
+
+        return pieces;
+    }
     public GameObject Create(PieceType type, string name, int x, int y, PieceColor color, Team team, Player owner)
     {
         GameObject prefab = GetPrefab(type);
@@ -193,7 +227,7 @@ public class PieceFactory : MonoBehaviour
 
     public List<GameObject> CreateOpponentPieces(Player opponent, EnemyType enemyType)
     {
-        int rand = rng.Next(3);
+        int rand = rng.Next(4);
 
         switch(enemyType)
         {
@@ -205,6 +239,8 @@ public class PieceFactory : MonoBehaviour
                 return CreateAbilityPiecesBlack(opponent, Game._instance.AllAbilities[2].Clone()); //Assassin ability
             case EnemyType.Thieves:
                 return CreateThievesGuild(opponent, opponent.color, Team.Enemy);
+            case EnemyType.Cult:
+                return CreateDarkCult(opponent, opponent.color, Team.Enemy);
         }
         return null;
     }
