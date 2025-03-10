@@ -76,7 +76,6 @@ public class ManagementStatManager : MonoBehaviour
         this.attack.text="attack: "+piece.attack;
         this.defense.text="defense: "+piece.defense;
         this.support.text="support: "+piece.support;
-        this.info.text=piece.info;
         this.pieceName.text=piece.name;
         this.value.text=": "+piece.releaseCost;
         this.image.sprite=piece.GetComponent<SpriteRenderer>().sprite;
@@ -128,7 +127,6 @@ public class ManagementStatManager : MonoBehaviour
         this.attack.text=string.Empty;
         this.defense.text=string.Empty;
         this.support.text=string.Empty;
-        this.info.text=string.Empty;
         this.pieceName.text=string.Empty;
         this.image.sprite=null;
         PopUpCanvas.SetActive(false);

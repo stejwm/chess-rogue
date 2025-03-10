@@ -125,7 +125,8 @@ public class MarketManager : MonoBehaviour
 
     public void ReturnMyPieces(){
         foreach (Chessman piece in selectedPieces){
-            //Chessman piece = obj.GetComponent<Chessman>();
+            if(piece.owner != Game._instance.hero)
+                break;
             if (selectedPieces.Contains(piece)){
                 Game._instance.hero.playerCoins-= piece.releaseCost;
                 SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();

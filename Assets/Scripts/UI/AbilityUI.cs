@@ -17,11 +17,11 @@ public class AbilityUI : MonoBehaviour
     void OnMouseEnter()
     {
         Debug.Log("Over Ability");
-        AbilityInfoManager._instance.SetAndShowAbilityInfo(this);
+        PopUpManager._instance.SetAndShowAbilityInfo(this);
     }
     void OnMouseExit()
     {
         Debug.Log("Over Ability");
-        AbilityInfoManager._instance.HideStats();
+        PopUpManager._instance.HideAbilityInfo();
     }
 }

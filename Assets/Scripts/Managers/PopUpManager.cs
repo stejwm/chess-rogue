@@ -13,6 +13,13 @@ public class PopUpManager : MonoBehaviour
     public static PopUpManager _instance;
     [SerializeField] GameObject piecesPanel; 
     public PieceType selectedPieceType = PieceType.None;
+    public GameObject abilityInfo;
+    public TMP_Text abilityInfoText;
+    public GameObject values;
+    public TMP_Text coinValue;
+    public TMP_Text bloodValue;
+
+    public bool alreadyActive = false;
     
     void Awake()
     {
@@ -24,9 +31,15 @@ public class PopUpManager : MonoBehaviour
         }
 
     }
+
+    public void ShowValues(){
+        gameObject.SetActive(true);
+
+    }
     void Start(){
         Cursor.visible=true;
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
+        abilityInfo.SetActive(false);
     }
     public void ShowPieceTypes(){
         gameObject.SetActive(true);
@@ -50,6 +63,52 @@ public class PopUpManager : MonoBehaviour
     }
     public void RookSelected(){
         selectedPieceType=PieceType.Rook;
+    }
+
+    public void SetAndShowAbilityInfo(AbilityUI abilityUI){
+        alreadyActive = gameObject.activeSelf;
+        gameObject.SetActive(true);
+        
+        abilityInfoText.text=abilityUI.ability.description;
+        abilityInfo.SetActive(true);
+    
+        abilityInfo.transform.position=abilityUI.gameObject.transform.position;
+        float xVal = abilityInfo.GetComponent<RectTransform>().localPosition.x;
+        if(xVal<0){
+            Debug.Log("Display Right");
+            abilityInfo.GetComponent<RectTransform>().localPosition+=new Vector3(200,0);
+        }
+        else if(xVal>0)
+            abilityInfo.GetComponent<RectTransform>().localPosition-=new Vector3(200,0);
+
+
+    }
+
+    public void HideAbilityInfo(){
+        abilityInfoText.text=null;
+        abilityInfo.gameObject.SetActive(false);
+        gameObject.SetActive(alreadyActive);
+    }
+
+    public void SetAndShowValues(Chessman piece){
+        alreadyActive = gameObject.activeSelf;
+        gameObject.SetActive(true);
+        coinValue.text=piece.releaseCost.ToString();
+        bloodValue.text=piece.blood.ToString();
+        values.gameObject.SetActive(true);
+        values.transform.position=piece.gameObject.transform.position;
+        values.GetComponent<RectTransform>().localPosition+=new Vector3(48,0);
+        /* float xVal = values.GetComponent<RectTransform>().localPosition.x;
+        if(xVal<0)
+            
+        else if(xVal>0)
+            values.GetComponent<RectTransform>().localPosition-=new Vector3(48,0); */
+        
+    }
+
+    public void HideValues(){
+        values.gameObject.SetActive(false);
+        gameObject.SetActive(alreadyActive);
     }
 
 }

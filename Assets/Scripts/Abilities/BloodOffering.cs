@@ -23,6 +23,8 @@ public class BloodOffering : Ability
 
     }
     public void AddBonus(Chessman attacker, Chessman defender){
+        if(!piece.gameObject)
+            return;
         if (defender.color==piece.color){
             piece.effectsFeedback.PlayFeedbacks();
             piece.attackBonus+=1;

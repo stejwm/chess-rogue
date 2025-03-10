@@ -396,13 +396,16 @@ public abstract class Chessman : MonoBehaviour
         {
             return;
         }
+        if(Game._instance.state==ScreenState.PrisonersMarket)
+            PopUpManager._instance.SetAndShowValues(this);
         RewardStatManager._instance.SetAndShowStats(this);
         ShopStatManager._instance.SetAndShowStats(this);
         MarketStatManager._instance.SetAndShowStats(this);
     } 
 
     private void OnMouseExit(){
-        //StatBoxManager._instance.HideStats();
+        if(Game._instance.state==ScreenState.PrisonersMarket)
+            PopUpManager._instance.HideValues();
     }
 
     public override bool Equals(object obj)
