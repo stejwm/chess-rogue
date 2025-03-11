@@ -58,6 +58,8 @@ public class MapManager : MonoBehaviour
 
     public void OpenShop()
     {
+        if(Game._instance.shopUsed)
+            return;
         CloseMap();
         Game._instance.OpenShop();
     }

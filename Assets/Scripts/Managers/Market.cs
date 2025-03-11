@@ -71,6 +71,7 @@ public class MarketManager : MonoBehaviour
             }
             
         }
+        var decimatedPieces = new List<GameObject>();
         if(opponentCapturedPieces.Count>0)
         foreach (GameObject piece in opponentCapturedPieces)
         {
@@ -80,8 +81,23 @@ public class MarketManager : MonoBehaviour
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 5;
             }
+            Chessman chessman = piece.GetComponent<Chessman>();
+            if(chessman.owner == Game._instance.hero){
+                if(chessman.abilities.Count>chessman.diplomacy){
+                    Debug.Log("checking diplomacy for "+piece.name);
+                    int survive = Random.Range(1,10);
+                    Debug.Log("Rolled "+survive+" and diplomacy is "+chessman.diplomacy);
+                    if(survive<=(chessman.abilities.Count -chessman.diplomacy)){
+                        Debug.Log("decimated from diplomacy check");
+                        decimatedPieces.Add(piece);
+                        Destroy(piece);
+                    }
+                }
+            }
+
             
         }
+        opponentCapturedPieces.RemoveAll(x => decimatedPieces.Contains(x));
     }
 
     public void CloseMarket(){

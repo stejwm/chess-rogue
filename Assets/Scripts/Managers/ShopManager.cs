@@ -12,6 +12,7 @@ public class ShopManager : MonoBehaviour
     public List<GameObject> myPieces;
     public TMP_Text bloodText;
     public TMP_Text coinText;
+    public TMP_Text rerollCostText;
 
     public List<GameObject> pieces = new List<GameObject>();
 
@@ -20,6 +21,7 @@ public class ShopManager : MonoBehaviour
     private static Rand rng = new Rand();
     private List<GameObject> cards = new List<GameObject>();
     private List<GameObject> orders = new List<GameObject>();
+    private int rerollCost = 5;
 
 
     void Awake()
@@ -125,8 +127,15 @@ public class ShopManager : MonoBehaviour
     }
 
     public void RerollAbilities(){
-        ClearCards();
-        CreateCards();
+        if(Game._instance.hero.playerCoins>=rerollCost){
+            Game._instance.hero.playerCoins-=rerollCost;
+            rerollCost+=5;
+            rerollCostText.text = rerollCost.ToString();
+            UpdateCurrency();
+            ClearCards();
+            CreateCards();
+        }
+        
     }
 
     public void UpdateCurrency(){

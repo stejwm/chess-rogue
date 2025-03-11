@@ -97,7 +97,7 @@ public class PopUpManager : MonoBehaviour
         bloodValue.text=piece.blood.ToString();
         values.gameObject.SetActive(true);
         values.transform.position=piece.gameObject.transform.position;
-        values.GetComponent<RectTransform>().localPosition+=new Vector3(48,0);
+        values.GetComponent<RectTransform>().localPosition+=new Vector3(96,0);
         /* float xVal = values.GetComponent<RectTransform>().localPosition.x;
         if(xVal<0)
             

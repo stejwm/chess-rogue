@@ -71,6 +71,7 @@ public class Game : MonoBehaviour
     public bool pause =false;
     public bool endEpisode = false;
     public bool tileSelect = false;
+    public bool shopUsed =false;
 
 
 
@@ -157,7 +158,7 @@ public class Game : MonoBehaviour
         audioSource.clip = ability;
         audioSource.Play();
         yield return new WaitForSeconds(waitTime);
-        RewardStatManager._instance.SetAndShowStats(selectedPiece);
+        StatBoxManager._instance.SetAndShowStats(selectedPiece);
         Destroy(selectedCard.gameObject);
         ClearCard();
         ClearPiece(); 
@@ -221,13 +222,13 @@ public class Game : MonoBehaviour
             selectedPiece = piece;
             sprite = selectedPiece.GetComponent<SpriteRenderer>();
             sprite.color = Color.green;
-            RewardStatManager._instance.SetAndShowStats(piece);
+            StatBoxManager._instance.SetAndShowStats(piece);
         }
         else{
             selectedPiece = piece;
             sprite = selectedPiece.GetComponent<SpriteRenderer>();
             sprite.color = Color.green;
-            RewardStatManager._instance.SetAndShowStats(piece);
+            StatBoxManager._instance.SetAndShowStats(piece);
         }
     }
     public void ClearPiece(){
@@ -275,8 +276,11 @@ public class Game : MonoBehaviour
     }
 
     public void OpenShop(){
-        //ResetPlayerPieces();
+        if(shopUsed){
+            return;
+        }
         state=ScreenState.ShopScreen;
+        shopUsed=true;
         ShopManager._instance.OpenShop();
     }
     public void ResetPlayerPieces(){
@@ -293,6 +297,7 @@ public class Game : MonoBehaviour
     public void NextMatch(EnemyType enemyType){
         level++;
         state=ScreenState.ActiveMatch;
+        shopUsed=false;
         opponent.DestroyPieces();
         BoardManager._instance.CreateBoard();
         opponent.pieces = PieceFactory._instance.CreateOpponentPieces(opponent, enemyType);

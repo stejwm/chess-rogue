@@ -50,6 +50,7 @@ public abstract class Chessman : MonoBehaviour
     public int attack = 1;
     public int defense = 1;
     public int support = 1;
+    public int diplomacy = 1;
 
     public int attackBonus = 0;
     public int defenseBonus = 0;
@@ -398,9 +399,7 @@ public abstract class Chessman : MonoBehaviour
         }
         if(Game._instance.state==ScreenState.PrisonersMarket)
             PopUpManager._instance.SetAndShowValues(this);
-        RewardStatManager._instance.SetAndShowStats(this);
-        ShopStatManager._instance.SetAndShowStats(this);
-        MarketStatManager._instance.SetAndShowStats(this);
+        StatBoxManager._instance.SetAndShowStats(this);
     } 
 
     private void OnMouseExit(){

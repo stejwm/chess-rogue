@@ -9,13 +9,9 @@ public class StatBoxManager : MonoBehaviour
 {
     
     public static StatBoxManager _instance;
-    public TMP_Text attack;
-    public TMP_Text defense;
-    public TMP_Text support;
-    public Text pieceName;
-    public GameObject abilityBox;
-    public GameObject abilityUI;
-    public Image image;
+    public List<StatBox> statBoxes;
+
+    public StatBox EnemyStatBox;
     public bool lockView;
     // Start is called before the first frame update
     void Awake()
@@ -30,7 +26,10 @@ public class StatBoxManager : MonoBehaviour
 
     void Start(){
         Cursor.visible=true;
-        gameObject.SetActive(false);
+        foreach (var statBox in statBoxes)
+        {
+            statBox.gameObject.SetActive(false);
+        }
     }
 
     public void LockView(){
@@ -42,34 +41,22 @@ public class StatBoxManager : MonoBehaviour
     public void SetAndShowStats(Chessman piece){
         if(!lockView)
         {
-            foreach (Transform child in abilityBox.transform)
+            foreach (StatBox statBox in statBoxes)
             {
-                Destroy(child.gameObject);
-            }
-            gameObject.SetActive(true);
-            this.attack.text="<sprite name=\"sword\">: "+piece.CalculateAttack();
-            this.defense.text="<sprite name=\"shield\">: "+piece.CalculateDefense();
-            this.support.text="<sprite name=\"cross\">: "+piece.CalculateSupport();
-            
-            this.pieceName.text=piece.name;
-            this.image.sprite=piece.GetComponent<SpriteRenderer>().sprite;
-            foreach (var ability in piece.abilities)
-            {
-                var icon=Instantiate(abilityUI, abilityBox.transform);
-                icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
-                icon.GetComponent<AbilityUI>().ability=ability;
+                statBox.SetStats(piece);
             }
         }
 
     }
 
+    public void SetAndShowEnemyStats(Chessman piece){
+        EnemyStatBox.SetStats(piece);
+    }
+
     public void HideStats(){
-        gameObject.SetActive(false);
-        this.attack.text=string.Empty;
-        this.defense.text=string.Empty;
-        this.support.text=string.Empty;
-        //this.info.text=string.Empty;
-        this.pieceName.text=string.Empty;
-        this.image.sprite=null;
+        foreach (var statBox in statBoxes)
+        {
+            statBox.HideStats();
+        }
     }
 }

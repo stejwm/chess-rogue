@@ -23,8 +23,10 @@ public class BloodOffering : Ability
 
     }
     public void AddBonus(Chessman attacker, Chessman defender){
-        if(!piece.gameObject)
+        if(!piece){
+            Game._instance.OnPieceCaptured.RemoveListener(AddBonus); 
             return;
+        }
         if (defender.color==piece.color){
             piece.effectsFeedback.PlayFeedbacks();
             piece.attackBonus+=1;

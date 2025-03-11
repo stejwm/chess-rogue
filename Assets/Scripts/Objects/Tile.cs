@@ -23,7 +23,7 @@ public class Tile : MonoBehaviour
             if(piece.team==Team.Hero)
                 StatBoxManager._instance.SetAndShowStats(piece);
             else if(piece.team == Team.Enemy)
-                EnemyStatBoxManager._instance.SetAndShowStats(piece);
+                StatBoxManager._instance.SetAndShowEnemyStats(piece);
         }
     }
 
