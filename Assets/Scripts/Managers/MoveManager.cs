@@ -64,6 +64,7 @@ public class MoveManager: MonoBehaviour
         else{
             LogManager._instance.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"> "+ BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)+" to "+ BoardPosition.ConvertToChessNotation(x, y));
             match.MovePiece(movingPiece, x,y);
+            Game._instance.OnRawMoveEnd.Invoke(movingPiece, new BoardPosition(x,y));
             BoardManager._instance.ClearTiles();
             match.NextTurn();
             Game._instance.isInMenu=false;
@@ -152,9 +153,13 @@ public class MoveManager: MonoBehaviour
         StartCoroutine(ShowBattlePanel(movingPiece, attackedPiece));
     }
     private void AttackCleanUp(Chessman movingPiece, Chessman attackedPiece){
-        Game._instance.OnAttackEnd.Invoke(movingPiece, attackedPiece, attackSupport, defenseSupport); 
+        
         //Move reference chess piece to this position
-        match.MovePiece(movingPiece, targetedX, targetedY);
+        if(!movingPiece.canStationarySlash)
+            match.MovePiece(movingPiece, targetedX, targetedY);
+        Debug.Log("Move piece to "+targetedX+","+targetedY);
+        Debug.Log("OnAttackEnd triggering");
+        Game._instance.OnAttackEnd.Invoke(movingPiece, attackedPiece, attackSupport, defenseSupport); 
         BoardManager._instance.ClearTiles();
         
         //reset all variables

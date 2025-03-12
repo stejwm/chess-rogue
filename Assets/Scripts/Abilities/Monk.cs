@@ -16,7 +16,8 @@ public class Monk : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnMove.AddListener(AddBonus);
+        Game._instance.OnRawMoveEnd.AddListener(RawMoveEnd);
+        Game._instance.OnAttack.AddListener(Check);
         piece.releaseCost+=10;
         //game.OnGameEnd.AddListener(RemoveBonus);
 
@@ -24,20 +25,76 @@ public class Monk : Ability
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnMove.RemoveListener(AddBonus); 
+        Game._instance.OnAttack.RemoveListener(Check); 
+        Game._instance.OnRawMoveEnd.RemoveListener(RawMoveEnd);
 
     }
-    public void AddBonus(Chessman movedPiece, BoardPosition targetPosition){
+    public void RawMoveEnd(Chessman movedPiece, BoardPosition targetPosition){
+        if(movedPiece.color==piece.color && movedPiece!=piece){
+            AddBonus(piece, null);
+        }
+        else if(movedPiece==piece){
+            RemoveBonus(piece, null, false);
+        }
+    }
+    public void Check(Chessman movedPiece, int support, bool isAttacking, BoardPosition targetedPosition){
+        if(!isAttacking)
+            return;
         if (movedPiece.color == piece.color && movedPiece!=piece){
+            AddBonus(piece, null);
+        }
+        else if(movedPiece==piece && piece.canStationarySlash){
+            Debug.Log("Monk is selected to move");
+            Game._instance.OnAttack.AddListener(CheckAgain);
+            
+        }
+        else if(movedPiece==piece){
+            RemoveBonus(null, null, false);
+        }
+    }
+
+    public void CheckAgain(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
+        if(attacker.color == piece.color && attacker!=piece){
+            AddBonus(piece, null);
+        }
+        else if(attacker==piece && piece.canStationarySlash){
+            Game._instance.OnPieceBounced.AddListener(RemoveBonus);
+            Game._instance.OnPieceCaptured.AddListener(AddBonus);
+        }
+        else if(attacker==piece){
+            RemoveBonus(null, null, false);
+        }
+    }
+
+    public void RemoveBonus(Chessman attacker, Chessman defender, bool isReduced){
+        if(attacker==piece){
+            Debug.Log("Removing monk bonus");
+            piece.attackBonus=Mathf.Max(0, piece.attackBonus - attackIncrease);
+            piece.defenseBonus=Mathf.Max(0, piece.defenseBonus - defenseIncrease);
+            piece.supportBonus=Mathf.Max(0, piece.supportBonus - supportIncrease);
+            attackIncrease=0;
+            defenseIncrease=0;
+            supportIncrease=0;
+            Game._instance.OnPieceBounced.RemoveListener(RemoveBonus);
+            Game._instance.OnPieceCaptured.RemoveListener(AddBonus);
+        }
+        
+    }
+
+    public void AddBonus(Chessman attacker, Chessman defender){
+        if(attacker==piece){
+            Debug.Log("Adding monk bonus");
             piece.effectsFeedback.PlayFeedbacks();
             int s = Random.Range (0, 3);
             switch(s){
-                case 0: piece.attackBonus++; break;
-                case 1: piece.defenseBonus++; break;
-                case 2: piece.supportBonus++; break;
+                case 0: attackIncrease++; piece.attackBonus++; break;
+                case 1: defenseIncrease++; piece.defenseBonus++; break;
+                case 2: supportIncrease++; piece.supportBonus++; break;
 
             }
+            Game._instance.OnPieceBounced.RemoveListener(RemoveBonus);
+            Game._instance.OnPieceCaptured.RemoveListener(AddBonus);
         }
-    }
+}
 
 }

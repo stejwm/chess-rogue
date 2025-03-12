@@ -14635,7 +14635,7 @@ MonoBehaviour:
         Owner: {fileID: 1478248758}
         DebugActive: 0
         AnimatePositionTarget: {fileID: 845383708}
-        Mode: 0
+        Mode: 2
         Space: 0
         RandomizeRemap: 0
         AnimatePositionDuration: 1
@@ -14813,7 +14813,7 @@ MonoBehaviour:
             m_RotationOrder: 4
           Initialized: 0
         AllowAdditivePlays: 0
-        RelativePosition: 1
+        RelativePosition: 0
         DeterminePositionsOnPlay: 0
         InitialPosition: {x: 0, y: 0, z: 0}
         DestinationPosition: {x: 1, y: 1, z: 1}
@@ -16073,6 +16073,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4513e9f41ae87094fa78cdfedf2c2ee5, type: 2}
   - {fileID: 11400000, guid: 4ef17c49dc3066546bfeb50603f7f27a, type: 2}
   - {fileID: 11400000, guid: aa159d6241be2ef4092c04fa55f8a178, type: 2}
+  - {fileID: 11400000, guid: c1bda6562688217489e1b0b84172e329, type: 2}
+  - {fileID: 11400000, guid: f0b0da6e062d4a442a8b00feb9fedb52, type: 2}
   AllOrders:
   - {fileID: 11400000, guid: 8812b8c1196501e4c85c6485c44955f7, type: 2}
   - {fileID: 11400000, guid: ef9345f117a80a540b88fd5d90c9610f, type: 2}

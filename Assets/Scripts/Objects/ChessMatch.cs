@@ -198,6 +198,7 @@ public class ChessMatch
     }
 
     public void MovePiece(Chessman piece, int x, int y){
+        Debug.Log("Actual Moving piece to "+x+","+y);
         piece.xBoard = x;
         piece.yBoard = y;
         positions[x,y] = piece.gameObject;
