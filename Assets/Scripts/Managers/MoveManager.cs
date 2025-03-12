@@ -263,18 +263,27 @@ public class MoveManager: MonoBehaviour
                 match.black.pieces.Remove(attackedPiece.gameObject);
             if(match.white.pieces.Contains(attackedPiece.gameObject))
                 match.white.pieces.Remove(attackedPiece.gameObject);
-            //Debug.Log("Setting capture tone");
+            
             Game._instance.audioSource.clip = Game._instance.capture; 
             Game._instance.audioSource.pitch=pitch;
-            //Game._instance.audioSource.Play();
-            BattlePanel._instance.SetAndShowResults("Capture!");
-            ResultFeedback.PlayFeedbacks();
-            yield return new WaitForSeconds(ResultFeedback.TotalDuration);
-            attackedPiece.gameObject.SetActive(false);
-            movingPiece.owner.capturedPieces.Add(attackedPiece.gameObject);
-            BoardManager._instance.GetTileAt(targetedX, targetedY).SetBloodTile();
-            AttackCleanUp(movingPiece, attackedPiece);
-            Game._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);  // Trigger the event
+            if(Game._instance.isDecimating){
+                BattlePanel._instance.SetAndShowResults("Decimate!");
+                ResultFeedback.PlayFeedbacks();
+                yield return new WaitForSeconds(ResultFeedback.TotalDuration);
+                Destroy(attackedPiece.gameObject);
+                BoardManager._instance.GetTileAt(targetedX, targetedY).SetBloodTile();
+                AttackCleanUp(movingPiece, attackedPiece);
+                Game._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);
+            }else{
+                BattlePanel._instance.SetAndShowResults("Capture!");
+                ResultFeedback.PlayFeedbacks();
+                yield return new WaitForSeconds(ResultFeedback.TotalDuration);
+                attackedPiece.gameObject.SetActive(false);
+                movingPiece.owner.capturedPieces.Add(attackedPiece.gameObject);
+                BoardManager._instance.GetTileAt(targetedX, targetedY).SetBloodTile();
+                AttackCleanUp(movingPiece, attackedPiece);
+                Game._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);    
+            }
             if (gameOver){
                 Game._instance.OnGameEnd.Invoke(movingPiece.color);
                 match.EndGame();

@@ -67,6 +67,7 @@ public class Game : MonoBehaviour
     private Chessman selectedPiece;
     private bool applyingAbility=false;
     public bool isInMenu =false;
+    public bool isDecimating =false;
     public bool pauseOverride =false;
     public bool pause =false;
     public bool endEpisode = false;

@@ -21,6 +21,7 @@ public class BloodThirstAbility : Ability
         piece.info += " " + abilityName;
 
         Game._instance.OnPieceCaptured.AddListener(Thirst);
+        Game._instance.OnAttack.AddListener(Decimate);
         Game._instance.OnPieceBounced.AddListener(EndThirst);
         Game._instance.OnGameEnd.AddListener(ResetMoveProfile);
         piece.releaseCost+=20;
@@ -30,18 +31,23 @@ public class BloodThirstAbility : Ability
 
     public override void Remove(Chessman piece)
     {
-
-        //game.OnPieceCaptured -= Thirst;
-        Game._instance.OnPieceCaptured.RemoveListener(Thirst);  // Unsubscribe from the event
-
+        Game._instance.OnPieceCaptured.RemoveListener(Thirst);
+        Game._instance.OnAttack.RemoveListener(Decimate);
+        Game._instance.OnPieceBounced.RemoveListener(EndThirst);
+        Game._instance.OnGameEnd.RemoveListener(ResetMoveProfile);
     }
 
+    public void Decimate(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
+        if(attacker==piece && isAttacking)
+            Game._instance.isDecimating=true;
+    }
     public void Thirst(Chessman attacker, Chessman defender)
     {
         //Debug.Log("Thirsting");
         if (attacker == piece)
         {
             thirsting=true;
+            Game._instance.isDecimating=false;
             CoroutineRunner.instance.StartCoroutine(EnableSecondAttackCoroutine());
         }
         if(defender == piece && thirsting){
@@ -104,7 +110,7 @@ public class BloodThirstAbility : Ability
                 thirsting=false;
                 piece.moveProfile=startingProfile;
                 Game._instance.currentMatch.BloodThirstOverride =false;
-                //Game._instance.currentMatch.NextTurn();
+                Game._instance.isDecimating=false;
             }
     }
 
