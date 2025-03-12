@@ -63,6 +63,7 @@ public abstract class Chessman : MonoBehaviour
     public PieceType type;
     public List<Ability> abilities;
     public bool isValidForAttack =false;
+    public bool paralyzed=false;
     public bool canStationarySlash =false;
 
     public MMF_Player supportFloatingText;
@@ -108,6 +109,7 @@ public abstract class Chessman : MonoBehaviour
         
     }
     public void ResetBonuses(){
+        Debug.Log("Resetting bonuses");
         this.attackBonus=0;
         this.defenseBonus=0;
         this.supportBonus=0;
@@ -119,8 +121,6 @@ public abstract class Chessman : MonoBehaviour
         float x = xBoard;
         float y = yBoard;
 
-        Debug.Log("UI Update position: "+x+","+y);
-        Debug.Log(xBoard+","+yBoard);
         //Adjust by variable offset
         x *= .96f;
         y *= .96f;
@@ -160,9 +160,7 @@ public abstract class Chessman : MonoBehaviour
 
     public void AddAbility(Ability ability)
     {
-        abilities.Add(ability);
         ability.Apply(this);
-        //abilityManager.AddAbility(ability, this);
     }
 
     private void OnMouseDown()
@@ -199,7 +197,6 @@ public abstract class Chessman : MonoBehaviour
         Game._instance.PieceSelected(this);
     }
     public void HandleShopClick(){   
-        Debug.Log("pressed in shop");
         if(this.owner==null) 
             ManagementStatManager._instance.SetAndShowStats(this);     
         else 

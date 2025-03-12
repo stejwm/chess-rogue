@@ -21,7 +21,7 @@ public class StationarySlash : Ability
         Game._instance.OnPieceBounced.AddListener(ReplaceOnBoard);
         piece.releaseCost+=20;
         piece.canStationarySlash=true;
-
+        base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
@@ -33,14 +33,12 @@ public class StationarySlash : Ability
     
     public void ListenForEnd(Chessman attacker, Chessman defender){
         if (attacker==piece){
-            Debug.Log("Not moving");
             Game._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
         }
     }
 
     public void ReplaceOnBoard(Chessman attacker, Chessman defender, bool isReduced){
         if (attacker==piece){
-            Debug.Log("Not moving");
             Game._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
         }
     }

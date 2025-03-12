@@ -23,6 +23,8 @@ public class AdamantAssault : Ability
 
         Game._instance.OnPieceBounced.AddListener(Assault);
         Game._instance.OnPieceCaptured.AddListener(EndAssault);
+        base.Apply(piece);
+
     }
 
     public override void Remove(Chessman piece)

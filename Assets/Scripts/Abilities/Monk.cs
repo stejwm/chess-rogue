@@ -19,8 +19,7 @@ public class Monk : Ability
         Game._instance.OnRawMoveEnd.AddListener(RawMoveEnd);
         Game._instance.OnAttack.AddListener(Check);
         piece.releaseCost+=10;
-        //game.OnGameEnd.AddListener(RemoveBonus);
-
+        base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
@@ -69,7 +68,6 @@ public class Monk : Ability
 
     public void AddBonus(Chessman attacker, Chessman defender){
         if(attacker==piece){
-            Debug.Log("Adding monk bonus");
             piece.effectsFeedback.PlayFeedbacks();
             int s = Random.Range (0, 3);
             switch(s){
@@ -84,7 +82,6 @@ public class Monk : Ability
     }
     public void AddBonusBounce(Chessman attacker, Chessman defender, bool isReduced){
         if(attacker==piece){
-            Debug.Log("Adding monk bonus");
             piece.effectsFeedback.PlayFeedbacks();
             int s = Random.Range (0, 3);
             switch(s){

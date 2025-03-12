@@ -88,8 +88,6 @@ public class PlayerAgent : Agent
             }
         }
 
-        Debug.Log($"Move Dictionary generated. Count = {moveCommands.Count}");
-        Debug.Log($"Reverse Move Dictionary generated. Count = {reverseMoveCommands.Count}");
     }
     public MoveCommand GetMoveCommandFromIndex(int index)
     {
@@ -131,7 +129,6 @@ public class PlayerAgent : Agent
         if (selectedPiece != null && destinationPosition != null)
         {
             // Map selected piece and destination to action space
-            Debug.Log("piece: "+selectedPiece.name+ " x: "+destinationPosition.x +" y: "+ destinationPosition.y);
             var command = new MoveCommand(selectedPiece, destinationPosition.x, destinationPosition.y);
             
             discreteActions[0] = reverseMoveCommands[command];

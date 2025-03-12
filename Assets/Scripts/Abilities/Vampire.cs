@@ -22,10 +22,13 @@ public class Vampire : Ability
         Game._instance.OnMove.AddListener(AddBonus);
         Game._instance.OnAttackEnd.AddListener(SuckBlood);
         Game._instance.OnChessMatchStart.AddListener(MatchStartBonus);
+        Game._instance.OnPieceBounced.AddListener(PossibleReset);
         piece.releaseCost += 15;
         if(Game._instance.state==ScreenState.ActiveMatch){
+            Debug.Log("Applying vamp live");
             AddBonus(piece, new BoardPosition(piece.xBoard, piece.yBoard));
         }
+        base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
@@ -33,12 +36,15 @@ public class Vampire : Ability
         Game._instance.OnMove.RemoveListener(AddBonus);
         Game._instance.OnAttackEnd.RemoveListener(SuckBlood);
         Game._instance.OnChessMatchStart.RemoveListener(MatchStartBonus);
+        Game._instance.OnPieceBounced.RemoveListener(PossibleReset);
     }
     public void MatchStartBonus(){
+        Debug.Log("Applying vamp at match start");
         AddBonus(piece, piece.startingPosition);
     }
     public void AddBonus(Chessman mover, BoardPosition targetPosition)
     {
+        Debug.Log("add bonus vamp position: " + targetPosition.x + ", " + targetPosition.y);
         int currentBonus = bonus;
         if (mover == piece)
         {
@@ -64,6 +70,9 @@ public class Vampire : Ability
 
     private void AdjustBonus(Chessman piece, int bonusChange)
     {
+        Debug.Log("Bonus change: " + bonusChange);
+        Debug.Log("attackBonus: " + piece.attackBonus);
+        Debug.Log("new attackBonus: " + Mathf.Max(-piece.attack, piece.attackBonus+bonusChange));
         piece.attackBonus = Mathf.Max(-piece.attack, piece.attackBonus+bonusChange);
         piece.defenseBonus = Mathf.Max(-piece.defense, piece.defenseBonus + bonusChange);
         piece.supportBonus = Mathf.Max(-piece.support, piece.supportBonus + bonusChange);
@@ -74,6 +83,13 @@ public class Vampire : Ability
         if (attacker == piece)
         {
             defender.AddAbility(Game._instance.AllAbilities[20].Clone());
+        }
+    }
+    public void PossibleReset(Chessman attacker, Chessman defender, bool isBounceReduced)
+    {
+        if (attacker == piece)
+        {
+            AddBonus(piece, new BoardPosition(piece.xBoard, piece.yBoard));
         }
     }
 }

@@ -75,7 +75,6 @@ public class PopUpManager : MonoBehaviour
         abilityInfo.transform.position=abilityUI.gameObject.transform.position;
         float xVal = abilityInfo.GetComponent<RectTransform>().localPosition.x;
         if(xVal<0){
-            Debug.Log("Display Right");
             abilityInfo.GetComponent<RectTransform>().localPosition+=new Vector3(200,0);
         }
         else if(xVal>0)

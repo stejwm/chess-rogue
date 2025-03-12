@@ -15,6 +15,7 @@ public class PickPocket : Ability
         piece.info += " " + abilityName;
         Game._instance.OnPieceBounced.AddListener(Steal);
         piece.releaseCost+=10;
+        base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)

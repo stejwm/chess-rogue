@@ -28,9 +28,9 @@ public class ChessMatch
 
     public ChessMatch(Player white, Player black)
     {
+        //ResetPieces();
         this.white=white;
         this.black=black;
-        //CreateTiles();
         CheckInventory();
         
     }
@@ -44,6 +44,7 @@ public class ChessMatch
         BoardManager._instance.toggleTileColliders(true);
         UpdateBoard();
         SetWhiteTurn();
+        Game._instance.OnChessMatchStart.Invoke();
     }
     private void DestroyTiles()
     {
@@ -52,7 +53,6 @@ public class ChessMatch
 
     public void CheckInventory(){
         UpdateBoard();
-        ResetPieces();
         if (Game._instance.hero.inventoryPieces.Count>0){
             int i = 0;
             foreach (var obj in Game._instance.hero.inventoryPieces)
@@ -132,7 +132,13 @@ public class ChessMatch
         currentPlayer=white;
         foreach (GameObject item in white.pieces)
             {
-                item.GetComponent<Chessman>().isValidForAttack=true;
+                if(item.GetComponent<Chessman>().paralyzed){
+                    item.GetComponent<Chessman>().isValidForAttack=false;
+                    item.GetComponent<Chessman>().paralyzed=false;
+                }
+                else{
+                    item.GetComponent<Chessman>().isValidForAttack=true;
+                }
             }
         foreach (GameObject item in black.pieces)
             {
@@ -143,7 +149,6 @@ public class ChessMatch
     }
 
     public void SetPiecesValidForAttack(Player player){
-        Debug.Log(player.pieces.Count);
         foreach (GameObject item in player.pieces)
         {
             item.GetComponent<Chessman>().isValidForAttack=true;
@@ -154,7 +159,13 @@ public class ChessMatch
         currentPlayer=black;
         foreach (GameObject item in black.pieces)
         {
-            item.GetComponent<Chessman>().isValidForAttack=true;
+            if(item.GetComponent<Chessman>().paralyzed){
+                item.GetComponent<Chessman>().isValidForAttack=false;
+                item.GetComponent<Chessman>().paralyzed=false;
+            }
+            else{
+                item.GetComponent<Chessman>().isValidForAttack=true;
+            }
         }
         foreach (GameObject item in white.pieces)
         {
@@ -198,7 +209,6 @@ public class ChessMatch
     }
 
     public void MovePiece(Chessman piece, int x, int y){
-        Debug.Log("Actual Moving piece to "+x+","+y);
         piece.xBoard = x;
         piece.yBoard = y;
         positions[x,y] = piece.gameObject;

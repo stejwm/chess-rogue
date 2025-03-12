@@ -11,7 +11,9 @@ public abstract class Ability : ScriptableObject
     public Sprite sprite;
     public int Cost = 10;
 
-    public abstract void Apply(Chessman piece);
+    public virtual void Apply(Chessman piece){
+        piece.abilities.Add(this);
+    }
     public abstract void Remove(Chessman piece);
 
     protected Ability(string name, string description)

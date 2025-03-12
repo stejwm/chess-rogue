@@ -16,7 +16,7 @@ public class Switchstance : Ability
         piece.info += " " + abilityName;
         Game._instance.OnAttackEnd.AddListener(Swap);
         piece.releaseCost+=20;
-
+        base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)

@@ -12,7 +12,6 @@ public class CivilianDefense : KingsOrder
     public CivilianDefense() : base("Civilian Defense", "Creates a pawn in any open spaces at selected row") {}
 
     public override IEnumerator Use(){
-        Debug.Log("Civilian Defense");
         Player hero = Game._instance.hero;
         Game._instance.tileSelect=true;
         yield return new WaitUntil(() => BoardManager._instance.selectedPosition !=null);
@@ -31,7 +30,6 @@ public class CivilianDefense : KingsOrder
         Game._instance.OnGameEnd.AddListener(RemoveCivilians);
         Game._instance.togglePieceColliders(civilians, false);
         Game._instance.currentMatch.SetPiecesValidForAttack(hero);
-        Debug.Log("Pieces created");
     }
 
     public void RemoveCivilians(PieceColor color){

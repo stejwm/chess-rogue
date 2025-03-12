@@ -116,7 +116,6 @@ public class Game : MonoBehaviour
     public void NewMatch(Player white, Player black){
         state = ScreenState.ActiveMatch;
         currentMatch = new ChessMatch(white, black);
-        OnChessMatchStart.Invoke();
         currentMatch.CheckInventory();
     }
 
@@ -213,7 +212,6 @@ public class Game : MonoBehaviour
     }
     public void PieceSelected(Chessman piece){
         SpriteRenderer sprite;
-        Debug.Log(piece.name+" selected");
         if (selectedPiece != null && selectedPiece == piece){
             sprite= selectedPiece.GetComponent<SpriteRenderer>();
             sprite.color = Color.white;

@@ -213,14 +213,12 @@ public class MapManager : MonoBehaviour
             float offset = firstPathYOffsets[index];
             while (!(offset <= -maxYOffset*2 || offset>=maxYOffset*2))
             {
-                Debug.Log("First path Offset: "+offset);
                 if(firstPathYOffsets[index]>secondPathYOffsets[index])
                     offset+=0.2f;
                 else
                     offset-=0.2f;
                 if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance/2 && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance/2)
                 {
-                    Debug.Log("setting offset: "+offset+", firstPathOffset: "+firstPathYOffsets[index]+ ", secondPathOffset: "+secondPathYOffsets[index]);
                     yOffset = offset;
                     break;
                 }
@@ -250,14 +248,12 @@ public class MapManager : MonoBehaviour
             offset = secondPathYOffsets[index];
             while (!(offset <= -maxYOffset*2 || offset>=maxYOffset*2))
             {
-                Debug.Log("Second path Offset: "+offset);
                 if(firstPathYOffsets[index]>secondPathYOffsets[index])
                     offset-=0.2f;
                 else
                     offset+=0.2f;
                 if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance/2 && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance/2)
                 {
-                    Debug.Log("setting offset: "+offset+", firstPathOffset: "+firstPathYOffsets[index]+ ", secondPathOffset: "+secondPathYOffsets[index]);
                     yOffset = offset;
                     break;
                 }

@@ -26,6 +26,7 @@ public class AvengingStrike : Ability
         Game._instance.OnSupportAdded.AddListener(Target);
         Game._instance.OnPieceCaptured.AddListener(Avenge);
         Game._instance.OnPieceBounced.AddListener(EndAvenge);
+        base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)

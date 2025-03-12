@@ -17,7 +17,7 @@ public class LoneGuard : Ability
         Game._instance.OnAttack.AddListener(AddBonus);
         Game._instance.OnAttackEnd.AddListener(RemoveBonus);
         piece.releaseCost+=20;
-
+        base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)

@@ -29,8 +29,6 @@ public class AbilityLogger : MonoBehaviour
 
     public void LogAbilityUsage(string abilityName, string message)
     {
-        
-        Debug.Log("Ability pop up started");
         StartCoroutine(ShowAbilityAndLog(abilityName, message));
     }
 

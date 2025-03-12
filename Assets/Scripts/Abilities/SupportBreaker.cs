@@ -18,9 +18,9 @@ public class SupportBreaker : Ability
         piece.info += " " + abilityName;
         Game._instance.OnAttack.AddListener(CheckForSupport);
         Game._instance.OnPieceBounced.AddListener(ReduceSupport);
-        Game._instance.OnAttackEnd.AddListener(ClearSupporters);
+        Game._instance.OnPieceCaptured.AddListener(ClearSupporters);
         piece.releaseCost+=20;
-
+        base.Apply(piece);
     }
 
     public void CheckForSupport(Chessman targetPiece, int support, bool isAttacking, BoardPosition targetedPosition){
@@ -32,7 +32,7 @@ public class SupportBreaker : Ability
     public override void Remove(Chessman piece)
     {
         Game._instance.OnAttack.RemoveListener(CheckForSupport); 
-        Game._instance.OnAttackEnd.RemoveListener(ClearSupporters); 
+        Game._instance.OnPieceCaptured.RemoveListener(ClearSupporters); 
         Game._instance.OnPieceBounced.RemoveListener(ReduceSupport); 
 
     }
@@ -50,15 +50,16 @@ public class SupportBreaker : Ability
             piece.effectsFeedback.PlayFeedbacks();
             AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Support Breaker</gradient></color>",  supporters.Count +" pieces -1 support");
             Game._instance.OnSupportAdded.RemoveListener(GatherSupporters);
-            supporters.Clear();        
+            supporters.Clear();   
+               
         }
     
         
     }
-    public void ClearSupporters(Chessman attacker, Chessman defender, int support, int defenseSupport){
+    public void ClearSupporters(Chessman attacker, Chessman defender){
         if(attacker==piece){
             Game._instance.OnSupportAdded.RemoveListener(GatherSupporters);
-            supporters.Clear();
+            supporters.Clear();  
         }
     }
 

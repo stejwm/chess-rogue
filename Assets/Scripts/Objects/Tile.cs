@@ -128,8 +128,6 @@ public class Tile : MonoBehaviour
         if (Game._instance.tileSelect)
         {
             BoardManager._instance.selectedPosition= this.position;
-            Debug.Log(BoardManager._instance.selectedPosition==null);
-            Debug.Log("positiono selected");
         }
         else if (Game._instance.isInMenu)
         {

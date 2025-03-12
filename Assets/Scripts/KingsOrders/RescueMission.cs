@@ -25,7 +25,6 @@ public class RescueMission : KingsOrder
             Game._instance.togglePieceColliders(Game._instance.currentMatch.black.capturedPieces, false);
         }
         if(!gotSomething){
-            Debug.Log("breaking");
             Game._instance.currentMatch.SetPiecesValidForAttack(hero);
             Game._instance.tileSelect=false;
             yield break;

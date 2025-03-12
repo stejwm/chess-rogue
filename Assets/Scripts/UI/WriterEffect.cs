@@ -56,8 +56,6 @@ public class WriterEffect : MonoBehaviour
     
     private void OnEnable()
     {
-        Debug.Log("LISTENER!!!!");
-
         TMPro_EventManager.TEXT_CHANGED_EVENT.Add(PrepareForNewText);
     }
 
@@ -71,8 +69,6 @@ public class WriterEffect : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("Button Press");
-
                 if (_textBox.maxVisibleCharacters != _textBox.textInfo.characterCount - 1){
                     Skip();
                 }

@@ -157,8 +157,6 @@ public class MoveManager: MonoBehaviour
         //Move reference chess piece to this position
         if(!movingPiece.canStationarySlash)
             match.MovePiece(movingPiece, targetedX, targetedY);
-        Debug.Log("Move piece to "+targetedX+","+targetedY);
-        Debug.Log("OnAttackEnd triggering");
         Game._instance.OnAttackEnd.Invoke(movingPiece, attackedPiece, attackSupport, defenseSupport); 
         BoardManager._instance.ClearTiles();
         

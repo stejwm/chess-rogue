@@ -16075,6 +16075,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aa159d6241be2ef4092c04fa55f8a178, type: 2}
   - {fileID: 11400000, guid: c1bda6562688217489e1b0b84172e329, type: 2}
   - {fileID: 11400000, guid: f0b0da6e062d4a442a8b00feb9fedb52, type: 2}
+  - {fileID: 11400000, guid: 6a2161c9ece184545990e09061c7aaf1, type: 2}
   AllOrders:
   - {fileID: 11400000, guid: 8812b8c1196501e4c85c6485c44955f7, type: 2}
   - {fileID: 11400000, guid: ef9345f117a80a540b88fd5d90c9610f, type: 2}
@@ -16109,10 +16110,16 @@ MonoBehaviour:
   OnMove:
     m_PersistentCalls:
       m_Calls: []
+  OnRawMoveEnd:
+    m_PersistentCalls:
+      m_Calls: []
   OnPieceBounced:
     m_PersistentCalls:
       m_Calls: []
   OnSupportAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnChessMatchStart:
     m_PersistentCalls:
       m_Calls: []
   OnGameEnd:

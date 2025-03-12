@@ -15,6 +15,7 @@ public class BloodOffering : Ability
         piece.info += " " + abilityName;
         Game._instance.OnPieceCaptured.AddListener(AddBonus);
         piece.releaseCost+=15;
+        base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)

@@ -24,6 +24,8 @@ public class BloodThirstAbility : Ability
         Game._instance.OnPieceBounced.AddListener(EndThirst);
         Game._instance.OnGameEnd.AddListener(ResetMoveProfile);
         piece.releaseCost+=20;
+        base.Apply(piece);
+
     }
 
     public override void Remove(Chessman piece)
