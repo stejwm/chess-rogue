@@ -221,22 +221,26 @@ public class Game : MonoBehaviour
     public void PieceSelected(Chessman piece){
         SpriteRenderer sprite;
         if (selectedPiece != null && selectedPiece == piece){
-            sprite= selectedPiece.GetComponent<SpriteRenderer>();
-            sprite.color = Color.white;
+            //sprite= selectedPiece.GetComponent<SpriteRenderer>();
+            //sprite.color = Color.white;
+            selectedPiece.flames.Stop();
             selectedPiece=null;
         }
         else if(selectedPiece != null && selectedPiece != piece){
-            sprite= selectedPiece.GetComponent<SpriteRenderer>();
-            sprite.color = Color.white;
+            //sprite= selectedPiece.GetComponent<SpriteRenderer>();
+            
+            selectedPiece.flames.Stop();
             selectedPiece = piece;
-            sprite = selectedPiece.GetComponent<SpriteRenderer>();
-            sprite.color = Color.green;
+            //sprite = selectedPiece.GetComponent<SpriteRenderer>();
+            //sprite.color = Color.green;
+            selectedPiece.flames.Play();
             StatBoxManager._instance.SetAndShowStats(piece);
         }
         else{
             selectedPiece = piece;
-            sprite = selectedPiece.GetComponent<SpriteRenderer>();
-            sprite.color = Color.green;
+            //sprite = selectedPiece.GetComponent<SpriteRenderer>();
+            //sprite.color = Color.green;
+            selectedPiece.flames.Play();
             StatBoxManager._instance.SetAndShowStats(piece);
         }
     }

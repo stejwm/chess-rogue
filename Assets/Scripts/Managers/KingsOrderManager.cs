@@ -115,4 +115,8 @@ public class KingsOrderManager : MonoBehaviour
                 yield return null; // Wait for next frame
             }
     }
+
+    public void Hide(){
+        parent.SetActive(false);
+    }
 }

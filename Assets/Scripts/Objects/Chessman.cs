@@ -84,6 +84,7 @@ public abstract class Chessman : MonoBehaviour
     public Sprite whiteSprite;
 
     public MMF_Player effectsFeedback;
+    public ParticleSystem flames;
 
     public abstract List<BoardPosition> GetValidMoves();
     public abstract List<BoardPosition> GetValidSupportMoves();

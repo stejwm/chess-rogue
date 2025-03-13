@@ -33,6 +33,7 @@ public class Card : MonoBehaviour
     public void Use(Chessman target)
     {
         target.AddAbility(ability.Clone());
+        target.flames.Stop();
     }
 
     public void Awake(){
