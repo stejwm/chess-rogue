@@ -11,6 +11,8 @@ public class KingsOrderManager : MonoBehaviour
     public TMP_Text title;
     public TMP_Text effect;
     public static KingsOrderManager _instance;
+    [SerializeField] private ParticleSystem flames;
+    [SerializeField] private Material dissolveMaterial;
 
     public GameObject parent;
 
@@ -51,8 +53,11 @@ public class KingsOrderManager : MonoBehaviour
         int index = Game._instance.hero.orders.IndexOf(order);
 
         Game._instance.hero.orders.Remove(order);
+        flames.Play();
         yield return StartCoroutine(order.Use()); // Wait for King's Order effect
-
+        flames.Stop();
+        yield return StartCoroutine(Dissolve());
+        
         if (index == 0)
         {
             parent.SetActive(false); // Now deactivate it *after* the coroutine finishes
@@ -90,5 +95,24 @@ public class KingsOrderManager : MonoBehaviour
         else{
             this.GetComponent<MMSpringPosition>().BumpRandom();
         }
+    }
+
+    public IEnumerator Dissolve(){
+        
+        float dissolveAmount = 0f;
+        float fadeAmount = 0.0f;
+        float duration = .5f;
+        flames.Stop();
+        Color originalColor = title.color;
+            while (dissolveAmount < duration)  // Stop when fully dissolved
+            {
+                dissolveAmount += Time.deltaTime * 0.3f;
+                dissolveMaterial.SetFloat("_Weight", dissolveAmount);
+                fadeAmount += Time.deltaTime;
+                title.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1 - (fadeAmount / duration));
+                effect.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1 - (fadeAmount / duration));
+
+                yield return null; // Wait for next frame
+            }
     }
 }

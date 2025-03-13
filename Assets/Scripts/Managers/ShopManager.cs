@@ -126,6 +126,19 @@ public class ShopManager : MonoBehaviour
         
     }
 
+    public void toggleCardColliders(){
+        foreach (var card in cards)
+        {
+            if(card!=null)
+                card.GetComponent<BoxCollider2D>().enabled = !card.GetComponent<BoxCollider2D>().enabled;
+        }
+        foreach (var order in orders)
+        {
+            if(order!=null)
+                order.GetComponent<BoxCollider2D>().enabled = !order.GetComponent<BoxCollider2D>().enabled;
+        }
+    }
+
     public void RerollAbilities(){
         if(Game._instance.hero.playerCoins>=rerollCost){
             Game._instance.hero.playerCoins-=rerollCost;

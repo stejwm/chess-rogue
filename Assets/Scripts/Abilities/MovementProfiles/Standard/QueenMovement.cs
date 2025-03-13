@@ -8,7 +8,7 @@ public class QueenMovement : MovementProfile
         if (allowFriendlyCapture)
             return Movement.ValidQueenMoves(piece,piece.xBoard,piece.yBoard);
         else
-        return Movement.RemoveFriendlyPieces(Movement.ValidQueenMoves(piece,piece.xBoard,piece.yBoard),piece);
+            return Movement.RemoveFriendlyPieces(Movement.ValidQueenMoves(piece,piece.xBoard,piece.yBoard),piece);
      }
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
         return Movement.ValidQueenMoves(piece,piece.xBoard,piece.yBoard);

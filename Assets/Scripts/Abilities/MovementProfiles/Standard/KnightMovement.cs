@@ -8,7 +8,7 @@ public class KnightMovement : MovementProfile
         if (allowFriendlyCapture)
             return Movement.ValidKnightMoves(piece,piece.xBoard,piece.yBoard);
         else
-        return Movement.RemoveFriendlyPieces(Movement.ValidKnightMoves(piece,piece.xBoard,piece.yBoard),piece);
+            return Movement.RemoveFriendlyPieces(Movement.ValidKnightMoves(piece,piece.xBoard,piece.yBoard),piece);
      }
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
         return Movement.ValidKnightMoves(piece,piece.xBoard,piece.yBoard);

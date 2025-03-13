@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public enum Team
 {
@@ -161,7 +162,19 @@ public abstract class Chessman : MonoBehaviour
 
     public void AddAbility(Ability ability)
     {
+        Betrayer betrayerAbility = abilities.OfType<Betrayer>().FirstOrDefault();
+        bool hadBetrayer = betrayerAbility != null;
+        if (hadBetrayer)
+        {
+            betrayerAbility.Remove(this);
+            abilities.Remove(betrayerAbility);
+        }
         ability.Apply(this);
+
+        if (hadBetrayer)
+        {
+            betrayerAbility.Apply(this);
+        }
     }
 
     private void OnMouseDown()

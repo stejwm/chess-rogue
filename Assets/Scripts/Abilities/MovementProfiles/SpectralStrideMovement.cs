@@ -10,6 +10,7 @@ public class SpectralStrideMovement : MovementProfile
         this.oldMovementProfile=oldMovementProfile;
     }
     public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
+        Debug.Log("SpectralStrideMovement allow friendly capture: " + allowFriendlyCapture);
         if(allowFriendlyCapture)
             return GetSpectralStrideMoves(piece, piece.xBoard, piece.yBoard);
         else
@@ -17,20 +18,18 @@ public class SpectralStrideMovement : MovementProfile
     }
     public List<BoardPosition> GetSpectralStrideMoves(Chessman piece, int xBoard, int yBoard)
     {
-        var controller = GameObject.FindGameObjectWithTag("GameController");
-        Game sc = controller.GetComponent<Game>();
         var spectralMoves = new List<BoardPosition>();
         var directions = oldMovementProfile.GetDirections(piece);
         
         if (directions==null)
-            return oldMovementProfile.GetValidMoves(piece);
+            return oldMovementProfile.GetValidMoves(piece, true);
             
         foreach (var direction in directions)
         {
             int currentX = xBoard + direction.x;
             int currentY = yBoard + direction.y;
 
-            while (sc.PositionOnBoard(currentX, currentY))
+            while (Game._instance.PositionOnBoard(currentX, currentY))
             {
                 // Check if the position is blocked by an ally
                 var occupyingPiece = Game._instance.currentMatch.GetPieceAtPosition(currentX, currentY);
@@ -40,6 +39,7 @@ public class SpectralStrideMovement : MovementProfile
                     if (occupyingChessman.color == piece.color)
                     {
                         // If it's an allied piece, skip to the next position
+                        spectralMoves.Add(new BoardPosition(currentX, currentY));
                         currentX += direction.x;
                         currentY += direction.y;
                         continue;

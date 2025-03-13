@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "NewBloodThirstyAbility", menuName = "Abilities/BloodThirstyAbility")]
 public class BloodThirstAbility : Ability
@@ -84,7 +85,12 @@ public class BloodThirstAbility : Ability
         Debug.Log("Blood thirst activated");
         piece.effectsFeedback.PlayFeedbacks();
         List<GameObject> pieces;
-        piece.moveProfile = new AttackOnlyMovement(startingProfile);
+        startingProfile = piece.moveProfile;
+        if (piece.abilities.OfType<Betrayer>().FirstOrDefault()!=null){
+            piece.moveProfile = new BetrayerMovement(new AttackOnlyMovement(startingProfile));
+        }
+        else
+            piece.moveProfile = new AttackOnlyMovement(startingProfile);
         pieces = piece.owner.pieces;
         foreach (GameObject pieceObject in pieces)
         {

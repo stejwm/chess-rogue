@@ -12,6 +12,7 @@ public class AttackOnlyMovement : MovementProfile
         oldProfile=old;
     }
     public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
+        Debug.Log("AttackOnlyMovement allow friendly capture: "+allowFriendlyCapture);
         List<BoardPosition> moves = new List<BoardPosition>();
         var StandardMoves =oldProfile.GetValidMoves(piece);
         foreach (var position in StandardMoves)

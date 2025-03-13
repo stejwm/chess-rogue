@@ -55,6 +55,7 @@ public class ManagementStatManager : MonoBehaviour
         }
     }
     public void SetAndShowStats(Chessman piece){
+        ShopManager._instance.toggleCardColliders();
         PopUpCanvas.SetActive(true);
         Game._instance.isInMenu=true;
         foreach(Transform child in infoBox.transform)
@@ -127,6 +128,7 @@ public class ManagementStatManager : MonoBehaviour
         this.support.text=string.Empty;
         this.pieceName.text=string.Empty;
         this.image.sprite=null;
+        ShopManager._instance.toggleCardColliders();
         PopUpCanvas.SetActive(false);
     }
 }

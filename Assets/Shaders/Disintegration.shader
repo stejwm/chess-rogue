@@ -21,7 +21,6 @@
 
         _Shape("Shape Texutre", 2D) = "white" {} 
         _R("Radius", float) = .1
-
     }
 
     CGINCLUDE
@@ -183,10 +182,18 @@
     ENDCG
 
     SubShader{
-
-        Tags { "RenderType"="Opaque" }
+        Tags { 
+            "RenderType"="Transparent"
+            "Queue"="Transparent+500"
+            "IgnoreProjector"="True"
+            "RenderQueue"="Transparent"
+            "CanUseSpriteAtlas"="True"
+        }
         LOD 100
         Cull Off
+        ZWrite Off
+        ZTest Always  // Changed from LEqual to Always to allow raycasts through
+        Blend SrcAlpha OneMinusSrcAlpha
 
         Pass{
 

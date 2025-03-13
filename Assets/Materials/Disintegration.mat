@@ -59,4 +59,6 @@ Material:
     - _Direction: {r: 0.2, g: 0.76, b: 0, a: 0.2}
     - _DisintegrationColor: {r: 0, g: 0, b: 0, a: 1}
     - _DissolveColor: {r: 0.5566038, g: 0, b: 0, a: 1}
+    - _ShadowColor: {r: 0, g: 0, b: 0, a: 0.5}
+    - _ShadowOffset: {r: 0.05, g: -0.05, b: 0, a: 0}
   m_BuildTextureStacks: []

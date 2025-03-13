@@ -8,7 +8,7 @@ public class RookMovement : MovementProfile
         if (allowFriendlyCapture)
             return Movement.ValidRookMoves(piece,piece.xBoard,piece.yBoard);
         else
-        return Movement.RemoveFriendlyPieces(Movement.ValidRookMoves(piece,piece.xBoard,piece.yBoard),piece);
+            return Movement.RemoveFriendlyPieces(Movement.ValidRookMoves(piece,piece.xBoard,piece.yBoard),piece);
      }
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
         return Movement.ValidRookMoves(piece,piece.xBoard,piece.yBoard);

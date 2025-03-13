@@ -30,6 +30,10 @@ public class Promotion : KingsOrder
             yield break;
         }
         Chessman piece = Chessobj.GetComponent<Chessman>();
+        if(piece.type!=PieceType.Pawn){
+            Debug.Log("Not a pawn");
+            yield break;
+        }
         PopUpManager._instance.ShowPieceTypes();
         Debug.Log("waiting for piece type select");
         yield return new WaitUntil(() => PopUpManager._instance.selectedPieceType !=PieceType.None);

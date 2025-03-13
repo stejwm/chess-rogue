@@ -96,6 +96,7 @@ public class BoardManager : MonoBehaviour
         piece.xBoard=tile.position.x;
         piece.yBoard=tile.position.y;
         ClearTiles();
+        piece.UpdateUIPosition();
         Game._instance.currentMatch.CheckInventory();
     }
 
