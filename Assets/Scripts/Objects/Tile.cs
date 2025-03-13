@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,8 +16,8 @@ public class Tile : MonoBehaviour
     private Chessman reference;
     private bool isValidMove = false;
     private bool isLightTile;
+    private int bloodCount=0;
     [SerializeField] private Material bloodMat;
-    [SerializeField] List<Texture2D> bloodTextures;
 
     private void OnMouseEnter(){
         Chessman piece = getPiece();
@@ -49,15 +51,13 @@ public class Tile : MonoBehaviour
         SetUIPosition();
     }
 
-    public void SetBloodTile(){
-        
-        Texture2D randomBloodTexture = bloodTextures[UnityEngine.Random.Range(0, bloodTextures.Count)];
-        
+    public void SetBloodTile(){        
+        var rand = UnityEngine.Random.Range(0,1000);
+        Debug.Log(rand);
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.material=bloodMat;
-        spriteRenderer.material.SetFloat("_RandomRotation", UnityEngine.Random.Range(0f, 360f));
-        spriteRenderer.material.SetTexture("_BloodTex", randomBloodTexture);
-        //spriteRenderer.material.EnableKeyword("_RandomRotation");
+        spriteRenderer.material.SetFloat("_RandomSeed", rand);
+        spriteRenderer.material.SetFloat("_BloodCount", ++bloodCount);
         
     }
 
