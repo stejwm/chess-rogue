@@ -132,6 +132,7 @@ public class ChessMatch
         currentPlayer=white;
         foreach (GameObject item in white.pieces)
             {
+                CheckHex(item.GetComponent<Chessman>());
                 if(item.GetComponent<Chessman>().paralyzed){
                     item.GetComponent<Chessman>().isValidForAttack=false;
                     item.GetComponent<Chessman>().paralyzed=false;
@@ -159,6 +160,7 @@ public class ChessMatch
         currentPlayer=black;
         foreach (GameObject item in black.pieces)
         {
+            CheckHex(item.GetComponent<Chessman>());
             if(item.GetComponent<Chessman>().paralyzed){
                 item.GetComponent<Chessman>().isValidForAttack=false;
                 item.GetComponent<Chessman>().paralyzed=false;
@@ -195,6 +197,23 @@ public class ChessMatch
         }
     }
 
+    public void CheckHex(Chessman piece){
+        if(piece.hexed){
+            foreach(var ability in piece.abilities){
+                ability.Remove(piece);
+            }
+            piece.hexed=false;
+            piece.wasHexed=true;
+        }
+        else if(piece.wasHexed){
+            piece.wasHexed=false;
+            List<Ability> abilitiesCopy = new List<Ability>(piece.abilities);
+            piece.abilities.Clear();
+            foreach(var ability in abilitiesCopy){
+                ability.Apply(piece);
+            }
+        }
+    }
     public GameObject GetPieceAtPosition(int x, int y)
     {
         if(positions[x, y])

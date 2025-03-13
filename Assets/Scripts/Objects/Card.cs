@@ -19,7 +19,11 @@ public class Card : MonoBehaviour
 
     public MMF_Player FlipPlayer;
     public bool cardFlipped =false;
+    
+    public bool isDissolved=false;
     public GameObject price;
+    private Material dissolveMaterial;
+    public ParticleSystem flames;
 
     public Card(Ability ability)
     {
@@ -35,8 +39,13 @@ public class Card : MonoBehaviour
         Canvas canvas =GetComponentInChildren<Canvas>();
          //GetComponent<Canvas>();
         canvas.sortingLayerName="Board Layer";
-        canvas.sortingOrder=6;
+        canvas.sortingOrder=4;
         HidePrice();
+    }
+
+    public void Start(){
+        dissolveMaterial = new Material(GetComponent<Renderer>().material);
+        GetComponent<Renderer>().material = dissolveMaterial;
     }
 
     void OnMouseDown(){
@@ -47,6 +56,7 @@ public class Card : MonoBehaviour
         if(ability != null){
             if(Game._instance.hero.playerCoins>=ability.Cost || !price.activeSelf){
                 Game._instance.GetComponent<Game>().CardSelected(this);
+                this.GetComponent<MMSpringPosition>().BumpRandom();
             }
             else{
                 this.GetComponent<MMSpringPosition>().BumpRandom();
@@ -96,5 +106,25 @@ public class Card : MonoBehaviour
     }
     public void HidePrice(){
         price.SetActive(false);
+    }
+
+    public IEnumerator Dissolve(){
+        
+        float dissolveAmount = 0f;
+        float fadeAmount = 0.0f;
+        float duration = .5f;
+        flames.Stop();
+        Color originalColor = title.color;
+            while (dissolveAmount < duration)  // Stop when fully dissolved
+            {
+                dissolveAmount += Time.deltaTime * 0.3f;
+                dissolveMaterial.SetFloat("_Weight", dissolveAmount);
+                fadeAmount += Time.deltaTime;
+                title.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1 - (fadeAmount / duration));
+                effect.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1 - (fadeAmount / duration));
+
+                yield return null; // Wait for next frame
+            }
+            isDissolved=true;
     }
 }

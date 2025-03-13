@@ -30,8 +30,8 @@ public class AdamantAssault : Ability
     public override void Remove(Chessman piece)
     {
 
-        //game.OnPieceCaptured -= Thirst;
-        Game._instance.OnPieceBounced.RemoveListener(Assault);  // Unsubscribe from the event
+        Game._instance.OnPieceBounced.RemoveListener(Assault);
+        Game._instance.OnPieceCaptured.RemoveListener(EndAssault);
 
     }
 

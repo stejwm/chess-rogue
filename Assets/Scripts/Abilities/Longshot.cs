@@ -25,6 +25,7 @@ public class Longshot : Ability
     public override void Remove(Chessman piece)
     {
         Game._instance.OnAttack.RemoveListener(AddBonus); 
+        Game._instance.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
     public void AddBonus(Chessman cm, int support, bool isAttacking, BoardPosition targetedPosition){

@@ -156,11 +156,13 @@ public class Game : MonoBehaviour
             hero.playerCoins-=selectedCard.ability.Cost;
             ShopManager._instance.UpdateCurrency();
         }
+
         applyingAbility=true;
+        StartCoroutine(selectedCard.Dissolve());
         selectedCard.Use(target);
         audioSource.clip = ability;
+        yield return new WaitUntil(() => selectedCard.isDissolved);
         audioSource.Play();
-        yield return new WaitForSeconds(waitTime);
         StatBoxManager._instance.SetAndShowStats(selectedPiece);
         Destroy(selectedCard.gameObject);
         ClearCard();
@@ -173,19 +175,24 @@ public class Game : MonoBehaviour
         if (selectedCard != null && selectedCard == card){
             sprite= selectedCard.GetComponent<SpriteRenderer>();
             sprite.color = Color.white;
+            card.flames.Stop();
             selectedCard=null;
         }
         else if(selectedCard != null && selectedCard != card){
             sprite= selectedCard.GetComponent<SpriteRenderer>();
             sprite.color = Color.white;
+            selectedCard.flames.Stop();
             selectedCard = card;
             sprite = selectedCard.GetComponent<SpriteRenderer>();
             sprite.color = Color.green;
+            selectedCard.flames.Play();
+            
         }
         else{
             selectedCard = card;
             sprite = selectedCard.GetComponent<SpriteRenderer>();
             sprite.color = Color.green;
+            selectedCard.flames.Play();
         }
     }
     public void ClearCard(){

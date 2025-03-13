@@ -27,6 +27,7 @@ public class StationarySlash : Ability
     public override void Remove(Chessman piece)
     {
         Game._instance.OnPieceCaptured.RemoveListener(ListenForEnd);
+        Game._instance.OnPieceBounced.RemoveListener(ReplaceOnBoard);
         piece.canStationarySlash=false; 
 
     }

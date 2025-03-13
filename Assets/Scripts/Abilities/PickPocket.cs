@@ -23,13 +23,6 @@ public class PickPocket : Ability
         Game._instance.OnPieceBounced.RemoveListener(Steal); 
 
     }
-
-    /* public void IsCapture(Chessman attacker){
-        if(attacker.team==piece.team)
-            AddBonus();
-
-        Game._instance.OnPieceCaptured.RemoveListener(IsCapture);
-    } */
     public void Steal(Chessman attacker, Chessman defender, bool isBounceReduced){
         if(attacker==piece){
             piece.effectsFeedback.PlayFeedbacks();

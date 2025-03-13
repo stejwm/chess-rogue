@@ -16076,10 +16076,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c1bda6562688217489e1b0b84172e329, type: 2}
   - {fileID: 11400000, guid: f0b0da6e062d4a442a8b00feb9fedb52, type: 2}
   - {fileID: 11400000, guid: 6a2161c9ece184545990e09061c7aaf1, type: 2}
+  - {fileID: 11400000, guid: f04553a6f74f3ba4fa2cd1ed52c81aa0, type: 2}
   AllOrders:
   - {fileID: 11400000, guid: 8812b8c1196501e4c85c6485c44955f7, type: 2}
   - {fileID: 11400000, guid: ef9345f117a80a540b88fd5d90c9610f, type: 2}
   - {fileID: 11400000, guid: 599660723058f304aa2855a3af150f13, type: 2}
+  - {fileID: 11400000, guid: c79b833230efaff489b2865d0f35cc0d, type: 2}
   AllDialogues:
   - {fileID: 11400000, guid: 351e97bd572da8d4c9376645155fead2, type: 2}
   AllOpponents:
@@ -16093,6 +16095,7 @@ MonoBehaviour:
   baseDefense: 0
   selectedCard: {fileID: 0}
   isInMenu: 0
+  isDecimating: 0
   pauseOverride: 0
   pause: 0
   endEpisode: 0

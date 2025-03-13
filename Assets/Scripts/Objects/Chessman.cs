@@ -64,6 +64,8 @@ public abstract class Chessman : MonoBehaviour
     public List<Ability> abilities;
     public bool isValidForAttack =false;
     public bool paralyzed=false;
+    public bool hexed=false;
+    public bool wasHexed=false;
     public bool canStationarySlash =false;
 
     public MMF_Player supportFloatingText;
@@ -109,7 +111,6 @@ public abstract class Chessman : MonoBehaviour
         
     }
     public void ResetBonuses(){
-        Debug.Log("Resetting bonuses");
         this.attackBonus=0;
         this.defenseBonus=0;
         this.supportBonus=0;
@@ -217,89 +218,6 @@ public abstract class Chessman : MonoBehaviour
         BoardManager._instance.SelectPieceToPlace(this);
     }
 
-    /* public void DestroyMovePlates()
-    {
-        //Destroy old MovePlates
-        GameObject[] movePlates = GameObject.FindGameObjectsWithTag("MovePlate");
-        for (int i = 0; i < movePlates.Length; i++)
-        {
-            Destroy(movePlates[i]); //Be careful with this function "Destroy" it is asynchronous
-        }
-    } */
-
-/*      public List<Tuple<int,int>> GetValidMoves()
-    {
-        switch (this.name)
-        {
-            case "black_queen":
-            case "white_queen":
-                return ValidQueenMoves();
-                
-            case "black_knight":
-            case "white_knight":
-                return ValidKnightMoves();
-                
-            case "black_bishop":
-            case "white_bishop":
-                return ValidBishopMoves();
-                
-            case "black_king":
-            case "white_king":
-                return ValidKingMoves();
-                
-            case "black_rook":
-            case "white_rook":
-                return ValidRookMoves();
-                
-            case "black_pawn":
-                return ValidPawnMoves(xBoard, yBoard - 1);
-                
-            case "white_pawn":
-                return ValidPawnMoves(xBoard, yBoard + 1);
-            default:
-                return null;
-            
-        }
-        
-    }  */
-
-/* public List<Tuple<int,int>> GetValidSupportMoves()
-    {
-        validMoves.Clear();
-        switch (this.name)
-        {
-            case "black_queen":
-            case "white_queen":
-                return ValidQueenMoves();
-                
-            case "black_knight":
-            case "white_knight":
-                return ValidKnightMoves();
-                
-            case "black_bishop":
-            case "white_bishop":
-                return ValidBishopMoves();
-                
-            case "black_king":
-            case "white_king":
-                return ValidKingMoves();
-                
-            case "black_rook":
-            case "white_rook":
-                return ValidRookMoves();
-                
-            case "black_pawn":
-                return ValidPawnSupportMoves(xBoard, yBoard - 1);
-                
-            case "white_pawn":
-                return ValidPawnSupportMoves(xBoard, yBoard + 1);
-            default:
-                return null;
-            
-        }
-        
-    }  */
-
     public List<BoardPosition> DisplayValidMoves(){
         List<BoardPosition> theseValidMoves=new List<BoardPosition>();
 
@@ -307,17 +225,8 @@ public abstract class Chessman : MonoBehaviour
         {
             if (Game._instance.PositionOnBoard(coordinate.x, coordinate.y))
             {
-                //GameObject cp = Game._instance.currentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
-                //if (cp == null)
-                //{
-                    SetTileValidMove(coordinate.x, coordinate.y);
-                    theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
-                //}
-                 /* else if (cp.GetComponent<Chessman>().player != player)
-                {
-                    SetTileValidMove(coordinate.x, coordinate.y);
-                    theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
-                }  */
+                SetTileValidMove(coordinate.x, coordinate.y);
+                theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
             }
         }
         return theseValidMoves;
@@ -369,29 +278,6 @@ public abstract class Chessman : MonoBehaviour
         BoardManager._instance.SetActiveTile(this, new BoardPosition(x,y));
     } 
 
-     /* public void MovePlateAttackSpawn(int matrixX, int matrixY)
-    {
-        //Get the board value in order to convert to xy coords
-        float x = matrixX;
-        float y = matrixY;
-
-        //Adjust by variable offset
-        x *= .96f;
-        y *= .96f;
-
-        //Add constants (pos 0,0)
-        x += -3.33f;
-        y += -3.33f;
-
-        //Set actual unity values
-        GameObject mp = Instantiate(movePlate, new Vector3(x, y, -3.0f), Quaternion.identity);
-
-        MovePlate mpScript = mp.GetComponent<MovePlate>();
-        mpScript.attack = true;
-        mpScript.SetReference(gameObject);
-        mpScript.SetCoords(matrixX, matrixY);
-    }  */
-
     private void OnMouseEnter(){
         if (Game._instance.isInMenu)
         {
@@ -424,5 +310,4 @@ public abstract class Chessman : MonoBehaviour
         return HashCode.Combine(this.name, this.startingPosition);
     }
 
-    
 }

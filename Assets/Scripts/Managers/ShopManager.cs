@@ -81,8 +81,8 @@ public class ShopManager : MonoBehaviour
     public void CreateOrders(){
         GameObject obj;
         List<KingsOrder> shuffledcards = Game._instance.AllOrders.OrderBy(_ => rng.Next()).ToList();
-        for(int i=0; i<3;i++){
-            Vector2 localPosition = new Vector2(i+i+3, 2);
+        for(int i=0; i<2;i++){
+            Vector2 localPosition = new Vector2(i+i+4, 2);
             obj = Instantiate(Game._instance.card, localPosition, Quaternion.identity);
             //AllAbilities.Sort();
             //int s = Random.Range (0, AllAbilities.Count);

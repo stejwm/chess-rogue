@@ -32,8 +32,9 @@ public class AvengingStrike : Ability
     public override void Remove(Chessman piece)
     {
 
-        //game.OnPieceCaptured -= Thirst;
-        Game._instance.OnPieceCaptured.RemoveListener(Avenge);  // Unsubscribe from the event
+        Game._instance.OnSupportAdded.RemoveListener(Target);
+        Game._instance.OnPieceCaptured.RemoveListener(Avenge);
+        Game._instance.OnPieceBounced.RemoveListener(EndAvenge);
 
     }
 
