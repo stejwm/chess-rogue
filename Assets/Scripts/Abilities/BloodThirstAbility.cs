@@ -104,6 +104,7 @@ public class BloodThirstAbility : Ability
             thirsting=false;
             piece.moveProfile=startingProfile;
             Game._instance.currentMatch.BloodThirstOverride =false;
+            Game._instance.isDecimating=false;
             return;
         }
         AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Blood Thirst</gradient></color>",  " attack again");
