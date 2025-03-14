@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b532ee7f3375024089914d6a67ffa4a, type: 3}
+  m_Name: CriticalBlow
+  m_EditorClassIdentifier: 
+  abilityName: Critical Blow
+  description: 10% chance of x2 attack
+  sprite: {fileID: 1518752052883170811, guid: 9ad98e9c7eb6d2d4b8926962afe54902, type: 3}
+  Cost: 8

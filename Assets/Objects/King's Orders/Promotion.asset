@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a27e26b8aa22f544db07763502ff7f8f, type: 3}
+  m_Name: Promotion
+  m_EditorClassIdentifier: 
+  Name: Promotion
+  Description: Promotes a pawn to a new rank
+  sprite: {fileID: 0}
+  Cost: 20
+  Knight: {fileID: 1179102283785704673, guid: 05c3ca02eecb8374fbe7917141dfde5e, type: 3}
+  Bishop: {fileID: 7515838367634678274, guid: 158c60feca9afb7409623cc12b48c718, type: 3}
+  Queen: {fileID: 4455156182322048620, guid: ca4b3543593258c4fb48acebc9b0221f, type: 3}
+  Rook: {fileID: 6029048972313450518, guid: 817d708a507f7b34bb86f4f4bbfcdcc1, type: 3}

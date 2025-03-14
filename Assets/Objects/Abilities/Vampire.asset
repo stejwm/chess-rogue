@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 222bba6e23406dc4b9c98319aded1917, type: 3}
+  m_Name: Vampire
+  m_EditorClassIdentifier: 
+  abilityName: Vampire
+  description: +1 to all stats on dark squares, -1 to all stats on light squares.
+    Ability is added to any piece that is attacked
+  sprite: {fileID: -6706551144356255671, guid: 383612421a13f8c43af6b66c3faabf03, type: 3}
+  Cost: 10

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0daabf3292a47b44299734afc0a8ff21
+guid: 41c3274bf39062843972ab96c8a95234
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,16 +123,16 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: White Bishop Landing_Frame_0
     originalName: 
-    pivot: {x: 0.5, y: -0.39130434}
+    pivot: {x: 0.5, y: -0.40909094}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 26
-      y: 36
-      width: 14
-      height: 23
-    spriteID: fdb03a65cc448fa4098310cb7793c7ca
+      x: 24
+      y: 35
+      width: 12
+      height: 22
+    spriteID: 22592f76a690ba44888161e9f720fe5a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -140,19 +140,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 26, y: 36}
+    uvTransform: {x: 24, y: 35}
   - name: White Bishop Landing_Frame_1
     originalName: 
-    pivot: {x: 0.5, y: -0.33333334}
+    pivot: {x: 0.5, y: -0.3478261}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 14
-      height: 24
-    spriteID: 5e7bc039533a92846852fc84a57aecd4
+      width: 12
+      height: 23
+    spriteID: eadff384ad79c2b45ad3d9e1964f7992
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -163,16 +163,16 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: White Bishop Landing_Frame_2
     originalName: 
-    pivot: {x: 0.5, y: -0.2916667}
+    pivot: {x: 0.5, y: -0.30434784}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 36
-      width: 14
-      height: 24
-    spriteID: 61923393f93836f4d9148f7af3151196
+      y: 35
+      width: 12
+      height: 23
+    spriteID: 9e224c80c8ff2624e9eee8072bfb5a1b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -180,19 +180,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 36}
+    uvTransform: {x: 4, y: 35}
   - name: White Bishop Landing_Frame_3
     originalName: 
-    pivot: {x: 0.5, y: -0.25}
+    pivot: {x: 0.5, y: -0.26086956}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 68
-      width: 14
-      height: 24
-    spriteID: 5bbc691949e341b4c88507e9dd9dcb56
+      y: 66
+      width: 12
+      height: 23
+    spriteID: 07917d66df223f14680c30c1bf33096b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -200,19 +200,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 68}
+    uvTransform: {x: 4, y: 66}
   - name: White Bishop Landing_Frame_4
     originalName: 
-    pivot: {x: 0.5, y: -0.20833334}
+    pivot: {x: 0.5, y: -0.21739131}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 100
-      width: 14
-      height: 24
-    spriteID: 2bd097792551cb7418ed76b80e02054b
+      y: 97
+      width: 12
+      height: 23
+    spriteID: 040b56dc4dd0f784699d4fb9c35b7bd6
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -220,39 +220,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 100}
+    uvTransform: {x: 4, y: 97}
   - name: White Bishop Landing_Frame_5
-    originalName: 
-    pivot: {x: 0.5, y: -0.16666667}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 26
-      y: 4
-      width: 14
-      height: 24
-    spriteID: 0b1b0f17494ab0b49b37a316a5dc0088
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 26, y: 4}
-  - name: White Bishop Landing_Frame_6
     originalName: 
     pivot: {x: 0.5, y: -0.17391305}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 26
-      y: 67
-      width: 14
+      x: 24
+      y: 4
+      width: 12
       height: 23
-    spriteID: 1c8024b7c1e48304c8d1b9e77c60b225
+    spriteID: 67e8bcb9db60a934bb064a2701ca7d78
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -260,19 +240,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 26, y: 67}
-  - name: White Bishop Landing_Frame_7
+    uvTransform: {x: 24, y: 4}
+  - name: White Bishop Landing_Frame_6
     originalName: 
     pivot: {x: 0.5, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 48
-      y: 97
-      width: 14
+      x: 24
+      y: 65
+      width: 12
       height: 22
-    spriteID: f18b022b472d97f4ca559da5fbc68057
+    spriteID: 7072c8aeaeafdf241ad4a69ed2f6c826
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -280,19 +260,39 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 48, y: 97}
+    uvTransform: {x: 24, y: 65}
+  - name: White Bishop Landing_Frame_7
+    originalName: 
+    pivot: {x: 0.5, y: -0.1904762}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 94
+      width: 12
+      height: 21
+    spriteID: afde308877634504aa17fcd94340fbd4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 94}
   - name: White Bishop Landing_Frame_8
     originalName: 
-    pivot: {x: 0.5, y: -0.17391305}
+    pivot: {x: 0.5, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 26
-      y: 98
-      width: 14
-      height: 23
-    spriteID: 58efc967c03770845a4a5f7b3eb298b7
+      x: 24
+      y: 95
+      width: 12
+      height: 22
+    spriteID: b42c836ef9fa74c45a8d30da9398c1ee
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -300,19 +300,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 26, y: 98}
+    uvTransform: {x: 24, y: 95}
   - name: White Bishop Landing_Frame_9
     originalName: 
-    pivot: {x: 0.5, y: -0.17391305}
+    pivot: {x: 0.5, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 48
+      x: 44
       y: 4
-      width: 14
-      height: 23
-    spriteID: b3454a45d987d3448b0d69dfa136c7a8
+      width: 12
+      height: 22
+    spriteID: 39c5136a4a198d545bab92b417776ced
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -320,19 +320,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 48, y: 4}
+    uvTransform: {x: 44, y: 4}
   - name: White Bishop Landing_Frame_10
     originalName: 
-    pivot: {x: 0.5, y: -0.17391305}
+    pivot: {x: 0.5, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 48
-      y: 35
-      width: 14
-      height: 23
-    spriteID: 114dd14ec17af394996cdce40bd3428d
+      x: 44
+      y: 34
+      width: 12
+      height: 22
+    spriteID: 7e3a30a656a71d741b5dadc634ff3406
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -340,19 +340,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 48, y: 35}
+    uvTransform: {x: 44, y: 34}
   - name: White Bishop Landing_Frame_11
     originalName: 
-    pivot: {x: 0.5, y: -0.17391305}
+    pivot: {x: 0.5, y: -0.18181819}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 48
-      y: 66
-      width: 14
-      height: 23
-    spriteID: 9c2daf9a69f0ca44b9e3d5c1c1e0fb7d
+      x: 44
+      y: 64
+      width: 12
+      height: 22
+    spriteID: b4ca318a71659bf479e4b1b249d1946d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -360,7 +360,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 48, y: 66}
+    uvTransform: {x: 44, y: 64}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -374,110 +374,110 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 9
+        x: 10
         y: 9
-        width: 14
-        height: 23
-      spriteId: fdb03a65cc448fa4098310cb7793c7ca
+        width: 12
+        height: 22
+      spriteId: 22592f76a690ba44888161e9f720fe5a
     - name: White Bishop Landing_Frame_1
       frameIndex: 1
       additiveSortOrder: 0
       cellRect:
-        x: 9
+        x: 10
         y: 8
-        width: 14
-        height: 24
-      spriteId: 5e7bc039533a92846852fc84a57aecd4
+        width: 12
+        height: 23
+      spriteId: eadff384ad79c2b45ad3d9e1964f7992
     - name: White Bishop Landing_Frame_2
       frameIndex: 2
       additiveSortOrder: 0
       cellRect:
-        x: 9
+        x: 10
         y: 7
-        width: 14
-        height: 24
-      spriteId: 61923393f93836f4d9148f7af3151196
+        width: 12
+        height: 23
+      spriteId: 9e224c80c8ff2624e9eee8072bfb5a1b
     - name: White Bishop Landing_Frame_3
       frameIndex: 3
       additiveSortOrder: 0
       cellRect:
-        x: 9
+        x: 10
         y: 6
-        width: 14
-        height: 24
-      spriteId: 5bbc691949e341b4c88507e9dd9dcb56
+        width: 12
+        height: 23
+      spriteId: 07917d66df223f14680c30c1bf33096b
     - name: White Bishop Landing_Frame_4
       frameIndex: 4
       additiveSortOrder: 0
       cellRect:
-        x: 9
+        x: 10
         y: 5
-        width: 14
-        height: 24
-      spriteId: 2bd097792551cb7418ed76b80e02054b
+        width: 12
+        height: 23
+      spriteId: 040b56dc4dd0f784699d4fb9c35b7bd6
     - name: White Bishop Landing_Frame_5
       frameIndex: 5
       additiveSortOrder: 0
       cellRect:
-        x: 9
+        x: 10
         y: 4
-        width: 14
-        height: 24
-      spriteId: 0b1b0f17494ab0b49b37a316a5dc0088
+        width: 12
+        height: 23
+      spriteId: 67e8bcb9db60a934bb064a2701ca7d78
     - name: White Bishop Landing_Frame_6
       frameIndex: 6
       additiveSortOrder: 0
       cellRect:
-        x: 9
+        x: 10
         y: 4
-        width: 14
-        height: 23
-      spriteId: 1c8024b7c1e48304c8d1b9e77c60b225
+        width: 12
+        height: 22
+      spriteId: 7072c8aeaeafdf241ad4a69ed2f6c826
     - name: White Bishop Landing_Frame_7
       frameIndex: 7
       additiveSortOrder: 0
       cellRect:
-        x: 9
+        x: 10
         y: 4
-        width: 14
-        height: 22
-      spriteId: f18b022b472d97f4ca559da5fbc68057
+        width: 12
+        height: 21
+      spriteId: afde308877634504aa17fcd94340fbd4
     - name: White Bishop Landing_Frame_8
       frameIndex: 8
       additiveSortOrder: 0
       cellRect:
-        x: 9
+        x: 10
         y: 4
-        width: 14
-        height: 23
-      spriteId: 58efc967c03770845a4a5f7b3eb298b7
+        width: 12
+        height: 22
+      spriteId: b42c836ef9fa74c45a8d30da9398c1ee
     - name: White Bishop Landing_Frame_9
       frameIndex: 9
       additiveSortOrder: 0
       cellRect:
-        x: 9
+        x: 10
         y: 4
-        width: 14
-        height: 23
-      spriteId: b3454a45d987d3448b0d69dfa136c7a8
+        width: 12
+        height: 22
+      spriteId: 39c5136a4a198d545bab92b417776ced
     - name: White Bishop Landing_Frame_10
       frameIndex: 10
       additiveSortOrder: 0
       cellRect:
-        x: 9
+        x: 10
         y: 4
-        width: 14
-        height: 23
-      spriteId: 114dd14ec17af394996cdce40bd3428d
+        width: 12
+        height: 22
+      spriteId: 7e3a30a656a71d741b5dadc634ff3406
     - name: White Bishop Landing_Frame_11
       frameIndex: 11
       additiveSortOrder: 0
       cellRect:
-        x: 9
+        x: 10
         y: 4
-        width: 14
-        height: 23
-      spriteId: 9c2daf9a69f0ca44b9e3d5c1c1e0fb7d
+        width: 12
+        height: 22
+      spriteId: b4ca318a71659bf479e4b1b249d1946d
     linkedCells: []
     parentIndex: -1
   platformSettings: []

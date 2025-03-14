@@ -18,7 +18,7 @@ public class ScoutPawn : Ability
         piece.moveProfile = new ScoutPawnMovement();
         piece.info += " "+abilityName;
         piece.releaseCost+=10;
-        
+        base.Apply(piece);
         
     }
 

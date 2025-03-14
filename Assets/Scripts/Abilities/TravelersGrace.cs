@@ -15,6 +15,7 @@ public class TravelersGrace : Ability
         piece.moveProfile = new TravelersGraceMovement(startingProfile);
         piece.info += " "+abilityName;
         piece.releaseCost+=15;
+        base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)

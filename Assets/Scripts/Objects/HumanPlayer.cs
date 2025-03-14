@@ -9,7 +9,7 @@ public class HumanPlayer : Player
 
     public override void Initialize()
     {
-        pieces = PieceFactory._instance.CreateWhitePieces(this);
+        //pieces = PieceFactory._instance.CreateWhitePieces(this);
         openPositions = new List<BoardPosition>();
         int startingRow;
         if (pieces[0].GetComponent<Chessman>().startingPosition.y <= 2)

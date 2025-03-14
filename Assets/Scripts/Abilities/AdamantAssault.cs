@@ -23,13 +23,15 @@ public class AdamantAssault : Ability
 
         Game._instance.OnPieceBounced.AddListener(Assault);
         Game._instance.OnPieceCaptured.AddListener(EndAssault);
+        base.Apply(piece);
+
     }
 
     public override void Remove(Chessman piece)
     {
 
-        //game.OnPieceCaptured -= Thirst;
-        Game._instance.OnPieceBounced.RemoveListener(Assault);  // Unsubscribe from the event
+        Game._instance.OnPieceBounced.RemoveListener(Assault);
+        Game._instance.OnPieceCaptured.RemoveListener(EndAssault);
 
     }
 
@@ -40,6 +42,7 @@ public class AdamantAssault : Ability
         if (attacker == piece && !alreadyBounced)
         {
             Debug.Log("Overriding turn for adamant assault");
+            piece.effectsFeedback.PlayFeedbacks();
             AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Adamant Assault</gradient></color>", "attacking again");
             Game._instance.currentMatch.AdamantAssaultOverride =true;
             //Game._instance.currentMatch.PlayerTurn();
@@ -50,7 +53,7 @@ public class AdamantAssault : Ability
             Game._instance.currentMatch.AdamantAssaultOverride =false;
         }
     }
-    public void EndAssault(Chessman attacker){
+    public void EndAssault(Chessman attacker, Chessman defender){
         if(attacker==piece){
             alreadyBounced=false;
             Game._instance.currentMatch.AdamantAssaultOverride =false;

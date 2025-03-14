@@ -31,7 +31,7 @@ public class MenuButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnSelect(BaseEventData eventData)
     {
-        this.GetComponent<AudioSource>().Play();
+        Menu._instance.audioSource.Play();
         StartCoroutine(MoveElement(true));
     }
 

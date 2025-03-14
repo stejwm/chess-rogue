@@ -17,17 +17,20 @@ public class LoneGuard : Ability
         Game._instance.OnAttack.AddListener(AddBonus);
         Game._instance.OnAttackEnd.AddListener(RemoveBonus);
         piece.releaseCost+=20;
-
+        base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
         Game._instance.OnAttack.RemoveListener(AddBonus); 
+        Game._instance.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
     public void AddBonus(Chessman cm, int support, bool isAttacking, BoardPosition targetedPosition){
-        if (cm==piece && support==0 && !isAttacking)
+        if (cm==piece && support==0 && !isAttacking){
+            piece.effectsFeedback.PlayFeedbacks();
             piece.defenseBonus+=5;
+        }
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if (defender==piece && defenseSupport==0)

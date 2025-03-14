@@ -14,14 +14,14 @@ public class BattlePanel : MonoBehaviour
     public TMP_Text heroSupport;
     public TMP_Text heroTotal;
     public TMP_Text heroPieceName;
-    public Image heroImage;
+    public GameObject heroImage;
     public TMP_Text enemyAttack;
     public TMP_Text enemyDefense;
     public TMP_Text enemySupport;
     public TMP_Text enemyTotal;
     public TMP_Text enemyPieceName;
     public TMP_Text result;
-    public Image enemyImage;
+    public GameObject enemyImage;
     // Start is called before the first frame update
     void Awake()
     {
@@ -37,18 +37,22 @@ public class BattlePanel : MonoBehaviour
         Cursor.visible=true;
         gameObject.SetActive(false);
     }
-    public void SetAndShowAttackingStats(string attack, string support, string total, string name, Sprite sprite, string enemyAttack, string enemySupport, string enemyTotal, string enemyPieceName, Sprite enemySprite){
+    public void SetAndShowAttackingStats(string attack, string support, string total, string name, GameObject sprite, string enemyAttack, string enemySupport, string enemyTotal, string enemyPieceName, GameObject enemySprite){
         gameObject.SetActive(true);
         this.heroAttack.text="attack: ";
         this.heroSupport.text="support: ";
         this.heroTotal.text="total: ";
         this.heroPieceName.text=name;
-        this.heroImage.sprite=sprite;
+        this.heroImage.transform.localPosition=new Vector3(-687,0,0);
+        this.heroImage.GetComponent<SpriteRenderer>().sprite=sprite.GetComponent<SpriteRenderer>().sprite;
+        this.heroImage.GetComponent<Animator>().runtimeAnimatorController=sprite.GetComponent<Animator>().runtimeAnimatorController;
         this.enemyAttack.text=" :defense";
         this.enemySupport.text=" :support";
         this.enemyTotal.text=" :total";
         this.enemyPieceName.text=enemyPieceName;
-        this.enemyImage.sprite=enemySprite;
+        this.enemyImage.transform.localPosition=new Vector3(687,0,0);
+        this.enemyImage.GetComponent<SpriteRenderer>().sprite=enemySprite.GetComponent<SpriteRenderer>().sprite;
+        this.enemyImage.GetComponent<Animator>().runtimeAnimatorController=enemySprite.GetComponent<Animator>().runtimeAnimatorController;
 
     }
 
@@ -84,18 +88,22 @@ public class BattlePanel : MonoBehaviour
         
     }
 
-    public void SetAndShowDefendingStats(string attack, string support, string total, string name, Sprite sprite, string enemyAttack, string enemySupport, string enemyTotal, string enemyPieceName, Sprite enemySprite){
+    public void SetAndShowDefendingStats(string attack, string support, string total, string name, GameObject sprite, string enemyAttack, string enemySupport, string enemyTotal, string enemyPieceName, GameObject enemySprite){
         gameObject.SetActive(true);
         this.heroAttack.text="defense: ";
         this.heroSupport.text="support: ";
         this.heroTotal.text="total: ";
         this.heroPieceName.text=name;
-        this.heroImage.sprite=sprite;
+        this.heroImage.transform.localPosition=new Vector3(-687,0,0);
+        this.heroImage.GetComponent<SpriteRenderer>().sprite=sprite.GetComponent<SpriteRenderer>().sprite;
+        this.heroImage.GetComponent<Animator>().runtimeAnimatorController=sprite.GetComponent<Animator>().runtimeAnimatorController;
         this.enemyAttack.text=" :attack";
         this.enemySupport.text=" :support";
         this.enemyTotal.text=" :total";
         this.enemyPieceName.text=enemyPieceName;
-        this.enemyImage.sprite=enemySprite;
+        this.enemyImage.transform.localPosition=new Vector3(687,0,0);
+        this.enemyImage.GetComponent<SpriteRenderer>().sprite=enemySprite.GetComponent<SpriteRenderer>().sprite;
+        this.enemyImage.GetComponent<Animator>().runtimeAnimatorController=enemySprite.GetComponent<Animator>().runtimeAnimatorController;
 
     }
 
@@ -107,6 +115,7 @@ public class BattlePanel : MonoBehaviour
     public void HideResults(){
         //gameObject.SetActive(true);
         this.result.text="";
+        result.gameObject.SetActive(false);
 
     }
 

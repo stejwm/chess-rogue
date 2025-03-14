@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da1681260035a648adea7198ef077d4, type: 3}
+  m_Name: TravelersGrace
+  m_EditorClassIdentifier: 
+  abilityName: Travelers Grace
+  description: Piece can move through it's own pieces according to it's typical movement
+  sprite: {fileID: 8157066088571303168, guid: b80aea0da8080dd45bb2dc2a48e048ba, type: 3}
+  Cost: 8

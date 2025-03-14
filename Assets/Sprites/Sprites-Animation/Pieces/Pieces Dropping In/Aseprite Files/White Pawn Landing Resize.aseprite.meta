@@ -1,0 +1,603 @@
+fileFormatVersion: 2
+guid: 50f1618c76cce8046845b5a11848dba4
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: White Pawn Landing Resize_Frame_0
+    originalName: 
+    pivot: {x: 0.5, y: -0.7222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 132
+      y: 400
+      width: 120
+      height: 180
+    spriteID: 3d48b75586656114da28a0b0c503e467
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 132, y: 400}
+  - name: White Pawn Landing Resize_Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: -0.6315789}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 628
+      width: 120
+      height: 190
+    spriteID: d2ee099ee83210d4e89776c478813bdc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 628}
+  - name: White Pawn Landing Resize_Frame_2
+    originalName: 
+    pivot: {x: 0.5, y: -0.57894737}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 826
+      width: 120
+      height: 190
+    spriteID: 9c87a4f2797af704f874c2fb7355c6a3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 826}
+  - name: White Pawn Landing Resize_Frame_3
+    originalName: 
+    pivot: {x: 0.5, y: -0.5263158}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 132
+      y: 4
+      width: 120
+      height: 190
+    spriteID: a1ff6c11b2d8f6a458eff2cac2b6dab4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 132, y: 4}
+  - name: White Pawn Landing Resize_Frame_4
+    originalName: 
+    pivot: {x: 0.5, y: -0.4}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 120
+      height: 200
+    spriteID: 380692356a7c6e645a671fcb6394bd69
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: White Pawn Landing Resize_Frame_5
+    originalName: 
+    pivot: {x: 0.5, y: -0.3}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 212
+      width: 120
+      height: 200
+    spriteID: f32a3664c51d1964e9f8a60fc5c0c1aa
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 212}
+  - name: White Pawn Landing Resize_Frame_6
+    originalName: 
+    pivot: {x: 0.5, y: -0.2}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 420
+      width: 120
+      height: 200
+    spriteID: 4b4a1ace835fe984681408f1beb2b942
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 420}
+  - name: White Pawn Landing Resize_Frame_7
+    originalName: 
+    pivot: {x: 0.5, y: -0.21052632}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 132
+      y: 202
+      width: 120
+      height: 190
+    spriteID: 751a9d70d90e8fb4d9248bd22846f49b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 132, y: 202}
+  - name: White Pawn Landing Resize_Frame_8
+    originalName: 
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 132
+      y: 588
+      width: 120
+      height: 180
+    spriteID: d1ead4d11a3ef3c44aa3d3f51b29aa2d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 132, y: 588}
+  - name: White Pawn Landing Resize_Frame_9
+    originalName: 
+    pivot: {x: 0.5, y: -0.23529412}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 388
+      y: 4
+      width: 120
+      height: 170
+    spriteID: f063ab0003a1388429260c7edc77a2e5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 388, y: 4}
+  - name: White Pawn Landing Resize_Frame_10
+    originalName: 
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 132
+      y: 776
+      width: 120
+      height: 180
+    spriteID: 79aa2b624c4ab0b4ebc80f574f462e6a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 132, y: 776}
+  - name: White Pawn Landing Resize_Frame_11
+    originalName: 
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 260
+      y: 4
+      width: 120
+      height: 180
+    spriteID: 7ac43156beb976c40854bcd1c7d56409
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 260, y: 4}
+  - name: White Pawn Landing Resize_Frame_12
+    originalName: 
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 260
+      y: 192
+      width: 120
+      height: 180
+    spriteID: a497d844ab6769c44bd4881241fb9c3c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 260, y: 192}
+  - name: White Pawn Landing Resize_Frame_13
+    originalName: 
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 260
+      y: 380
+      width: 120
+      height: 180
+    spriteID: 8375c288fc883634fbe2649b22a2cd7e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 260, y: 380}
+  - name: White Pawn Landing Resize_Frame_14
+    originalName: 
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 260
+      y: 568
+      width: 120
+      height: 180
+    spriteID: f7615ef5a48e6984f96496c553a3675e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 260, y: 568}
+  - name: White Pawn Landing Resize_Frame_15
+    originalName: 
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 260
+      y: 756
+      width: 120
+      height: 180
+    spriteID: 00d733b64635cb8459168a6699ee3316
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 260, y: 756}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: 699513984
+    name: White Pawn Landing Resize
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: White Pawn Landing Resize_Frame_0
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 130
+        width: 120
+        height: 180
+      spriteId: 3d48b75586656114da28a0b0c503e467
+    - name: White Pawn Landing Resize_Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 120
+        width: 120
+        height: 190
+      spriteId: d2ee099ee83210d4e89776c478813bdc
+    - name: White Pawn Landing Resize_Frame_2
+      frameIndex: 2
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 110
+        width: 120
+        height: 190
+      spriteId: 9c87a4f2797af704f874c2fb7355c6a3
+    - name: White Pawn Landing Resize_Frame_3
+      frameIndex: 3
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 100
+        width: 120
+        height: 190
+      spriteId: a1ff6c11b2d8f6a458eff2cac2b6dab4
+    - name: White Pawn Landing Resize_Frame_4
+      frameIndex: 4
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 80
+        width: 120
+        height: 200
+      spriteId: 380692356a7c6e645a671fcb6394bd69
+    - name: White Pawn Landing Resize_Frame_5
+      frameIndex: 5
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 60
+        width: 120
+        height: 200
+      spriteId: f32a3664c51d1964e9f8a60fc5c0c1aa
+    - name: White Pawn Landing Resize_Frame_6
+      frameIndex: 6
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 40
+        width: 120
+        height: 200
+      spriteId: 4b4a1ace835fe984681408f1beb2b942
+    - name: White Pawn Landing Resize_Frame_7
+      frameIndex: 7
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 40
+        width: 120
+        height: 190
+      spriteId: 751a9d70d90e8fb4d9248bd22846f49b
+    - name: White Pawn Landing Resize_Frame_8
+      frameIndex: 8
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 40
+        width: 120
+        height: 180
+      spriteId: d1ead4d11a3ef3c44aa3d3f51b29aa2d
+    - name: White Pawn Landing Resize_Frame_9
+      frameIndex: 9
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 40
+        width: 120
+        height: 170
+      spriteId: f063ab0003a1388429260c7edc77a2e5
+    - name: White Pawn Landing Resize_Frame_10
+      frameIndex: 10
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 40
+        width: 120
+        height: 180
+      spriteId: 79aa2b624c4ab0b4ebc80f574f462e6a
+    - name: White Pawn Landing Resize_Frame_11
+      frameIndex: 11
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 40
+        width: 120
+        height: 180
+      spriteId: 7ac43156beb976c40854bcd1c7d56409
+    - name: White Pawn Landing Resize_Frame_12
+      frameIndex: 12
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 40
+        width: 120
+        height: 180
+      spriteId: a497d844ab6769c44bd4881241fb9c3c
+    - name: White Pawn Landing Resize_Frame_13
+      frameIndex: 13
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 40
+        width: 120
+        height: 180
+      spriteId: 8375c288fc883634fbe2649b22a2cd7e
+    - name: White Pawn Landing Resize_Frame_14
+      frameIndex: 14
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 40
+        width: 120
+        height: 180
+      spriteId: f7615ef5a48e6984f96496c553a3675e
+    - name: White Pawn Landing Resize_Frame_15
+      frameIndex: 15
+      additiveSortOrder: 0
+      cellRect:
+        x: 100
+        y: 40
+        width: 120
+        height: 180
+      spriteId: 00d733b64635cb8459168a6699ee3316
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  generatePhysicsShape: 0
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 320, y: 320}

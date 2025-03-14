@@ -9,13 +9,18 @@ public class ChessMatch
 {
     //public List<GameObject> playerWhite;
     //public List<GameObject> playerBlack;
-    public PieceColor currentPlayer;
+    public PieceColor currentPlayerColor;
+    public Player currentPlayer;
     public Player white;
     public Player black;
     private GameObject[,] positions = new GameObject[8, 8];
     public bool AdamantAssaultOverride = false;
     public bool BloodThirstOverride = false;
     public bool AvengingStrikeOverride = false;
+    
+    public int reward = 40;
+
+    public bool AvengerActive = false;
 
     public bool isSetUpPhase = true;
     //[SerializeField] private GameObject tilePrefab;
@@ -23,23 +28,23 @@ public class ChessMatch
 
     public ChessMatch(Player white, Player black)
     {
+        //ResetPieces();
         this.white=white;
         this.black=black;
-        CreateTiles();
         CheckInventory();
         
     }
 
     public void StartMatch(){
+        KingsOrderManager._instance.Setup();
+        white.CreateMoveCommandDictionary();
+        black.CreateMoveCommandDictionary();
         isSetUpPhase=false;
         Game._instance.toggleAllPieceColliders(false);
         BoardManager._instance.toggleTileColliders(true);
         UpdateBoard();
         SetWhiteTurn();
-    }
-    private void CreateTiles()
-    {
-        BoardManager._instance.CreateBoard();
+        Game._instance.OnChessMatchStart.Invoke();
     }
     private void DestroyTiles()
     {
@@ -48,15 +53,15 @@ public class ChessMatch
 
     public void CheckInventory(){
         UpdateBoard();
-        ResetPieces();
         if (Game._instance.hero.inventoryPieces.Count>0){
+            KingsOrderManager._instance.Hide();
             int i = 0;
             foreach (var obj in Game._instance.hero.inventoryPieces)
             {
                 Chessman piece = obj.GetComponent<Chessman>();
                 obj.SetActive(true);
                 piece.xBoard=-4;
-                piece.yBoard=4-i; 
+                piece.yBoard=3-i; 
                 i++;
                 piece.UpdateUIPosition();
             }
@@ -67,7 +72,7 @@ public class ChessMatch
             StartMatch();
         }
     }
-    public ChessMatch(Player white)
+    public ChessMatch(AIPlayer white)
     {
         this.white=white;
         //playerWhite = white.pieces;
@@ -125,9 +130,17 @@ public class ChessMatch
     }
 
     public void SetWhiteTurn(){
+        currentPlayer=white;
         foreach (GameObject item in white.pieces)
             {
-                item.GetComponent<Chessman>().isValidForAttack=true;
+                CheckHex(item.GetComponent<Chessman>());
+                if(item.GetComponent<Chessman>().paralyzed){
+                    item.GetComponent<Chessman>().isValidForAttack=false;
+                    item.GetComponent<Chessman>().paralyzed=false;
+                }
+                else{
+                    item.GetComponent<Chessman>().isValidForAttack=true;
+                }
             }
         foreach (GameObject item in black.pieces)
             {
@@ -136,10 +149,26 @@ public class ChessMatch
             
         white.MakeMove(this);
     }
-    public void SetBlackTurn(){
-        foreach (GameObject item in black.pieces)
+
+    public void SetPiecesValidForAttack(Player player){
+        foreach (GameObject item in player.pieces)
         {
             item.GetComponent<Chessman>().isValidForAttack=true;
+        }
+
+    }
+    public void SetBlackTurn(){
+        currentPlayer=black;
+        foreach (GameObject item in black.pieces)
+        {
+            CheckHex(item.GetComponent<Chessman>());
+            if(item.GetComponent<Chessman>().paralyzed){
+                item.GetComponent<Chessman>().isValidForAttack=false;
+                item.GetComponent<Chessman>().paralyzed=false;
+            }
+            else{
+                item.GetComponent<Chessman>().isValidForAttack=true;
+            }
         }
         foreach (GameObject item in white.pieces)
         {
@@ -151,23 +180,47 @@ public class ChessMatch
     public void NextTurn()
     {
         //Debug.Log("IsTurnOverride? "+turnOverride);
-        if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride)
+        if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride || Game._instance.pauseOverride)
             return;
-        if (currentPlayer == PieceColor.White)
+        if (currentPlayerColor == PieceColor.White)
         {
-            currentPlayer = PieceColor.Black;
+            currentPlayerColor = PieceColor.Black;
+            //currentPlayer=black;
             SetBlackTurn();
         }
         else
         {
-            currentPlayer = PieceColor.White;
+            currentPlayerColor = PieceColor.White;
+            //currentPlayer=white;
             SetWhiteTurn();
+            if(reward>0)
+                reward-=2;
         }
     }
 
+    public void CheckHex(Chessman piece){
+        if(piece.hexed){
+            foreach(var ability in piece.abilities){
+                ability.Remove(piece);
+            }
+            piece.hexed=false;
+            piece.wasHexed=true;
+        }
+        else if(piece.wasHexed){
+            piece.wasHexed=false;
+            List<Ability> abilitiesCopy = new List<Ability>(piece.abilities);
+            piece.abilities.Clear();
+            foreach(var ability in abilitiesCopy){
+                ability.Apply(piece);
+            }
+        }
+    }
     public GameObject GetPieceAtPosition(int x, int y)
     {
-        return positions[x, y];
+        if(positions[x, y])
+            return positions[x, y];
+        else
+            return null;
     }
 
     public void SetPositionEmpty(int x, int y)
@@ -180,11 +233,10 @@ public class ChessMatch
         piece.yBoard = y;
         positions[x,y] = piece.gameObject;
         piece.UpdateUIPosition();
-        Debug.Log(piece.name + " moved to "+ BoardPosition.ConvertToChessNotation(x,y));
     } 
 
     public void MyTurn(PieceColor player){
-        currentPlayer=player;
+        currentPlayerColor=player;
     }
     public void EndGame(){
         BattlePanel._instance.HideResults();   
@@ -194,6 +246,7 @@ public class ChessMatch
         DestroyTiles();
         Game._instance.toggleAllPieceColliders(true);
         BoardManager._instance.toggleTileColliders(false);
+        white.playerCoins+=reward;
         Game._instance.EndMatch();
     }
     public GameObject[,] GetPositions()

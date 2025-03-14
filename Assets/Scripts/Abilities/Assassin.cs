@@ -17,16 +17,20 @@ public class Assassin : Ability
         Game._instance.OnAttack.AddListener(AddBonus);
         Game._instance.OnAttackEnd.AddListener(RemoveBonus);
         piece.releaseCost+=20;
+        base.Apply(piece);
 
+        
     }
 
     public override void Remove(Chessman piece)
     {
         Game._instance.OnAttack.RemoveListener(AddBonus); 
+        Game._instance.OnAttackEnd.RemoveListener(RemoveBonus); 
 
     }
     public void AddBonus(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
         if (attacker==piece && support==0 && isAttacking){
+            piece.effectsFeedback.PlayFeedbacks();
             AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Assassin</gradient></color>", "<color=green>+5</color> attack");
             piece.attackBonus+=5;
         }

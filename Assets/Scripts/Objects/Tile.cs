@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,29 +15,50 @@ public class Tile : MonoBehaviour
 
     private Chessman reference;
     private bool isValidMove = false;
+    private bool isLightTile;
+    private int bloodCount=0;
+    [SerializeField] private Material bloodMat;
 
     private void OnMouseEnter(){
         Chessman piece = getPiece();
         if(piece){
-        var sprite = piece.GetComponent<SpriteRenderer>().sprite;
-        if(piece.team==Team.Hero)
-            StatBoxManager._instance.SetAndShowStats(piece.CalculateAttack(),piece.CalculateDefense(),piece.CalculateSupport(),piece.info,piece.name, sprite);
-        else if(piece.team == Team.Enemy)
-            EnemyStatBoxManager._instance.SetAndShowStats(piece.CalculateAttack(),piece.CalculateDefense(),piece.CalculateSupport(),piece.info,piece.name, sprite);
+            if(piece.team==Team.Hero)
+                StatBoxManager._instance.SetAndShowStats(piece);
+            else if(piece.team == Team.Enemy)
+                StatBoxManager._instance.SetAndShowEnemyStats(piece);
         }
     }
 
     public Chessman getPiece(){
-        GameObject obj = Game._instance.currentMatch.GetPieceAtPosition(position.x, position.y);
+        GameObject obj =null;
+        if (Game._instance.currentMatch!=null)
+            obj = Game._instance.currentMatch.GetPieceAtPosition(position.x, position.y);
         if(obj !=null)
             return obj.GetComponent<Chessman>();
         else
             return null;
     }
 
+    public PieceColor GetColor(){
+        if (isLightTile)
+            return PieceColor.White;
+        else
+            return PieceColor.Black;
+    }
+
     public void Initialize(BoardPosition boardPosition){
         position = boardPosition;
         SetUIPosition();
+    }
+
+    public void SetBloodTile(){        
+        var rand = UnityEngine.Random.Range(0,1000);
+        Debug.Log(rand);
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.material=bloodMat;
+        spriteRenderer.material.SetFloat("_RandomSeed", rand);
+        spriteRenderer.material.SetFloat("_BloodCount", ++bloodCount);
+        
     }
 
     public void SetUIPosition(){
@@ -57,7 +80,7 @@ public class Tile : MonoBehaviour
         //Set actual unity values
         this.transform.position = new Vector3(x, y, -1.0f);
 
-        bool isLightTile = (position.x + position.y) % 2 == 0; // Even sum for light, odd for dark
+        isLightTile = !((position.x + position.y) % 2 == 0); // Even sum for light, odd for dark
 
     // Get the SpriteRenderer component
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -102,18 +125,28 @@ public class Tile : MonoBehaviour
     }
 
     private void OnMouseDown(){
-        Debug.Log("Tile selected");
-        if (Game._instance.isInMenu)
+        if (Game._instance.tileSelect)
+        {
+            BoardManager._instance.selectedPosition= this.position;
+        }
+        else if (Game._instance.isInMenu)
         {
             return;
         }
-        if(!isValidMove && !Game._instance.currentMatch.isSetUpPhase){
+        else if(!isValidMove && !Game._instance.currentMatch.isSetUpPhase){
             BoardManager._instance.ClearTiles();
             var piece =getPiece();
-            if(piece!=null && piece.isValidForAttack && piece.owner==Game._instance.hero)
+            if(piece!=null && piece.isValidForAttack && piece.owner==Game._instance.hero){
+                StatBoxManager._instance.UnlockView();
                 piece.validMoves.Clear();
                 piece.validMoves=piece.GetValidMoves();
                 piece.DisplayValidMoves();
+                StatBoxManager._instance.SetAndShowStats(piece);
+                StatBoxManager._instance.LockView();
+            }
+            else{
+                StatBoxManager._instance.UnlockView();
+            }
         }
         
         
@@ -127,6 +160,10 @@ public class Tile : MonoBehaviour
             BoardManager._instance.PlacePiece(reference, this);
         }
         else if(reference!=null && reference.isValidForAttack){
+            /* Game._instance.currentMatch.currentPlayer.SetSelectedPiece(reference);
+            Game._instance.currentMatch.currentPlayer.SetSelectedDestination(new BoardPosition(position.x, position.y));
+            Game._instance.currentMatch.currentPlayer.RequestDecision(); */
+            StatBoxManager._instance.UnlockView();
             Game._instance.currentMatch.ExecuteTurn(reference, position.x, position.y);
         }
         

@@ -29,8 +29,6 @@ public class AbilityLogger : MonoBehaviour
 
     public void LogAbilityUsage(string abilityName, string message)
     {
-        
-        Debug.Log("Ability pop up started");
         StartCoroutine(ShowAbilityAndLog(abilityName, message));
     }
 
@@ -50,6 +48,7 @@ public class AbilityLogger : MonoBehaviour
         PopUp.gameObject.SetActive(false);
         PopUp.transform.position = startingPosition;
         PopUpMenu.SetActive(false);
+        yield return null;
     }
 
     private void AddLogMessage(string message)

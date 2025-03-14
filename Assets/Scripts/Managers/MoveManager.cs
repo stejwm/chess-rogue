@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 
 public class MoveManager: MonoBehaviour
@@ -45,7 +46,7 @@ public class MoveManager: MonoBehaviour
     public void HandleMove(Chessman piece, int x, int y){
         Chessman movingPiece = piece;
         
-        Game._instance.OnMove.Invoke(piece);
+        Game._instance.OnMove.Invoke(piece, new BoardPosition(x,y));
         //Set the Chesspiece's original location to be empty
         match.SetPositionEmpty(movingPiece.xBoard, movingPiece.yBoard);
         Game._instance.audioSource.clip = Game._instance.move; 
@@ -63,6 +64,7 @@ public class MoveManager: MonoBehaviour
         else{
             LogManager._instance.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"> "+ BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)+" to "+ BoardPosition.ConvertToChessNotation(x, y));
             match.MovePiece(movingPiece, x,y);
+            Game._instance.OnRawMoveEnd.Invoke(movingPiece, new BoardPosition(x,y));
             BoardManager._instance.ClearTiles();
             match.NextTurn();
             Game._instance.isInMenu=false;
@@ -84,7 +86,6 @@ public class MoveManager: MonoBehaviour
         }
 
         //Calculate attacking support first
-        Debug.Log("Running support check for attacking pieces");
         StartCoroutine(AddSupport(movingPiece, attackedPiece, true));
     }
 
@@ -143,7 +144,6 @@ public class MoveManager: MonoBehaviour
             yield break;
         }
         readyForCleanup=true;
-        Debug.Log("Running support check for defending pieces");
         yield return StartCoroutine(AddSupport(movingPiece, attackedPiece, false));
         
     }
@@ -153,9 +153,11 @@ public class MoveManager: MonoBehaviour
         StartCoroutine(ShowBattlePanel(movingPiece, attackedPiece));
     }
     private void AttackCleanUp(Chessman movingPiece, Chessman attackedPiece){
-        Game._instance.OnAttackEnd.Invoke(movingPiece, attackedPiece, attackSupport, defenseSupport); 
+        
         //Move reference chess piece to this position
-        match.MovePiece(movingPiece, targetedX, targetedY);
+        if(!movingPiece.canStationarySlash)
+            match.MovePiece(movingPiece, targetedX, targetedY);
+        Game._instance.OnAttackEnd.Invoke(movingPiece, attackedPiece, attackSupport, defenseSupport); 
         BoardManager._instance.ClearTiles();
         
         //reset all variables
@@ -187,11 +189,11 @@ public class MoveManager: MonoBehaviour
         pitch=1f;
         var attackVal = movingPiece.CalculateAttack();
         var supportVal= attackSupport;
-        var sprite = movingPiece.GetComponent<SpriteRenderer>().sprite;
+        var sprite = movingPiece.droppingSprite;
 
         var defendVal = attackedPiece.CalculateDefense();
         var defendSupportVal= defenseSupport;
-        var defendSprite = attackedPiece.GetComponent<SpriteRenderer>().sprite;
+        var defendSprite = attackedPiece.droppingSprite;
         //If hero is attacking
         if(movingPiece.team==Team.Hero){
             float scale=0.05f;
@@ -251,24 +253,37 @@ public class MoveManager: MonoBehaviour
         yield return new WaitForSeconds(Game._instance.waitTime);
         if(totalAttackPower>=totalDefensePower){
             
-            Debug.Log(movingPiece.name + " captures "+ attackedPiece.name +" on "+ BoardPosition.ConvertToChessNotation(targetedX, targetedY));
             LogManager._instance.WriteLog($"<sprite=\"{movingPiece.color}{movingPiece.type}\" name=\"{movingPiece.color}{movingPiece.type}\"> captures <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(targetedX, targetedY)}");
             if (attackedPiece.type==PieceType.King){
                 gameOver=true;
+                if(attackedPiece.team==Team.Hero)
+                    SceneManager.LoadScene(0);
             }
             if (match.black.pieces.Contains(attackedPiece.gameObject))
                 match.black.pieces.Remove(attackedPiece.gameObject);
             if(match.white.pieces.Contains(attackedPiece.gameObject))
                 match.white.pieces.Remove(attackedPiece.gameObject);
-            //Debug.Log("Setting capture tone");
+            
             Game._instance.audioSource.clip = Game._instance.capture; 
-            BattlePanel._instance.SetAndShowResults("Capture!");
-            ResultFeedback.PlayFeedbacks();
-            yield return new WaitForSeconds(ResultFeedback.TotalDuration);
-            attackedPiece.gameObject.SetActive(false);
-            movingPiece.owner.capturedPieces.Add(attackedPiece.gameObject);
-            AttackCleanUp(movingPiece, attackedPiece);
-            Game._instance.OnPieceCaptured.Invoke(movingPiece);  // Trigger the event
+            Game._instance.audioSource.pitch=pitch;
+            if(Game._instance.isDecimating){
+                BattlePanel._instance.SetAndShowResults("Decimate!");
+                ResultFeedback.PlayFeedbacks();
+                yield return new WaitForSeconds(ResultFeedback.TotalDuration);
+                Destroy(attackedPiece.gameObject);
+                BoardManager._instance.GetTileAt(targetedX, targetedY).SetBloodTile();
+                AttackCleanUp(movingPiece, attackedPiece);
+                Game._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);
+            }else{
+                BattlePanel._instance.SetAndShowResults("Capture!");
+                ResultFeedback.PlayFeedbacks();
+                yield return new WaitForSeconds(ResultFeedback.TotalDuration);
+                attackedPiece.gameObject.SetActive(false);
+                movingPiece.owner.capturedPieces.Add(attackedPiece.gameObject);
+                BoardManager._instance.GetTileAt(targetedX, targetedY).SetBloodTile();
+                AttackCleanUp(movingPiece, attackedPiece);
+                Game._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);    
+            }
             if (gameOver){
                 Game._instance.OnGameEnd.Invoke(movingPiece.color);
                 match.EndGame();
@@ -303,6 +318,8 @@ public class MoveManager: MonoBehaviour
             match.MovePiece(attackedPiece, attackedPiece.xBoard, attackedPiece.yBoard);
             //Debug.Log("Setting bounce tone");
             Game._instance.audioSource.clip = Game._instance.bounce;
+            Game._instance.audioSource.pitch=pitch;
+            //Game._instance.audioSource.Play();
             BattlePanel._instance.SetAndShowResults("Bounce!"); 
             ResultFeedback.PlayFeedbacks();
             yield return new WaitForSeconds(ResultFeedback.TotalDuration);
@@ -315,8 +332,7 @@ public class MoveManager: MonoBehaviour
         }
         
         //Debug.Log("Playing audio");
-        Game._instance.audioSource.pitch=pitch;
-        Game._instance.audioSource.Play();
+        
         yield return new WaitForSeconds(Game._instance.waitTime);
         
         BattlePanel._instance.HideResults();   

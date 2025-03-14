@@ -54,6 +54,9 @@ public class MarketManager : MonoBehaviour
         opponentCapturedPieces= Game._instance.opponent.capturedPieces;
 
         Game._instance.opponent.pieces.AddRange(myCapturedPieces);
+        Game._instance.toggleAllPieceColliders(false);
+        Game._instance.togglePieceColliders(myCapturedPieces, true);
+        Game._instance.togglePieceColliders(opponentCapturedPieces, true);
 
         /* var controller = GameObject.FindGameObjectWithTag("GameController");
         var game = controller.GetComponent<Game>(); */
@@ -68,6 +71,7 @@ public class MarketManager : MonoBehaviour
             }
             
         }
+        var decimatedPieces = new List<GameObject>();
         if(opponentCapturedPieces.Count>0)
         foreach (GameObject piece in opponentCapturedPieces)
         {
@@ -77,8 +81,23 @@ public class MarketManager : MonoBehaviour
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 5;
             }
+            Chessman chessman = piece.GetComponent<Chessman>();
+            if(chessman.owner == Game._instance.hero){
+                if(chessman.abilities.Count>chessman.diplomacy){
+                    Debug.Log("checking diplomacy for "+piece.name);
+                    int survive = Random.Range(1,10);
+                    Debug.Log("Rolled "+survive+" and diplomacy is "+chessman.diplomacy);
+                    if(survive<=(chessman.abilities.Count -chessman.diplomacy)){
+                        Debug.Log("decimated from diplomacy check");
+                        decimatedPieces.Add(piece);
+                        Destroy(piece);
+                    }
+                }
+            }
+
             
         }
+        opponentCapturedPieces.RemoveAll(x => decimatedPieces.Contains(x));
     }
 
     public void CloseMarket(){
@@ -87,13 +106,6 @@ public class MarketManager : MonoBehaviour
         if(opponentCapturedPieces.Count>0)
         foreach (GameObject piece in opponentCapturedPieces)
         {
-            /* if(piece){
-                if (piece.GetComponent<SpriteRenderer>())
-                {
-                    SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                    rend.sortingOrder = 1;
-                }
-            } */
             Chessman cm = piece.GetComponent<Chessman>();
             Game._instance.hero.openPositions.Add(cm.startingPosition);
             Destroy(piece);
@@ -102,19 +114,13 @@ public class MarketManager : MonoBehaviour
         if(myCapturedPieces.Count>0)
         foreach (GameObject piece in myCapturedPieces)
         {
-            /* if(piece){
-                if (piece.GetComponent<SpriteRenderer>())
-                {
-                    SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                    rend.sortingOrder = 1;
-                }
-            } */
             Destroy(piece);
         }
         Game._instance.state=ScreenState.RewardScreen;
         myCapturedPieces.Clear();
         opponentCapturedPieces.Clear();
         selectedPieces.Clear();
+
         Game._instance.OpenReward();
         gameObject.SetActive(false);
         
@@ -135,7 +141,8 @@ public class MarketManager : MonoBehaviour
 
     public void ReturnMyPieces(){
         foreach (Chessman piece in selectedPieces){
-            //Chessman piece = obj.GetComponent<Chessman>();
+            if(piece.owner != Game._instance.hero)
+                break;
             if (selectedPieces.Contains(piece)){
                 Game._instance.hero.playerCoins-= piece.releaseCost;
                 SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
@@ -143,9 +150,11 @@ public class MarketManager : MonoBehaviour
                 piece.gameObject.SetActive(false);
                 Game._instance.hero.pieces.Add(piece.gameObject);
                 opponentCapturedPieces.Remove(piece.gameObject);
+                myCapturedPieces.Remove(piece.gameObject);
+                Game._instance.opponent.pieces.Remove(piece.gameObject);
+
             }
         }
-        //Game._instance.opponent.capturedPieces.Clear();
         totalCost=0;
         coinText.text = ": "+Game._instance.hero.playerCoins;
         selectedPieces.Clear();

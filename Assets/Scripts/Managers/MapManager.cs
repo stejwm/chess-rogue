@@ -1,51 +1,384 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class MapManager : MonoBehaviour
 {
     public static MapManager _instance;
 
+    public List<MapNode> mapNodes;
+    public MapNode currentNode;
+    public GameObject nodePrefab; // Prefab for the node UI element
+    public Transform mapParent; // Parent transform to hold the nodes
+    public GameObject linePrefab;
+    public Sprite shopSprite; 
+    private Dictionary<int, MapNode> firstPathAdditionalNodes = new Dictionary<int, MapNode>();
+    private Dictionary<int, MapNode> secondPathAdditionalNodes = new Dictionary<int, MapNode>();
+    public List<Sprite> images;
+    public Sprite wandererImage;
+    public Sprite bossImage;
+    public Sprite shopImage;
 
     void Awake()
     {
-        
-        if(_instance !=null && _instance !=this){
+        if (_instance != null && _instance != this)
+        {
             Destroy(this.gameObject);
         }
-        else{
-            _instance=this;
+        else
+        {
+            _instance = this;
         }
     }
 
     public void Start()
     {
         gameObject.SetActive(false);
-        
+        GenerateMap();
     }
 
-    public void OpenMap(){
+    public void OpenMap()
+    {
         gameObject.SetActive(true);
-        Game._instance.isInMenu=true;
+        Game._instance.isInMenu = true;
     }
 
-    public void CloseMap(){
-        Game._instance.isInMenu=false;
+    public void CloseMap()
+    {
+        Game._instance.isInMenu = false;
         Game._instance.CloseMap();
         gameObject.SetActive(false);
     }
 
-    public void NextMatch(){
+    public void NextMatch(EnemyType enemyType)
+    {
         CloseMap();
-        Game._instance.NextMatch();
+        Game._instance.NextMatch(enemyType);
     }
-    public void OpenShop(){
+
+    public void OpenShop()
+    {
+        if(Game._instance.shopUsed)
+            return;
         CloseMap();
         Game._instance.OpenShop();
     }
 
+    public void OpenArmyManagement()
+    {
+        CloseMap();
+        Game._instance.OpenArmyManagement();
+    }
 
+    public void SelectEnemyNode(MapNode node, EnemyType enemyType)
+    {
+        if (node.isCompleted || !currentNode.connectedNodes.Contains(node))
+        {
+            Debug.Log("Node not legal");
+            return;
+        }
+        else{
+
+            currentNode = node;
+            NextMatch(enemyType);
+            Debug.Log("Selected enemy node: " + node.nodeName);
+        }
+        // Implement logic to start the match with the selected node's enemies
+    }
+
+    public void SelectShopNode(MapNode node)
+    {
+        if (node.isCompleted || !currentNode.connectedNodes.Contains(node))
+        {
+            Debug.Log("Node not legal");
+            return;
+        }
+        else{
+            Debug.Log("Selected shop node: " + node.nodeName);
+            // Implement logic to open the shop
+            OpenShop();
+        }
+    }
+
+    public void SelectEncounterNode(MapNode node)
+    {
+        if (node.isCompleted || !currentNode.connectedNodes.Contains(node))
+        {
+            Debug.Log("Node not legal");
+            return;
+        }
+        else{
+            Debug.Log("Selected encounter node: " + node.nodeName);
+        }
+    }
+
+    private void GenerateMap()
+    {
+        float startX = -4.2f * 1.5f; // Adjust this value to start from the left side of the screen
+        float xOffset = 0.96f * 1.5f; // Horizontal distance between nodes
+        float maxYOffset = 2.5f; // Maximum vertical offset for randomness
+        float controlPointOffset = 1f; // Offset for control points to create curves
+        float verticalShift = 0.0f; // Shift the nodes up
+        float minVerticalDistance = 1.5f; // Minimum vertical distance between nodes from different paths
+        // Create a parent GameObject for lines to ensure they are rendered behind nodes
+        GameObject linesParent = new GameObject("LinesParent");
+        linesParent.transform.SetParent(mapParent, false);
+        linesParent.transform.SetAsFirstSibling(); // Ensure linesParent is the first child of mapParent
+
+        // Create the starting node
+        Vector3 startNodePosition = new Vector3(startX - xOffset, verticalShift, 0);
+        GameObject startNodeObject = Instantiate(nodePrefab, startNodePosition, Quaternion.identity, mapParent);
+        MapNode startNode = startNodeObject.GetComponent<MapNode>();
+        startNode.nodeName = "Start Node";
+        startNode.isCompleted = false;
+        mapNodes.Add(startNode);
+        currentNode=startNode;
+
+        // Generate the first path of nodes
+        List<MapNode> firstPathNodes = new List<MapNode>();
+        List<float> firstPathYOffsets = new List<float>(); // Store y-offsets for the first path
+        for (int i = 0; i < 10; i++)
+        {
+            float yOffset = Random.Range(-maxYOffset, maxYOffset); // Random vertical offset
+            firstPathYOffsets.Add(yOffset); // Store the y-offset
+            Vector3 position = new Vector3(startX + i * xOffset, yOffset + verticalShift, 0); // Adjusted positions
+            GameObject nodeObject = Instantiate(nodePrefab, position, Quaternion.identity, mapParent);
+            MapNode mapNode = nodeObject.GetComponent<MapNode>();
+            mapNode.nodeName = "Node " + i;
+            mapNode.isCompleted = false;
+
+            // Assign the node as an enemy
+            mapNode.nodeType = NodeType.Enemy;
+            mapNode.enemyType = (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length);
+            // Set the sprite based on the enemy type
+            // mapNode.nodeImage.sprite = ... (assign the appropriate sprite here)
+
+            mapNodes.Add(mapNode);
+            firstPathNodes.Add(mapNode);
+
+            // Assign the OnClick event programmatically
+            Button nodeButton = nodeObject.GetComponent<Button>();
+            nodeButton.onClick.AddListener(() => mapNode.OnNodeSelected());
+        }
+
+        // Generate the second path of nodes
+        List<MapNode> secondPathNodes = new List<MapNode>();
+        List<float> secondPathYOffsets = new List<float>(); // Store y-offsets for the second path
+        for (int i = 0; i < 10; i++)
+        {
+            float yOffset;
+            do
+            {
+                yOffset = Random.Range(-maxYOffset, maxYOffset); // Random vertical offset
+            } while (Mathf.Abs(yOffset - firstPathYOffsets[i]) < minVerticalDistance); // Ensure minimum vertical distance
+
+            secondPathYOffsets.Add(yOffset); // Store the y-offset
+            Vector3 position = new Vector3(startX + i * xOffset, yOffset + verticalShift, 0); // Adjusted positions for the second path
+            GameObject nodeObject = Instantiate(nodePrefab, position, Quaternion.identity, mapParent);
+            MapNode mapNode = nodeObject.GetComponent<MapNode>();
+            mapNode.nodeName = "Node " + (i + 10);
+            mapNode.isCompleted = false;
+
+            // Assign the node as an enemy
+            mapNode.nodeType = NodeType.Enemy;
+            mapNode.enemyType = (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length);
+            // Set the sprite based on the enemy type
+            // mapNode.nodeImage.sprite = ... (assign the appropriate sprite here)
+
+            // Set the color of the node to black
+            mapNode.nodeImage.color = Color.black;
+
+            mapNodes.Add(mapNode);
+            secondPathNodes.Add(mapNode);
+
+            // Assign the OnClick event programmatically
+            Button nodeButton = nodeObject.GetComponent<Button>();
+            nodeButton.onClick.AddListener(() => mapNode.OnNodeSelected());
+        }
+
+        // Create additional nodes for Shop and Encounter
+        NodeType[] additionalNodeTypes = { NodeType.Shop, NodeType.Encounter };
+        foreach (NodeType nodeType in additionalNodeTypes)
+        {
+            // Create one node for the first path
+            int index = Random.Range(1, 10);
+            while (firstPathAdditionalNodes.ContainsKey(index))
+            {
+                index = Random.Range(1, 10);
+            }
+            float yOffset = 0.0f;
+            //if (Mathf.Abs(yOffset - firstPathYOffsets[index]) < minVerticalDistance || Mathf.Abs(yOffset - secondPathYOffsets[index]) < minVerticalDistance)
+            //{
+            float offset = firstPathYOffsets[index];
+            while (!(offset <= -maxYOffset*2 || offset>=maxYOffset*2))
+            {
+                if(firstPathYOffsets[index]>secondPathYOffsets[index])
+                    offset+=0.2f;
+                else
+                    offset-=0.2f;
+                if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance)
+                {
+                    yOffset = offset;
+                    break;
+                }
+            }
+            //}
+            Vector3 position = new Vector3(Random.Range(-.2f, 0.2f)+startX + index * xOffset, yOffset + verticalShift, 0); // Adjusted positions
+            GameObject nodeObject = Instantiate(nodePrefab, position, Quaternion.identity, mapParent);
+            MapNode mapNode = nodeObject.GetComponent<MapNode>();
+            mapNode.nodeName = nodeType.ToString() + " Node";
+            mapNode.isCompleted = false;
+            mapNode.nodeType = nodeType;
+            mapNodes.Add(mapNode);
+            firstPathNodes.Add(mapNode);
+            firstPathAdditionalNodes.Add(index, mapNode);
+            // Assign the OnClick event programmatically
+            Button nodeButton = nodeObject.GetComponent<Button>();
+            nodeButton.onClick.AddListener(() => mapNode.OnNodeSelected());
+
+            index = Random.Range(1, 10);
+            while (secondPathAdditionalNodes.ContainsKey(index))
+            {
+                index = Random.Range(1, 10);
+            }
+            
+            offset = secondPathYOffsets[index];
+            while (!(offset <= -maxYOffset*2 || offset>=maxYOffset*2))
+            {
+                if(firstPathYOffsets[index]>secondPathYOffsets[index])
+                    offset-=0.2f;
+                else
+                    offset+=0.2f;
+                if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance)
+                {
+                    yOffset = offset;
+                    break;
+                }
+            }
+            
+            position = new Vector3(Random.Range(-.2f, 0.2f)+startX + index * xOffset, yOffset + verticalShift, 0); // Adjusted positions
+            nodeObject = Instantiate(nodePrefab, position, Quaternion.identity, mapParent);
+            mapNode = nodeObject.GetComponent<MapNode>();
+            mapNode.nodeName = nodeType.ToString() + " Node";
+            mapNode.isCompleted = false;
+            mapNode.nodeType = nodeType;
+            if(nodeType==NodeType.Shop)
+                mapNode.nodeImage.sprite = shopSprite;
+            // Set the color of the node to black
+            mapNode.nodeImage.color = Color.black;
+
+            mapNodes.Add(mapNode);
+            secondPathNodes.Add(mapNode);
+            secondPathAdditionalNodes.Add(index, mapNode);
+
+            // Assign the OnClick event programmatically
+            nodeButton = nodeObject.GetComponent<Button>();
+            nodeButton.onClick.AddListener(() => mapNode.OnNodeSelected());
+        }
+
+        // Connect the starting node to the first nodes of each path
+        startNode.connectedNodes = new MapNode[] { firstPathNodes[0], secondPathNodes[0] };
+
+        // Create the final node
+        Vector3 finalNodePosition = new Vector3(startX + 10 * xOffset, verticalShift, 0);
+        GameObject finalNodeObject = Instantiate(nodePrefab, finalNodePosition, Quaternion.identity, mapParent);
+        MapNode finalNode = finalNodeObject.GetComponent<MapNode>();
+        finalNode.nodeName = "Final Node";
+        finalNode.nodeType = NodeType.Boss;
+        finalNode.isCompleted = false;
+        mapNodes.Add(finalNode);
+
+        // Connect the final nodes of each path to the final node
+        firstPathNodes[9].connectedNodes = new MapNode[] { finalNode };
+        secondPathNodes[9].connectedNodes = new MapNode[] { finalNode };
+
+        // Connect nodes within each path and randomly between paths
+        for (int i = 0; i < 10; i++)
+        {
+            if (i < 9)
+            {
+                firstPathNodes[i].connectedNodes = new MapNode[] { firstPathNodes[i + 1] };
+                secondPathNodes[i].connectedNodes = new MapNode[] { secondPathNodes[i + 1] };
+            }
+            if(secondPathAdditionalNodes.ContainsKey(i))
+            {
+                List<MapNode> secondPathConnections = new List<MapNode>(secondPathNodes[i].connectedNodes);
+                secondPathConnections.Add(secondPathAdditionalNodes[i]);
+                secondPathNodes[i].connectedNodes = secondPathConnections.ToArray();
+            }
+            if(firstPathAdditionalNodes.ContainsKey(i))
+            {
+                List<MapNode> firstPathConnections = new List<MapNode>(firstPathNodes[i].connectedNodes);
+                firstPathConnections.Add(firstPathAdditionalNodes[i]);
+                firstPathNodes[i].connectedNodes = firstPathConnections.ToArray();
+            }
+
+            // Random chance to connect to the next node in the other path
+            if (Random.value < 0.3f && i !=9) // 30% chance to connect to the next node in the other path
+            {
+                List<MapNode> firstPathConnections = new List<MapNode>(firstPathNodes[i].connectedNodes);
+                firstPathConnections.Add(secondPathNodes[i+1]);
+                firstPathNodes[i].connectedNodes = firstPathConnections.ToArray();
+            }
+            if (Random.value < 0.3f && i !=9) // 30% chance to connect to the next node in the other path
+            {
+                List<MapNode> secondPathConnections = new List<MapNode>(secondPathNodes[i].connectedNodes);
+                secondPathConnections.Add(firstPathNodes[i+1]);
+                secondPathNodes[i].connectedNodes = secondPathConnections.ToArray();
+            }
+        }
+
+        
+
+        
+
+        // Draw lines between connected nodes
+        foreach (MapNode node in mapNodes)
+        {
+            foreach (MapNode connectedNode in node.connectedNodes)
+            {
+                // Draw line between nodes using UILineRenderer
+                GameObject lineObject = Instantiate(linePrefab, linesParent.transform);
+                RectTransform lineRectTransform = lineObject.GetComponent<RectTransform>();
+                lineRectTransform.localPosition = Vector3.zero; // Ensure the line is positioned correctly
+
+                UILineRenderer lineRenderer = lineObject.GetComponent<UILineRenderer>();
+
+                // Set the color of the line based on the path
+                /* if (firstPathNodes.Contains(node) || firstPathNodes.Contains(connectedNode))
+                {
+                    lineRenderer.color = Color.white;
+                }
+                else if (secondPathNodes.Contains(node) || secondPathNodes.Contains(connectedNode))
+                {
+                    lineRenderer.color = Color.grey;
+                } */
+
+                // Calculate control points for the Bezier curve
+                Vector2 startPoint = node.transform.localPosition;
+                Vector2 endPoint = connectedNode.transform.localPosition;
+                Vector2 controlPoint1 = startPoint + new Vector2(Random.Range(0.3f, 0.7f) * (endPoint.x - startPoint.x), Random.Range(-controlPointOffset, controlPointOffset));
+                Vector2 controlPoint2 = endPoint + new Vector2(Random.Range(-0.7f, -0.3f) * (endPoint.x - startPoint.x), Random.Range(-controlPointOffset, controlPointOffset));
+
+                // Generate points along the Bezier curve
+                List<Vector2> bezierPoints = new List<Vector2>();
+                int segmentCount = 20; // Number of segments for the curve
+                for (int j = 0; j <= segmentCount; j++)
+                {
+                    float t = j / (float)segmentCount;
+                    Vector2 point = Mathf.Pow(1 - t, 3) * startPoint +
+                                    3 * Mathf.Pow(1 - t, 2) * t * controlPoint1 +
+                                    3 * (1 - t) * Mathf.Pow(t, 2) * controlPoint2 +
+                                    Mathf.Pow(t, 3) * endPoint;
+                    bezierPoints.Add(point);
+                }
+
+                lineRenderer.Points = bezierPoints.ToArray();
+            }
+        }
+    }
 }

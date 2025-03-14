@@ -32,6 +32,8 @@ public class InventoryManager : MonoBehaviour
     public void OpenInventory(){
         gameObject.SetActive(true);
         Game._instance.togglePieceColliders(Game._instance.opponent.pieces, false);
+        Game._instance.togglePieceColliders(Game._instance.hero.pieces, true);
+
         Game._instance.CreateCards();
         myPieces=Game._instance.hero.pieces;
 
@@ -51,7 +53,7 @@ public class InventoryManager : MonoBehaviour
         Game._instance.ClearPiece();
         foreach (GameObject piece in myPieces)
         {
-            if (piece.GetComponent<SpriteRenderer>())
+            if (piece !=null && piece.GetComponent<SpriteRenderer>())
             {
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 1;

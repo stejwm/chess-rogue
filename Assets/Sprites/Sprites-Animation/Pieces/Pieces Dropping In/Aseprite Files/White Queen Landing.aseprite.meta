@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2a2b3b4026f62dd4f99670b2f4cb9fec
+guid: f1ce0f0ef976210438caea32c785cad0
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,16 +123,16 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: White Queen Landing_Frame_0
     originalName: 
-    pivot: {x: 0.5, y: -0.33333334}
+    pivot: {x: 0.5, y: -0.3478261}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
-      y: 136
-      width: 16
-      height: 24
-    spriteID: 363088414011cfa408991824acb6f644
+      y: 132
+      width: 14
+      height: 23
+    spriteID: a51f8e3aa120ae34496d61a71d51b522
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -140,19 +140,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 40, y: 136}
+    uvTransform: {x: 40, y: 132}
   - name: White Queen Landing_Frame_1
     originalName: 
-    pivot: {x: 0.5, y: -0.33333334}
+    pivot: {x: 0.5, y: -0.3478261}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
-      y: 168
-      width: 16
-      height: 24
-    spriteID: 886d55d821a1d754f9965f59694dbfb2
+      y: 163
+      width: 14
+      height: 23
+    spriteID: e1ed1379753653b4e9959e7b29d848d9
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -160,19 +160,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 40, y: 168}
+    uvTransform: {x: 40, y: 163}
   - name: White Queen Landing_Frame_2
     originalName: 
-    pivot: {x: 0.5, y: -0.28}
+    pivot: {x: 0.5, y: -0.2916667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 225
-      width: 16
-      height: 25
-    spriteID: 888dedbff2afda7448a7eff00a422bfe
+      y: 218
+      width: 14
+      height: 24
+    spriteID: 0c66a1418a94cde42a09b08c24db493e
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -180,19 +180,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 225}
+    uvTransform: {x: 4, y: 218}
   - name: White Queen Landing_Frame_3
     originalName: 
-    pivot: {x: 0.5, y: -0.28}
+    pivot: {x: 0.5, y: -0.2916667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
       y: 4
-      width: 16
-      height: 25
-    spriteID: b7f771b6421a08c4a8773b55fee82a90
+      width: 14
+      height: 24
+    spriteID: 66d29a2cf6fabba498460f23fda925d5
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -203,16 +203,16 @@ ScriptedImporter:
     uvTransform: {x: 40, y: 4}
   - name: White Queen Landing_Frame_4
     originalName: 
-    pivot: {x: 0.5, y: -0.24}
+    pivot: {x: 0.5, y: -0.25}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
-      y: 37
-      width: 16
-      height: 25
-    spriteID: 4db0ebd8473454545a104d6da654b4fb
+      y: 36
+      width: 14
+      height: 24
+    spriteID: 263cce3789a00b74dbe25cc8959f92cd
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -220,19 +220,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 40, y: 37}
+    uvTransform: {x: 40, y: 36}
   - name: White Queen Landing_Frame_5
     originalName: 
-    pivot: {x: 0.5, y: -0.19999999}
+    pivot: {x: 0.5, y: -0.20833334}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
-      y: 70
-      width: 16
-      height: 25
-    spriteID: b05e8ad355982ff4bbed5b984c17c669
+      y: 68
+      width: 14
+      height: 24
+    spriteID: 1a10bdc48fd8ad1409fe885f96b4fe9f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -240,19 +240,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 40, y: 70}
+    uvTransform: {x: 40, y: 68}
   - name: White Queen Landing_Frame_6
     originalName: 
-    pivot: {x: 0.5, y: -0.16}
+    pivot: {x: 0.5, y: -0.16666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
-      y: 103
-      width: 16
-      height: 25
-    spriteID: 2c2e8b176e6412f44a82497f89c55761
+      y: 100
+      width: 14
+      height: 24
+    spriteID: 3c5db4a172aa0f34e85c8263258ec779
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -260,19 +260,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 40, y: 103}
+    uvTransform: {x: 40, y: 100}
   - name: White Queen Landing_Frame_7
     originalName: 
-    pivot: {x: 0.5, y: -0.16}
+    pivot: {x: 0.5, y: -0.16666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 192
+      y: 186
       width: 18
-      height: 25
-    spriteID: 7701b15e3bbfc1b46868dc6ec44aa5ef
+      height: 24
+    spriteID: 477be894e689b674aabe4604efff2fb3
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -280,48 +280,8 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 192}
+    uvTransform: {x: 4, y: 186}
   - name: White Queen Landing_Frame_8
-    originalName: 
-    pivot: {x: 0.5, y: -0.16666667}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 160
-      width: 20
-      height: 24
-    spriteID: 7d86110418fe79046b6639b8d931b6f9
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 160}
-  - name: White Queen Landing_Frame_9
-    originalName: 
-    pivot: {x: 0.5, y: -0.16666667}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 128
-      width: 24
-      height: 24
-    spriteID: 4a401f33785c9be458391b01aef06c8c
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 128}
-  - name: White Queen Landing_Frame_10
     originalName: 
     pivot: {x: 0.5, y: -0.17391305}
     alignment: 9
@@ -329,10 +289,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 36
-      width: 28
+      y: 155
+      width: 20
       height: 23
-    spriteID: 3e1442332bdc49245bc5dffc3f9f1db4
+    spriteID: c53bcc3fd4182bf45aa3b507815b878e
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -340,8 +300,28 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 36}
-  - name: White Queen Landing_Frame_11
+    uvTransform: {x: 4, y: 155}
+  - name: White Queen Landing_Frame_9
+    originalName: 
+    pivot: {x: 0.5, y: -0.17391305}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 124
+      width: 24
+      height: 23
+    spriteID: 3ffb38cca083a664c99f1188ca9abcf2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 124}
+  - name: White Queen Landing_Frame_10
     originalName: 
     pivot: {x: 0.5, y: -0.18181819}
     alignment: 9
@@ -349,10 +329,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 98
+      y: 35
       width: 28
       height: 22
-    spriteID: fcde7921e87b5a14782f3c79fe5cbb7e
+    spriteID: 6d4fc7c5d6eebf24f857e2bcfa83a66f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -360,8 +340,48 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 98}
+    uvTransform: {x: 4, y: 35}
+  - name: White Queen Landing_Frame_11
+    originalName: 
+    pivot: {x: 0.5, y: -0.1904762}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 95
+      width: 28
+      height: 21
+    spriteID: 29c27e77942c664408ef238fcb5f9a93
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 95}
   - name: White Queen Landing_Frame_12
+    originalName: 
+    pivot: {x: 0.5, y: -0.18181819}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 65
+      width: 28
+      height: 22
+    spriteID: 7ac2f9bb9d3ec5b4a886e78931f6f308
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 65}
+  - name: White Queen Landing_Frame_13
     originalName: 
     pivot: {x: 0.5, y: -0.17391305}
     alignment: 9
@@ -369,30 +389,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 67
-      width: 28
-      height: 23
-    spriteID: fcf17db7e760705429324594bcd689e0
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 67}
-  - name: White Queen Landing_Frame_13
-    originalName: 
-    pivot: {x: 0.5, y: -0.16666667}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
       y: 4
       width: 28
-      height: 24
-    spriteID: c914551e3e7c19c4c8fa2ce7d8cfbcbe
+      height: 23
+    spriteID: 690022591e354b24a81654eeace57ac8
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -403,16 +403,16 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: White Queen Landing_Frame_14
     originalName: 
-    pivot: {x: 0.5, y: -0.16666667}
+    pivot: {x: 0.5, y: -0.17391305}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 40
-      y: 200
-      width: 16
-      height: 24
-    spriteID: 5ec9417c722853d4e9add3c05d8af5ba
+      y: 194
+      width: 14
+      height: 23
+    spriteID: 70e07ac81da019449935dbfcf49cb467
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -420,19 +420,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 40, y: 200}
+    uvTransform: {x: 40, y: 194}
   - name: White Queen Landing_Frame_15
     originalName: 
-    pivot: {x: 0.5, y: -0.16666667}
+    pivot: {x: 0.5, y: -0.17391305}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 64
-      y: 4
-      width: 16
-      height: 24
-    spriteID: d4074b3f8fe3549478a91138f018201d
+      x: 40
+      y: 225
+      width: 14
+      height: 23
+    spriteID: d609831e14378db418c210a4e96bcc77
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -440,47 +440,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 64, y: 4}
-  - name: White Queen Landing_Frame_16
-    originalName: 
-    pivot: {x: 0.5, y: -0.16666667}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 64
-      y: 36
-      width: 16
-      height: 24
-    spriteID: 59aef39448f747848afde0557e7a1300
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 64, y: 36}
-  - name: White Queen Landing_Frame_17
-    originalName: 
-    pivot: {x: 0.5, y: -0.16666667}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 64
-      y: 68
-      width: 16
-      height: 24
-    spriteID: 8c360fa198a88d84390f18bbd9ed7a6b
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 64, y: 68}
+    uvTransform: {x: 40, y: 225}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -494,65 +454,65 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 8
-        width: 16
-        height: 24
-      spriteId: 363088414011cfa408991824acb6f644
+        width: 14
+        height: 23
+      spriteId: a51f8e3aa120ae34496d61a71d51b522
     - name: White Queen Landing_Frame_1
       frameIndex: 1
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 8
-        width: 16
-        height: 24
-      spriteId: 886d55d821a1d754f9965f59694dbfb2
+        width: 14
+        height: 23
+      spriteId: e1ed1379753653b4e9959e7b29d848d9
     - name: White Queen Landing_Frame_2
       frameIndex: 2
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 7
-        width: 16
-        height: 25
-      spriteId: 888dedbff2afda7448a7eff00a422bfe
+        width: 14
+        height: 24
+      spriteId: 0c66a1418a94cde42a09b08c24db493e
     - name: White Queen Landing_Frame_3
       frameIndex: 3
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 7
-        width: 16
-        height: 25
-      spriteId: b7f771b6421a08c4a8773b55fee82a90
+        width: 14
+        height: 24
+      spriteId: 66d29a2cf6fabba498460f23fda925d5
     - name: White Queen Landing_Frame_4
       frameIndex: 4
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 6
-        width: 16
-        height: 25
-      spriteId: 4db0ebd8473454545a104d6da654b4fb
+        width: 14
+        height: 24
+      spriteId: 263cce3789a00b74dbe25cc8959f92cd
     - name: White Queen Landing_Frame_5
       frameIndex: 5
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 5
-        width: 16
-        height: 25
-      spriteId: b05e8ad355982ff4bbed5b984c17c669
+        width: 14
+        height: 24
+      spriteId: 1a10bdc48fd8ad1409fe885f96b4fe9f
     - name: White Queen Landing_Frame_6
       frameIndex: 6
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 16
-        height: 25
-      spriteId: 2c2e8b176e6412f44a82497f89c55761
+        width: 14
+        height: 24
+      spriteId: 3c5db4a172aa0f34e85c8263258ec779
     - name: White Queen Landing_Frame_7
       frameIndex: 7
       additiveSortOrder: 0
@@ -560,8 +520,8 @@ ScriptedImporter:
         x: 7
         y: 4
         width: 18
-        height: 25
-      spriteId: 7701b15e3bbfc1b46868dc6ec44aa5ef
+        height: 24
+      spriteId: 477be894e689b674aabe4604efff2fb3
     - name: White Queen Landing_Frame_8
       frameIndex: 8
       additiveSortOrder: 0
@@ -569,8 +529,8 @@ ScriptedImporter:
         x: 6
         y: 4
         width: 20
-        height: 24
-      spriteId: 7d86110418fe79046b6639b8d931b6f9
+        height: 23
+      spriteId: c53bcc3fd4182bf45aa3b507815b878e
     - name: White Queen Landing_Frame_9
       frameIndex: 9
       additiveSortOrder: 0
@@ -578,8 +538,8 @@ ScriptedImporter:
         x: 4
         y: 4
         width: 24
-        height: 24
-      spriteId: 4a401f33785c9be458391b01aef06c8c
+        height: 23
+      spriteId: 3ffb38cca083a664c99f1188ca9abcf2
     - name: White Queen Landing_Frame_10
       frameIndex: 10
       additiveSortOrder: 0
@@ -587,8 +547,8 @@ ScriptedImporter:
         x: 2
         y: 4
         width: 28
-        height: 23
-      spriteId: 3e1442332bdc49245bc5dffc3f9f1db4
+        height: 22
+      spriteId: 6d4fc7c5d6eebf24f857e2bcfa83a66f
     - name: White Queen Landing_Frame_11
       frameIndex: 11
       additiveSortOrder: 0
@@ -596,8 +556,8 @@ ScriptedImporter:
         x: 2
         y: 4
         width: 28
-        height: 22
-      spriteId: fcde7921e87b5a14782f3c79fe5cbb7e
+        height: 21
+      spriteId: 29c27e77942c664408ef238fcb5f9a93
     - name: White Queen Landing_Frame_12
       frameIndex: 12
       additiveSortOrder: 0
@@ -605,8 +565,8 @@ ScriptedImporter:
         x: 2
         y: 4
         width: 28
-        height: 23
-      spriteId: fcf17db7e760705429324594bcd689e0
+        height: 22
+      spriteId: 7ac2f9bb9d3ec5b4a886e78931f6f308
     - name: White Queen Landing_Frame_13
       frameIndex: 13
       additiveSortOrder: 0
@@ -614,44 +574,26 @@ ScriptedImporter:
         x: 2
         y: 4
         width: 28
-        height: 24
-      spriteId: c914551e3e7c19c4c8fa2ce7d8cfbcbe
+        height: 23
+      spriteId: 690022591e354b24a81654eeace57ac8
     - name: White Queen Landing_Frame_14
       frameIndex: 14
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 16
-        height: 24
-      spriteId: 5ec9417c722853d4e9add3c05d8af5ba
+        width: 14
+        height: 23
+      spriteId: 70e07ac81da019449935dbfcf49cb467
     - name: White Queen Landing_Frame_15
       frameIndex: 15
       additiveSortOrder: 0
       cellRect:
-        x: 8
+        x: 9
         y: 4
-        width: 16
-        height: 24
-      spriteId: d4074b3f8fe3549478a91138f018201d
-    - name: White Queen Landing_Frame_16
-      frameIndex: 16
-      additiveSortOrder: 0
-      cellRect:
-        x: 8
-        y: 4
-        width: 16
-        height: 24
-      spriteId: 59aef39448f747848afde0557e7a1300
-    - name: White Queen Landing_Frame_17
-      frameIndex: 17
-      additiveSortOrder: 0
-      cellRect:
-        x: 8
-        y: 4
-        width: 16
-        height: 24
-      spriteId: 8c360fa198a88d84390f18bbd9ed7a6b
+        width: 14
+        height: 23
+      spriteId: d609831e14378db418c210a4e96bcc77
     linkedCells: []
     parentIndex: -1
   platformSettings: []

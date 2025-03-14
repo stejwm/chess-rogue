@@ -5,6 +5,8 @@ using MoreMountains.Feedbacks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
+using System.Linq;
 
 public enum Team
 {
@@ -27,8 +29,6 @@ public enum PieceType
     Queen,
     King,
     None
-
-
 }
 public abstract class Chessman : MonoBehaviour
 {
@@ -45,9 +45,13 @@ public abstract class Chessman : MonoBehaviour
     public MovementProfile moveProfile;
     protected Sprite sprite;
 
+    public GameObject droppingSprite;
+    public GameObject attackingSprite;
+
     public int attack = 1;
     public int defense = 1;
     public int support = 1;
+    public int diplomacy = 1;
 
     public int attackBonus = 0;
     public int defenseBonus = 0;
@@ -60,7 +64,10 @@ public abstract class Chessman : MonoBehaviour
     public PieceType type;
     public List<Ability> abilities;
     public bool isValidForAttack =false;
-    public Vector3 gridOrigin;
+    public bool paralyzed=false;
+    public bool hexed=false;
+    public bool wasHexed=false;
+    public bool canStationarySlash =false;
 
     public MMF_Player supportFloatingText;
 
@@ -75,6 +82,9 @@ public abstract class Chessman : MonoBehaviour
     //References to all the possible Sprites that this Chesspiece could be
     public Sprite blackSprite;
     public Sprite whiteSprite;
+
+    public MMF_Player effectsFeedback;
+    public ParticleSystem flames;
 
     public abstract List<BoardPosition> GetValidMoves();
     public abstract List<BoardPosition> GetValidSupportMoves();
@@ -124,11 +134,11 @@ public abstract class Chessman : MonoBehaviour
 
         //Debug.Log("positions: "+x+","+y);
         //Set actual unity values
-        if(this.transform.position == new Vector3(x, y, -1.0f))
+         if(this.transform.position == new Vector3(x, y, -1.0f))
             this.GetComponent<MMSpringPosition>().BumpRandom();
         else
             this.GetComponent<MMSpringPosition>().MoveTo(new Vector3(x, y, -1.0f));
-        //this.transform.position = ;
+        //this.transform.position = new Vector3(x, y, -1.0f);
     }
 
     public int GetXBoard()
@@ -153,9 +163,19 @@ public abstract class Chessman : MonoBehaviour
 
     public void AddAbility(Ability ability)
     {
-        abilities.Add(ability);
+        Betrayer betrayerAbility = abilities.OfType<Betrayer>().FirstOrDefault();
+        bool hadBetrayer = betrayerAbility != null;
+        if (hadBetrayer)
+        {
+            betrayerAbility.Remove(this);
+            abilities.Remove(betrayerAbility);
+        }
         ability.Apply(this);
-        //abilityManager.AddAbility(ability, this);
+
+        if (hadBetrayer)
+        {
+            betrayerAbility.Apply(this);
+        }
     }
 
     private void OnMouseDown()
@@ -180,107 +200,37 @@ public abstract class Chessman : MonoBehaviour
             case ScreenState.ShopScreen:
                 HandleShopClick();
                 break;
+            case ScreenState.ManagementScreen:
+                HandleManagementClick();
+                break;
             default: break;
         }
+
     }
 
     public void HandleRewardScreenClick(){        
         Game._instance.PieceSelected(this);
     }
-    public void HandleShopClick(){        
-        ShopStatManager._instance.SetAndShowStats(this);
+    public void HandleShopClick(){   
+        if(this.owner==null) 
+            ManagementStatManager._instance.SetAndShowStats(this);     
+        else 
+            if (Game._instance.selectedCard==null)
+                ManagementStatManager._instance.SetAndShowStats(this); 
+            else
+                Game._instance.PieceSelected(this);
+    }
+    public void HandleManagementClick(){        
+        ManagementStatManager._instance.SetAndShowStats(this);
     }
 
-    public void HandlePrisonersMarketClick(){        
+    public void HandlePrisonersMarketClick(){   
         MarketManager._instance.AddPiece(this);
     }
 
     public void HandlePiecePlacement(){        
         BoardManager._instance.SelectPieceToPlace(this);
     }
-
-    /* public void DestroyMovePlates()
-    {
-        //Destroy old MovePlates
-        GameObject[] movePlates = GameObject.FindGameObjectsWithTag("MovePlate");
-        for (int i = 0; i < movePlates.Length; i++)
-        {
-            Destroy(movePlates[i]); //Be careful with this function "Destroy" it is asynchronous
-        }
-    } */
-
-/*      public List<Tuple<int,int>> GetValidMoves()
-    {
-        switch (this.name)
-        {
-            case "black_queen":
-            case "white_queen":
-                return ValidQueenMoves();
-                
-            case "black_knight":
-            case "white_knight":
-                return ValidKnightMoves();
-                
-            case "black_bishop":
-            case "white_bishop":
-                return ValidBishopMoves();
-                
-            case "black_king":
-            case "white_king":
-                return ValidKingMoves();
-                
-            case "black_rook":
-            case "white_rook":
-                return ValidRookMoves();
-                
-            case "black_pawn":
-                return ValidPawnMoves(xBoard, yBoard - 1);
-                
-            case "white_pawn":
-                return ValidPawnMoves(xBoard, yBoard + 1);
-            default:
-                return null;
-            
-        }
-        
-    }  */
-
-/* public List<Tuple<int,int>> GetValidSupportMoves()
-    {
-        validMoves.Clear();
-        switch (this.name)
-        {
-            case "black_queen":
-            case "white_queen":
-                return ValidQueenMoves();
-                
-            case "black_knight":
-            case "white_knight":
-                return ValidKnightMoves();
-                
-            case "black_bishop":
-            case "white_bishop":
-                return ValidBishopMoves();
-                
-            case "black_king":
-            case "white_king":
-                return ValidKingMoves();
-                
-            case "black_rook":
-            case "white_rook":
-                return ValidRookMoves();
-                
-            case "black_pawn":
-                return ValidPawnSupportMoves(xBoard, yBoard - 1);
-                
-            case "white_pawn":
-                return ValidPawnSupportMoves(xBoard, yBoard + 1);
-            default:
-                return null;
-            
-        }
-        
-    }  */
 
     public List<BoardPosition> DisplayValidMoves(){
         List<BoardPosition> theseValidMoves=new List<BoardPosition>();
@@ -289,17 +239,8 @@ public abstract class Chessman : MonoBehaviour
         {
             if (Game._instance.PositionOnBoard(coordinate.x, coordinate.y))
             {
-                GameObject cp = Game._instance.currentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
-                if (cp == null)
-                {
-                    SetTileValidMove(coordinate.x, coordinate.y);
-                    theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
-                }
-                else if (cp.GetComponent<Chessman>().player != player)
-                {
-                    SetTileValidMove(coordinate.x, coordinate.y);
-                    theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
-                }
+                SetTileValidMove(coordinate.x, coordinate.y);
+                theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
             }
         }
         return theseValidMoves;
@@ -351,39 +292,19 @@ public abstract class Chessman : MonoBehaviour
         BoardManager._instance.SetActiveTile(this, new BoardPosition(x,y));
     } 
 
-     /* public void MovePlateAttackSpawn(int matrixX, int matrixY)
-    {
-        //Get the board value in order to convert to xy coords
-        float x = matrixX;
-        float y = matrixY;
-
-        //Adjust by variable offset
-        x *= .96f;
-        y *= .96f;
-
-        //Add constants (pos 0,0)
-        x += -3.33f;
-        y += -3.33f;
-
-        //Set actual unity values
-        GameObject mp = Instantiate(movePlate, new Vector3(x, y, -3.0f), Quaternion.identity);
-
-        MovePlate mpScript = mp.GetComponent<MovePlate>();
-        mpScript.attack = true;
-        mpScript.SetReference(gameObject);
-        mpScript.SetCoords(matrixX, matrixY);
-    }  */
-
-    /* private void OnMouseEnter(){
-        var sprite = this.GetComponent<SpriteRenderer>().sprite;
-        if(team==Team.Hero)
-            StatBoxManager._instance.SetAndShowStats(CalculateAttack(),CalculateDefense(),CalculateSupport(),info,name, sprite);
-        else if(team == Team.Enemy)
-            EnemyStatBoxManager._instance.SetAndShowStats(CalculateAttack(),CalculateDefense(),CalculateSupport(),info,name, sprite);
-    } */
+    private void OnMouseEnter(){
+        if (Game._instance.isInMenu)
+        {
+            return;
+        }
+        if(Game._instance.state==ScreenState.PrisonersMarket)
+            PopUpManager._instance.SetAndShowValues(this);
+        StatBoxManager._instance.SetAndShowStats(this);
+    } 
 
     private void OnMouseExit(){
-        //StatBoxManager._instance.HideStats();
+        if(Game._instance.state==ScreenState.PrisonersMarket)
+            PopUpManager._instance.HideValues();
     }
 
     public override bool Equals(object obj)
@@ -395,6 +316,12 @@ public abstract class Chessman : MonoBehaviour
             return false;
         }
 
-        return this.name ==item.name && this.xBoard == item.xBoard && this.yBoard==item.yBoard && this.startingPosition ==item.startingPosition;
+        return this.name ==item.name && this.startingPosition ==item.startingPosition;
     }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(this.name, this.startingPosition);
+    }
+
 }

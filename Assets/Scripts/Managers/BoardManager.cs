@@ -13,6 +13,7 @@ public class BoardManager : MonoBehaviour
 
     //current turn
     public static BoardManager _instance;
+    public BoardPosition selectedPosition;
 
 
     void Awake()
@@ -36,6 +37,11 @@ public class BoardManager : MonoBehaviour
         validTiles.Add(tile);
         tile.SetReference(piece);
         tile.SetValidMove();
+    }
+
+    public Tile GetTileAt(int x, int y){
+        //Debug.Log("X: "+x+" Y: "+y);
+        return tiles[new BoardPosition(x,y)];
     }
 
     public void CreateBoard(){
@@ -90,6 +96,7 @@ public class BoardManager : MonoBehaviour
         piece.xBoard=tile.position.x;
         piece.yBoard=tile.position.y;
         ClearTiles();
+        piece.UpdateUIPosition();
         Game._instance.currentMatch.CheckInventory();
     }
 

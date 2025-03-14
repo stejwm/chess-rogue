@@ -15,16 +15,17 @@ public class IncreasingStrike : Ability
         piece.info += " " + abilityName;
         Game._instance.OnPieceCaptured.AddListener(AddBonus);
         piece.releaseCost+=15;
+        base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnMove.RemoveListener(AddBonus); 
+        Game._instance.OnPieceCaptured.RemoveListener(AddBonus); 
 
     }
-    public void AddBonus(Chessman attacker){
+    public void AddBonus(Chessman attacker, Chessman defender){
         if (attacker==piece){
-            //Debug.Log("adding 1 bonus");
+            piece.effectsFeedback.PlayFeedbacks();
             piece.attack+=1;
         }
     }

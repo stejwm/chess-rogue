@@ -5,11 +5,17 @@ using UnityEngine;
 public class PawnMovement : MovementProfile
 {
     private bool isWhite;
-    public override List<BoardPosition> GetValidMoves(Chessman piece) {
-        if(piece.color==PieceColor.White)
-            return Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard+1);
+    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture=false) {
+        if (allowFriendlyCapture)
+            if(piece.color==PieceColor.White)
+                return Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard+1);
+            else
+                return Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard-1);
         else
-            return Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard-1);
+            if(piece.color==PieceColor.White)
+                return Movement.RemoveFriendlyPieces(Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard+1),piece);
+            else
+                return Movement.RemoveFriendlyPieces(Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard-1),piece);
      }
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
         if(piece.color==PieceColor.White)

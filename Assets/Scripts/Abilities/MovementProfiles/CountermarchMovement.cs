@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 public class CountermarchMovement : MovementProfile
 {
-        public override List<BoardPosition> GetValidMoves(Chessman piece) {
+    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture=false) {
         List<BoardPosition> validMoves = new List<BoardPosition>();
         validMoves.AddRange(Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard-1));
         validMoves.AddRange(Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard+1));
-        return validMoves;
+        if (allowFriendlyCapture)
+            return validMoves;
+        else
+            return Movement.RemoveFriendlyPieces(validMoves,piece);
      }
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
         List<BoardPosition> validMoves = new List<BoardPosition>();

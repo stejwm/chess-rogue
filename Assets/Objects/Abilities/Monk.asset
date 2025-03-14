@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c24c8408bb6aaa46a2b7bd23786297a, type: 3}
+  m_Name: Monk
+  m_EditorClassIdentifier: 
+  abilityName: Monk
+  description: Gain +1 to random stat for each turn piece does not move
+  sprite: {fileID: -763251562599900308, guid: 9cdb04ee48b67ff4da8ca46c395aa522, type: 3}
+  Cost: 15

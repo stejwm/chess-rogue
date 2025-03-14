@@ -15,7 +15,7 @@ public class SpectralStride : Ability
         piece.moveProfile = new SpectralStrideMovement(startingProfile);
         piece.info += " "+abilityName;
         piece.releaseCost+=15;
-        
+        base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)

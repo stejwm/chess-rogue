@@ -5,10 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static Menu _instance;
+    public AudioSource audioSource;
+    void Awake()
     {
         
+        if(_instance !=null && _instance !=this){
+            Destroy(this.gameObject);
+        }
+        else{
+            _instance=this;
+        }
     }
 
     // Update is called once per frame
@@ -16,7 +23,13 @@ public class Menu : MonoBehaviour
     {
         
     }
+
     public void StartGame(){
         SceneManager.LoadScene(1);
+    }
+
+    public void QuitGame(){
+        Debug.Log("Quit");
+        Application.Quit();
     }
 }

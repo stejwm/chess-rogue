@@ -11,14 +11,16 @@ public class Countermarch : Ability
 
     public override void Apply(Chessman piece)
     {
+        
         if (piece.type != PieceType.Pawn)
             return;
 
+        Debug.Log($"adding Countermarch, starting profile null: {piece.moveProfile == null}");
         startingProfile=piece.moveProfile;
         piece.moveProfile = new CountermarchMovement();
         piece.info += " "+abilityName;
         piece.releaseCost+=10;
-        
+        base.Apply(piece);
         
     }
 

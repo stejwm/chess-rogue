@@ -123,15 +123,15 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: White Pawn Unmoving
     originalName: 
-    pivot: {x: 0.5, y: -0.21052632}
+    pivot: {x: 0.5, y: -0.22222222}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 4
+      x: 40
+      y: 30
       width: 14
-      height: 19
+      height: 18
     spriteID: 2567ea857ba496c44b70348387bac16a
     spriteBone: []
     spriteOutline: []
@@ -140,7 +140,107 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
+    uvTransform: {x: 40, y: 30}
+  - name: White Pawn Unmoving_Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 40
+      y: 4
+      width: 18
+      height: 18
+    spriteID: 3cc4729bd1e9e9c46b1d2432228d6e67
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 40, y: 4}
+  - name: White Pawn Unmoving_Frame_2
+    originalName: 
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 28
+      height: 18
+    spriteID: cf4e58e0cb1e7cb4294e9847a1abf042
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
+  - name: White Pawn Unmoving_Frame_3
+    originalName: 
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 30
+      width: 28
+      height: 18
+    spriteID: ca620acf4444ffb44a7042729da1a01c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 30}
+  - name: White Pawn Unmoving_Frame_4
+    originalName: 
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 56
+      width: 28
+      height: 18
+    spriteID: 0eaeb4c6389ba5a49b916d854b2b3942
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 56}
+  - name: White Pawn Unmoving_Frame_5
+    originalName: 
+    pivot: {x: 0.5, y: -0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 82
+      width: 28
+      height: 18
+    spriteID: 3c7696c8a6fff9146a5b9816e56c0968
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 82}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -150,15 +250,60 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: White Pawn Unmoving
+    - name: White Pawn Unmoving_Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 9
         y: 4
         width: 14
-        height: 19
+        height: 18
       spriteId: 2567ea857ba496c44b70348387bac16a
+    - name: White Pawn Unmoving_Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 7
+        y: 4
+        width: 18
+        height: 18
+      spriteId: 3cc4729bd1e9e9c46b1d2432228d6e67
+    - name: White Pawn Unmoving_Frame_2
+      frameIndex: 2
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 4
+        width: 28
+        height: 18
+      spriteId: cf4e58e0cb1e7cb4294e9847a1abf042
+    - name: White Pawn Unmoving_Frame_3
+      frameIndex: 3
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 4
+        width: 28
+        height: 18
+      spriteId: ca620acf4444ffb44a7042729da1a01c
+    - name: White Pawn Unmoving_Frame_4
+      frameIndex: 4
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 4
+        width: 28
+        height: 18
+      spriteId: 0eaeb4c6389ba5a49b916d854b2b3942
+    - name: White Pawn Unmoving_Frame_5
+      frameIndex: 5
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 4
+        width: 28
+        height: 18
+      spriteId: 3c7696c8a6fff9146a5b9816e56c0968
     linkedCells: []
     parentIndex: -1
   platformSettings: []
