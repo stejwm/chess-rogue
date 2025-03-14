@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: InspiringPresence
   m_EditorClassIdentifier: 
   abilityName: Inspiring Presence
-  description: Permanently gain +1 to support every time you successfully support
-    a piece
+  description: Permanently gain +1 to support for every successful support on a defending
+    piece
   sprite: {fileID: -6133567048407352812, guid: fae3813ac049dbf409dcad989c28db30, type: 3}
   Cost: 15

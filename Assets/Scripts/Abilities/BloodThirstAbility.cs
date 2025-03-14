@@ -12,7 +12,7 @@ public class BloodThirstAbility : Ability
     MovementProfile startingProfile;
     private bool thirsting = false;
     
-    public BloodThirstAbility() : base("Blood Thirst", "Attack again after capture.") {}
+    public BloodThirstAbility() : base("Blood Thirst", "Attack again after capture, Decimates all captured pieces") {}
 
 
     public override void Apply(Chessman piece)

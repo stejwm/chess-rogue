@@ -7,7 +7,7 @@ public class IronResolve : Ability
 {
     private Chessman piece;
     
-    public IronResolve() : base("Iron Resolve", "Permanently gain +1 to defense every time you bounce an enemy") {}
+    public IronResolve() : base("Iron Resolve", "Permanently gain +1 to defense every time an enemy is bounced") {}
 
     public override void Apply(Chessman piece)
     {

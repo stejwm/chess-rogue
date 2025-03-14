@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BloodThirstyAbility
   m_EditorClassIdentifier: 
   abilityName: Blood Thirst
-  description: Attack again after capturing if possible.
+  description: Attack again after capture, Decimates all captured pieces
   sprite: {fileID: -7488207628762978027, guid: 298e4d8a3cf49084ebc5febaf42db16d, type: 3}
   Cost: 15

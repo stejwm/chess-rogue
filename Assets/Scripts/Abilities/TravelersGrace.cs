@@ -6,7 +6,7 @@ using UnityEngine;
 public class TravelersGrace : Ability
 {
     private MovementProfile startingProfile;
-    public TravelersGrace() : base("Traveler's Grace", "Piece can move to any open square, supports as normal, cannot attack") {}
+    public TravelersGrace() : base("Traveler's Grace", "Can move to any open square, supports as normal, cannot attack") {}
 
 
     public override void Apply(Chessman piece)

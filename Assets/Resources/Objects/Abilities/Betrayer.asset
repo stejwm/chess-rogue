@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92fee7cda81617d42942cae3dd192b1d, type: 3}
-  m_Name: ScoutPawn
+  m_Script: {fileID: 11500000, guid: a39580473db7b4b4fb8c56dac146ee52, type: 3}
+  m_Name: Betrayer
   m_EditorClassIdentifier: 
-  abilityName: Scout
-  description: Moves like queen. Captures & supports like pawn
-  sprite: {fileID: -1001733721352394691, guid: 8c87ae6b75b10534dac2970b713d76d8, type: 3}
-  Cost: 5
+  abilityName: Betrayer
+  description: Can capture it's own pieces, supports as if it were an enemy
+  sprite: {fileID: 7748195786237880742, guid: 2e766e9ea33fadc4c93c78449c083d65, type: 3}
+  Cost: 8

@@ -294,6 +294,12 @@ public class PieceFactory : MonoBehaviour
         return obj;
     }
 
+    public GameObject CreateAbilityPiece(PieceType type, string name, int x, int y, PieceColor color, Team team, Player owner, Ability ability){
+        var piece = Create(type, name, x, y, color, team, owner);
+        StartCoroutine(WaitForPieceToApplyAbility(piece.GetComponent<Chessman>(), ability));
+        return piece;
+    }
+
     public List<GameObject> CreateOpponentPieces(Player opponent, EnemyType enemyType)
     {
         switch(enemyType)

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0989ad662bb5efb48a0b05660053944b, type: 3}
+  m_Name: StartDialogue
+  m_EditorClassIdentifier: 
+  description: 
+  sprite: {fileID: 21300000, guid: c1c34bfac783c5546b18dbee1478daca, type: 3}
+  messages:
+  - message: "{name}\u2026 It has only been days since your father\u2019s passing,
+      and already, the kingdom turns its gaze to you. The weight of the crown is
+      heavy, and the shadows of old enemies stir."
+    options:
+    - optionText: Continue...
+      onSelect:
+        m_PersistentCalls:
+          m_Calls: []
+      nextDialogueId: 
+  - message: But grief must wait. The battlefield calls. Our enemies test the strength
+      of their new king, and the court watches, waiting to see if you will stand
+      or falter.
+    options:
+    - optionText: Continue...
+      onSelect:
+        m_PersistentCalls:
+          m_Calls: []
+      nextDialogueId: 
+  - message: The first move is yours, Your Majesty. The board is set. The pieces
+      await their command.
+    options:
+    - optionText: Continue...
+      onSelect:
+        m_PersistentCalls:
+          m_Calls: []
+      nextDialogueId: 

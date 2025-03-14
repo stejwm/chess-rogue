@@ -7,7 +7,7 @@ public class Monk : Ability
 {
     private Chessman piece;
     
-    public Monk() : base("Monk", "Gain +1 to random stat for each turn piece does not move") {}
+    public Monk() : base("Monk", "Gain +1 to random stat every turn piece does not move, loses bonuses after first move is complete") {}
     private int attackIncrease=0;
     private int defenseIncrease=0;
     private int supportIncrease=0;

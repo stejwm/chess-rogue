@@ -16,6 +16,7 @@ public class MapNode : MonoBehaviour
     public MapNode[] connectedNodes;
     public NodeType nodeType; // Add this field
     public EnemyType enemyType; // Add this field for enemy nodes
+    public EncounterType encounterType;
     public Image nodeImage; // Reference to the Image component for changing the sprite
     
 
@@ -52,8 +53,33 @@ public class MapNode : MonoBehaviour
                 MapManager._instance.SelectShopNode(this);
                 break;
             case NodeType.Encounter:
-                MapManager._instance.SelectShopNode(this);
+                MapManager._instance.SelectEncounterNode(this, encounterType);
                 break;
+        }
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        MapNode other = (MapNode)obj;
+        return nodeName == other.nodeName && 
+               nodeType == other.nodeType &&
+               enemyType == other.enemyType &&
+               encounterType == other.encounterType;
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 23 + (nodeName != null ? nodeName.GetHashCode() : 0);
+            hash = hash * 23 + nodeType.GetHashCode();
+            hash = hash * 23 + enemyType.GetHashCode();
+            hash = hash * 23 + encounterType.GetHashCode();
+            return hash;
         }
     }
 }

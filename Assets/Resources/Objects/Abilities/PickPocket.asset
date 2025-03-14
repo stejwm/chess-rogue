@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 546c8eb4f22a1174594256c5a276ad5a, type: 3}
-  m_Name: LoneGuard
+  m_Script: {fileID: 11500000, guid: 34a3689e5a1b4b74dbfda20c55b7c176, type: 3}
+  m_Name: PickPocket
   m_EditorClassIdentifier: 
-  abilityName: Lone Guard
-  description: +5 defense if defends with no support
-  sprite: {fileID: 7647224981564562967, guid: 1007f45fdc4a4b6448dafdedce705c1e, type: 3}
+  abilityName: Pickpocket
+  description: +3 coins when bounced
+  sprite: {fileID: 4552134719307402070, guid: 1e9724fd823a3534c990fbe14606eabc, type: 3}
   Cost: 8

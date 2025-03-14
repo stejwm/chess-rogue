@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34a3689e5a1b4b74dbfda20c55b7c176, type: 3}
-  m_Name: PickPocket
+  m_Script: {fileID: 11500000, guid: 92fee7cda81617d42942cae3dd192b1d, type: 3}
+  m_Name: ScoutPawn
   m_EditorClassIdentifier: 
-  abilityName: Pickpocket
-  description: Get +2 coins when this piece is bounced
-  sprite: {fileID: 4552134719307402070, guid: 1e9724fd823a3534c990fbe14606eabc, type: 3}
-  Cost: 8
+  abilityName: Scout
+  description: Moves like queen, attacks & supports like pawn
+  sprite: {fileID: -1001733721352394691, guid: 8c87ae6b75b10534dac2970b713d76d8, type: 3}
+  Cost: 5

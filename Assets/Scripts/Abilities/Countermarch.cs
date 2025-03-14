@@ -6,7 +6,7 @@ using UnityEngine;
 public class Countermarch : Ability
 {
     private MovementProfile startingProfile;
-    public Countermarch() : base("Countermarch", "Can move and attack backwards") {}
+    public Countermarch() : base("Countermarch", "Can move and support backwards") {}
 
 
     public override void Apply(Chessman piece)

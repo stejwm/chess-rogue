@@ -324,4 +324,19 @@ public abstract class Chessman : MonoBehaviour
         return HashCode.Combine(this.name, this.startingPosition);
     }
 
+    public void LevelUp(int level){
+        for (int i =0; i<level; i++)
+            switch (UnityEngine.Random.Range(0,3)){
+                case 0:
+                    defense+=1;
+                    break;
+                case 1:
+                    attack+=1;
+                    break;
+                case 2:
+                    support+=1;
+                    break;
+            }
+            
+    }
 }

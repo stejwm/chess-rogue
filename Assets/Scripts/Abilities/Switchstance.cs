@@ -7,7 +7,7 @@ public class Switchstance : Ability
 {
     private Chessman piece;
     
-    public Switchstance() : base("Switchstance", "Swap attack and defense values on every interaction (Attacking or Defending)") {}
+    public Switchstance() : base("Switchstance", "Swap attack and defense values on every combat (Attacking or Defending)") {}
 
 
     public override void Apply(Chessman piece)

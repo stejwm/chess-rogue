@@ -10,7 +10,7 @@ public class Vampire : Ability
     private Chessman piece;
     private int bonus = 0;
 
-    public Vampire() : base("Vampire", "+1 to all stats on dark squares, -1 to all stats on light squares. Ability is added to any piece that is attacked") {}
+    public Vampire() : base("Vampire", "+1 to all stats on dark squares, -1 to all stats on light squares. transfer ability when attacking") {}
 
     public override void Apply(Chessman piece)
     {
@@ -25,7 +25,6 @@ public class Vampire : Ability
         Game._instance.OnPieceBounced.AddListener(PossibleReset);
         piece.releaseCost += 15;
         if(Game._instance.state==ScreenState.ActiveMatch){
-            Debug.Log("Applying vamp live");
             AddBonus(piece, new BoardPosition(piece.xBoard, piece.yBoard));
         }
         base.Apply(piece);
@@ -44,7 +43,6 @@ public class Vampire : Ability
     }
     public void AddBonus(Chessman mover, BoardPosition targetPosition)
     {
-        Debug.Log("add bonus vamp position: " + targetPosition.x + ", " + targetPosition.y);
         int currentBonus = bonus;
         if (mover == piece)
         {
@@ -72,7 +70,6 @@ public class Vampire : Ability
     {
         Debug.Log("Bonus change: " + bonusChange);
         Debug.Log("attackBonus: " + piece.attackBonus);
-        Debug.Log("new attackBonus: " + Mathf.Max(-piece.attack, piece.attackBonus+bonusChange));
         piece.attackBonus = Mathf.Max(-piece.attack, piece.attackBonus+bonusChange);
         piece.defenseBonus = Mathf.Max(-piece.defense, piece.defenseBonus + bonusChange);
         piece.supportBonus = Mathf.Max(-piece.support, piece.supportBonus + bonusChange);

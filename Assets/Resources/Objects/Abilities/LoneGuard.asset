@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a39580473db7b4b4fb8c56dac146ee52, type: 3}
-  m_Name: Betrayer
+  m_Script: {fileID: 11500000, guid: 546c8eb4f22a1174594256c5a276ad5a, type: 3}
+  m_Name: LoneGuard
   m_EditorClassIdentifier: 
-  abilityName: Betrayer
-  description: Can capture it's own pieces, cannot support
-  sprite: {fileID: 7748195786237880742, guid: 2e766e9ea33fadc4c93c78449c083d65, type: 3}
+  abilityName: Lone Guard
+  description: +5 defense if defending with no support
+  sprite: {fileID: 7647224981564562967, guid: 1007f45fdc4a4b6448dafdedce705c1e, type: 3}
   Cost: 8

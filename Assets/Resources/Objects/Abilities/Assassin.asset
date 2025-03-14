@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b98f003e06729b43a470b7027caa83f, type: 3}
-  m_Name: Countermarch
+  m_Script: {fileID: 11500000, guid: ebfee4463c394e14bbd90cf5ec05f861, type: 3}
+  m_Name: Assassin
   m_EditorClassIdentifier: 
-  abilityName: Countermarch
-  description: Can move and attack backwards
-  sprite: {fileID: -4601645179611525662, guid: e97317e49d2749848939105c2551132f, type: 3}
-  Cost: 5
+  abilityName: Assassin
+  description: +5 attack if attacking with no support
+  sprite: {fileID: 8798635138200050783, guid: a35a8f31cf98f394281f01d342db5223, type: 3}
+  Cost: 8

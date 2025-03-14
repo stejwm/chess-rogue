@@ -7,7 +7,7 @@ public class InspiringPresence : Ability
 {
     private Chessman piece;
     
-    public InspiringPresence() : base("Inspiring Presence", "Permanently gain +1 to support every time you successfully support a defending piece") {}
+    public InspiringPresence() : base("Inspiring Presence", "Permanently gain +1 to support for every successful support on a defending piece") {}
 
     public override void Apply(Chessman piece)
     {

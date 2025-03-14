@@ -7,7 +7,7 @@ public class HexBolt : Ability
 {
     private Chessman piece;
     
-    public HexBolt() : base("Hex Bolt", "When bounced, removes all abilities from defender until end of their next turn") {}
+    public HexBolt() : base("Hex Bolt", "When bounced, Removes all abilities from defender until end of their next turn") {}
 
 
     public override void Apply(Chessman piece)

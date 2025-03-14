@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63752979f170ab54e96c29bd5054e4ea, type: 3}
-  m_Name: AvengingStrike
+  m_Script: {fileID: 11500000, guid: 884786df50f2f6744bce4c1cceb1db9e, type: 3}
+  m_Name: Switchstance
   m_EditorClassIdentifier: 
-  abilityName: Avenging Strike
-  description: Automatically trigger attack if supported piece was captured
-  sprite: {fileID: 614508094739402100, guid: c221a766c9ef65242b12922976491956, type: 3}
+  abilityName: Switchstance
+  description: Swap attack and defense values on every combat (Attacking or Defending)
+  sprite: {fileID: 9066866386506114935, guid: bd90e85aec1e51945afe9838a8466dd1, type: 3}
   Cost: 8

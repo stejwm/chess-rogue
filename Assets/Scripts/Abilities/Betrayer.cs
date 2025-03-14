@@ -6,7 +6,7 @@ using UnityEngine;
 public class Betrayer : Ability
 {
     private MovementProfile startingProfile;
-    public Betrayer() : base("Betrayer", "Can capture it's own pieces, cannot support") {}
+    public Betrayer() : base("Betrayer", "Can capture it's own pieces, supports as if it were an enemy") {}
 
 
     public override void Apply(Chessman piece)

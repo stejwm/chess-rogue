@@ -6,7 +6,7 @@ using UnityEngine;
 public class SpectralStride : Ability
 {
     private MovementProfile startingProfile;
-    public SpectralStride() : base("Spectral Stride", "Piece can move through it's own pieces according to it's typical movement") {}
+    public SpectralStride() : base("Spectral Stride", "Can move through it's own pieces according to it's typical movement") {}
 
 
     public override void Apply(Chessman piece)

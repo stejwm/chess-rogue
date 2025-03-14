@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0989ad662bb5efb48a0b05660053944b, type: 3}
+  m_Name: EscapedPeasant
+  m_EditorClassIdentifier: 
+  description: 
+  sprite: {fileID: 21300000, guid: ae6d5ade37fb576419bbbb027a508053, type: 3}
+  messages:
+  - message: I smell arrogance, the weight of power.
+    options:
+    - optionText: Who are you?
+      eventName: 
+      nextDialogueId: 
+    - optionText: What's the cause of your vitriol?
+      eventName: 
+      nextDialogueId: 
+    - optionText: I care little to hear the grievances of a runaway peasant. Your
+        kind grumble no matter who sits the throne.
+      eventName: EndDialogue
+      nextDialogueId: 
+  - message: I fled a kingdom like yours. Lived under the rule of a man who claimed
+      to be just, claimed to be wise. But kings only rule for themselves. Power always
+      curdles into tyranny.
+    options:
+    - optionText: Continue...
+      eventName: 
+      nextDialogueId: 
+  - message: "But\u2026 I know things. I know how the common folk fight, how we survive.
+      If your soldiers fought like us\u2014if they learned to stand together instead
+      of bowing to a throne\u2014maybe they\u2019d be something more than pawns in
+      your little game."
+    options:
+    - optionText: If you know so much of war, then prove it. Join us and fight for
+        something greater than yourself, as an equal.
+      eventName: 
+      nextDialogueId: Objects/Dialogues/EscapedPawnJoining
+    - optionText: If you possess such wisdom, then share it. Teach my army your ways,
+        so they can fight not as soldiers, but as survivors, and free themselves
+        from my reign of terror.
+      eventName: 
+      nextDialogueId: 
+  - message: "Knowledge isn\u2019t free. If you want my teachings, you\u2019ll have
+      to give up one of your royal decrees. A King's Order\u2014one less command
+      from a throne, one less chain around the world\u2019s neck."
+    options:
+    - optionText: Fine, to free the people. (Must have 1 king's order)
+      eventName: EscapeeTeachings
+      nextDialogueId: 
+    - optionText: "I won\u2019t waste a decree on a peasant."
+      eventName: 
+      nextDialogueId: 

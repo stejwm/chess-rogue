@@ -104,15 +104,23 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void SelectEncounterNode(MapNode node)
+    public void SelectEncounterNode(MapNode node, EncounterType encounterType)
     {
+        foreach (var mapNode in currentNode.connectedNodes)
+        {
+            Debug.Log($"Selected node: {node.nodeName} Connected node: {mapNode.nodeName}");
+            Debug.Log($"Selected node: {node.nodeType} Connected node: {mapNode.nodeType}");
+            Debug.Log($"Selected node: {node.enemyType} Connected node: {mapNode.enemyType}");
+            Debug.Log($"Selected node: {node.encounterType} Connected node: {mapNode.encounterType}");
+            Debug.Log($"Nodes equal: {node.Equals(mapNode)}");
+        }
         if (node.isCompleted || !currentNode.connectedNodes.Contains(node))
         {
             Debug.Log("Node not legal");
             return;
         }
         else{
-            Debug.Log("Selected encounter node: " + node.nodeName);
+            DialogueManager._instance.LaunchEncounterDialogue(encounterType);
         }
     }
 
@@ -230,9 +238,10 @@ public class MapManager : MonoBehaviour
             Vector3 position = new Vector3(Random.Range(-.2f, 0.2f)+startX + index * xOffset, yOffset + verticalShift, 0); // Adjusted positions
             GameObject nodeObject = Instantiate(nodePrefab, position, Quaternion.identity, mapParent);
             MapNode mapNode = nodeObject.GetComponent<MapNode>();
-            mapNode.nodeName = nodeType.ToString() + " Node";
+            mapNode.nodeName = nodeType.ToString() + "First Path Node" + index;
             mapNode.isCompleted = false;
             mapNode.nodeType = nodeType;
+            mapNode.encounterType = (EncounterType)Random.Range(0, System.Enum.GetValues(typeof(EncounterType)).Length);
             mapNodes.Add(mapNode);
             firstPathNodes.Add(mapNode);
             firstPathAdditionalNodes.Add(index, mapNode);
@@ -261,23 +270,21 @@ public class MapManager : MonoBehaviour
             }
             
             position = new Vector3(Random.Range(-.2f, 0.2f)+startX + index * xOffset, yOffset + verticalShift, 0); // Adjusted positions
-            nodeObject = Instantiate(nodePrefab, position, Quaternion.identity, mapParent);
-            mapNode = nodeObject.GetComponent<MapNode>();
-            mapNode.nodeName = nodeType.ToString() + " Node";
-            mapNode.isCompleted = false;
-            mapNode.nodeType = nodeType;
-            if(nodeType==NodeType.Shop)
-                mapNode.nodeImage.sprite = shopSprite;
-            // Set the color of the node to black
-            mapNode.nodeImage.color = Color.black;
+            GameObject nodeOnjectSecond = Instantiate(nodePrefab, position, Quaternion.identity, mapParent);
+            MapNode mapNodeSecond = nodeOnjectSecond.GetComponent<MapNode>();
+            mapNodeSecond.nodeName = nodeType.ToString() + "Second Path Node" + index;
+            mapNodeSecond.isCompleted = false;
+            mapNodeSecond.encounterType = (EncounterType)Random.Range(0, System.Enum.GetValues(typeof(EncounterType)).Length);
+            mapNodeSecond.nodeType = nodeType;
+            mapNodeSecond.nodeImage.color = Color.black;
 
-            mapNodes.Add(mapNode);
-            secondPathNodes.Add(mapNode);
-            secondPathAdditionalNodes.Add(index, mapNode);
+            mapNodes.Add(mapNodeSecond);
+            secondPathNodes.Add(mapNodeSecond);
+            secondPathAdditionalNodes.Add(index, mapNodeSecond);
 
             // Assign the OnClick event programmatically
-            nodeButton = nodeObject.GetComponent<Button>();
-            nodeButton.onClick.AddListener(() => mapNode.OnNodeSelected());
+            Button NodeButtonSecond = nodeOnjectSecond.GetComponent<Button>();
+            NodeButtonSecond.onClick.AddListener(() => mapNodeSecond.OnNodeSelected());
         }
 
         // Connect the starting node to the first nodes of each path

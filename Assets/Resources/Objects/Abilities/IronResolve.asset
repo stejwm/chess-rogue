@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68fa173fc70ebbd4aa2d47546ad05d2f, type: 3}
-  m_Name: IncreasingStrike
+  m_Script: {fileID: 11500000, guid: 70b34d5f50138b743ae6d5a186ebaef1, type: 3}
+  m_Name: IronResolve
   m_EditorClassIdentifier: 
-  abilityName: Increasing Strike
-  description: Permanently gain +1 to attack for every capture
-  sprite: {fileID: -1752959765298073396, guid: 3a9526cbbee91a945a23de02fed73726, type: 3}
+  abilityName: Iron Resolve
+  description: Permanently gain +1 to defense every time an enemy is bounced
+  sprite: {fileID: 5321450956632317814, guid: 5d57960fe8a878c4282c565956bd62f3, type: 3}
   Cost: 15

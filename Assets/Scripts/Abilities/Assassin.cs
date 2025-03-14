@@ -7,7 +7,7 @@ public class Assassin : Ability
 {
     private Chessman piece;
     
-    public Assassin() : base("Assassin", "+5 attack if attacks with no support") {}
+    public Assassin() : base("Assassin", "+5 attack if attacking with no support") {}
 
 
     public override void Apply(Chessman piece)

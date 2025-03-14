@@ -168,6 +168,8 @@ public class Game : MonoBehaviour
         ClearCard();
         ClearPiece(); 
         applyingAbility=false;
+        yield return new WaitForSeconds(waitTime);
+        InventoryManager._instance.CloseInventory();
         yield break;
     }
     public void CardSelected(Card card){

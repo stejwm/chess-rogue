@@ -6,12 +6,17 @@ using TMPro;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Dialogue", menuName = "Dialogues/New Dialogue")]
-
 public class Dialogue : ScriptableObject
 {
     public string description;
     public Sprite sprite;
     
-    public List<String> messages;
+    [System.Serializable]
+    public class DialogueMessage
+    {
+        public string message;
+        public List<DialogueOption> options;
+    }
     
+    public List<DialogueMessage> messages;
 }

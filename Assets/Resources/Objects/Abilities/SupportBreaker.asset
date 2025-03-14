@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SupportBreaker
   m_EditorClassIdentifier: 
   abilityName: Support Breaker
-  description: When bounced reduces all opponents supporting pieces support by 1
+  description: When bounced, reduce all supporting enemies support by -1
   sprite: {fileID: -2466447011678480698, guid: a8cadddbf127bef4781a597f05b2f1ca, type: 3}
   Cost: 10

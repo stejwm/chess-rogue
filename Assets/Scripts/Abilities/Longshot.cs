@@ -9,7 +9,7 @@ public class Longshot : Ability
     private Chessman piece;
     private bool bonusAdded;
     
-    public Longshot() : base("Longshot", "+5 attack if piece attacks from 4 or more squares away") {}
+    public Longshot() : base("Longshot", "+5 attack if attacking from 4 or more squares away") {}
 
 
     public override void Apply(Chessman piece)

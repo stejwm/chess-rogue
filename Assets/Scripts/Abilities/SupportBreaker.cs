@@ -9,7 +9,7 @@ public class SupportBreaker : Ability
     private Chessman piece;
     private List<Chessman> supporters = new List<Chessman>();
     
-    public SupportBreaker() : base("Support Breaker", "When bounced reduces all opponents supporting pieces support by 1") {}
+    public SupportBreaker() : base("Support Breaker", "When bounced, reduce all supporting enemies support by -1") {}
 
 
     public override void Apply(Chessman piece)

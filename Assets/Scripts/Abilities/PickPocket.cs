@@ -7,7 +7,7 @@ public class PickPocket : Ability
 {
     private Chessman piece;
     
-    public PickPocket() : base("Pickpocket", "Get +2 coins when this piece is bounced") {}
+    public PickPocket() : base("Pickpocket", "+3 coins when bounced") {}
 
     public override void Apply(Chessman piece)
     {

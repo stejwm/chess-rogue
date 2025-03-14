@@ -9,15 +9,23 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public enum EncounterType
+    {
+        EscapedPawn
+    }
+
 public class DialogueManager : MonoBehaviour
 {
-
+    
     //current turn
     public static DialogueManager _instance;
     [SerializeField] private TMP_Text dialogueBox;
-    [SerializeField] private GameObject nextButton;
+    [SerializeField] private GameObject optionsContainer;
+    [SerializeField] private GameObject optionButtonPrefab;
+    [SerializeField] private SpriteRenderer speakerSprite;
     private int dialogueIndex=0;
     private Dialogue dialogue;
+    private Dialogue.DialogueMessage currentMessage;
 
 
 
@@ -32,46 +40,143 @@ public class DialogueManager : MonoBehaviour
         }
     }
     private void OnEnable(){
-        WriterEffect.CompleteTextRevealed+=ShowButton;
+        WriterEffect.CompleteTextRevealed+=ShowOptions;
     }
 
     private void OnDisable(){
-        WriterEffect.CompleteTextRevealed-=ShowButton;
+        WriterEffect.CompleteTextRevealed-=ShowOptions;
     }
 
 
-    public void ShowDialogue(String message){
-        dialogueBox.maxVisibleCharacters=0;
-        dialogueBox.text=message.Replace("{name}", Game._instance.hero.name);
+    public void ShowDialogue(Dialogue.DialogueMessage message)
+    {
+        dialogueBox.maxVisibleCharacters = 0;
+        currentMessage = message;
+        dialogueBox.text = message.message.Replace("{name}", Game._instance.hero.name);
         
     }
 
-    public void NextDialogue(){
-        HideButton();
-        dialogueIndex++;
-        if(dialogue.messages.Count<=dialogueIndex){
-            gameObject.SetActive(false);
-            Game._instance.isInMenu=false;
+    public void ShowOptions(){
+        List<TMP_Text> optionTexts = new List<TMP_Text>();
+        if (currentMessage.options != null && currentMessage.options.Count > 0)
+        {
+            foreach (var option in currentMessage.options)
+            {
+
+                var buttonObj = Instantiate(optionButtonPrefab, optionsContainer.transform);
+                var button = buttonObj.GetComponent<Button>();
+                var text = buttonObj.GetComponentInChildren<TMP_Text>();
+                buttonObj.SetActive(true);
+                text.text = option.optionText;
+                optionTexts.Add(text);
+                button.onClick.AddListener(() => {
+                    DialogueEventRouter._instance.TriggerEvent(option.eventName);
+                    if (!string.IsNullOrEmpty(option.nextDialogueId))
+                    {
+                        // Load and start new dialogue
+                        var nextDialogue = Resources.Load<Dialogue>(option.nextDialogueId);
+                        if (nextDialogue != null)
+                        {
+                            StartDialogue(nextDialogue);
+                        }
+                    }
+                    else
+                    {
+                        NextDialogue();
+                    }
+                });
+            }
+            StartCoroutine(AdjustFontSizes(optionTexts));
         }
-        else{
+    }
+    public void ClearOptions()
+    {
+        foreach (Transform child in optionsContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+    
+    public void NextDialogue()
+    {
+        ClearOptions();
+        dialogueIndex++;
+        if (dialogue.messages.Count <= dialogueIndex)
+        {
+            EndDialogue();
+        }
+        else
+        {
             ShowDialogue(dialogue.messages[dialogueIndex]);
         }
     }
 
+    public void EndDialogue()
+    {
+        gameObject.SetActive(false);
+        Game._instance.isInMenu = false;
+    }
+
     public void StartDialogue(Dialogue dialogue){
+        this.gameObject.SetActive(true);
+        ClearOptions();
         Game._instance.isInMenu=true;
+        speakerSprite.sprite = dialogue.sprite;
         dialogueIndex=0;
         this.dialogue=dialogue;
         ShowDialogue(dialogue.messages[dialogueIndex]);
     }
 
-    private void ShowButton(){
-        nextButton.SetActive(true); 
-    }
-    private void HideButton(){
-        nextButton.SetActive(false); 
+
+    public void EscapeeTeachings(){
+        foreach (var pieceObj in Game._instance.hero.pieces){
+            var piece = pieceObj.GetComponent<Chessman>();
+            if (piece.type != PieceType.King && piece.type != PieceType.Queen)
+            {
+                piece.support++;
+            }
+        }
     }
 
+    public void AddEscapee(){
+        var hero = Game._instance.hero;
+        var pieceObj = PieceFactory._instance.CreateAbilityPiece(
+                PieceType.Pawn, "s", -1, -1, PieceColor.White, Team.Hero, hero, Game._instance.AllAbilities[18].Clone());
+        hero.inventoryPieces.Add(pieceObj);
+        Chessman piece = pieceObj.GetComponent<Chessman>();
+        piece.LevelUp(Game._instance.level+2);
+    }
+
+    public void LaunchEncounterDialogue(EncounterType encounterType){
+        switch(encounterType){
+            case EncounterType.EscapedPawn:
+            Dialogue dialogue = Resources.Load<Dialogue>("Objects/Dialogues/EscapedPeasant");
+            Debug.Log($"Dialogue=null : {dialogue==null}");
+                StartDialogue(dialogue);
+                break;
+        }
+
+    }
+    public IEnumerator AdjustFontSizes(List<TMP_Text> optionTexts)
+    {
+        float minFontSize = Mathf.Infinity;
+        yield return null; 
+
+        foreach (var text in optionTexts)
+        {
+            
+            text.ForceMeshUpdate(); // Ensure TMP updates the text size
+            Debug.Log("Font size: " + text.fontSize);
+            minFontSize = Mathf.Min(minFontSize, text.fontSize);
+        }
+
+        // Apply the smallest font size to all options
+        foreach (var text in optionTexts)
+        {
+            text.enableAutoSizing = false; // Disable auto-sizing after setting
+            text.fontSize = minFontSize;
+        }
+    }
 
 
 }

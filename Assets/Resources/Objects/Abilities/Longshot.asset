@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Longshot
   m_EditorClassIdentifier: 
   abilityName: Longshot
-  description: +5 attack if piece attacks from 5 or more squares away
+  description: +5 attack if attacking from 4 or more squares away
   sprite: {fileID: 5797555737352298209, guid: 517c4c4704454a24685d874946909bce, type: 3}
   Cost: 8

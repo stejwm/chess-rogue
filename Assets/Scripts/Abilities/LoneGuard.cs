@@ -7,7 +7,7 @@ public class LoneGuard : Ability
 {
     private Chessman piece;
     
-    public LoneGuard() : base("Lone Guard", "+5 defense if defends with no support") {}
+    public LoneGuard() : base("Lone Guard", "+5 defense if defending with no support") {}
 
 
     public override void Apply(Chessman piece)

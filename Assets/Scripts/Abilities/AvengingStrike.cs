@@ -11,7 +11,7 @@ public class AvengingStrike : Ability
     private BoardPosition targetPosition;
 
     
-    public AvengingStrike() : base("Avenging Strike", "Automatically trigger attack if supported piece was captured") {}
+    public AvengingStrike() : base("Avenging Strike", "Automatically trigger attack if a supported piece was captured") {}
 
 
     public override void Apply(Chessman piece)

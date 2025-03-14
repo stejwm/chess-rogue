@@ -6,7 +6,7 @@ using UnityEngine;
 public class ScoutPawn : Ability
 {
     private MovementProfile startingProfile;
-    public ScoutPawn() : base("Scout", "Moves like queen. Captures & supports like pawn") {}
+    public ScoutPawn() : base("Scout (Pawn only)", "Moves like queen, attacks & supports like pawn") {}
 
 
     public override void Apply(Chessman piece)

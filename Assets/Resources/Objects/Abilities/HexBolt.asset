@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26e9f92af7681d34ea38dbd0379f0d62, type: 3}
-  m_Name: StationarySlash
+  m_Script: {fileID: 11500000, guid: cb1ba6efa30299748842ed260fc05c3e, type: 3}
+  m_Name: HexBolt
   m_EditorClassIdentifier: 
-  abilityName: Stationary Slash
-  description: Piece stays in position when it captures
-  sprite: {fileID: -6592229671360042225, guid: ba646a3dfc7c52f4ea7d5be517f1d0af, type: 3}
+  abilityName: Hex Bolt
+  description: When bounced, Removes all abilities from defender until end of their
+    next turn
+  sprite: {fileID: -390666964726450316, guid: c2b299f139d5d5048b38ed4322cb8bc4, type: 3}
   Cost: 10

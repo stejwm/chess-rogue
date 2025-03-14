@@ -9,7 +9,7 @@ public class StationarySlash : Ability
     private int x;
     private int y;
     
-    public StationarySlash() : base("Stationary Slash", "Piece stays in position when it captures") {}
+    public StationarySlash() : base("Stationary Slash", "Does not move when capturing") {}
 
 
     public override void Apply(Chessman piece)
