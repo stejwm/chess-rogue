@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Paralyzing Blow
   description: When bounced, prevents the defender from moving next turn
-  sprite: {fileID: 0}
+  sprite: {fileID: -1701742802483145967, guid: 740254a14bf0b9545a24eb9aa9ccb871, type: 3}
   Cost: 10

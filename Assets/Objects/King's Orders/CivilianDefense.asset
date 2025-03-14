@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Civilian Defense
   Description: Creates a pawn in any open spaces at selected row
   sprite: {fileID: 0}
-  Cost: 15
+  Cost: 20

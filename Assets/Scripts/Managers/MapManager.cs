@@ -18,6 +18,10 @@ public class MapManager : MonoBehaviour
     public Sprite shopSprite; 
     private Dictionary<int, MapNode> firstPathAdditionalNodes = new Dictionary<int, MapNode>();
     private Dictionary<int, MapNode> secondPathAdditionalNodes = new Dictionary<int, MapNode>();
+    public List<Sprite> images;
+    public Sprite wandererImage;
+    public Sprite bossImage;
+    public Sprite shopImage;
 
     void Awake()
     {
@@ -120,7 +124,6 @@ public class MapManager : MonoBehaviour
         float controlPointOffset = 1f; // Offset for control points to create curves
         float verticalShift = 0.0f; // Shift the nodes up
         float minVerticalDistance = 1.5f; // Minimum vertical distance between nodes from different paths
-
         // Create a parent GameObject for lines to ensure they are rendered behind nodes
         GameObject linesParent = new GameObject("LinesParent");
         linesParent.transform.SetParent(mapParent, false);
@@ -217,7 +220,7 @@ public class MapManager : MonoBehaviour
                     offset+=0.2f;
                 else
                     offset-=0.2f;
-                if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance/2 && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance/2)
+                if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance)
                 {
                     yOffset = offset;
                     break;
@@ -230,8 +233,6 @@ public class MapManager : MonoBehaviour
             mapNode.nodeName = nodeType.ToString() + " Node";
             mapNode.isCompleted = false;
             mapNode.nodeType = nodeType;
-            if(nodeType==NodeType.Shop)
-                mapNode.nodeImage.sprite = shopSprite;
             mapNodes.Add(mapNode);
             firstPathNodes.Add(mapNode);
             firstPathAdditionalNodes.Add(index, mapNode);
@@ -252,7 +253,7 @@ public class MapManager : MonoBehaviour
                     offset-=0.2f;
                 else
                     offset+=0.2f;
-                if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance/2 && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance/2)
+                if (Mathf.Abs(offset - firstPathYOffsets[index]) >= minVerticalDistance && Mathf.Abs(offset - secondPathYOffsets[index]) >= minVerticalDistance)
                 {
                     yOffset = offset;
                     break;
@@ -287,6 +288,7 @@ public class MapManager : MonoBehaviour
         GameObject finalNodeObject = Instantiate(nodePrefab, finalNodePosition, Quaternion.identity, mapParent);
         MapNode finalNode = finalNodeObject.GetComponent<MapNode>();
         finalNode.nodeName = "Final Node";
+        finalNode.nodeType = NodeType.Boss;
         finalNode.isCompleted = false;
         mapNodes.Add(finalNode);
 
@@ -347,14 +349,14 @@ public class MapManager : MonoBehaviour
                 UILineRenderer lineRenderer = lineObject.GetComponent<UILineRenderer>();
 
                 // Set the color of the line based on the path
-                if (firstPathNodes.Contains(node) || firstPathNodes.Contains(connectedNode))
+                /* if (firstPathNodes.Contains(node) || firstPathNodes.Contains(connectedNode))
                 {
                     lineRenderer.color = Color.white;
                 }
                 else if (secondPathNodes.Contains(node) || secondPathNodes.Contains(connectedNode))
                 {
                     lineRenderer.color = Color.grey;
-                }
+                } */
 
                 // Calculate control points for the Bezier curve
                 Vector2 startPoint = node.transform.localPosition;

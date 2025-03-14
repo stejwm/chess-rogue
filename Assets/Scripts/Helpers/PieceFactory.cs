@@ -207,6 +207,75 @@ public class PieceFactory : MonoBehaviour
 
         return pieces;
     }
+
+    public List<GameObject> CreateAngryMob(Player owner, PieceColor color, Team team)
+    {
+        string prefix = color == PieceColor.White ? "white" : "black";
+        int backRow = color == PieceColor.White ? 0 : 7;
+        int pawnRow = color == PieceColor.White ? 1 : 6;
+        int frontRow = color == PieceColor.White ? 2 : 5;
+        owner.playerCoins= UnityEngine.Random.Range(10,30);
+        // Create back row
+        List<GameObject> pieces = new List<GameObject> {
+            Create(PieceType.King, $"{prefix}_king", 4, backRow, color, team, owner)
+        };
+
+        foreach (var piece in pieces)
+        {
+            piece.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[17].Clone()); //Blood offering ability
+        }
+        // Create pawns
+        for (int i = 0; i < 8; i++)
+        {
+            var pawn = Create(PieceType.Pawn, $"{prefix}_pawn", i, pawnRow, color, team, owner);
+            StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), Game._instance.AllAbilities[0].Clone()));
+            RandomMobAbility(pawn); 
+            pieces.Add(pawn);
+            pawn = Create(PieceType.Pawn, $"{prefix}_pawn", i, frontRow, color, team, owner);
+            StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), Game._instance.AllAbilities[0].Clone()));
+            RandomMobAbility(pawn); 
+            pieces.Add(pawn);
+            if(i!=4){
+                pawn = Create(PieceType.Pawn, $"{prefix}_pawn", i, backRow, color, team, owner);
+                StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), Game._instance.AllAbilities[0].Clone()));
+                RandomMobAbility(pawn); 
+                pieces.Add(pawn);
+            }
+            
+        }
+
+        return pieces;
+    }
+
+    public IEnumerator WaitForPieceToApplyAbility(Chessman piece, Ability ability){
+        yield return new WaitUntil(() => piece.moveProfile!=null);
+        yield return null;
+        piece.AddAbility(ability);
+    }
+    public void RandomMobAbility(GameObject pieceObj){
+        Chessman piece = pieceObj.GetComponent<Chessman>();
+        var rand = UnityEngine.Random.Range(0,10);
+        if(rand>3){
+            rand = UnityEngine.Random.Range(0,4);
+            switch(rand){
+                case 0:
+                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[14].Clone())); //Blood thirst
+                    break;
+                case 1:
+                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[8].Clone())); //Blood thirst
+                    break;
+                case 2:
+                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[10].Clone())); //Blood thirst
+                    break;
+                case 3:
+                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[23].Clone())); //Blood thirst
+                    break;
+                case 4:
+                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[19].Clone())); //Blood thirst
+                    break;
+            }
+        }
+    }
     public GameObject Create(PieceType type, string name, int x, int y, PieceColor color, Team team, Player owner)
     {
         GameObject prefab = GetPrefab(type);
@@ -227,8 +296,6 @@ public class PieceFactory : MonoBehaviour
 
     public List<GameObject> CreateOpponentPieces(Player opponent, EnemyType enemyType)
     {
-        int rand = rng.Next(4);
-
         switch(enemyType)
         {
             case EnemyType.Knights:
@@ -241,6 +308,8 @@ public class PieceFactory : MonoBehaviour
                 return CreateThievesGuild(opponent, opponent.color, Team.Enemy);
             case EnemyType.Cult:
                 return CreateDarkCult(opponent, opponent.color, Team.Enemy);
+            case EnemyType.Mob:
+                return CreateAngryMob(opponent, opponent.color, Team.Enemy);
         }
         return null;
     }

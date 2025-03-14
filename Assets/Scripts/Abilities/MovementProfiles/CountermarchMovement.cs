@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class CountermarchMovement : MovementProfile
 {
-        public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture=false) {
+    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture=false) {
         List<BoardPosition> validMoves = new List<BoardPosition>();
         validMoves.AddRange(Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard-1));
         validMoves.AddRange(Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard+1));

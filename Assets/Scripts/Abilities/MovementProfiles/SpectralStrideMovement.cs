@@ -10,7 +10,6 @@ public class SpectralStrideMovement : MovementProfile
         this.oldMovementProfile=oldMovementProfile;
     }
     public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
-        Debug.Log("SpectralStrideMovement allow friendly capture: " + allowFriendlyCapture);
         if(allowFriendlyCapture)
             return GetSpectralStrideMoves(piece, piece.xBoard, piece.yBoard);
         else

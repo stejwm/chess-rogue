@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Lone Guard
   description: +5 defense if defends with no support
-  sprite: {fileID: 0}
+  sprite: {fileID: 7647224981564562967, guid: 1007f45fdc4a4b6448dafdedce705c1e, type: 3}
   Cost: 8

@@ -33,6 +33,9 @@ public class KingsOrderManager : MonoBehaviour
         {
             parent.SetActive(true);
             order = Game._instance.hero.orders[0];
+            dissolveMaterial.SetFloat("_Weight", 0);
+            title.color = Color.white;
+            effect.color = Color.white;
             UpdateCardUI();
         }
         else{

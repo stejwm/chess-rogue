@@ -13,7 +13,8 @@ public enum EnemyType
     Fortress,
     Assassins,
     Thieves,
-    Cult
+    Cult,
+    Mob
 }
 
 

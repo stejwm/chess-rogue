@@ -16055,6 +16055,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ef9345f117a80a540b88fd5d90c9610f, type: 2}
   - {fileID: 11400000, guid: 599660723058f304aa2855a3af150f13, type: 2}
   - {fileID: 11400000, guid: c79b833230efaff489b2865d0f35cc0d, type: 2}
+  - {fileID: 11400000, guid: d6d656b437ba3a84cacbe9040ff0c8df, type: 2}
+  - {fileID: 11400000, guid: 0f745b8986d438244aea8ea9b15e6780, type: 2}
   AllDialogues:
   - {fileID: 11400000, guid: 351e97bd572da8d4c9376645155fead2, type: 2}
   AllOpponents:
@@ -18424,6 +18426,15 @@ MonoBehaviour:
   mapParent: {fileID: 1058925136}
   linePrefab: {fileID: 4766632278236315651, guid: e2dacf058b9490e4f8dc16f3f7510c00, type: 3}
   shopSprite: {fileID: -7528719304108995221, guid: 08d5152dc07f9a24ea9944415bb817c2, type: 3}
+  images:
+  - {fileID: 21300000, guid: d2a1a8eb8dec28b44931f240e5ca4923, type: 3}
+  - {fileID: 21300000, guid: 42bf216e9c07a2247a0e4af88877820d, type: 3}
+  - {fileID: 21300000, guid: ae728c392317eea4bb0651799563040e, type: 3}
+  - {fileID: 21300000, guid: d3c32145960a895489284638fa5c7bad, type: 3}
+  - {fileID: 21300000, guid: c1c34bfac783c5546b18dbee1478daca, type: 3}
+  wandererImage: {fileID: 21300000, guid: ae6d5ade37fb576419bbbb027a508053, type: 3}
+  bossImage: {fileID: 21300000, guid: e5057ff2132540548b60858b536fcc78, type: 3}
+  shopImage: {fileID: -7528719304108995221, guid: 08d5152dc07f9a24ea9944415bb817c2, type: 3}
 --- !u!1 &1898742909
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Avenging Strike
   description: Automatically trigger attack if supported piece was captured
-  sprite: {fileID: 0}
+  sprite: {fileID: 614508094739402100, guid: c221a766c9ef65242b12922976491956, type: 3}
   Cost: 8

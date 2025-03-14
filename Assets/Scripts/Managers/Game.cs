@@ -156,8 +156,8 @@ public class Game : MonoBehaviour
             hero.playerCoins-=selectedCard.ability.Cost;
             ShopManager._instance.UpdateCurrency();
         }
-
         applyingAbility=true;
+        yield return new WaitForSeconds(waitTime);
         StartCoroutine(selectedCard.Dissolve());
         selectedCard.Use(target);
         audioSource.clip = ability;

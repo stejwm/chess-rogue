@@ -47,6 +47,7 @@ public class Card : MonoBehaviour
     public void Start(){
         dissolveMaterial = new Material(GetComponent<Renderer>().material);
         GetComponent<Renderer>().material = dissolveMaterial;
+        dissolveMaterial.SetFloat("_Weight", 0);
     }
 
     void OnMouseDown(){

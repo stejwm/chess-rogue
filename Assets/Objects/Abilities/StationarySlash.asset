@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Stationary Slash
   description: Piece stays in position when it captures
-  sprite: {fileID: 0}
+  sprite: {fileID: -6592229671360042225, guid: ba646a3dfc7c52f4ea7d5be517f1d0af, type: 3}
   Cost: 10

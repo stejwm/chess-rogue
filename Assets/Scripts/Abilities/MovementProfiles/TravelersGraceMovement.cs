@@ -10,8 +10,6 @@ public class TravelersGraceMovement : MovementProfile
     Game game;
     public TravelersGraceMovement(MovementProfile old){
         oldProfile=old;
-        GameObject controller = GameObject.FindGameObjectWithTag("GameController");
-        game = controller.GetComponent<Game>();
     }
     public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture=false) {
         return Movement.AllOpenSquares();

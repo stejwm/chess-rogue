@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,7 +6,8 @@ public enum NodeType
 {
     Enemy,
     Shop,
-    Encounter
+    Encounter,
+    Boss
 }
 public class MapNode : MonoBehaviour
 {
@@ -15,9 +17,24 @@ public class MapNode : MonoBehaviour
     public NodeType nodeType; // Add this field
     public EnemyType enemyType; // Add this field for enemy nodes
     public Image nodeImage; // Reference to the Image component for changing the sprite
+    
 
 
     void Start(){
+        switch(nodeType){
+            case NodeType.Enemy:
+                nodeImage.sprite= MapManager._instance.images[Random.Range(0,MapManager._instance.images.Count)];                
+                break;
+            case NodeType.Shop:
+                nodeImage.sprite= MapManager._instance.shopImage;
+                break;
+            case NodeType.Encounter:
+                nodeImage.sprite= MapManager._instance.wandererImage;
+                break;
+            case NodeType.Boss:
+                nodeImage.sprite= MapManager._instance.bossImage;
+                break;
+        }
         
     }
 

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Countermarch
   description: Can move and attack backwards
-  sprite: {fileID: 0}
+  sprite: {fileID: -4601645179611525662, guid: e97317e49d2749848939105c2551132f, type: 3}
   Cost: 5
