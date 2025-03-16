@@ -7,5 +7,5 @@ public class DialogueOption
     public string optionText;
     
     public string eventName; 
-    public string nextDialogueId;
+    public Dialogue nextDialogue;
 }

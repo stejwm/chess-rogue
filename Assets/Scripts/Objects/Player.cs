@@ -14,7 +14,8 @@ public enum EnemyType
     Assassins,
     Thieves,
     Cult,
-    Mob
+    Mob,
+    RoyalFamily
 }
 
 
@@ -55,7 +56,20 @@ public abstract class Player: MonoBehaviour
         }
         //Destroy(this);
     }
-    public virtual void LevelUp(int level){
+    public virtual void LevelUp(int level, EnemyType enemyType){
+        switch(enemyType){
+            case EnemyType.Knights:
+                level+=2;
+                break;
+            case EnemyType.RoyalFamily:
+                level=level*3;
+                break;
+            case EnemyType.Thieves:
+                playerCoins= UnityEngine.Random.Range(5,10)*level;
+                break;
+            default:
+                break;
+        }
         for (int i =0; i<level; i++)
             foreach (GameObject piece in pieces)
             {

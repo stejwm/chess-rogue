@@ -19,21 +19,21 @@ MonoBehaviour:
     options:
     - optionText: Who are you?
       eventName: 
-      nextDialogueId: 
+      nextDialogue: {fileID: 0}
     - optionText: What's the cause of your vitriol?
       eventName: 
-      nextDialogueId: 
+      nextDialogue: {fileID: 0}
     - optionText: I care little to hear the grievances of a runaway peasant. Your
         kind grumble no matter who sits the throne.
       eventName: EndDialogue
-      nextDialogueId: 
+      nextDialogue: {fileID: 0}
   - message: I fled a kingdom like yours. Lived under the rule of a man who claimed
       to be just, claimed to be wise. But kings only rule for themselves. Power always
       curdles into tyranny.
     options:
     - optionText: Continue...
       eventName: 
-      nextDialogueId: 
+      nextDialogue: {fileID: 0}
   - message: "But\u2026 I know things. I know how the common folk fight, how we survive.
       If your soldiers fought like us\u2014if they learned to stand together instead
       of bowing to a throne\u2014maybe they\u2019d be something more than pawns in
@@ -42,19 +42,19 @@ MonoBehaviour:
     - optionText: If you know so much of war, then prove it. Join us and fight for
         something greater than yourself, as an equal.
       eventName: 
-      nextDialogueId: Objects/Dialogues/EscapedPawnJoining
+      nextDialogue: {fileID: 11400000, guid: f68076baf63663c4ba05fa7a57db19c8, type: 2}
     - optionText: If you possess such wisdom, then share it. Teach my army your ways,
         so they can fight not as soldiers, but as survivors, and free themselves
         from my reign of terror.
       eventName: 
-      nextDialogueId: 
+      nextDialogue: {fileID: 0}
   - message: "Knowledge isn\u2019t free. If you want my teachings, you\u2019ll have
       to give up one of your royal decrees. A King's Order\u2014one less command
       from a throne, one less chain around the world\u2019s neck."
     options:
     - optionText: Fine, to free the people. (Must have 1 king's order)
       eventName: EscapeeTeachings
-      nextDialogueId: 
+      nextDialogue: {fileID: 0}
     - optionText: "I won\u2019t waste a decree on a peasant."
       eventName: 
-      nextDialogueId: 
+      nextDialogue: {fileID: 0}

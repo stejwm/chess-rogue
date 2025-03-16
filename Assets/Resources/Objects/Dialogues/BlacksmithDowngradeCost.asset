@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0989ad662bb5efb48a0b05660053944b, type: 3}
+  m_Name: BlacksmithDowngradeCost
+  m_EditorClassIdentifier: 
+  description: 
+  sprite: {fileID: 21300000, guid: 52e207460730bce4d85a5eda887012d8, type: 3}
+  messages:
+  - message: "What\u2019s this now? A king haggling like a back-alley merchant? You
+      must be desperate. But listen close\u2014my hammer doesn\u2019t strike for
+      free, a mans got to make a living. You pass on the word of my craftsmanship
+      and I\u2019ll take what you\u2019ve got."
+    options:
+    - optionText: Kingdoms from here to Varelmere will know your name.
+      eventName: DowngradeAttackCost
+      nextDialogue: {fileID: 0}
+    - optionText: I'm alright, sorry for my transgressions.
+      eventName: 
+      nextDialogue: {fileID: 0}

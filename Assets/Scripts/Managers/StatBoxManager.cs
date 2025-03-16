@@ -13,6 +13,9 @@ public class StatBoxManager : MonoBehaviour
 
     public StatBox EnemyStatBox;
     public bool lockView;
+    public bool enemyLockView;
+    public Chessman enemyLockedPiece;
+    public Chessman lockedPiece;
     // Start is called before the first frame update
     void Awake()
     {
@@ -32,11 +35,17 @@ public class StatBoxManager : MonoBehaviour
         }
     }
 
-    public void LockView(){
+    public void LockView(Chessman piece){
         lockView=true;
+        piece.flames.Play();
+        lockedPiece=piece;
     }
     public void UnlockView(){
         lockView=false;
+        if (lockedPiece){
+            lockedPiece.flames.Stop();
+            lockedPiece=null;
+        }
     }
     public void SetAndShowStats(Chessman piece){
         if(!lockView)
@@ -50,7 +59,24 @@ public class StatBoxManager : MonoBehaviour
     }
 
     public void SetAndShowEnemyStats(Chessman piece){
-        EnemyStatBox.SetStats(piece);
+        if(!enemyLockView)
+        {
+            EnemyStatBox.SetStats(piece);
+        }
+        
+    }
+
+    public void LockEnemyView(Chessman piece){
+        enemyLockView=true;
+        piece.highlightedParticles.Play();
+        enemyLockedPiece=piece;
+    }
+    public void UnlockEnemyView(){
+        enemyLockView=false;
+        if (enemyLockedPiece){
+            enemyLockedPiece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            enemyLockedPiece=null;
+        }
     }
 
     public void HideStats(){

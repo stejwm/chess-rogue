@@ -44,7 +44,9 @@ public class BloodThirstAbility : Ability
     }
     public void Thirst(Chessman attacker, Chessman defender)
     {
-        //Debug.Log("Thirsting");
+        if(attacker==piece && !thirsting){
+            startingProfile=piece.moveProfile; //update to currentMoveProfile in case it has changed
+        }
         if (attacker == piece)
         {
             thirsting=true;
@@ -52,6 +54,7 @@ public class BloodThirstAbility : Ability
             CoroutineRunner.instance.StartCoroutine(EnableSecondAttackCoroutine());
         }
         if(defender == piece && thirsting){
+            Game._instance.isDecimating=false;
             List<GameObject> pieces;
             pieces = piece.owner.pieces;
             foreach (GameObject pieceObject in pieces)
@@ -85,7 +88,6 @@ public class BloodThirstAbility : Ability
         Debug.Log("Blood thirst activated");
         piece.effectsFeedback.PlayFeedbacks();
         List<GameObject> pieces;
-        startingProfile = piece.moveProfile;
         if (piece.abilities.OfType<Betrayer>().FirstOrDefault()!=null){
             piece.moveProfile = new BetrayerMovement(new AttackOnlyMovement(startingProfile));
         }
@@ -112,13 +114,15 @@ public class BloodThirstAbility : Ability
     }
 
     private void EndThirst(Chessman attackingPiece, Chessman defendingPiece, bool isBounceReduced){
-            if(attackingPiece==piece && thirsting){
-                Debug.Log("Bounced, thirst over");
-                thirsting=false;
-                piece.moveProfile=startingProfile;
-                Game._instance.currentMatch.BloodThirstOverride =false;
-                Game._instance.isDecimating=false;
-            }
+        if(attackingPiece==piece)
+            Game._instance.isDecimating=false;
+        if(attackingPiece==piece && thirsting){
+            Debug.Log("Bounced, thirst over");
+            thirsting=false;
+            piece.moveProfile=startingProfile;
+            Game._instance.currentMatch.BloodThirstOverride =false;
+            Game._instance.isDecimating=false;
+        }
     }
 
     private void ResetMoveProfile(PieceColor color){

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -26,7 +27,20 @@ public class Tile : MonoBehaviour
                 StatBoxManager._instance.SetAndShowStats(piece);
             else if(piece.team == Team.Enemy)
                 StatBoxManager._instance.SetAndShowEnemyStats(piece);
+
+            piece.GetComponent<MMSpringPosition>().Bump(new Vector3(0, 5f, 0f));
         }
+    }
+
+    private void OnMouseExit()
+    {
+        /* Chessman piece = getPiece();
+        if(piece){
+            if(piece.owner != Game._instance.hero && StatBoxManager._instance.enemyLockedPiece==piece)
+                return;
+            else
+                piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        } */
     }
 
     public Chessman getPiece(){
@@ -134,23 +148,48 @@ public class Tile : MonoBehaviour
             return;
         }
         else if(!isValidMove && !Game._instance.currentMatch.isSetUpPhase){
-            BoardManager._instance.ClearTiles();
+            
             var piece =getPiece();
-            if(piece!=null && piece.isValidForAttack && piece.owner==Game._instance.hero){
+            if(piece== null || piece.owner == Game._instance.hero)
+                BoardManager._instance.ClearTiles();
+            if(piece!=null && piece.owner==Game._instance.hero && piece==StatBoxManager._instance.lockedPiece){
+                Debug.Log("Already selected piece clicked");
+                StatBoxManager._instance.UnlockView();
+                //piece.flames.Stop();
+                piece.validMoves.Clear();
+            }
+            else if(piece!=null && piece.isValidForAttack && piece.owner==Game._instance.hero){
+                Debug.Log("New piece clicked");
+                //Game._instance.StopHeroFlames();
                 StatBoxManager._instance.UnlockView();
                 piece.validMoves.Clear();
                 piece.validMoves=piece.GetValidMoves();
                 piece.DisplayValidMoves();
+                //piece.flames.Play();
                 StatBoxManager._instance.SetAndShowStats(piece);
-                StatBoxManager._instance.LockView();
+                StatBoxManager._instance.LockView(piece);
             }
-            else{
+            else if(piece!=null && piece.owner!=Game._instance.hero && piece == StatBoxManager._instance.enemyLockedPiece){
+                Debug.Log("Enemy Clicked while locked");
+                StatBoxManager._instance.UnlockEnemyView();
+                //piece.validMoves.Clear();
+            }
+            else if(piece!=null && piece.owner!=Game._instance.hero){
+                Debug.Log("Any enemy clicked");
+                StatBoxManager._instance.UnlockEnemyView();
+                //piece.validMoves.Clear();
+                StatBoxManager._instance.LockEnemyView(piece);
+            }
+            else if(piece==null){
+                StatBoxManager._instance.UnlockEnemyView();
                 StatBoxManager._instance.UnlockView();
             }
         }
         
         
     }
+
+    
     private void OnMouseUp(){
         if (Game._instance.isInMenu)
         {
@@ -164,6 +203,7 @@ public class Tile : MonoBehaviour
             Game._instance.currentMatch.currentPlayer.SetSelectedDestination(new BoardPosition(position.x, position.y));
             Game._instance.currentMatch.currentPlayer.RequestDecision(); */
             StatBoxManager._instance.UnlockView();
+            //reference.flames.Stop();
             Game._instance.currentMatch.ExecuteTurn(reference, position.x, position.y);
         }
         

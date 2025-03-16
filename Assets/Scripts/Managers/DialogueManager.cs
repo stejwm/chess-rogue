@@ -11,7 +11,8 @@ using UnityEngine.UI;
 
 public enum EncounterType
     {
-        EscapedPawn
+        EscapedPawn,
+        Blacksmith
     }
 
 public class DialogueManager : MonoBehaviour
@@ -71,14 +72,10 @@ public class DialogueManager : MonoBehaviour
                 optionTexts.Add(text);
                 button.onClick.AddListener(() => {
                     DialogueEventRouter._instance.TriggerEvent(option.eventName);
-                    if (!string.IsNullOrEmpty(option.nextDialogueId))
+                    if (option.nextDialogue !=null)
                     {
                         // Load and start new dialogue
-                        var nextDialogue = Resources.Load<Dialogue>(option.nextDialogueId);
-                        if (nextDialogue != null)
-                        {
-                            StartDialogue(nextDialogue);
-                        }
+                        StartDialogue(option.nextDialogue);
                     }
                     else
                     {
@@ -129,13 +126,59 @@ public class DialogueManager : MonoBehaviour
 
 
     public void EscapeeTeachings(){
+        if(Game._instance.hero.orders.Count>0){
+            Game._instance.hero.orders.RemoveAt(UnityEngine.Random.Range(0,Game._instance.hero.orders.Count));
+            foreach (var pieceObj in Game._instance.hero.pieces){
+                var piece = pieceObj.GetComponent<Chessman>();
+                if (piece.type != PieceType.King && piece.type != PieceType.Queen)
+                {
+                    piece.support++;
+                }
+        }
+        }
+        
+    }
+
+    public void UpgradeAttack(){
+        if(Game._instance.hero.playerCoins>=75){
+            Game._instance.hero.playerCoins-=75;
+            foreach (var pieceObj in Game._instance.hero.pieces){
+                var piece = pieceObj.GetComponent<Chessman>();
+                piece.attack++;
+            }
+            EndDialogue();
+        }
+        else{
+            StartDialogue(Resources.Load<Dialogue>("Objects/Dialogues/BlacksmithNotEnoughCoins"));
+        }
+    }
+
+    public void UpgradeAttackCost(){
+        Game._instance.hero.playerCoins=0;
         foreach (var pieceObj in Game._instance.hero.pieces){
             var piece = pieceObj.GetComponent<Chessman>();
-            if (piece.type != PieceType.King && piece.type != PieceType.Queen)
-            {
-                piece.support++;
-            }
+            piece.attack++;
         }
+        EndDialogue();
+    }
+
+    public void DowngradeAttack(){
+        
+        foreach (var pieceObj in Game._instance.hero.pieces){
+            var piece = pieceObj.GetComponent<Chessman>();
+            piece.attack--;
+        }
+        EndDialogue();
+    }
+
+    public void DowngradeAttackCost(){
+        
+        Game._instance.hero.playerCoins=0;
+        foreach (var pieceObj in Game._instance.hero.pieces){
+            var piece = pieceObj.GetComponent<Chessman>();
+            piece.attack--;
+        }
+        EndDialogue();
     }
 
     public void AddEscapee(){
@@ -150,9 +193,10 @@ public class DialogueManager : MonoBehaviour
     public void LaunchEncounterDialogue(EncounterType encounterType){
         switch(encounterType){
             case EncounterType.EscapedPawn:
-            Dialogue dialogue = Resources.Load<Dialogue>("Objects/Dialogues/EscapedPeasant");
-            Debug.Log($"Dialogue=null : {dialogue==null}");
-                StartDialogue(dialogue);
+                StartDialogue(Resources.Load<Dialogue>("Objects/Dialogues/EscapedPeasant"));
+                break;
+            case EncounterType.Blacksmith:
+                StartDialogue(Resources.Load<Dialogue>("Objects/Dialogues/Blacksmith"));
                 break;
         }
 

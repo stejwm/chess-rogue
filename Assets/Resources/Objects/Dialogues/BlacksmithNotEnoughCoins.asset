@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0989ad662bb5efb48a0b05660053944b, type: 3}
+  m_Name: BlacksmithNotEnoughCoins
+  m_EditorClassIdentifier: 
+  description: 
+  sprite: {fileID: 21300000, guid: 52e207460730bce4d85a5eda887012d8, type: 3}
+  messages:
+  - message: "Tch. You come to me, demanding my steel, and you don\u2019t even have
+      the coin to back it up?"
+    options:
+    - optionText: Continue...
+      eventName: 
+      nextDialogue: {fileID: 0}
+  - message: "Some king you are. All talk, no gold. Just another crown-wearing bastard
+      thinking he\u2019s owed something for nothing."
+    options:
+    - optionText: Take what I've got, it's all I have to offer.
+      eventName: 
+      nextDialogue: {fileID: 11400000, guid: 7420d0f3eb6cdb64ca41968498fc0cdf, type: 2}
+    - optionText: Actually I think I'll have it for free, after all you have no king
+        to protect you now.
+      eventName: 
+      nextDialogue: {fileID: 0}
+  - message: "Oh? Gonna take it by force, are you? Try it. Let\u2019s see how well
+      your \u2018strong army\u2019 fights with blunted blades and rusted mail. If
+      you think you can rule with nothing but demands and empty threats, you won\u2019t
+      be a king for long."
+    options:
+    - optionText: Continue...
+      eventName: DowngradeAttack
+      nextDialogue: {fileID: 0}

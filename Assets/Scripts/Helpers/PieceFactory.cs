@@ -145,7 +145,7 @@ public class PieceFactory : MonoBehaviour
         string prefix = color == PieceColor.White ? "white" : "black";
         int backRow = color == PieceColor.White ? 0 : 7;
         int pawnRow = color == PieceColor.White ? 1 : 6;
-        owner.playerCoins= UnityEngine.Random.Range(10,30);
+        
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
             Create(PieceType.Rook, $"{prefix}_rook", 0, backRow, color, team, owner),
@@ -247,6 +247,29 @@ public class PieceFactory : MonoBehaviour
         return pieces;
     }
 
+    public List<GameObject> CreateRoyalFamily(Player owner, PieceColor color, Team team)
+    {
+        string prefix = color == PieceColor.White ? "white" : "black";
+        int backRow = color == PieceColor.White ? 0 : 7;
+        int pawnRow = color == PieceColor.White ? 1 : 6;
+        owner.playerCoins= UnityEngine.Random.Range(10,30);
+        // Create back row
+        List<GameObject> pieces = new List<GameObject> {
+            Create(PieceType.Queen, $"{prefix}_queen", 3, backRow, color, team, owner),
+            Create(PieceType.King, $"{prefix}_king", 4, backRow, color, team, owner),
+            Create(PieceType.Pawn, $"{prefix}_pawn", 3, pawnRow, color, team, owner),
+            Create(PieceType.Pawn, $"{prefix}_pawn", 4, pawnRow, color, team, owner),
+        };
+
+        foreach (var piece in pieces)
+        {
+            piece.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[17].Clone()); //Blood offering ability
+        }
+        
+
+        return pieces;
+    }
+
     public IEnumerator WaitForPieceToApplyAbility(Chessman piece, Ability ability){
         yield return new WaitUntil(() => piece.moveProfile!=null);
         yield return null;
@@ -316,6 +339,8 @@ public class PieceFactory : MonoBehaviour
                 return CreateDarkCult(opponent, opponent.color, Team.Enemy);
             case EnemyType.Mob:
                 return CreateAngryMob(opponent, opponent.color, Team.Enemy);
+            case EnemyType.RoyalFamily:
+                return CreateRoyalFamily(opponent, opponent.color, Team.Enemy);
         }
         return null;
     }

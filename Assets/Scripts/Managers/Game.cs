@@ -169,7 +169,8 @@ public class Game : MonoBehaviour
         ClearPiece(); 
         applyingAbility=false;
         yield return new WaitForSeconds(waitTime);
-        InventoryManager._instance.CloseInventory();
+        if(state==ScreenState.RewardScreen)
+            InventoryManager._instance.CloseInventory();
         yield break;
     }
     public void CardSelected(Card card){
@@ -221,7 +222,6 @@ public class Game : MonoBehaviour
         
     }
     public void PieceSelected(Chessman piece){
-        SpriteRenderer sprite;
         if (selectedPiece != null && selectedPiece == piece){
             //sprite= selectedPiece.GetComponent<SpriteRenderer>();
             //sprite.color = Color.white;
@@ -317,7 +317,7 @@ public class Game : MonoBehaviour
         BoardManager._instance.CreateBoard();
         opponent.pieces = PieceFactory._instance.CreateOpponentPieces(opponent, enemyType);
         opponent.Initialize();
-        opponent.LevelUp(level);
+        opponent.LevelUp(level, enemyType);
         NewMatch(hero, opponent);
     }
 
@@ -352,6 +352,19 @@ public class Game : MonoBehaviour
         foreach (var piece in pieces)
         {
             piece.GetComponent<BoxCollider2D>().enabled=active;
+        }
+    }
+
+    public void StopHeroFlames(){
+        foreach (var piece in hero.pieces)
+        {
+            piece.GetComponent<Chessman>().flames.Stop();
+        }
+    }
+    public void StopHeroHighlights(){
+        foreach (var piece in hero.pieces)
+        {
+            piece.GetComponent<Chessman>().highlightedParticles.Stop();
         }
     }
 }

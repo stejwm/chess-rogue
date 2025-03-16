@@ -61,13 +61,14 @@ public class KingsOrderManager : MonoBehaviour
         flames.Stop();
         yield return StartCoroutine(Dissolve());
         
-        if (index == 0)
+        if (Game._instance.hero.orders.Count <= 0)
         {
             parent.SetActive(false); // Now deactivate it *after* the coroutine finishes
             order = null;
         }
         else
         {
+            dissolveMaterial.SetFloat("_Weight", 0);
             order = Game._instance.hero.orders[0];
             UpdateCardUI();
         }

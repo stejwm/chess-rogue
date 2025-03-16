@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0989ad662bb5efb48a0b05660053944b, type: 3}
+  m_Name: Blacksmith
+  m_EditorClassIdentifier: 
+  description: 
+  sprite: {fileID: 21300000, guid: 52e207460730bce4d85a5eda887012d8, type: 3}
+  messages:
+  - message: "A new king, eh? Haven't seen one of your kind in some time. Most rulers
+      sit in their halls while the world burns. At least you\u2019ve got the spine
+      to be out here."
+    options:
+    - optionText: Continue...
+      eventName: 
+      nextDialogue: {fileID: 0}
+  - message: "So, what can I do for you? The steel I forge is second to none\u2014every
+      piece infused with the weight of experience. I could temper your army\u2019s
+      blades, but the method depends on what you're after."
+    options:
+    - optionText: Sharpen their edges. We need weapons that strike true.
+      eventName: 
+      nextDialogue: {fileID: 0}
+    - optionText: Reinforce their durability. We must strike with unbreakable force.
+      eventName: 
+      nextDialogue: {fileID: 0}
+    - optionText: What's a blacksmith doing out here in the middle of nowhere?
+      eventName: 
+      nextDialogue: {fileID: 11400000, guid: c63a3db3fe444e546b17487225b11737, type: 2}
+  - message: I'd say that'll do the trick, it'll cost you 75 pieces.
+    options:
+    - optionText: Thats a hefty price, I hope it's worth it. (pay 75 coins)
+      eventName: UpgradeAttack
+      nextDialogue: {fileID: 0}
+    - optionText: No thanks, we can manage on our own.
+      eventName: 
+      nextDialogue: {fileID: 0}

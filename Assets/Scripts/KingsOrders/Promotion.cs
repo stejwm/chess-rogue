@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using TMPro;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -77,12 +78,12 @@ public class Promotion : KingsOrder
         newPiece.color=piece.color;
         newPiece.team=piece.team;
         newPiece.type=piece.type;
-        newPiece.abilities=piece.abilities;
+        //newPiece.abilities= new List<Ability>(piece.abilities);
         newPiece.isValidForAttack=piece.isValidForAttack;
         newPiece.name=piece.name;
 
-        foreach (var ability in newPiece.abilities){
-            ability.Apply(newPiece);
+        foreach (var ability in piece.abilities){
+            newPiece.AddAbility(ability.Clone());
         }
         Game._instance.hero.pieces.Remove(piece.gameObject);
         Game._instance.hero.pieces.Add(newPiece.gameObject);

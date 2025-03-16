@@ -85,6 +85,8 @@ public abstract class Chessman : MonoBehaviour
 
     public MMF_Player effectsFeedback;
     public ParticleSystem flames;
+    public ParticleSystem highlightedParticles;
+    public ParticleSystem hexedParticles;
 
     public abstract List<BoardPosition> GetValidMoves();
     public abstract List<BoardPosition> GetValidSupportMoves();
