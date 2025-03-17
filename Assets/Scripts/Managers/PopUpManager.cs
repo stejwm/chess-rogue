@@ -82,6 +82,23 @@ public class PopUpManager : MonoBehaviour
 
 
     }
+    public void SetAndShowText(string text, GameObject parent){
+        alreadyActive = gameObject.activeSelf;
+        gameObject.SetActive(true);
+        
+        abilityInfoText.text=text;
+        abilityInfo.SetActive(true);
+    
+        abilityInfo.transform.position=parent.transform.position;
+        float xVal = abilityInfo.GetComponent<RectTransform>().localPosition.x;
+        if(xVal<0){
+            abilityInfo.GetComponent<RectTransform>().localPosition+=new Vector3(200,0);
+        }
+        else if(xVal>0)
+            abilityInfo.GetComponent<RectTransform>().localPosition-=new Vector3(200,0);
+
+
+    }
 
     public void HideAbilityInfo(){
         abilityInfoText.text=null;
@@ -97,6 +114,33 @@ public class PopUpManager : MonoBehaviour
         values.gameObject.SetActive(true);
         values.transform.position=piece.gameObject.transform.position;
         values.GetComponent<RectTransform>().localPosition+=new Vector3(96,0);
+        /* float xVal = values.GetComponent<RectTransform>().localPosition.x;
+        if(xVal<0)
+            
+        else if(xVal>0)
+            values.GetComponent<RectTransform>().localPosition-=new Vector3(48,0); */
+        
+    }
+    public void DiplomacyValues(Transform transform){
+        SetAndShowUpgrades(25,0, transform);
+    }
+    public void StatValues(Transform transform){
+        SetAndShowUpgrades(0,1, transform);
+    }
+    public void SetAndShowUpgrades(int coins, int blood, Transform transform){
+        alreadyActive = gameObject.activeSelf;
+        gameObject.SetActive(true);
+        if(coins!=0)
+            coinValue.text=":"+coins.ToString();
+        else
+            coinValue.text=":X";
+        if(blood!=0)
+            bloodValue.text=":"+blood.ToString();
+        else
+            bloodValue.text=":X";
+        values.gameObject.SetActive(true);
+        values.transform.position=transform.position;
+        values.GetComponent<RectTransform>().localPosition+=new Vector3(-85,0);
         /* float xVal = values.GetComponent<RectTransform>().localPosition.x;
         if(xVal<0)
             

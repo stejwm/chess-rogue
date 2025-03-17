@@ -10,11 +10,11 @@ public class ManagementStatManager : MonoBehaviour
 {
     
     public static ManagementStatManager _instance;
-    public Text attack;
-    public Text defense;
-    public Text support;
+    public TMP_Text attack;
+    public TMP_Text defense;
+    public TMP_Text support;
+    public TMP_Text diplomacy;
     public TMP_Text value;
-    public Text info;
     public Text pieceName;
     public Image image;
     public GameObject abilityUI;
@@ -73,9 +73,10 @@ public class ManagementStatManager : MonoBehaviour
         StartCoroutine(SetAbilities(piece));
     }
     private void updateStats(){
-        this.attack.text="attack: "+piece.attack;
-        this.defense.text="defense: "+piece.defense;
-        this.support.text="support: "+piece.support;
+        this.attack.text = "<sprite name=\"sword\">: " + piece.CalculateAttack();
+        this.defense.text = "<sprite name=\"shield\">: " + piece.CalculateDefense();
+        this.support.text = "<sprite name=\"cross\">: " + piece.CalculateSupport();
+        this.diplomacy.text = piece.diplomacy.ToString();
         this.pieceName.text=piece.name;
         this.value.text=": "+piece.releaseCost;
         this.image.sprite=piece.GetComponent<SpriteRenderer>().sprite;
@@ -94,6 +95,16 @@ public class ManagementStatManager : MonoBehaviour
         if (Game._instance.hero.playerBlood >=1){
             piece.attack+=1;
             Game._instance.hero.playerBlood -=1;
+        }
+        updateStats();
+        ArmyManager._instance.UpdateCurrency();
+        ShopManager._instance.UpdateCurrency();
+    }
+
+    public void DiplomacyUp(){
+        if (Game._instance.hero.playerCoins >=25){
+            piece.diplomacy+=1;
+            Game._instance.hero.playerCoins -=25;
         }
         updateStats();
         ArmyManager._instance.UpdateCurrency();

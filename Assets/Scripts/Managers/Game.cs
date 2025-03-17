@@ -12,6 +12,7 @@ using UnityEngine.UIElements;
 using System.Linq;
 using Rand= System.Random;
 using MoreMountains.Feedbacks;
+using System.Text.RegularExpressions;
 
 
 public enum ScreenState
@@ -73,6 +74,7 @@ public class Game : MonoBehaviour
     public bool endEpisode = false;
     public bool tileSelect = false;
     public bool shopUsed =false;
+    public bool tutorial =false;
 
 
 
@@ -100,6 +102,11 @@ public class Game : MonoBehaviour
         //Time.timeScale = 0.5f;
         NameDatabase.LoadNames();
         BoardManager._instance.CreateBoard();
+        LetsBegin();
+        
+    }
+
+    public void LetsBegin(){
         DialogueManager._instance.StartDialogue(AllDialogues[0]);
         heroColor=PieceColor.White;
         opponent.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(opponent, opponent.color, Team.Enemy);
@@ -107,7 +114,17 @@ public class Game : MonoBehaviour
         hero.Initialize();
         opponent.Initialize();
         NewMatch(hero, opponent);
-        
+    }
+
+    public void Tutorial(){
+        heroColor=PieceColor.White;
+        opponent.pieces = PieceFactory._instance.CreatePiecesForColor(opponent, opponent.color, Team.Enemy);
+        hero.pieces = PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
+        hero.Initialize();
+        opponent.Initialize();
+        ChessMatch match =  new ChessMatch(hero, opponent);
+        currentMatch = match;
+        match.TutorialMatch();
     }
 
     public void OpenMarket(){

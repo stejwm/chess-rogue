@@ -19,9 +19,15 @@ public class Menu : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        QualitySettings.vSyncCount = 0; // Set vSyncCount to 0 so that using .targetFrameRate is enabled.
+        Application.targetFrameRate = 60;
+        if (Display.displays.Length > 1) // Ensure multiple displays are available
+        {
+            Display.displays[1].Activate(); // Activate second display
+            Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow); // Adjust as needed
+        }
     }
 
     public void StartGame(){

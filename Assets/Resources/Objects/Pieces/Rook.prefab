@@ -592,8 +592,8 @@ MonoBehaviour:
   SpringVector3:
     SeparateAxis: 0
     UnifiedSpring:
-      Damping: 0.4
-      Frequency: 6
+      Damping: 0.5
+      Frequency: 3
       ClampSettings:
         ClampMin: 0
         ClampMinValue: 0

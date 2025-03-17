@@ -68,6 +68,8 @@ public class MarketManager : MonoBehaviour
             {
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 5;
+                piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=4;
+                piece.GetComponent<Chessman>().flames.GetComponent<Renderer>().sortingOrder=6;
             }
             
         }
@@ -80,6 +82,9 @@ public class MarketManager : MonoBehaviour
             {
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 5;
+                piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=4;
+                piece.GetComponent<Chessman>().flames.GetComponent<Renderer>().sortingOrder=2;
+
             }
             Chessman chessman = piece.GetComponent<Chessman>();
             if(chessman.owner == Game._instance.hero){
@@ -87,7 +92,7 @@ public class MarketManager : MonoBehaviour
                     Debug.Log("checking diplomacy for "+piece.name);
                     int survive = Random.Range(1,10);
                     Debug.Log("Rolled "+survive+" and diplomacy is "+chessman.diplomacy);
-                    if(survive<=(chessman.abilities.Count -chessman.diplomacy)){
+                    if(survive<=((chessman.abilities.Count -chessman.diplomacy)*2)){
                         Debug.Log("decimated from diplomacy check");
                         decimatedPieces.Add(piece);
                         Destroy(piece);
@@ -131,8 +136,7 @@ public class MarketManager : MonoBehaviour
         foreach (Chessman item in selectedPieces)
         {
             Game._instance.hero.playerCoins+= item.releaseCost;
-            SpriteRenderer sprite= item.GetComponent<SpriteRenderer>();
-            sprite.color = Color.white;
+            item.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             item.gameObject.SetActive(false);
         }
         coinText.text = ": "+ Game._instance.hero.playerCoins;
@@ -146,7 +150,7 @@ public class MarketManager : MonoBehaviour
             if (selectedPieces.Contains(piece)){
                 Game._instance.hero.playerCoins-= piece.releaseCost;
                 SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
-                sprite.color = Color.white;
+                piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 piece.gameObject.SetActive(false);
                 Game._instance.hero.pieces.Add(piece.gameObject);
                 opponentCapturedPieces.Remove(piece.gameObject);
@@ -185,15 +189,13 @@ public class MarketManager : MonoBehaviour
 
         if(selectedPieces.Contains(piece)){
             selectedPieces.Remove(piece);
-            SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
-            sprite.color = Color.white;
+            piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             if(piece.color==Game._instance.heroColor)
                 totalCost-=piece.releaseCost;
         }
         else{
             selectedPieces.Add(piece);
-            SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
-            sprite.color = Color.green;
+            piece.highlightedParticles.Play();
             if(piece.color==Game._instance.heroColor)
                 totalCost+=piece.releaseCost;
         }

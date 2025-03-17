@@ -66,6 +66,7 @@ public class MoveManager: MonoBehaviour
             match.MovePiece(movingPiece, x,y);
             Game._instance.OnRawMoveEnd.Invoke(movingPiece, new BoardPosition(x,y));
             BoardManager._instance.ClearTiles();
+            movingPiece.flames.Stop();
             match.NextTurn();
             Game._instance.isInMenu=false;
             
@@ -174,6 +175,7 @@ public class MoveManager: MonoBehaviour
         attackingUnits.Clear();
         Game._instance.isInMenu=false;
         pitch=1f;
+        movingPiece.flames.Stop();
 
         if(!gameOver)
             StartCoroutine(CallNextTurn());
@@ -286,6 +288,7 @@ public class MoveManager: MonoBehaviour
             }
             if (gameOver){
                 Game._instance.OnGameEnd.Invoke(movingPiece.color);
+                movingPiece.flames.Stop();
                 match.EndGame();
                 gameOver=false;
                 yield break;

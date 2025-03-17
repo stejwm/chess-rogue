@@ -48,6 +48,11 @@ public class DialogueManager : MonoBehaviour
         WriterEffect.CompleteTextRevealed-=ShowOptions;
     }
 
+    public void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
 
     public void ShowDialogue(Dialogue.DialogueMessage message)
     {

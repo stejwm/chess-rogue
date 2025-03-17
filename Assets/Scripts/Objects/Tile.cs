@@ -202,7 +202,8 @@ public class Tile : MonoBehaviour
             /* Game._instance.currentMatch.currentPlayer.SetSelectedPiece(reference);
             Game._instance.currentMatch.currentPlayer.SetSelectedDestination(new BoardPosition(position.x, position.y));
             Game._instance.currentMatch.currentPlayer.RequestDecision(); */
-            StatBoxManager._instance.UnlockView();
+            Debug.Log("On Move true");
+            StatBoxManager._instance.UnlockView(true);
             //reference.flames.Stop();
             Game._instance.currentMatch.ExecuteTurn(reference, position.x, position.y);
         }

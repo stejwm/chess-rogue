@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using UnityEditor.U2D.Aseprite;
 
 public class TileFactory : MonoBehaviour
 {

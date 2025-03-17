@@ -55,6 +55,7 @@ public class ShopManager : MonoBehaviour
             {
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 5;
+                piece.GetComponent<Chessman>().flames.GetComponent<Renderer>().sortingOrder=6;
             }
             
         }
@@ -166,6 +167,8 @@ public class ShopManager : MonoBehaviour
             {
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 1;
+                piece.GetComponent<Chessman>().flames.GetComponent<Renderer>().sortingOrder=2;
+                piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=0;
             }
         }
         foreach (GameObject piece in Game._instance.hero.inventoryPieces)
@@ -174,6 +177,8 @@ public class ShopManager : MonoBehaviour
             {
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 1;
+                piece.GetComponent<Chessman>().flames.GetComponent<Renderer>().sortingOrder=2;
+                piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=0;
             }
         }
         foreach (GameObject piece in pieces)

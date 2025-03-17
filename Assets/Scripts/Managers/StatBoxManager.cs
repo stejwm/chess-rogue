@@ -40,10 +40,13 @@ public class StatBoxManager : MonoBehaviour
         piece.flames.Play();
         lockedPiece=piece;
     }
-    public void UnlockView(){
+    public void UnlockView(bool isOnAttack=false){
         lockView=false;
-        if (lockedPiece){
+        if (lockedPiece && !isOnAttack){
+            Debug.Log("Stopping Flames");
             lockedPiece.flames.Stop();
+        }
+        if(lockedPiece){
             lockedPiece=null;
         }
     }

@@ -35,6 +35,26 @@ public class ChessMatch
         
     }
 
+    public void TutorialMatch(){
+        Game._instance.tutorial=true;
+        CoroutineRunner.instance.StartCoroutine(Tutorial());
+
+    }
+
+    public IEnumerator Tutorial(){
+        MovePiece(positions[1,0].GetComponent<Chessman>(), 0, 2); // White knight
+        MovePiece(positions[3,1].GetComponent<Chessman>(), 3, 1); // White D pawn
+        MovePiece(positions[4,1].GetComponent<Chessman>(), 4, 3); // White E pawn
+        MovePiece(positions[1,7].GetComponent<Chessman>(), 2, 5); // Black night 
+        MovePiece(positions[3,7].GetComponent<Chessman>(), 5, 5); //Black queen
+        MovePiece(positions[5,7].GetComponent<Chessman>(), 7, 3); //Black bishop
+        MovePiece(positions[6,7].GetComponent<Chessman>(), 6, 3); //Black night
+        MovePiece(positions[3,6].GetComponent<Chessman>(), 3, 5); //Black D pawn
+        MovePiece(positions[4,6].GetComponent<Chessman>(), 4, 4); //Black E pawn
+
+        yield return null;
+    }
+
     public void StartMatch(){
         KingsOrderManager._instance.Setup();
         white.CreateMoveCommandDictionary();
@@ -180,7 +200,7 @@ public class ChessMatch
     public void NextTurn()
     {
         //Debug.Log("IsTurnOverride? "+turnOverride);
-        if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride || Game._instance.pauseOverride)
+        if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride || Game._instance.pauseOverride || Game._instance.tutorial)
             return;
         if (currentPlayerColor == PieceColor.White)
         {
