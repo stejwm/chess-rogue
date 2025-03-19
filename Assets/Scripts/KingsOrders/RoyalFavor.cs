@@ -17,6 +17,7 @@ public class RoyalFavor : KingsOrder
         yield return new WaitUntil(() => BoardManager._instance.selectedPosition !=null);
         Game._instance.tileSelect=false;
         BoardPosition targetPosition = BoardManager._instance.selectedPosition;
+        BoardManager._instance.selectedPosition=null;
         var Chessobj = Game._instance.currentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
         if(Chessobj==null){
             Debug.Log("No piece at possition");

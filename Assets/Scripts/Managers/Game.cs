@@ -60,13 +60,14 @@ public class Game : MonoBehaviour
     public int defenseSupport;
     public int baseAttack;
     public int baseDefense;
+    public int abandonedPieces;
     public static Game _instance;
 
     //Variables for selecting cards
     public Card selectedCard;
     private List<GameObject> cards = new List<GameObject>();
     private Chessman selectedPiece;
-    private bool applyingAbility=false;
+    public bool applyingAbility=false;
     public bool isInMenu =false;
     public bool isDecimating =false;
     public bool pauseOverride =false;

@@ -18,6 +18,8 @@ public class Card : MonoBehaviour
 
     public MMF_Player FlipPlayer;
     public bool cardFlipped =false;
+    public bool cardFlipping =false;
+
     
     public bool isDissolved=false;
     public GameObject price;
@@ -50,7 +52,7 @@ public class Card : MonoBehaviour
     }
 
     void OnMouseDown(){
-        if (Game._instance.isInMenu)
+        if (Game._instance.isInMenu || Game._instance.applyingAbility)
         {
             return;
         }
@@ -75,18 +77,19 @@ public class Card : MonoBehaviour
                 }
             }
     }
-    void OnMouseOver(){
+    void OnMouseEnter(){
         if (Game._instance.isInMenu)
         {
             return;
         }
-        FlipCard();
+        StartCoroutine(CardHovered());
 
     }
-
-    private void FlipCard(){
-        if (!cardFlipped){
+    public IEnumerator CardHovered(){
+        if (!cardFlipped && !cardFlipping){
+            cardFlipping=true;
             FlipPlayer.PlayFeedbacks();
+            
             this.GetComponent<SpriteRenderer>().sprite=front;
             if(ability!=null){
                 effect.text= ability.description;
@@ -95,8 +98,21 @@ public class Card : MonoBehaviour
                 effect.text= order.Description;
                 title.text= order.Name;
             }
+            yield return new WaitForSeconds(FlipPlayer.TotalDuration);
             cardFlipped=true;
         }
+        if(cardFlipped){
+            Debug.Log("Bump Up");
+            gameObject.GetComponent<MMSpringPosition>().MoveToAdditive(new Vector3(0,1,0));
+        }
+    }
+
+    void OnMouseExit(){
+        if(cardFlipped){
+            Debug.Log("Bump Down");
+            gameObject.GetComponent<MMSpringPosition>().MoveToSubtractive(new Vector3(0,1,0));
+        }
+
     }
     public void ShowPrice(){
         if(ability!=null)

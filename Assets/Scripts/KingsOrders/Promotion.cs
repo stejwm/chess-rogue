@@ -18,13 +18,12 @@ public class Promotion : KingsOrder
     public Promotion() : base("Promotion", "Promotes a pawn to a new rank") {}
 
     public override IEnumerator Use(){
-        Debug.Log("Promotion... Waiting for piece select");
         Player hero = Game._instance.hero;
         Game._instance.tileSelect=true;
         yield return new WaitUntil(() => BoardManager._instance.selectedPosition !=null);
         Game._instance.tileSelect=false;
-        Debug.Log("position selected");
         BoardPosition targetPosition = BoardManager._instance.selectedPosition;
+        BoardManager._instance.selectedPosition=null;
         var Chessobj = Game._instance.currentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
         if(Chessobj==null){
             Debug.Log("No piece at possition");

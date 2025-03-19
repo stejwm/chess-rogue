@@ -114,6 +114,8 @@ public class MarketManager : MonoBehaviour
             Chessman cm = piece.GetComponent<Chessman>();
             Game._instance.hero.openPositions.Add(cm.startingPosition);
             Destroy(piece);
+            Game._instance.abandonedPieces++;
+            Debug.Log("AbandonedPieces :"+Game._instance.abandonedPieces);
             
         }
         if(myCapturedPieces.Count>0)

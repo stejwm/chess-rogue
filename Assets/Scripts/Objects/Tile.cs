@@ -153,13 +153,11 @@ public class Tile : MonoBehaviour
             if(piece== null || piece.owner == Game._instance.hero)
                 BoardManager._instance.ClearTiles();
             if(piece!=null && piece.owner==Game._instance.hero && piece==StatBoxManager._instance.lockedPiece){
-                Debug.Log("Already selected piece clicked");
                 StatBoxManager._instance.UnlockView();
                 //piece.flames.Stop();
                 piece.validMoves.Clear();
             }
             else if(piece!=null && piece.isValidForAttack && piece.owner==Game._instance.hero){
-                Debug.Log("New piece clicked");
                 //Game._instance.StopHeroFlames();
                 StatBoxManager._instance.UnlockView();
                 piece.validMoves.Clear();
@@ -170,14 +168,12 @@ public class Tile : MonoBehaviour
                 StatBoxManager._instance.LockView(piece);
             }
             else if(piece!=null && piece.owner!=Game._instance.hero && piece == StatBoxManager._instance.enemyLockedPiece){
-                Debug.Log("Enemy Clicked while locked");
                 StatBoxManager._instance.UnlockEnemyView();
                 //piece.validMoves.Clear();
             }
             else if(piece!=null && piece.owner!=Game._instance.hero){
-                Debug.Log("Any enemy clicked");
                 StatBoxManager._instance.UnlockEnemyView();
-                //piece.validMoves.Clear();
+                StatBoxManager._instance.SetAndShowEnemyStats(piece);
                 StatBoxManager._instance.LockEnemyView(piece);
             }
             else if(piece==null){

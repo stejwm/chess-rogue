@@ -50,7 +50,7 @@ public class ManagementStatManager : MonoBehaviour
             //piece.startingPosition = piece.owner.openPositions[0];
             ShopManager._instance.pieces.Remove(piece.gameObject);
             piece.gameObject.SetActive(false);
-            ArmyManager._instance.UpdateCurrency();
+            ShopManager._instance.UpdateCurrency();
             HideStats();
         }
     }

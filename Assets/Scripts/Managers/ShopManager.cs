@@ -102,7 +102,7 @@ public class ShopManager : MonoBehaviour
             obj = PieceFactory._instance.CreateRandomPiece();
             obj.transform.position=localPosition;
             Chessman cm = obj.GetComponent<Chessman>();
-            cm.xBoard=2+i;
+            cm.xBoard=7+i;
             cm.yBoard = 3;
             cm.UpdateUIPosition();
             SpriteRenderer rend = obj.GetComponent<SpriteRenderer>();

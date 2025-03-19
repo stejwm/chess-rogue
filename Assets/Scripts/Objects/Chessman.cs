@@ -182,7 +182,7 @@ public abstract class Chessman : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (Game._instance.isInMenu)
+        if (Game._instance.isInMenu || Game._instance.applyingAbility)
         {
             return;
         }
