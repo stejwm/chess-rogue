@@ -85,6 +85,8 @@ public class MapManager : MonoBehaviour
 
             currentNode = node;
             NextMatch(enemyType);
+            node.nodeImage.color = Color.black;
+
             Debug.Log("Selected enemy node: " + node.nodeName);
         }
         // Implement logic to start the match with the selected node's enemies
@@ -99,21 +101,14 @@ public class MapManager : MonoBehaviour
         }
         else{
             Debug.Log("Selected shop node: " + node.nodeName);
-            // Implement logic to open the shop
+            node.nodeImage.color = Color.black;
             OpenShop();
         }
     }
 
     public void SelectEncounterNode(MapNode node, EncounterType encounterType)
     {
-        foreach (var mapNode in currentNode.connectedNodes)
-        {
-            Debug.Log($"Selected node: {node.nodeName} Connected node: {mapNode.nodeName}");
-            Debug.Log($"Selected node: {node.nodeType} Connected node: {mapNode.nodeType}");
-            Debug.Log($"Selected node: {node.enemyType} Connected node: {mapNode.enemyType}");
-            Debug.Log($"Selected node: {node.encounterType} Connected node: {mapNode.encounterType}");
-            Debug.Log($"Nodes equal: {node.Equals(mapNode)}");
-        }
+        
         if (node.isCompleted || !currentNode.connectedNodes.Contains(node))
         {
             Debug.Log("Node not legal");
@@ -121,6 +116,7 @@ public class MapManager : MonoBehaviour
         }
         else{
             DialogueManager._instance.LaunchEncounterDialogue(encounterType);
+            node.nodeImage.color = Color.black;
         }
     }
 
@@ -198,7 +194,7 @@ public class MapManager : MonoBehaviour
             // mapNode.nodeImage.sprite = ... (assign the appropriate sprite here)
 
             // Set the color of the node to black
-            mapNode.nodeImage.color = Color.black;
+            mapNode.nodeImage.color = new Color(69 / 255f, 69/255f, 69/255f);
 
             mapNodes.Add(mapNode);
             secondPathNodes.Add(mapNode);
@@ -276,7 +272,7 @@ public class MapManager : MonoBehaviour
             mapNodeSecond.isCompleted = false;
             mapNodeSecond.encounterType = (EncounterType)Random.Range(0, System.Enum.GetValues(typeof(EncounterType)).Length);
             mapNodeSecond.nodeType = nodeType;
-            mapNodeSecond.nodeImage.color = Color.black;
+            mapNodeSecond.nodeImage.color = new Color(69/255f, 69/255f, 69/255f);
 
             mapNodes.Add(mapNodeSecond);
             secondPathNodes.Add(mapNodeSecond);

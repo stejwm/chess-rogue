@@ -26,9 +26,9 @@ public class RadiatingDeath : Ability
     public void RadiateDeath(Chessman attacker, Chessman defender){
         if (defender==piece){
             piece.effectsFeedback.PlayFeedbacks();
-            defender.attackBonus--;
-            defender.supportBonus--;
-            defender.defenseBonus--;
+            attacker.attackBonus--;
+            attacker.supportBonus--;
+            attacker.defenseBonus--;
         }
     }
 

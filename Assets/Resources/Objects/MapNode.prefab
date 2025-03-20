@@ -199,6 +199,7 @@ MonoBehaviour:
   connectedNodes: []
   nodeType: 0
   enemyType: 0
+  encounterType: 0
   nodeImage: {fileID: 3094449813305587882}
 --- !u!114 &3094449813305587882
 MonoBehaviour:

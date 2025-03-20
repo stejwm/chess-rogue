@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,6 +57,9 @@ public class MapNode : MonoBehaviour
                 MapManager._instance.SelectEncounterNode(this, encounterType);
                 break;
         }
+
+        
+        
     }
 
     public override bool Equals(object obj)
