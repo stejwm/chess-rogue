@@ -363,7 +363,7 @@ public class PieceFactory : MonoBehaviour
     public GameObject CreateRandomPiece(){
         Array values = Enum.GetValues(typeof(PieceType));
         System.Random random = new System.Random();
-        if(random.Next(100)>16){
+        if(random.Next(100)<16){
             return Create(PieceType.Jester,"pieceName",-1,-1,Game._instance.heroColor,Team.Hero,null);
         }
         PieceType randPieceType = (PieceType)values.GetValue(random.Next(values.Length-3));
@@ -373,6 +373,7 @@ public class PieceFactory : MonoBehaviour
 
     public IEnumerator DelayedDestroy(Chessman piece){
         yield return null;
-        Destroy(piece.gameObject);
+        if(piece !=null)
+            Destroy(piece.gameObject);
     }
 }
