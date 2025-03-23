@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "SoulBond", menuName = "Abilities/SoulBond")]
+public class SoulBond : Ability
+{
+    private Chessman piece;
+    
+    public SoulBond() : base("Soul Bond", "Permanently gain +5 to each stat for each soul bonded piece, when any soul bonded piece is captured, all are captured") {}
+
+    public override void Apply(Chessman piece)
+    {
+        this.piece = piece;
+        piece.info += " " + abilityName;
+        Game._instance.OnPieceCaptured.AddListener(Capture);
+        piece.releaseCost+=20;
+        base.Apply(piece);
+    }
+
+    public override void Remove(Chessman piece)
+    {
+        Game._instance.OnPieceCaptured.RemoveListener(Capture); 
+
+    }
+    public void Capture(Chessman attacker, Chessman defender){
+        if(defender.color == piece.color && defender.abilities.OfType<SoulBond>().FirstOrDefault()!=null && !defender.hexed && !piece.hexed){
+            Game._instance.currentMatch.SetPositionEmpty(piece.xBoard, piece.yBoard);
+            piece.gameObject.SetActive(false);
+            attacker.owner.capturedPieces.Add(attackedPiece.gameObject);
+            BoardManager._instance.GetTileAt(piece.xBoard, piece.yBoard).SetBloodTile();
+            Game._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece); 
+        }
+    }
+
+}

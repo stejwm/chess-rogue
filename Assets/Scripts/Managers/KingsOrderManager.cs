@@ -75,6 +75,9 @@ public class KingsOrderManager : MonoBehaviour
     }
 
     public void UpdateCardUI(){
+        title.color = Color.white;
+        effect.color = Color.white;
+
         title.text= order.Name;
         effect.text= order.Description;
     }

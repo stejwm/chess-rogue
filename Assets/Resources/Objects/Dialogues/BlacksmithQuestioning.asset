@@ -21,7 +21,7 @@ MonoBehaviour:
       craft for those who ask\u2026 and those who deserve."
     options:
     - optionText: Well then let me ask, am I deserving?
-      eventName: 
+      eventName: UpgradeAttack
       nextDialogue: {fileID: 0}
     - optionText: Whatever it costs, I'll take your finest.
       eventName: UpgradeAttackCost
