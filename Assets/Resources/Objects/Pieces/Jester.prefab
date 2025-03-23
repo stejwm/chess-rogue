@@ -390,7 +390,7 @@ MonoBehaviour:
   xBoard: -1
   yBoard: -1
   owner: {fileID: 0}
-  droppingSprite: {fileID: 0}
+  droppingSprite: {fileID: 8466642962775998541, guid: f40e561e78ae26d4394d9677bc6b7016, type: 3}
   attackingSprite: {fileID: 0}
   attack: 1
   defense: 1
@@ -412,8 +412,8 @@ MonoBehaviour:
   wasHexed: 0
   canStationarySlash: 0
   supportFloatingText: {fileID: 0}
-  blackSprite: {fileID: 21300000, guid: 518fb2a5411a12646bacbde8ad277c28, type: 3}
-  whiteSprite: {fileID: 21300000, guid: 518fb2a5411a12646bacbde8ad277c28, type: 3}
+  blackSprite: {fileID: 21300000, guid: 96b4bfe33dce1284fb3911fa787e2118, type: 3}
+  whiteSprite: {fileID: 21300000, guid: 434b41ae68e03e640928f3b619de9613, type: 3}
   effectsFeedback: {fileID: 5536543186642219935}
   flames: {fileID: 6382819837993637800}
   highlightedParticles: {fileID: 282704021301466068}

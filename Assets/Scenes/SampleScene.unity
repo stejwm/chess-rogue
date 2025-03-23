@@ -3855,6 +3855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCoins: 0
   playerBlood: 0
+  soulBondedPieces: 0
   color: 1
   pieces: []
   capturedPieces: []
@@ -5103,6 +5104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCoins: 0
   playerBlood: 0
+  soulBondedPieces: 0
   color: 0
   pieces: []
   capturedPieces: []
@@ -7371,6 +7373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCoins: 0
   playerBlood: 0
+  soulBondedPieces: 0
   color: 0
   pieces: []
   capturedPieces: []
@@ -17160,6 +17163,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnGameEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSoulBonded:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &1624334842
