@@ -24,6 +24,7 @@ public abstract class Player: MonoBehaviour
 {
     public int playerCoins = 0;
     public int playerBlood = 0;
+    public int soulBondedPieces = 0;
     public PieceColor color;
     public List<GameObject> pieces;
     public List<GameObject> capturedPieces = new List<GameObject>();

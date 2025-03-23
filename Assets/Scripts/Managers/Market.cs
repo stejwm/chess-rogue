@@ -140,6 +140,8 @@ public class MarketManager : MonoBehaviour
             Game._instance.hero.playerCoins+= item.releaseCost;
             item.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             item.gameObject.SetActive(false);
+            if(item.owner == Game._instance.hero)
+                Game._instance.hero.openPositions.Add(item.startingPosition);
         }
         coinText.text = ": "+ Game._instance.hero.playerCoins;
         selectedPieces.Clear();
@@ -173,6 +175,8 @@ public class MarketManager : MonoBehaviour
             Game._instance.hero.playerBlood+= item.blood;
             myCapturedPieces.Remove(item.gameObject);
             item.gameObject.SetActive(false);
+            if(item.owner == Game._instance.hero)
+                Game._instance.hero.openPositions.Add(item.startingPosition);
         }
         bloodText.text = ": "+Game._instance.hero.playerBlood;
         selectedPieces.Clear();

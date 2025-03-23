@@ -89,6 +89,7 @@ public class Game : MonoBehaviour
     public UnityEvent<Chessman, Chessman, Chessman> OnSupportAdded = new UnityEvent<Chessman, Chessman, Chessman>();
     public UnityEvent OnChessMatchStart = new UnityEvent();
     public UnityEvent<PieceColor> OnGameEnd= new UnityEvent<PieceColor>();
+    public UnityEvent OnSoulBonded= new UnityEvent();
 
     public void Awake(){
         if(_instance !=null && _instance !=this){

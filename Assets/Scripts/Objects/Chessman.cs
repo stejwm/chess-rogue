@@ -28,7 +28,8 @@ public enum PieceType
     Rook,
     Queen,
     King,
-    None
+    None,
+    Jester,
 }
 public abstract class Chessman : MonoBehaviour
 {

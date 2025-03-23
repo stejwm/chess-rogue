@@ -103,14 +103,14 @@ public class Card : MonoBehaviour
         }
         if(cardFlipped){
             Debug.Log("Bump Up");
-            gameObject.GetComponent<MMSpringPosition>().MoveToAdditive(new Vector3(0,1,0));
+            //gameObject.GetComponent<MMSpringPosition>().MoveToAdditive(new Vector3(0,1,0));
         }
     }
 
     void OnMouseExit(){
         if(cardFlipped){
             Debug.Log("Bump Down");
-            gameObject.GetComponent<MMSpringPosition>().MoveToSubtractive(new Vector3(0,1,0));
+            //gameObject.GetComponent<MMSpringPosition>().MoveToSubtractive(new Vector3(0,1,0));
         }
 
     }

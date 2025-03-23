@@ -66,6 +66,33 @@ public static class Movement
         return validMoves;
     }   
 
+    public static List<BoardPosition> ValidJesterMoves(Chessman piece, int xBoard, int yBoard)
+    {
+        var validMoves = new List<BoardPosition>
+        {
+            new BoardPosition(xBoard + 1, yBoard),
+            new BoardPosition(xBoard - 1, yBoard),
+            new BoardPosition(xBoard, yBoard + 1),
+            new BoardPosition(xBoard, yBoard - 1),
+            new BoardPosition(xBoard + 3, yBoard),
+            new BoardPosition(xBoard - 3, yBoard),
+            new BoardPosition(xBoard, yBoard + 3),
+            new BoardPosition(xBoard, yBoard - 3),
+            new BoardPosition(xBoard-2, yBoard +3),
+            new BoardPosition(xBoard-2, yBoard - 3),
+            new BoardPosition(xBoard-3, yBoard - 2),
+            new BoardPosition(xBoard-3, yBoard +2),
+            new BoardPosition(xBoard+2, yBoard +3),
+            new BoardPosition(xBoard+2, yBoard - 3),
+            new BoardPosition(xBoard+3, yBoard - 2),
+            new BoardPosition(xBoard+3, yBoard +2),
+        };
+        validMoves = validMoves.Where(pos =>
+        IsWithinBounds(pos.x, pos.y)
+        ).ToList();
+        return validMoves;
+    }   
+
     public static List<BoardPosition> ValidKingMoves(Chessman piece, int xBoard, int yBoard)
     {
         var validMoves = new List<BoardPosition>

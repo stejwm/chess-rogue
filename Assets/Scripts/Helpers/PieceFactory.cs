@@ -15,6 +15,7 @@ public class PieceFactory : MonoBehaviour
     public GameObject rook;
     public GameObject queen;
     public GameObject king;
+    public GameObject jester;
 
     public static PieceFactory _instance;
     //private BoardManager boardManager;
@@ -354,6 +355,7 @@ public class PieceFactory : MonoBehaviour
             case PieceType.King: return king;
             case PieceType.Rook: return rook;
             case PieceType.Pawn: return pawn;
+            case PieceType.Jester: return jester;
             default: return null;
         }
     }
@@ -361,8 +363,16 @@ public class PieceFactory : MonoBehaviour
     public GameObject CreateRandomPiece(){
         Array values = Enum.GetValues(typeof(PieceType));
         System.Random random = new System.Random();
-        PieceType randPieceType = (PieceType)values.GetValue(random.Next(values.Length-1));
+        if(random.Next(100)>16){
+            return Create(PieceType.Jester,"pieceName",-1,-1,Game._instance.heroColor,Team.Hero,null);
+        }
+        PieceType randPieceType = (PieceType)values.GetValue(random.Next(values.Length-3));
         string pieceName = (Game._instance.heroColor+"_"+randPieceType).ToLower();
         return Create(randPieceType,pieceName,-1,-1,Game._instance.heroColor,Team.Hero,null);
+    }
+
+    public IEnumerator DelayedDestroy(Chessman piece){
+        yield return null;
+        Destroy(piece.gameObject);
     }
 }
