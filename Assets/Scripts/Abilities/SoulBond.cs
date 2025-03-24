@@ -70,9 +70,11 @@ public class SoulBond : Ability
     }
     public void Capture(Chessman attacker, Chessman defender){
         if(defender.color == piece.color && defender!=piece && defender.abilities.OfType<SoulBond>().FirstOrDefault()!=null && !defender.hexed && !piece.hexed){
+            if(piece.type==PieceType.King){
+                MoveManager._instance.gameOver=true;
+            }
             Game._instance.OnPieceCaptured.RemoveListener(Capture); 
             Game._instance.currentMatch.SetPositionEmpty(piece.xBoard, piece.yBoard);
-            //piece.gameObject.SetActive(false);
             BoardManager._instance.GetTileAt(piece.xBoard, piece.yBoard).SetBloodTile();
             Game._instance.OnPieceCaptured.Invoke(attacker, piece);
             piece.owner.pieces.Remove(piece.gameObject);

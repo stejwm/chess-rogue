@@ -39,6 +39,7 @@ public class Vampire : Ability
     }
     public void MatchStartBonus(){
         Debug.Log("Applying vamp at match start");
+        bonus=0;
         AddBonus(piece, piece.startingPosition);
     }
     public void AddBonus(Chessman mover, BoardPosition targetPosition)

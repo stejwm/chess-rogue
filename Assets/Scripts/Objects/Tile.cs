@@ -147,6 +147,9 @@ public class Tile : MonoBehaviour
         {
             return;
         }
+        else if(Game._instance.state == ScreenState.ManagementScreen){
+            ArmyManager._instance.PositionSelect(this.position);
+        }
         else if(!isValidMove && !Game._instance.currentMatch.isSetUpPhase){
             
             var piece =getPiece();
@@ -187,7 +190,7 @@ public class Tile : MonoBehaviour
 
     
     private void OnMouseUp(){
-        if (Game._instance.isInMenu)
+        if (Game._instance.isInMenu || Game._instance.currentMatch==null)
         {
             return;
         }

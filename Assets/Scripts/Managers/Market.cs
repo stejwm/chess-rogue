@@ -95,6 +95,7 @@ public class MarketManager : MonoBehaviour
                     if(survive<=((chessman.abilities.Count -chessman.diplomacy)*2)){
                         Debug.Log("decimated from diplomacy check");
                         decimatedPieces.Add(piece);
+                        Game._instance.hero.openPositions.Add(chessman.startingPosition);
                         Destroy(piece);
                     }
                 }

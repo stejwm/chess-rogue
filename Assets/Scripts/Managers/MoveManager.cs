@@ -24,7 +24,7 @@ public class MoveManager: MonoBehaviour
     private int baseAttack=0;
     private int baseDefense=0;
     private bool readyForCleanup=false;
-    private bool gameOver = false;
+    public bool gameOver = false;
     private float pitch=1f;
     public static MoveManager _instance;
     public MMF_Player ResultFeedback;

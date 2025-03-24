@@ -97,12 +97,13 @@ public class MapManager : MonoBehaviour
         if (node.isCompleted || !currentNode.connectedNodes.Contains(node))
         {
             Debug.Log("Node not legal");
+            OpenArmyManagement();
             return;
         }
         else{
             Debug.Log("Selected shop node: " + node.nodeName);
             node.nodeImage.color = Color.black;
-            OpenShop();
+            OpenArmyManagement();
         }
     }
 

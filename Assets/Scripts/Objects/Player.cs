@@ -15,7 +15,8 @@ public enum EnemyType
     Thieves,
     Cult,
     Mob,
-    RoyalFamily
+    RoyalFamily,
+    SoulKing
 }
 
 

@@ -55,6 +55,31 @@ public class PieceFactory : MonoBehaviour
         return pieces;
     }
 
+    public List<GameObject> CreateSoulKing(Player owner, PieceColor color, Team team){
+        int backRow = color == PieceColor.White ? 0 : 7;
+        int pawnRow = color == PieceColor.White ? 1 : 6;
+        int frontRow = color == PieceColor.White ? 2 : 5;
+        List<GameObject> pieces = new List<GameObject>();
+
+        for (int i=0; i<8; i++){
+            if(i==3)
+                pieces.Add(Create(PieceType.Queen, $"name", i, backRow, color, team, owner));
+            else if(i==4)
+                pieces.Add(Create(PieceType.King, $"name", i, backRow, color, team, owner));
+
+            else
+                pieces.Add(Create(PieceType.Pawn, $"name", i, backRow, color, team, owner));
+        }
+        for (int i=2; i<6; i++){
+            pieces.Add(Create(PieceType.Pawn, $"name", i, pawnRow, color, team, owner));
+        }
+        
+        foreach (var piece in pieces){
+            StartCoroutine(WaitForPieceToApplyAbility(piece.GetComponent<Chessman>(), Game._instance.AllAbilities[27].Clone()));
+        }
+        return pieces;
+    }
+
     public List<GameObject> CreateAbilityPiecesBlack(Player owner, Ability ability){
         var pieces = CreateBlackPieces(owner);
         foreach (var piece in pieces){
@@ -341,6 +366,8 @@ public class PieceFactory : MonoBehaviour
                 return CreateAngryMob(opponent, opponent.color, Team.Enemy);
             case EnemyType.RoyalFamily:
                 return CreateRoyalFamily(opponent, opponent.color, Team.Enemy);
+            case EnemyType.SoulKing:
+                return CreateSoulKing(opponent, opponent.color, Team.Enemy);
         }
         return null;
     }

@@ -54,6 +54,20 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    public void CreateManagementBoard(){
+
+        for(int i =0; i<8; i++){
+            for (int j=0; j<3; j++){
+                BoardPosition pos = new BoardPosition(i,j);
+                tiles.Add(pos, TileFactory._instance.CreateTile(pos));
+            }
+        }
+        foreach (var tile in tiles.Values){
+            SpriteRenderer rend = tile.GetComponent<SpriteRenderer>();
+            rend.sortingOrder = 4;
+        }
+    }
+
     public void DestroyBoard(){
         foreach (var item in tiles.Values)
         {

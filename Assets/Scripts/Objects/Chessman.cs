@@ -224,7 +224,7 @@ public abstract class Chessman : MonoBehaviour
                 Game._instance.PieceSelected(this);
     }
     public void HandleManagementClick(){        
-        ManagementStatManager._instance.SetAndShowStats(this);
+        ArmyManager._instance.PieceSelect(this);
     }
 
     public void HandlePrisonersMarketClick(){   
