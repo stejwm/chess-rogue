@@ -17170,6 +17170,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e909f15bee4373945b10a2d2ca503bca, type: 2}
   - {fileID: 11400000, guid: e2a6808d99b32c243831ec39d488eb08, type: 2}
   - {fileID: 11400000, guid: 407d6c3b7dda5ee458d97452ff1eda9c, type: 2}
+  - {fileID: 11400000, guid: 41770cc1f9fbde34da027f660d9ed364, type: 2}
   AllOrders:
   - {fileID: 11400000, guid: 8812b8c1196501e4c85c6485c44955f7, type: 2}
   - {fileID: 11400000, guid: ef9345f117a80a540b88fd5d90c9610f, type: 2}
@@ -17353,6 +17354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a77c7bf98666145adb08fac0375514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOver: 0
   ResultFeedback: {fileID: 2139247896}
 --- !u!114 &1624334845
 MonoBehaviour:

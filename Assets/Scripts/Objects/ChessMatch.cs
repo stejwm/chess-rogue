@@ -17,6 +17,7 @@ public class ChessMatch
     public bool AdamantAssaultOverride = false;
     public bool BloodThirstOverride = false;
     public bool AvengingStrikeOverride = false;
+    public bool SwiftOverride = false;
     
     public int reward = 40;
 
@@ -200,7 +201,7 @@ public class ChessMatch
     public void NextTurn()
     {
         //Debug.Log("IsTurnOverride? "+turnOverride);
-        if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride || Game._instance.pauseOverride || Game._instance.tutorial)
+        if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride || Game._instance.pauseOverride || SwiftOverride || Game._instance.tutorial)
             return;
         if (currentPlayerColor == PieceColor.White)
         {

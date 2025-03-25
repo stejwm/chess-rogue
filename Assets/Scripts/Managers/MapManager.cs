@@ -295,6 +295,8 @@ public class MapManager : MonoBehaviour
         finalNode.nodeType = NodeType.Boss;
         finalNode.enemyType = GetRandomBossType();
         finalNode.isCompleted = false;
+        Button finalNodeButton = finalNodeObject.GetComponent<Button>();
+        finalNodeButton.onClick.AddListener(() => finalNode.OnNodeSelected());
         mapNodes.Add(finalNode);
 
         // Connect the final nodes of each path to the final node

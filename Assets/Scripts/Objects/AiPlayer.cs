@@ -17,6 +17,7 @@ public class AIPlayer : Player
     {
         agent.pieces=pieces;
         agent.StartUp();
+        openPositions = new List<BoardPosition>();
     }
 
     public override void CreateMoveCommandDictionary(){
