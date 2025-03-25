@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 //using UnityEngine.UIElements;
 
 public class ManagementStatManager : MonoBehaviour
@@ -14,6 +15,14 @@ public class ManagementStatManager : MonoBehaviour
     public TMP_Text defense;
     public TMP_Text support;
     public TMP_Text diplomacy;
+
+    public TMP_Text captures;
+    public TMP_Text captured;
+    public TMP_Text bounces;
+    public TMP_Text bouncings;
+    public TMP_Text supportAttacks;
+    public TMP_Text supportDefends;
+
     public TMP_Text value;
     public Text pieceName;
     public Image image;
@@ -21,7 +30,9 @@ public class ManagementStatManager : MonoBehaviour
     public Chessman piece;
     public GameObject infoBox;
     public GameObject purchase;
+    public GameObject GameStats;
     [SerializeField] GameObject PopUpCanvas;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -47,7 +58,6 @@ public class ManagementStatManager : MonoBehaviour
             Game._instance.hero.playerCoins-=piece.releaseCost;
             Game._instance.hero.inventoryPieces.Add(piece.gameObject);
             piece.owner=Game._instance.hero;
-            //piece.startingPosition = piece.owner.openPositions[0];
             ShopManager._instance.pieces.Remove(piece.gameObject);
             piece.gameObject.SetActive(false);
             ShopManager._instance.UpdateCurrency();
@@ -66,8 +76,10 @@ public class ManagementStatManager : MonoBehaviour
         this.piece=piece;
         if (piece.owner == null){
             purchase.SetActive(true);
+            GameStats.SetActive(false);
         }else{
             purchase.SetActive(false);
+            GameStats.SetActive(true);
         }
         updateStats();
         StartCoroutine(SetAbilities(piece));
@@ -77,17 +89,42 @@ public class ManagementStatManager : MonoBehaviour
         this.defense.text = "<sprite name=\"shield\">: " + piece.CalculateDefense();
         this.support.text = "<sprite name=\"cross\">: " + piece.CalculateSupport();
         this.diplomacy.text = piece.diplomacy.ToString();
+
+        this.captures.text = piece.captures.ToString();
+        this.captured.text = piece.captured.ToString();
+        this.bounces.text = piece.bounced.ToString();
+        this.bouncings.text = piece.bouncing.ToString();
+        this.supportAttacks.text = piece.supportsAttacking.ToString();
+        this.supportDefends.text = piece.supportsDefending.ToString();
+
+
         this.pieceName.text=piece.name;
         this.value.text=": "+piece.releaseCost;
         this.image.sprite=piece.GetComponent<SpriteRenderer>().sprite;
     }
     public IEnumerator SetAbilities(Chessman piece){
         yield return null;
+        List<Ability> multiples = new List<Ability>();
         foreach (var ability in piece.abilities)
         {
-            var icon=Instantiate(abilityUI, infoBox.transform);
-            icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
-            icon.GetComponent<AbilityUI>().ability=ability;
+            if(multiples.Contains(ability))
+                continue;
+
+            int abilityCount = piece.abilities.Where(s=>s!=null && s.Equals(ability)).Count();
+            if(abilityCount>1){
+                var icon=Instantiate(abilityUI, infoBox.transform);
+                icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+                icon.GetComponent<AbilityUI>().ability=ability;
+                icon.GetComponentInChildren<TMP_Text>().text=$"x{abilityCount}";
+                multiples.Add(ability);
+            }else{
+                var icon=Instantiate(abilityUI, infoBox.transform);
+                icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+                icon.GetComponent<AbilityUI>().ability=ability;
+                icon.GetComponentInChildren<TMP_Text>().text="";
+            }
+            
+            
         }
     }
 
@@ -142,4 +179,5 @@ public class ManagementStatManager : MonoBehaviour
         ShopManager._instance.toggleCardColliders();
         PopUpCanvas.SetActive(false);
     }
+
 }

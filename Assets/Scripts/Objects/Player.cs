@@ -93,6 +93,86 @@ public abstract class Player: MonoBehaviour
             }
         }
     }
+
+    public virtual Chessman GetHighestCapturer(){
+        Chessman highestCapturer = null;
+        int maxCaptures = -1;
+
+        foreach (GameObject piece in pieces) {
+            Chessman cm = piece.GetComponent<Chessman>();
+            if (cm.captures > maxCaptures) {
+                maxCaptures = cm.captures;
+                highestCapturer = cm;
+            }
+        }
+        
+        return highestCapturer;
+    }
+
+    public virtual Chessman GetHighestCaptured(){
+        Chessman highest = null;
+        int maxValue = -1;
+        foreach (GameObject piece in pieces) {
+            Chessman cm = piece.GetComponent<Chessman>();
+            if (cm.captured > maxValue) {
+                maxValue = cm.captured;
+                highest = cm;
+            }
+        }
+        return highest;
+    }
+
+    public virtual Chessman GetHighestBounced(){
+        Chessman highest = null;
+        int maxValue = -1;
+        foreach (GameObject piece in pieces) {
+            Chessman cm = piece.GetComponent<Chessman>();
+            if (cm.bounced > maxValue) {
+                maxValue = cm.bounced;
+                highest = cm;
+            }
+        }
+        return highest;
+    }
+
+    public virtual Chessman GetHighestBouncing(){
+        Chessman highest = null;
+        int maxValue = -1;
+        foreach (GameObject piece in pieces) {
+            Chessman cm = piece.GetComponent<Chessman>();
+            if (cm.bouncing > maxValue) {
+                maxValue = cm.bouncing;
+                highest = cm;
+            }
+        }
+        return highest;
+    }
+
+    public virtual Chessman GetHighestSupportsDefensive(){
+        Chessman highest = null;
+        int maxValue = -1;
+        foreach (GameObject piece in pieces) {
+            Chessman cm = piece.GetComponent<Chessman>();
+            if (cm.supportsDefending > maxValue) {
+                maxValue = cm.supportsDefending;
+                highest = cm;
+            }
+        }
+        return highest;
+    }
+
+    public virtual Chessman GetHighestSupportsAttacks(){
+        Chessman highest = null;
+        int maxValue = -1;
+        foreach (GameObject piece in pieces) {
+            Chessman cm = piece.GetComponent<Chessman>();
+            if (cm.supportsAttacking > maxValue) {
+                maxValue = cm.supportsAttacking;
+                highest = cm;
+            }
+        }
+        return highest;
+    }
 }
 
 

@@ -4,6 +4,7 @@ using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class StatBox : MonoBehaviour
 {
@@ -32,11 +33,29 @@ public class StatBox : MonoBehaviour
         this.support.text = "<sprite name=\"cross\">: " + target.CalculateSupport();
         this.diplomacy.text = target.diplomacy.ToString();
         this.image.sprite = target.GetComponent<SpriteRenderer>().sprite;
+        
+
+        List<Ability> multiples = new List<Ability>();
         foreach (var ability in target.abilities)
         {
-            var icon=Instantiate(abilityUI, abilityBox.transform);
-            icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
-            icon.GetComponent<AbilityUI>().ability=ability;
+            if(multiples.Contains(ability))
+                continue;
+
+            int abilityCount = target.abilities.Where(s=>s!=null && s.Equals(ability)).Count();
+            if(abilityCount>1){
+                var icon=Instantiate(abilityUI, abilityBox.transform);
+                icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+                icon.GetComponent<AbilityUI>().ability=ability;
+                icon.GetComponentInChildren<TMP_Text>().text=$"x{abilityCount}";
+                multiples.Add(ability);
+            }else{
+                var icon=Instantiate(abilityUI, abilityBox.transform);
+                icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+                icon.GetComponent<AbilityUI>().ability=ability;
+                icon.GetComponentInChildren<TMP_Text>().text="";
+            }
+            
+            
         }
     }
 

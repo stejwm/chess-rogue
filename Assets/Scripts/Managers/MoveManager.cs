@@ -28,6 +28,9 @@ public class MoveManager: MonoBehaviour
     private float pitch=1f;
     public static MoveManager _instance;
     public MMF_Player ResultFeedback;
+
+    private List<Chessman> defensiveSupporters = new List<Chessman>();
+    private List<Chessman> attackingSupporters = new List<Chessman>();
     public void Set(ChessMatch match, Chessman attackingPiece, int x, int y){
         this.match = match;
         this.attackingPiece=attackingPiece;
@@ -93,13 +96,16 @@ public class MoveManager: MonoBehaviour
     private IEnumerator AddSupport(Chessman movingPiece, Chessman attackedPiece, bool isAttacking){
         ArrayList pieces;
         Chessman targetPiece;
+        List<Chessman> supporters;
         int supportPower=0;
         pitch=1f;
         if(isAttacking){
             pieces=attackingUnits;
             targetPiece=movingPiece;
+            supporters=attackingSupporters;
         }
         else{
+            supporters=defensiveSupporters;
             pieces=defendingUnits;
             targetPiece=attackedPiece;
         }
@@ -123,6 +129,7 @@ public class MoveManager: MonoBehaviour
                     //Debug.Log("Spawned bonus for " + piece.name + " at position " + BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard));
                     LogManager._instance.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\">{BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} <color=green>+{pieceSupport}</color> on {BoardPosition.ConvertToChessNotation(targetedX, targetedY)}");
                     yield return new WaitForSeconds(Game._instance.waitTime/2);
+                    supporters.Add(piece);
                     Game._instance.OnSupportAdded.Invoke(piece, movingPiece, attackedPiece);
                     pitch+=.05f;
                     break;
@@ -254,7 +261,11 @@ public class MoveManager: MonoBehaviour
 
         yield return new WaitForSeconds(Game._instance.waitTime);
         if(totalAttackPower>=totalDefensePower){
-            
+            attackedPiece.captured++;
+            movingPiece.captures++;
+            foreach (var supporter in attackingSupporters)
+                supporter.supportsAttacking++;
+
             LogManager._instance.WriteLog($"<sprite=\"{movingPiece.color}{movingPiece.type}\" name=\"{movingPiece.color}{movingPiece.type}\"> captures <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(targetedX, targetedY)}");
             if (attackedPiece.type==PieceType.King){
                 gameOver=true;
@@ -296,6 +307,10 @@ public class MoveManager: MonoBehaviour
               
         }
         else{
+            attackedPiece.bouncing++;
+            movingPiece.bounced++;
+            foreach (var supporter in defensiveSupporters)
+                supporter.supportsDefending++;
             //Debug.Log(movingPiece.name + " failed to capture "+ attackedPiece.name +" on "+ BoardPosition.ConvertToChessNotation(targetedX, targetedY));
             //LogManager._instance.WriteLog(movingPiece.name + " failed to capture "+ attackedPiece.name +" on "+ BoardPosition.ConvertToChessNotation(targetedX, targetedY));
             LogManager._instance.WriteLog($"<sprite=\"{movingPiece.color}{movingPiece.type}\" name=\"{movingPiece.color}{movingPiece.type}\"> failed to capture <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(targetedX, targetedY)}");

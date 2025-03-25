@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SoulBond
   m_EditorClassIdentifier: 
   abilityName: Soul Bond
-  description: Permanently gain +5 to each stat for each soul bonded piece, when
-    any soul bonded piece is captured, all are decimated
+  description: +5 to all stat for each other soul bonded piece, when any soul bonded
+    piece is captured, all are decimated
   sprite: {fileID: 0}
   Cost: 10

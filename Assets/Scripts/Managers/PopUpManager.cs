@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,9 +16,10 @@ public class PopUpManager : MonoBehaviour
     public PieceType selectedPieceType = PieceType.None;
     public GameObject abilityInfo;
     public TMP_Text abilityInfoText;
+    public TMP_Text abilityInfoTitle;
     public GameObject values;
     public TMP_Text coinValue;
-    public TMP_Text bloodValue;
+    public TMP_Text bloodValue; 
 
     public bool alreadyActive = false;
     
@@ -69,6 +71,8 @@ public class PopUpManager : MonoBehaviour
         alreadyActive = gameObject.activeSelf;
         gameObject.SetActive(true);
         
+
+        abilityInfoTitle.text=abilityUI.ability.abilityName;
         abilityInfoText.text=abilityUI.ability.description;
         abilityInfo.SetActive(true);
     
@@ -80,7 +84,7 @@ public class PopUpManager : MonoBehaviour
         else if(xVal>0)
             abilityInfo.GetComponent<RectTransform>().localPosition-=new Vector3(200,0);
 
-
+        LayoutRebuilder.ForceRebuildLayoutImmediate(abilityInfo.GetComponent<RectTransform>());
     }
     public void SetAndShowText(string text, GameObject parent){
         alreadyActive = gameObject.activeSelf;

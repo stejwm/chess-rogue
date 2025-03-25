@@ -103,12 +103,15 @@ public class BoardManager : MonoBehaviour
     }
 
     public void PlacePiece(Chessman piece, Tile tile){
-        Game._instance.hero.pieces.Add(piece.gameObject);
-        Game._instance.hero.inventoryPieces.Remove(piece.gameObject);
-        Game._instance.hero.openPositions.Remove(tile.position);
+        
+        
         piece.startingPosition = tile.position;
         piece.xBoard=tile.position.x;
         piece.yBoard=tile.position.y;
+        Game._instance.hero.inventoryPieces.Remove(piece.gameObject);
+        Game._instance.hero.openPositions.Remove(tile.position);
+        Game._instance.hero.pieces.Add(piece.gameObject);
+        Game._instance.OnPieceAdded.Invoke(piece);
         ClearTiles();
         piece.UpdateUIPosition();
         Game._instance.currentMatch.CheckInventory();

@@ -1,16 +1,16 @@
 using System.Collections;
 using MoreMountains.Feedbacks;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AbilityLogger : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI popUpText; // Text for the pop-up
-    [SerializeField] private MMF_Player feedbacks;
+    private MMF_Player feedbacks;
     [SerializeField] private GameObject PopUpMenu;
-    [SerializeField] private GameObject PopUp;
+    [SerializeField] private GameObject AbilityPopUp;
     public static AbilityLogger _instance;
-    private Vector3 startingPosition;
+    bool currentlyLogging=false;
 
     void Awake()
     {
@@ -23,21 +23,24 @@ public class AbilityLogger : MonoBehaviour
     }
 
     void Start(){
-        startingPosition=PopUp.transform.position;
+        //startingPosition=PopUp.transform.position;
         //gameObject.SetActive(false);
     }
 
     public void LogAbilityUsage(string abilityName, string message)
     {
         StartCoroutine(ShowAbilityAndLog(abilityName, message));
+        currentlyLogging=true;
     }
 
     private IEnumerator ShowAbilityAndLog(string abilityName, string message)
     {
         PopUpMenu.SetActive(true);
-        PopUp.gameObject.SetActive(true);
-        popUpText.text = abilityName;
-
+        if (currentlyLogging)
+            yield return new WaitForSeconds(Game._instance.waitTime);
+        var abilityPopUp = Instantiate(AbilityPopUp, PopUpMenu.transform);
+        abilityPopUp.GetComponentInChildren<TMP_Text>().text = abilityName;
+        feedbacks = abilityPopUp.GetComponentInChildren<MMF_Player>();
         // Play the FEEL feedbacks effect
         if (feedbacks != null)
             feedbacks.PlayFeedbacks();
@@ -45,9 +48,11 @@ public class AbilityLogger : MonoBehaviour
         // Wait for the feedback effect duration
         yield return new WaitForSeconds(feedbacks.TotalDuration);
         AddLogMessage(abilityName + " "+ message);
-        PopUp.gameObject.SetActive(false);
-        PopUp.transform.position = startingPosition;
+        //PopUp.gameObject.SetActive(false);
+        //PopUp.transform.position = startingPosition;
         PopUpMenu.SetActive(false);
+        Destroy(abilityPopUp);
+        currentlyLogging=false;
         yield return null;
     }
 

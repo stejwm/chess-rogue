@@ -54,6 +54,14 @@ public abstract class Chessman : MonoBehaviour
     public int support = 1;
     public int diplomacy = 1;
 
+    public int captures = 0;
+    public int captured = 0;
+    public int bounced = 0;
+    public int bouncing = 0;
+    public int supportsAttacking = 0;
+    public int supportsDefending = 0;
+
+
     public int attackBonus = 0;
     public int defenseBonus = 0;
     public int supportBonus = 0;
@@ -91,6 +99,7 @@ public abstract class Chessman : MonoBehaviour
 
     public abstract List<BoardPosition> GetValidMoves();
     public abstract List<BoardPosition> GetValidSupportMoves();
+    public event Action<bool> OnChessmanStateChanged;
     public int CalculateSupport(){
         return support+supportBonus;
     }
@@ -102,6 +111,16 @@ public abstract class Chessman : MonoBehaviour
     }
     public void SetValidMoves(){
         validMoves=GetValidMoves();
+    }
+
+    void OnEnable()
+    {
+        OnChessmanStateChanged?.Invoke(true); // Notify that the object is enabled
+    }
+
+    void OnDisable()
+    {
+        OnChessmanStateChanged?.Invoke(false); // Notify that the object is disabled
     }
     public void Activate()
     {

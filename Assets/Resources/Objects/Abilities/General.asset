@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68fa173fc70ebbd4aa2d47546ad05d2f, type: 3}
-  m_Name: IncreasingStrike
+  m_Script: {fileID: 11500000, guid: 5e91ee6406dbc924988c5dcad03ea178, type: 3}
+  m_Name: General
   m_EditorClassIdentifier: 
-  abilityName: Increasing Strike
-  description: Permanently gain +1 to attack for every capture
-  sprite: {fileID: -1752959765298073396, guid: 3a9526cbbee91a945a23de02fed73726, type: 3}
+  abilityName: General
+  description: +1 to all knights, bonus increases for each knight added
+  sprite: {fileID: 0}
   Cost: 15
