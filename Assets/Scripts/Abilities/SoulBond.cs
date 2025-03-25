@@ -14,6 +14,9 @@ public class SoulBond : Ability
 
     public override void Apply(Chessman piece)
     {
+        if(piece.abilities.Contains(this)){
+            return;
+        }
         this.piece = piece;
         piece.info += " " + abilityName;
         Game._instance.OnPieceCaptured.AddListener(Capture);

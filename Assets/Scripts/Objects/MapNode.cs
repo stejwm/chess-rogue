@@ -48,6 +48,7 @@ public class MapNode : MonoBehaviour
         switch (nodeType)
         {
             case NodeType.Enemy:
+            case NodeType.Boss:
                 MapManager._instance.SelectEnemyNode(this, enemyType);
                 break;
             case NodeType.Shop:

@@ -4,7 +4,20 @@ using System.Collections.Generic;
 using System;
 using Rand= System.Random;
 
+public enum EnemyType
+{
+    // Enemies
+    Knights,
+    Fortress,
+    Assassins,
+    Thieves,
+    Cult,
+    Mob,
+    RoyalFamily,
 
+    //Bosses
+    SoulKing
+}
 
 public class PieceFactory : MonoBehaviour
 {
@@ -401,6 +414,6 @@ public class PieceFactory : MonoBehaviour
     public IEnumerator DelayedDestroy(Chessman piece){
         yield return null;
         if(piece !=null)
-            Destroy(piece.gameObject);
+            piece.DestroyPiece();
     }
 }

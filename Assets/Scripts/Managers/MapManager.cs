@@ -97,7 +97,7 @@ public class MapManager : MonoBehaviour
         if (node.isCompleted || !currentNode.connectedNodes.Contains(node))
         {
             Debug.Log("Node not legal");
-            OpenArmyManagement();
+            //OpenArmyManagement();
             return;
         }
         else{
@@ -158,7 +158,7 @@ public class MapManager : MonoBehaviour
 
             // Assign the node as an enemy
             mapNode.nodeType = NodeType.Enemy;
-            mapNode.enemyType = (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length);
+            mapNode.enemyType = GetRandomEnemyType();
             // Set the sprite based on the enemy type
             // mapNode.nodeImage.sprite = ... (assign the appropriate sprite here)
 
@@ -190,7 +190,7 @@ public class MapManager : MonoBehaviour
 
             // Assign the node as an enemy
             mapNode.nodeType = NodeType.Enemy;
-            mapNode.enemyType = (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length);
+            mapNode.enemyType = GetRandomEnemyType();
             // Set the sprite based on the enemy type
             // mapNode.nodeImage.sprite = ... (assign the appropriate sprite here)
 
@@ -293,6 +293,7 @@ public class MapManager : MonoBehaviour
         MapNode finalNode = finalNodeObject.GetComponent<MapNode>();
         finalNode.nodeName = "Final Node";
         finalNode.nodeType = NodeType.Boss;
+        finalNode.enemyType = GetRandomBossType();
         finalNode.isCompleted = false;
         mapNodes.Add(finalNode);
 
@@ -337,7 +338,6 @@ public class MapManager : MonoBehaviour
         }
 
         
-
         
 
         // Draw lines between connected nodes
@@ -384,5 +384,15 @@ public class MapManager : MonoBehaviour
                 lineRenderer.Points = bezierPoints.ToArray();
             }
         }
+    }
+
+    public EnemyType GetRandomBossType(){
+        int enemyAmount=7;
+        return (EnemyType)Random.Range(enemyAmount, System.Enum.GetValues(typeof(EnemyType)).Length);
+        
+    }
+    public EnemyType GetRandomEnemyType(){
+        int bossAmount=1;
+        return (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length- bossAmount);
     }
 }

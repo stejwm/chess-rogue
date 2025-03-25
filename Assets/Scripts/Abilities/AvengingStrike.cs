@@ -26,6 +26,8 @@ public class AvengingStrike : Ability
         Game._instance.OnSupportAdded.AddListener(Target);
         Game._instance.OnPieceCaptured.AddListener(Avenge);
         Game._instance.OnPieceBounced.AddListener(EndAvenge);
+        Game._instance.OnRawMoveEnd.AddListener(RawMoveCheck);
+        
         base.Apply(piece);
     }
 
@@ -35,7 +37,17 @@ public class AvengingStrike : Ability
         Game._instance.OnSupportAdded.RemoveListener(Target);
         Game._instance.OnPieceCaptured.RemoveListener(Avenge);
         Game._instance.OnPieceBounced.RemoveListener(EndAvenge);
+        Game._instance.OnRawMoveEnd.RemoveListener(RawMoveCheck);
 
+    }
+    public void RawMoveCheck(Chessman piece, BoardPosition destination)
+    {
+        if(readyToAvenge){
+            Game._instance.currentMatch.AvengingStrikeOverride =false;
+            readyToAvenge=false;
+            Game._instance.currentMatch.AvengerActive=false;
+            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">???</gradient></color>", "missed attack");
+        }
     }
 
     public void EndAvenge(Chessman attacker, Chessman defender, bool isBounceReduced){

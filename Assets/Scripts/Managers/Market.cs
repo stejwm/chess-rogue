@@ -95,8 +95,7 @@ public class MarketManager : MonoBehaviour
                     if(survive<=((chessman.abilities.Count -chessman.diplomacy)*2)){
                         Debug.Log("decimated from diplomacy check");
                         decimatedPieces.Add(piece);
-                        Game._instance.hero.openPositions.Add(chessman.startingPosition);
-                        Destroy(piece);
+                        chessman.DestroyPiece();
                     }
                 }
             }
@@ -113,8 +112,9 @@ public class MarketManager : MonoBehaviour
         foreach (GameObject piece in opponentCapturedPieces)
         {
             Chessman cm = piece.GetComponent<Chessman>();
+            Game._instance.hero.pieces.Remove(piece);
             Game._instance.hero.openPositions.Add(cm.startingPosition);
-            Destroy(piece);
+            piece.GetComponent<Chessman>().DestroyPiece();
             Game._instance.abandonedPieces++;
             Debug.Log("AbandonedPieces :"+Game._instance.abandonedPieces);
             
@@ -122,7 +122,7 @@ public class MarketManager : MonoBehaviour
         if(myCapturedPieces.Count>0)
         foreach (GameObject piece in myCapturedPieces)
         {
-            Destroy(piece);
+            piece.GetComponent<Chessman>().DestroyPiece();
         }
         Game._instance.state=ScreenState.RewardScreen;
         myCapturedPieces.Clear();
@@ -141,8 +141,9 @@ public class MarketManager : MonoBehaviour
             Game._instance.hero.playerCoins+= item.releaseCost;
             item.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             item.gameObject.SetActive(false);
-            if(item.owner == Game._instance.hero)
-                Game._instance.hero.openPositions.Add(item.startingPosition);
+            if(item.owner == Game._instance.hero){
+                item.DestroyPiece();
+            }
         }
         coinText.text = ": "+ Game._instance.hero.playerCoins;
         selectedPieces.Clear();
@@ -176,8 +177,9 @@ public class MarketManager : MonoBehaviour
             Game._instance.hero.playerBlood+= item.blood;
             myCapturedPieces.Remove(item.gameObject);
             item.gameObject.SetActive(false);
-            if(item.owner == Game._instance.hero)
-                Game._instance.hero.openPositions.Add(item.startingPosition);
+            if(item.owner == Game._instance.hero){
+                item.DestroyPiece();
+            }
         }
         bloodText.text = ": "+Game._instance.hero.playerBlood;
         selectedPieces.Clear();

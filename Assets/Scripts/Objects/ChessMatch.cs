@@ -31,7 +31,6 @@ public class ChessMatch
         //ResetPieces();
         this.white=white;
         this.black=black;
-        CheckInventory();
         
     }
 
@@ -56,6 +55,7 @@ public class ChessMatch
     }
 
     public void StartMatch(){
+        Debug.Log("Match Starting");
         KingsOrderManager._instance.Setup();
         white.CreateMoveCommandDictionary();
         black.CreateMoveCommandDictionary();

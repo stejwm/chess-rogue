@@ -7,17 +7,7 @@ using UnityEngine.AI;
 using Rand= System.Random;
 
 
-public enum EnemyType
-{
-    Knights,
-    Fortress,
-    Assassins,
-    Thieves,
-    Cult,
-    Mob,
-    RoyalFamily,
-    SoulKing
-}
+
 
 
 
@@ -61,13 +51,16 @@ public abstract class Player: MonoBehaviour
     public virtual void LevelUp(int level, EnemyType enemyType){
         switch(enemyType){
             case EnemyType.Knights:
-                level+=2;
+                level=level*2;
                 break;
             case EnemyType.RoyalFamily:
-                level=level*3;
+                level=level*5;
+                break;
+            case EnemyType.Fortress:
+                level+=2;
                 break;
             case EnemyType.Thieves:
-                playerCoins= UnityEngine.Random.Range(5,10)*level;
+                playerCoins= UnityEngine.Random.Range(6,12)*level;
                 break;
             default:
                 break;

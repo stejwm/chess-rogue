@@ -342,4 +342,13 @@ public abstract class Chessman : MonoBehaviour
             }
             
     }
+
+    public void DestroyPiece()
+    {
+        owner.openPositions.Add(this.startingPosition);
+        owner.pieces.Remove(this.gameObject);
+        foreach(var ability in abilities)
+            ability.Remove(this);
+        Destroy(this.gameObject);
+    }
 }
