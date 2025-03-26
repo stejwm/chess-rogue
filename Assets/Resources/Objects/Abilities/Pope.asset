@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a1224a5acc761741a5a427f5a17c888, type: 3}
   m_Name: Pope
   m_EditorClassIdentifier: 
-  abilityName: Pope
+  abilityName: 'Pope <sprite=\"WhiteBishop\" name=\"WhiteBishop\"> '
   description: +1 to all bishops, bonus increases for each bishop added
   sprite: {fileID: 0}
-  Cost: 20
+  Cost: 6
+  rarity: 2

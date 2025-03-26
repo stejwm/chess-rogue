@@ -14,7 +14,7 @@ public class TravelersGrace : Ability
         startingProfile=piece.moveProfile;
         piece.moveProfile = new TravelersGraceMovement(startingProfile);
         piece.info += " "+abilityName;
-        piece.releaseCost+=15;
+        piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 

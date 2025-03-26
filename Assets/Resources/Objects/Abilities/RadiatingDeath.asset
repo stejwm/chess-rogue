@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Radiating Death
   description: Reduce all attackers stats by -1 when captured
   sprite: {fileID: 0}
-  Cost: 20
+  Cost: 3
+  rarity: 0

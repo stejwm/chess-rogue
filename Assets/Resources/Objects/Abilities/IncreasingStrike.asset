@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Increasing Strike
   description: Permanently gain +1 to attack for every capture
   sprite: {fileID: -1752959765298073396, guid: 3a9526cbbee91a945a23de02fed73726, type: 3}
-  Cost: 15
+  Cost: 7
+  rarity: 2

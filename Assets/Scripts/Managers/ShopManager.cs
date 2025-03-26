@@ -22,6 +22,12 @@ public class ShopManager : MonoBehaviour
     private List<GameObject> cards = new List<GameObject>();
     private List<GameObject> orders = new List<GameObject>();
     private int rerollCost = 5;
+    private Dictionary<Rarity, float> rarityWeights = new Dictionary<Rarity, float>()
+    {
+        { Rarity.Common, 50f },
+        { Rarity.Uncommon, 30f },
+        { Rarity.Rare, 20f }
+    };
 
 
     void Awake()
@@ -64,20 +70,65 @@ public class ShopManager : MonoBehaviour
         CreateOrders();
     }
 
-    public void CreateCards(){
+    public void ModifyRarityWeight(Rarity rarity, float multiplier)
+    {
+        if (rarityWeights.ContainsKey(rarity))
+        {
+            rarityWeights[rarity] *= multiplier;
+            // Normalize weights to ensure they sum to 100
+            float total = rarityWeights.Values.Sum();
+            foreach (var key in rarityWeights.Keys.ToList())
+            {
+                rarityWeights[key] = (rarityWeights[key] / total) * 100f;
+            }
+        }
+    }
+
+    public void CreateCards(float rareMultiplier = 1f)
+    {
         GameObject obj;
-        List<Ability> shuffledcards = Game._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
-        for(int i=0; i<3;i++){
-            Vector2 localPosition = new Vector2(i+i-4, 2);
+        // Group abilities by rarity
+        var groupedAbilities = Game._instance.AllAbilities
+            .GroupBy(a => a.rarity)
+            .ToDictionary(g => g.Key, g => g.ToList());
+
+        for (int i = 0; i < 3; i++)
+        {
+            Vector2 localPosition = new Vector2(i + i - 4, 2);
             obj = Instantiate(Game._instance.card, localPosition, Quaternion.identity);
-            //AllAbilities.Sort();
-            //int s = Random.Range (0, AllAbilities.Count);
-            
-            obj.GetComponent<Card>().ability = shuffledcards[i].Clone();
+
+            // Select rarity based on weights
+            float random = Random.Range(0f, 100f);
+            float cumulative = 0f;
+            Rarity selectedRarity = Rarity.Common;
+
+            foreach (var rarity in rarityWeights.Keys)
+            {
+                cumulative += rarityWeights[rarity];
+                if (random <= cumulative)
+                {
+                    selectedRarity = rarity;
+                    break;
+                }
+            }
+
+            // Select random ability of chosen rarity
+            if (groupedAbilities.ContainsKey(selectedRarity) && groupedAbilities[selectedRarity].Any())
+            {
+                var availableAbilities = groupedAbilities[selectedRarity];
+                int randomIndex = rng.Next(availableAbilities.Count);
+                obj.GetComponent<Card>().ability = availableAbilities[randomIndex].Clone();
+            }
+            else
+            {
+                // Fallback to any random ability if no abilities of selected rarity exist
+                List<Ability> shuffledcards = Game._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
+                obj.GetComponent<Card>().ability = shuffledcards[0].Clone();
+            }
+
             cards.Add(obj);
             obj.GetComponent<Card>().ShowPrice();
         }
-        
     }
     public void CreateOrders(){
         GameObject obj;

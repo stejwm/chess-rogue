@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Travelers Grace
   description: Can move to any open square, supports as normal, cannot attack
   sprite: {fileID: 8157066088571303168, guid: b80aea0da8080dd45bb2dc2a48e048ba, type: 3}
-  Cost: 8
+  Cost: 3
+  rarity: 0

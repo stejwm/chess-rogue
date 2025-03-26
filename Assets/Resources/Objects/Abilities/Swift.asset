@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Swift
   description: Move again if first move is not an attack
   sprite: {fileID: 0}
-  Cost: 20
+  Cost: 5
+  rarity: 1

@@ -327,9 +327,7 @@ public class MoveManager: MonoBehaviour
                 isBounceReduced =true;
             } */
             if(attackedPiece.CalculateDefense()>0){
-                attackedPiece.defenseBonus-=movingPiece.CalculateAttack();
-                if(attackedPiece.CalculateDefense()<0)
-                    attackedPiece.defenseBonus+=Math.Abs(attackedPiece.CalculateDefense());
+                attackedPiece.defenseBonus=Mathf.Max(-attackedPiece.defense, attackedPiece.defenseBonus - movingPiece.CalculateAttack());
                 isBounceReduced =true;
             }
             //Debug.Log("Setting attacked piece Position back to: "+attackingPiece.xBoard+", "+attackedPiece)

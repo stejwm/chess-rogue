@@ -65,7 +65,7 @@ public abstract class Chessman : MonoBehaviour
     public int attackBonus = 0;
     public int defenseBonus = 0;
     public int supportBonus = 0;
-    public int releaseCost = 5;
+    public int releaseCost = 1;
     public int blood = 1;
     public string info = "";
     public PieceColor color;

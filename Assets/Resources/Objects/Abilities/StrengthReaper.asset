@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Strength Reaper
   description: Adds half of attackers attack to defense when defending
   sprite: {fileID: 0}
-  Cost: 15
+  Cost: 3
+  rarity: 0

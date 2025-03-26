@@ -34,7 +34,7 @@ public class InventoryManager : MonoBehaviour
         Game._instance.togglePieceColliders(Game._instance.opponent.pieces, false);
         Game._instance.togglePieceColliders(Game._instance.hero.pieces, true);
 
-        Game._instance.CreateCards();
+        ShopManager._instance.CreateCards();
         myPieces=Game._instance.hero.pieces;
 
         foreach (GameObject piece in myPieces)

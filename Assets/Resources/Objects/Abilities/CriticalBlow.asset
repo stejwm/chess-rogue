@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Critical Blow
   description: 10% chance of x2 attack
   sprite: {fileID: 1518752052883170811, guid: 9ad98e9c7eb6d2d4b8926962afe54902, type: 3}
-  Cost: 8
+  Cost: 4
+  rarity: 0

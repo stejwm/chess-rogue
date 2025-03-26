@@ -227,7 +227,7 @@ public class Game : MonoBehaviour
         }
         
     }
-    public void CreateCards(){
+    /* public void CreateCards(){
         GameObject obj;
         List<Ability> shuffledcards = AllAbilities.OrderBy(_ => rng.Next()).ToList();
         for(int i=0; i<3;i++){
@@ -240,7 +240,7 @@ public class Game : MonoBehaviour
             cards.Add(obj);
         }
         
-    }
+    } */
     public void PieceSelected(Chessman piece){
         if (selectedPiece != null && selectedPiece == piece){
             //sprite= selectedPiece.GetComponent<SpriteRenderer>();

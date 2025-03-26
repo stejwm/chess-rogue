@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed3f614c836b3e840a4ffdc1216d3033, type: 3}
   m_Name: Sentinel
   m_EditorClassIdentifier: 
-  abilityName: Sentinel
+  abilityName: Sentinel <sprite=\"WhiteRook\" name=\"WhiteRook\">
   description: +1 to all rooks, bonus increases for each rook added
   sprite: {fileID: 0}
-  Cost: 20
+  Cost: 6
+  rarity: 2

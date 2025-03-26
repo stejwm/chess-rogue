@@ -4,12 +4,19 @@ using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 
+public enum Rarity
+{
+    Common,
+    Uncommon,
+    Rare,
+}
 public abstract class Ability : ScriptableObject
 {   
     public string abilityName;
     public string description;
     public Sprite sprite;
     public int Cost = 10;
+    public Rarity rarity;
 
     public virtual void Apply(Chessman piece){
         piece.abilities.Add(this);

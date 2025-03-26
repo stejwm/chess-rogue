@@ -16,4 +16,5 @@ MonoBehaviour:
   description: Gain +1 to random stat every turn piece does not move, loses bonuses
     after first move is complete
   sprite: {fileID: -763251562599900308, guid: 9cdb04ee48b67ff4da8ca46c395aa522, type: 3}
-  Cost: 15
+  Cost: 4
+  rarity: 1

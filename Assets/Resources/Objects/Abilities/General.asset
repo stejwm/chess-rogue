@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e91ee6406dbc924988c5dcad03ea178, type: 3}
   m_Name: General
   m_EditorClassIdentifier: 
-  abilityName: General
+  abilityName: 'General <sprite=\"WhiteKnight\" name=\"WhiteKnight\"> '
   description: +1 to all knights, bonus increases for each knight added
   sprite: {fileID: 0}
-  Cost: 20
+  Cost: 6
+  rarity: 2

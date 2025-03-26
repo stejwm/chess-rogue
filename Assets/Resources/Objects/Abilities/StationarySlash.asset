@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Stationary Slash
   description: Does not move when attacking
   sprite: {fileID: -6592229671360042225, guid: ba646a3dfc7c52f4ea7d5be517f1d0af, type: 3}
-  Cost: 10
+  Cost: 5
+  rarity: 1

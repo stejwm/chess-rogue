@@ -25,7 +25,7 @@ public class BloodThirstAbility : Ability
         Game._instance.OnAttack.AddListener(Decimate);
         Game._instance.OnPieceBounced.AddListener(EndThirst);
         Game._instance.OnGameEnd.AddListener(ResetMoveProfile);
-        piece.releaseCost+=20;
+        piece.releaseCost+=Cost;
         base.Apply(piece);
 
     }

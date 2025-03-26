@@ -19,7 +19,7 @@ public class StationarySlash : Ability
         //Game._instance.OnAttack.AddListener(AddBonus);
         Game._instance.OnPieceCaptured.AddListener(ListenForEnd);
         Game._instance.OnPieceBounced.AddListener(ReplaceOnBoard);
-        piece.releaseCost+=20;
+        piece.releaseCost+=Cost;
         piece.canStationarySlash=true;
         base.Apply(piece);
     }

@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Merchant
   description: 10% chance of +1 attack per coin owned
   sprite: {fileID: 4463075361857580378, guid: f1c4dc8e5d729064b97cc7768b94aedd, type: 3}
-  Cost: 15
+  Cost: 5
+  rarity: 1

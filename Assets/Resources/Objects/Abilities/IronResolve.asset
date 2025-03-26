@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Iron Resolve
   description: Permanently gain +1 to defense every time an enemy is bounced
   sprite: {fileID: 5321450956632317814, guid: 5d57960fe8a878c4282c565956bd62f3, type: 3}
-  Cost: 15
+  Cost: 7
+  rarity: 2

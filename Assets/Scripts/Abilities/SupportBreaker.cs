@@ -19,7 +19,7 @@ public class SupportBreaker : Ability
         Game._instance.OnAttack.AddListener(CheckForSupport);
         Game._instance.OnPieceBounced.AddListener(ReduceSupport);
         Game._instance.OnPieceCaptured.AddListener(ClearSupporters);
-        piece.releaseCost+=20;
+        piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 

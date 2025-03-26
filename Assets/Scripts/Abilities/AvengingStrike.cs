@@ -19,7 +19,7 @@ public class AvengingStrike : Ability
         //startingProfile=piece.moveProfile;
         this.piece = piece;
         piece.info += " " + abilityName;
-        piece.releaseCost+=15;
+        piece.releaseCost+=Cost;
         //game.OnPieceCaptured += Thirst;
         //Debug.Log(game==null);
 

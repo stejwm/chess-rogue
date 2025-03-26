@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Betrayer
   description: Can capture it's own pieces, supports as if it were an enemy
   sprite: {fileID: 7748195786237880742, guid: 2e766e9ea33fadc4c93c78449c083d65, type: 3}
-  Cost: 8
+  Cost: 3
+  rarity: 0

@@ -14,7 +14,7 @@ public class InspiringPresence : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         Game._instance.OnSupportAdded.AddListener(CheckForResult);
-        piece.releaseCost+=10;
+        piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 

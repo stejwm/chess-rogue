@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Spectral Stride
   description: Can move through it's own pieces according to it's typical movement
   sprite: {fileID: 405441053606406524, guid: 08487e6cd52d3c14ab9a0220d0f415a6, type: 3}
-  Cost: 10
+  Cost: 6
+  rarity: 2

@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Assassin
   description: +5 attack if attacking with no support
   sprite: {fileID: 8798635138200050783, guid: a35a8f31cf98f394281f01d342db5223, type: 3}
-  Cost: 8
+  Cost: 5
+  rarity: 1

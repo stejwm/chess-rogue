@@ -15,7 +15,7 @@ public class HexBolt : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         Game._instance.OnPieceBounced.AddListener(Hex);
-        piece.releaseCost+=20;
+        piece.releaseCost+=Cost;
         base.Apply(piece);
 
         

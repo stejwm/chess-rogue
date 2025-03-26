@@ -19,7 +19,7 @@ public class Countermarch : Ability
         startingProfile=piece.moveProfile;
         piece.moveProfile = new CountermarchMovement();
         piece.info += " "+abilityName;
-        piece.releaseCost+=10;
+        piece.releaseCost+=Cost;
         base.Apply(piece);
         
     }

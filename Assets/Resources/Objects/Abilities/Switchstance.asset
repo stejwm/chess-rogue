@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Switchstance
   description: Swap attack and defense values on every combat (Attacking or Defending)
   sprite: {fileID: 9066866386506114935, guid: bd90e85aec1e51945afe9838a8466dd1, type: 3}
-  Cost: 8
+  Cost: 4
+  rarity: 0

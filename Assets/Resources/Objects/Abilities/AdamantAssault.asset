@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Adamant Assault
   description: Automatically trigger second attack after being bounced
   sprite: {fileID: -3602032179135429145, guid: 0bcfebfaf360df542b79c1c22d20f152, type: 3}
-  Cost: 10
+  Cost: 4
+  rarity: 0

@@ -16,4 +16,5 @@ MonoBehaviour:
   description: Permanently gain +1 to support for every successful support on a defending
     piece
   sprite: {fileID: -6133567048407352812, guid: fae3813ac049dbf409dcad989c28db30, type: 3}
-  Cost: 15
+  Cost: 7
+  rarity: 2

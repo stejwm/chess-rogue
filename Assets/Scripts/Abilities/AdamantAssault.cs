@@ -17,9 +17,7 @@ public class AdamantAssault : Ability
         //startingProfile=piece.moveProfile;
         this.piece = piece;
         piece.info += " " + abilityName;
-        piece.releaseCost+=15;
-        //game.OnPieceCaptured += Thirst;
-        //Debug.Log(game==null);
+        piece.releaseCost+=Cost;
 
         Game._instance.OnPieceBounced.AddListener(Assault);
         Game._instance.OnPieceCaptured.AddListener(EndAssault);

@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Avenging Strike
   description: Automatically trigger attack if a supported piece was captured
   sprite: {fileID: 614508094739402100, guid: c221a766c9ef65242b12922976491956, type: 3}
-  Cost: 8
+  Cost: 4
+  rarity: 0

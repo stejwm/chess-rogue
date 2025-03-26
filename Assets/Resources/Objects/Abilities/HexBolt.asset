@@ -16,4 +16,5 @@ MonoBehaviour:
   description: When bounced, Removes all abilities from defender until end of their
     next turn
   sprite: {fileID: -390666964726450316, guid: c2b299f139d5d5048b38ed4322cb8bc4, type: 3}
-  Cost: 10
+  Cost: 3
+  rarity: 0

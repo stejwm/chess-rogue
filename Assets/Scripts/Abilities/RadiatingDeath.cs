@@ -14,7 +14,7 @@ public class RadiatingDeath : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         Game._instance.OnPieceCaptured.AddListener(RadiateDeath);
-        piece.releaseCost+=20;
+        piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 

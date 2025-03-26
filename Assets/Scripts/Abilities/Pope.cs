@@ -23,7 +23,7 @@ public class Pope : Ability
         piece.info += " " + abilityName;
         Game._instance.OnPieceAdded.AddListener(PieceAdded);
         Game._instance.OnChessMatchStart.AddListener(ApplyBonus);
-        piece.releaseCost+=20;
+        piece.releaseCost+=Cost;
         CreateGeneral();
         base.Apply(piece);
         piece.OnChessmanStateChanged += HandleChessmanStateChanged;
@@ -85,9 +85,9 @@ public class Pope : Ability
                 if (appliedBonus.ContainsKey(cm))
                 {
                     var currentlyAppliedBonus = appliedBonus[cm];
-                    cm.attackBonus -= currentlyAppliedBonus;
-                    cm.defenseBonus -= currentlyAppliedBonus;
-                    cm.supportBonus -= currentlyAppliedBonus;
+                    cm.attackBonus = Mathf.Max(-cm.attack, cm.attackBonus - currentlyAppliedBonus);
+                    cm.defenseBonus = Mathf.Max(-cm.defense, cm.defenseBonus - currentlyAppliedBonus);
+                    cm.supportBonus = Mathf.Max(-cm.support, cm.supportBonus - currentlyAppliedBonus);
                     appliedBonus[cm] = 0;
                     Debug.Log($"{cm.name} bonus removing, currently applied bonus {currentlyAppliedBonus} total bonus amount {bonus} amount to remove {currentlyAppliedBonus}");
                 }else{

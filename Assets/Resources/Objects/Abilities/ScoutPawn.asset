@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92fee7cda81617d42942cae3dd192b1d, type: 3}
   m_Name: ScoutPawn
   m_EditorClassIdentifier: 
-  abilityName: Scout
+  abilityName: 'Scout <sprite=\"WhitePawn\" name=\"WhitePawn\"> '
   description: Moves like queen, attacks & supports like pawn
   sprite: {fileID: -1001733721352394691, guid: 8c87ae6b75b10534dac2970b713d76d8, type: 3}
-  Cost: 5
+  Cost: 3
+  rarity: 0
