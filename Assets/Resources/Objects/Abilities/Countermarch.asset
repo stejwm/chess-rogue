@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b98f003e06729b43a470b7027caa83f, type: 3}
   m_Name: Countermarch
   m_EditorClassIdentifier: 
-  abilityName: Countermarch <sprite=\"WhitePawn\" name=\"WhitePawn\">
+  abilityName: Countermarch <sprite="WhitePawn" name="WhitePawn">
   description: Can move and support backwards
   sprite: {fileID: -4601645179611525662, guid: e97317e49d2749848939105c2551132f, type: 3}
   Cost: 3

@@ -86,7 +86,7 @@ public class BloodThirstAbility : Ability
     }
     private void EnableSecondAttack()
     {   
-        if(!piece.gameObject.activeSelf)
+        if(piece==null || !piece.gameObject.activeSelf)
             return;
         Game._instance.currentMatch.BloodThirstOverride =true;
         Debug.Log("Blood thirst activated");

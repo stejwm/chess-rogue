@@ -50,14 +50,12 @@ public class General : Ability
         if(addedPiece.owner==piece.owner && addedPiece.type==PieceType.Knight){ 
             if(!appliedBonus.ContainsKey(addedPiece)){
                 appliedBonus.Add(addedPiece,0);
-                Debug.Log($"{addedPiece.name} added to dictionary, count {appliedBonus.Count}");
                 bonus++;
             }
         }
     }
 
     public void ApplyBonus(){
-        Debug.Log($"Adding General bonus dictionary size {appliedBonus.Count}");
         foreach (var piece in piece.owner.pieces){
             Chessman cm = piece.GetComponent<Chessman>();
             //Debug.Log($"Piece name {cm.name} piece type {cm.type}");
@@ -69,7 +67,6 @@ public class General : Ability
                     cm.defenseBonus += bonus;
                     cm.supportBonus += bonus;
                     appliedBonus[cm] = bonus;
-                    Debug.Log($"{cm.name} bonus applying, currently applied bonus {currentlyAppliedBonus} total bonus amount {bonus} amount to apply {bonus-currentlyAppliedBonus}");
                 }else{
                     Debug.Log($"Untracked knight {cm.name} not in dictionary or destroyed while adding");
                 }
@@ -89,9 +86,8 @@ public class General : Ability
                     cm.defenseBonus = Mathf.Max(-cm.defense, cm.defenseBonus - currentlyAppliedBonus);
                     cm.supportBonus = Mathf.Max(-cm.support, cm.supportBonus - currentlyAppliedBonus);
                     appliedBonus[cm] = 0;
-                    Debug.Log($"{cm.name} bonus removing, currently applied bonus {currentlyAppliedBonus} total bonus amount {bonus} amount to remove {currentlyAppliedBonus}");
                 }else{
-                    Debug.LogWarning($"Untracked knight {cm.name} not in dictionary or destroyed while removing");
+                    Debug.Log($"Untracked knight {cm.name} not in dictionary or destroyed while removing");
                 }
             }
         }

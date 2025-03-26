@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed3f614c836b3e840a4ffdc1216d3033, type: 3}
-  m_Name: Sentinel
+  m_Script: {fileID: 11500000, guid: 7d6cdf0916168ff4ab9e04b7752a46df, type: 3}
+  m_Name: LostToLuck
   m_EditorClassIdentifier: 
-  abilityName: Sentinel <sprite="WhiteRook" name="WhiteRook">
-  description: +1 to all rooks, bonus increases for each rook added
+  Name: Lost To Luck
+  Description: Abandon a piece in order to increase odds uncommon and rare abilities
   sprite: {fileID: 0}
-  Cost: 6
-  rarity: 2
+  Cost: 15

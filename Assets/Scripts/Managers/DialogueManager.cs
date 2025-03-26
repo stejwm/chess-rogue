@@ -215,7 +215,6 @@ public class DialogueManager : MonoBehaviour
         {
             
             text.ForceMeshUpdate(); // Ensure TMP updates the text size
-            Debug.Log("Font size: " + text.fontSize);
             minFontSize = Mathf.Min(minFontSize, text.fontSize);
         }
 

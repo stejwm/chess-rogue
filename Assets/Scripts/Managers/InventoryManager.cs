@@ -50,7 +50,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     public void CloseInventory(){
-        Game._instance.ClearCard();
+        ShopManager._instance.ClearCards();
         Game._instance.ClearPiece();
         foreach (GameObject piece in myPieces)
         {

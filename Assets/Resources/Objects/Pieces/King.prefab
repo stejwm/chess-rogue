@@ -450,7 +450,7 @@ MonoBehaviour:
   attackBonus: 0
   defenseBonus: 0
   supportBonus: 0
-  releaseCost: 5
+  releaseCost: 2
   blood: 1
   info: 
   color: 0

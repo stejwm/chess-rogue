@@ -94,7 +94,12 @@ public class ShopManager : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            Vector2 localPosition = new Vector2(i + i - 4, 2);
+            Vector2 localPosition;
+            if(Game._instance.state==ScreenState.ShopScreen)
+                localPosition = new Vector2(i + i - 4, 2);
+            else
+                localPosition = new Vector2(i+i, 2);
+                
             obj = Instantiate(Game._instance.card, localPosition, Quaternion.identity);
 
             // Select rarity based on weights
@@ -127,7 +132,8 @@ public class ShopManager : MonoBehaviour
             }
 
             cards.Add(obj);
-            obj.GetComponent<Card>().ShowPrice();
+            if(Game._instance.state==ScreenState.ShopScreen)
+                obj.GetComponent<Card>().ShowPrice();
         }
     }
     public void CreateOrders(){

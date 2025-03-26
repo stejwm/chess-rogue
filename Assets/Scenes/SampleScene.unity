@@ -6249,6 +6249,7 @@ MonoBehaviour:
   purchase: {fileID: 1806177362}
   GameStats: {fileID: 1713734139}
   PopUpCanvas: {fileID: 1749834651}
+  diplomacyCost: 10
 --- !u!1 &501690204
 GameObject:
   m_ObjectHideFlags: 0
@@ -17373,6 +17374,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d6d656b437ba3a84cacbe9040ff0c8df, type: 2}
   - {fileID: 11400000, guid: 0f745b8986d438244aea8ea9b15e6780, type: 2}
   - {fileID: 11400000, guid: 15273d54d6aa5434a8f509b8cf2fb5f3, type: 2}
+  - {fileID: 11400000, guid: fccca258b67bb5c4c91b5cf21d81cb2f, type: 2}
   AllDialogues:
   - {fileID: 11400000, guid: 351e97bd572da8d4c9376645155fead2, type: 2}
   AllOpponents:

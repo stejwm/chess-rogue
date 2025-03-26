@@ -180,6 +180,8 @@ public class MoveManager: MonoBehaviour
         readyForCleanup=false;
         defendingUnits.Clear();
         attackingUnits.Clear();
+        attackingSupporters.Clear();
+        defensiveSupporters.Clear();
         Game._instance.isInMenu=false;
         pitch=1f;
         movingPiece.flames.Stop();

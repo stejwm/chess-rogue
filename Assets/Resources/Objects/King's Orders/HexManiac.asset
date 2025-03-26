@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Hex Maniac
   Description: Hex all opponent pieces
   sprite: {fileID: 0}
-  Cost: 15
+  Cost: 10

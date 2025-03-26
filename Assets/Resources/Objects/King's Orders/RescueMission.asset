@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: RescueMission
   m_EditorClassIdentifier: 
   Name: Rescue Mission
-  Description: Place a captured piece on the board
+  Description: Place a captured piece back on the board
   sprite: {fileID: 0}
-  Cost: 25
+  Cost: 10

@@ -33,6 +33,8 @@ public class ManagementStatManager : MonoBehaviour
     public GameObject GameStats;
     [SerializeField] GameObject PopUpCanvas;
 
+    public int diplomacyCost=10;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -139,9 +141,9 @@ public class ManagementStatManager : MonoBehaviour
     }
 
     public void DiplomacyUp(){
-        if (Game._instance.hero.playerCoins >=25){
+        if (Game._instance.hero.playerCoins >=10){
             piece.diplomacy+=1;
-            Game._instance.hero.playerCoins -=25;
+            Game._instance.hero.playerCoins -=10;
         }
         updateStats();
         ArmyManager._instance.UpdateCurrency();

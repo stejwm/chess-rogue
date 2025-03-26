@@ -77,6 +77,7 @@ public class Promotion : KingsOrder
         newPiece.color=piece.color;
         newPiece.team=piece.team;
         newPiece.type=piece.type;
+        newPiece.uniqueId=piece.uniqueId;
         //newPiece.abilities= new List<Ability>(piece.abilities);
         newPiece.isValidForAttack=piece.isValidForAttack;
         newPiece.name=piece.name;

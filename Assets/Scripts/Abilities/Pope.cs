@@ -50,14 +50,12 @@ public class Pope : Ability
         if(addedPiece.owner==piece.owner && addedPiece.type==PieceType.Bishop){ 
             if(!appliedBonus.ContainsKey(addedPiece)){
                 appliedBonus.Add(addedPiece,0);
-                Debug.Log($"{addedPiece.name} added to dictionary, count {appliedBonus.Count}");
                 bonus++;
             }
         }
     }
 
     public void ApplyBonus(){
-        Debug.Log($"Adding General bonus dictionary size {appliedBonus.Count}");
         foreach (var piece in piece.owner.pieces){
             Chessman cm = piece.GetComponent<Chessman>();
             //Debug.Log($"Piece name {cm.name} piece type {cm.type}");

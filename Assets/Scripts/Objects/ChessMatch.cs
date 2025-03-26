@@ -56,6 +56,7 @@ public class ChessMatch
     }
 
     public void StartMatch(){
+        reward= (Game._instance.level*5)+20;
         Debug.Log("Match Starting");
         KingsOrderManager._instance.Setup();
         white.CreateMoveCommandDictionary();

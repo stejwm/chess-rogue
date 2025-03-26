@@ -15,7 +15,6 @@ public class Countermarch : Ability
         if (piece.type != PieceType.Pawn)
             return;
 
-        Debug.Log($"adding Countermarch, starting profile null: {piece.moveProfile == null}");
         startingProfile=piece.moveProfile;
         piece.moveProfile = new CountermarchMovement();
         piece.info += " "+abilityName;

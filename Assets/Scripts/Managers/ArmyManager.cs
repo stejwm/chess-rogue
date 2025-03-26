@@ -103,7 +103,6 @@ public class ArmyManager : MonoBehaviour
         
         UpdateCurrency();
         myPieces=Game._instance.hero.pieces;
-        Debug.Log("Management piece count :"+myPieces.Count);
         Game._instance.toggleAllPieceColliders(false);
         foreach (GameObject piece in myPieces)
         {

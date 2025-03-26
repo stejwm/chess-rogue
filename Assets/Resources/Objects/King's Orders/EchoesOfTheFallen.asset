@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Echoes of the Fallen
   Description: All pieces gain +1 to random stat for each piece abandoned this run
   sprite: {fileID: 0}
-  Cost: 20
+  Cost: 15

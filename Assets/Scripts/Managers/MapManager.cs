@@ -97,7 +97,6 @@ public class MapManager : MonoBehaviour
         if (node.isCompleted || !currentNode.connectedNodes.Contains(node))
         {
             Debug.Log("Node not legal");
-            OpenArmyManagement();
             return;
         }
         else{

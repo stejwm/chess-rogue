@@ -33,11 +33,10 @@ public enum PieceType
 }
 public abstract class Chessman : MonoBehaviour
 {
-    public GameObject movePlate;
-    //public EventSystem eventSystem;
+    private static int nextId = 0; // Auto-incrementing counter
 
-    //Position for this Chesspiece on the Board
-    //The correct position will be set later
+    
+    public int uniqueId;
     public int xBoard = -1;
     public int yBoard = -1;
     public Player owner;
@@ -100,6 +99,11 @@ public abstract class Chessman : MonoBehaviour
     public abstract List<BoardPosition> GetValidMoves();
     public abstract List<BoardPosition> GetValidSupportMoves();
     public event Action<bool> OnChessmanStateChanged;
+
+    protected virtual void Awake()
+    {
+        uniqueId = nextId++; // Assign unique ID and increment counter
+    }
     public int CalculateSupport(){
         return support+supportBonus;
     }
@@ -111,6 +115,10 @@ public abstract class Chessman : MonoBehaviour
     }
     public void SetValidMoves(){
         validMoves=GetValidMoves();
+    }
+    public void SetUniqueId(int id) // Allow manual ID assignment in specific cases
+    {
+        uniqueId = id;
     }
 
     void OnEnable()
@@ -331,19 +339,16 @@ public abstract class Chessman : MonoBehaviour
 
     public override bool Equals(object obj)
     {
-        var item = obj as Chessman;
-
-        if (item == null)
+        if (obj is Chessman other)
         {
-            return false;
+            return uniqueId == other.uniqueId;
         }
-
-        return this.name ==item.name && this.startingPosition ==item.startingPosition;
+        return false;
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(this.name, this.startingPosition);
+        return uniqueId.GetHashCode();
     }
 
     public void LevelUp(int level){

@@ -43,7 +43,6 @@ public class StatBoxManager : MonoBehaviour
     public void UnlockView(bool isOnAttack=false){
         lockView=false;
         if (lockedPiece && !isOnAttack){
-            Debug.Log("Stopping Flames");
             lockedPiece.flames.Stop();
         }
         if(lockedPiece){
