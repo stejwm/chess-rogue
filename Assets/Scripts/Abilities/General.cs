@@ -60,17 +60,18 @@ public class General : Ability
         Debug.Log($"Adding General bonus dictionary size {appliedBonus.Count}");
         foreach (var piece in piece.owner.pieces){
             Chessman cm = piece.GetComponent<Chessman>();
-            Debug.Log($"Piece name {cm.name} piece type {cm.type}");
+            //Debug.Log($"Piece name {cm.name} piece type {cm.type}");
             if(cm != null && cm.type==PieceType.Knight){
-                if (cm != null && appliedBonus.ContainsKey(cm))
+                if (appliedBonus.ContainsKey(cm))
                 {
                     var currentlyAppliedBonus = appliedBonus[cm];
-                    cm.attackBonus += bonus - currentlyAppliedBonus;
-                    cm.defenseBonus += bonus - currentlyAppliedBonus;
-                    cm.supportBonus += bonus - currentlyAppliedBonus;
+                    cm.attackBonus += bonus;
+                    cm.defenseBonus += bonus;
+                    cm.supportBonus += bonus;
                     appliedBonus[cm] = bonus;
+                    Debug.Log($"{cm.name} bonus applying, currently applied bonus {currentlyAppliedBonus} total bonus amount {bonus} amount to apply {bonus-currentlyAppliedBonus}");
                 }else{
-                    Debug.LogWarning($"Untracked knight not in dictionary or destroyed while adding");
+                    Debug.Log($"Untracked knight {cm.name} not in dictionary or destroyed while adding");
                 }
             }
         }
@@ -81,15 +82,16 @@ public class General : Ability
         foreach (var piece in piece.owner.pieces){
             Chessman cm = piece.GetComponent<Chessman>();
             if(cm != null && cm.type==PieceType.Knight){
-                if (cm != null && appliedBonus.ContainsKey(cm))
+                if (appliedBonus.ContainsKey(cm))
                 {
                     var currentlyAppliedBonus = appliedBonus[cm];
                     cm.attackBonus -= currentlyAppliedBonus;
                     cm.defenseBonus -= currentlyAppliedBonus;
                     cm.supportBonus -= currentlyAppliedBonus;
                     appliedBonus[cm] = 0;
+                    Debug.Log($"{cm.name} bonus removing, currently applied bonus {currentlyAppliedBonus} total bonus amount {bonus} amount to remove {currentlyAppliedBonus}");
                 }else{
-                    Debug.LogWarning($"Untracked knight not in dictionary or destroyed while removing");
+                    Debug.LogWarning($"Untracked knight {cm.name} not in dictionary or destroyed while removing");
                 }
             }
         }

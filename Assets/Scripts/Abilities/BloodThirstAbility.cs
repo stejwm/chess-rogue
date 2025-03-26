@@ -39,14 +39,18 @@ public class BloodThirstAbility : Ability
     }
 
     public void Decimate(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
-        if(attacker==piece && isAttacking)
+        if(attacker==piece && isAttacking){
             Game._instance.isDecimating=true;
+            if(!thirsting)
+                startingProfile=piece.moveProfile;
+        }
     }
     public void Thirst(Chessman attacker, Chessman defender)
     {
-        if(attacker==piece && !thirsting){
-            startingProfile=piece.moveProfile; //update to currentMoveProfile in case it has changed
-        }
+        /* if(attacker==piece && !thirsting){
+            Debug.Log("Setting thirst to most recent profile");
+            //startingProfile=piece.moveProfile; //update to currentMoveProfile in case it has changed
+        } */
         if (attacker == piece)
         {
             thirsting=true;
