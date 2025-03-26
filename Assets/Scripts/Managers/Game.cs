@@ -346,6 +346,7 @@ public class Game : MonoBehaviour
         OpenMap();
     }
     public void OpenMap(){
+        KingsOrderManager._instance.Hide();
         MapManager._instance.OpenMap();
         this.state=ScreenState.Map;
     }

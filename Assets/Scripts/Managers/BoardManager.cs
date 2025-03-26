@@ -59,7 +59,11 @@ public class BoardManager : MonoBehaviour
         for(int i =0; i<8; i++){
             for (int j=0; j<3; j++){
                 BoardPosition pos = new BoardPosition(i,j);
-                tiles.Add(pos, TileFactory._instance.CreateTile(pos));
+                Tile tile = TileFactory._instance.CreateTile(pos);
+                tiles.Add(pos, tile);
+                Vector3 currentPosition = tile.transform.position;
+                Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y, -0.5f);
+                tile.transform.position = newPosition;
             }
         }
         foreach (var tile in tiles.Values){

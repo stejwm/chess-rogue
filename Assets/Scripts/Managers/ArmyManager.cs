@@ -82,6 +82,8 @@ public class ArmyManager : MonoBehaviour
             return;
         }
         else if (selectedPiece && Game._instance.hero.playerCoins>=5){
+            selectedPiece.owner.openPositions.Add(new BoardPosition(selectedPiece.xBoard, selectedPiece.yBoard));
+            selectedPiece.owner.openPositions.Remove(position);
             selectedPiece.startingPosition=position;
             selectedPiece.xBoard=position.x;
             selectedPiece.yBoard=position.y;
@@ -94,40 +96,11 @@ public class ArmyManager : MonoBehaviour
             selectedPiece.GetComponent<MMSpringPosition>().BumpRandom();
         }
     }
-    public IEnumerator GetManagementInput(){
-
-        Game._instance.tileSelect=true;
-        yield return new WaitUntil(() => BoardManager._instance.selectedPosition !=null);
-        Game._instance.tileSelect=false;
-        BoardPosition targetPosition = BoardManager._instance.selectedPosition;
-        BoardManager._instance.selectedPosition=null;
-        var Chessobj = Game._instance.currentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
-        if(Chessobj==null && selectedPiece!=null && Game._instance.hero.playerCoins>=5){
-            if (Game._instance.hero.openPositions.Contains(targetPosition)){
-                selectedPiece.startingPosition=targetPosition;
-                selectedPiece.xBoard=targetPosition.x;
-                selectedPiece.yBoard=targetPosition.y;
-                selectedPiece.UpdateUIPosition();
-                Game._instance.hero.playerCoins-=5;
-            }
-            yield break;
-        }
-        if(Chessobj==null && selectedPiece==null){
-            Debug.Log("No piece at possition");
-            yield break;
-        }
-        Chessman piece = Chessobj.GetComponent<Chessman>();
-        if(selectedPiece==null){
-            selectedPiece=piece;
-            yield break;
-        }
-        
-    }
 
     public void OpenShop(){
         //Game._instance.isInMenu=false;
         gameObject.SetActive(true);
-        BoardManager._instance.CreateManagementBoard();
+        
         UpdateCurrency();
         myPieces=Game._instance.hero.pieces;
         Debug.Log("Management piece count :"+myPieces.Count);
@@ -137,31 +110,14 @@ public class ArmyManager : MonoBehaviour
             if (piece !=null && piece.GetComponent<SpriteRenderer>())
             {
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                rend.sortingOrder = 6;
-                piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=4;
+                rend.sortingOrder = 7;
+                piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=5;
             }
             piece.GetComponent<Chessman>().UpdateUIPosition();
         }
         Game._instance.togglePieceColliders(myPieces, true);
-        //Game._instance.toggleAllPieceColliders(false);
-        
+        BoardManager._instance.CreateManagementBoard();
         //CreatePieces();
-    }
-
-    public void CreatePieces(){
-        GameObject obj;
-        for(int i=0; i<3;i++){
-            Vector2 localPosition = new Vector2(i, 2);
-            obj = PieceFactory._instance.CreateRandomPiece();
-            obj.transform.position=localPosition;
-            Chessman cm = obj.GetComponent<Chessman>();
-            cm.xBoard=4+i;
-            cm.yBoard = 5;
-            cm.UpdateUIPosition();
-            SpriteRenderer rend = obj.GetComponent<SpriteRenderer>();
-            rend.sortingOrder = 5;
-            pieces.Add(obj);
-        }
     }
 
     public void UpdateCurrency(){

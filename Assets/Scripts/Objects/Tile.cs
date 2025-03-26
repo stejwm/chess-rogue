@@ -209,4 +209,17 @@ public class Tile : MonoBehaviour
         
     }
 
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+        
+        Tile other = (Tile)obj;
+        return position.Equals(other.position);
+    }
+
+    public override int GetHashCode()
+    {
+        return position.GetHashCode();
+    }
 }

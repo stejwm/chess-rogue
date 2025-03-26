@@ -111,18 +111,21 @@ public class MarketManager : MonoBehaviour
         if(opponentCapturedPieces.Count>0)
         foreach (GameObject piece in opponentCapturedPieces)
         {
-            Chessman cm = piece.GetComponent<Chessman>();
-            Game._instance.hero.pieces.Remove(piece);
-            Game._instance.hero.openPositions.Add(cm.startingPosition);
-            piece.GetComponent<Chessman>().DestroyPiece();
-            Game._instance.abandonedPieces++;
-            Debug.Log("AbandonedPieces :"+Game._instance.abandonedPieces);
+            if(piece!=null){
+                Chessman cm = piece.GetComponent<Chessman>();
+                Game._instance.hero.pieces.Remove(piece);
+                Game._instance.hero.openPositions.Add(cm.startingPosition);
+                piece.GetComponent<Chessman>().DestroyPiece();
+                Game._instance.abandonedPieces++;
+                Debug.Log("AbandonedPieces :"+Game._instance.abandonedPieces);
+            }
             
         }
         if(myCapturedPieces.Count>0)
         foreach (GameObject piece in myCapturedPieces)
         {
-            piece.GetComponent<Chessman>().DestroyPiece();
+            if(piece!=null)
+                piece.GetComponent<Chessman>().DestroyPiece();
         }
         Game._instance.state=ScreenState.RewardScreen;
         myCapturedPieces.Clear();

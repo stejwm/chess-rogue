@@ -441,6 +441,12 @@ MonoBehaviour:
   defense: 1
   support: 1
   diplomacy: 1
+  captures: 0
+  captured: 0
+  bounced: 0
+  bouncing: 0
+  supportsAttacking: 0
+  supportsDefending: 0
   attackBonus: 0
   defenseBonus: 0
   supportBonus: 0
@@ -561,10 +567,10 @@ MonoBehaviour:
       CurrentValueDisplay: 0
       TargetValueDisplay: 0
       VelocityDisplay: 0
-  MoveToRandomValueMin: {x: -2, y: -2, z: -2}
-  MoveToRandomValueMax: {x: 2, y: 2, z: 2}
-  BumpAmountRandomValueMin: {x: -20, y: 20, z: -20}
-  BumpAmountRandomValueMax: {x: 20, y: 20, z: 20}
+  MoveToRandomValueMin: {x: -2, y: -2, z: 0}
+  MoveToRandomValueMax: {x: 2, y: 2, z: 0}
+  BumpAmountRandomValueMin: {x: -20, y: 20, z: 0}
+  BumpAmountRandomValueMax: {x: 20, y: 20, z: 0}
   TestMoveToValue: {x: 2, y: 2, z: 2}
   MoveToToolbar: 0
   TestBumpAmount: {x: 75, y: 100, z: 50}
