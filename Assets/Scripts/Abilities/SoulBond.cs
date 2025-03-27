@@ -68,7 +68,7 @@ public class SoulBond : Ability
             Game._instance.isDecimating=true;
     }
     public void RemoveDecimate(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
-        if(defender==piece)
+        if(defender==piece || piece==null)
             Game._instance.isDecimating=false;
     }
     public void Capture(Chessman attacker, Chessman defender){

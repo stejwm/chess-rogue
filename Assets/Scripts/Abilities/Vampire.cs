@@ -39,9 +39,13 @@ public class Vampire : Ability
     }
     public void MatchStartBonus(){
         Debug.Log("Applying vamp at match start");
-        bonus=0;
+        if(bonus!=0){
+            Debug.Log("Removing vamp bonus");
+            RemoveBonus();
+        }
         AddBonus(piece, piece.startingPosition);
     }
+
     public void AddBonus(Chessman mover, BoardPosition targetPosition)
     {
         int currentBonus = bonus;
@@ -69,8 +73,7 @@ public class Vampire : Ability
 
     private void AdjustBonus(Chessman piece, int bonusChange)
     {
-        Debug.Log("Bonus change: " + bonusChange);
-        Debug.Log("attackBonus: " + piece.attackBonus);
+        Debug.Log($"piece {piece.name} current stats are {piece.attack},{piece.defense},{piece.support} bonus is {bonus} apply bonus change of {bonusChange}");
         piece.attackBonus = Mathf.Max(-piece.attack, piece.attackBonus+bonusChange);
         piece.defenseBonus = Mathf.Max(-piece.defense, piece.defenseBonus + bonusChange);
         piece.supportBonus = Mathf.Max(-piece.support, piece.supportBonus + bonusChange);
@@ -82,6 +85,12 @@ public class Vampire : Ability
         {
             defender.AddAbility(Game._instance.AllAbilities[20].Clone());
         }
+    }
+    public void RemoveBonus(){
+        piece.attackBonus = Mathf.Max(-piece.attack, piece.attackBonus-bonus);
+        piece.defenseBonus = Mathf.Max(-piece.defense, piece.defenseBonus - bonus);
+        piece.supportBonus = Mathf.Max(-piece.support, piece.supportBonus - bonus);
+        bonus=0;
     }
     public void PossibleReset(Chessman attacker, Chessman defender, bool isBounceReduced)
     {
