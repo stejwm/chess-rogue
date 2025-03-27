@@ -106,12 +106,22 @@ public class Game : MonoBehaviour
         //Time.timeScale = 0.5f;
         NameDatabase.LoadNames();
         BoardManager._instance.CreateBoard();
-        LetsBegin();
+        //LetsBegin();
+        AIStart();
         
     }
 
     public void LetsBegin(){
         DialogueManager._instance.StartDialogue(AllDialogues[0]);
+        heroColor=PieceColor.White;
+        opponent.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(opponent, opponent.color, Team.Enemy);
+        hero.pieces = PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
+        hero.Initialize();
+        opponent.Initialize();
+        NewMatch(hero, opponent);
+    }
+
+    public void AIStart(){
         heroColor=PieceColor.White;
         opponent.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(opponent, opponent.color, Team.Enemy);
         hero.pieces = PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
