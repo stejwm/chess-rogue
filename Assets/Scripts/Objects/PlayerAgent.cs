@@ -201,7 +201,7 @@ public class PlayerAgent : Agent
                     sensor.AddObservation(piece.xBoard);
                     sensor.AddObservation(piece.yBoard);
 
-                    sensor.AddOneHotObservation((int)piece.type, 7);
+                    sensor.AddOneHotObservation((int)piece.type, 8);
                     sensor.AddOneHotObservation((int)piece.color, 3);
 
                     // Add other stats
@@ -216,7 +216,7 @@ public class PlayerAgent : Agent
                 else{
                     sensor.AddObservation(-1);
                     sensor.AddObservation(-1);
-                    sensor.AddOneHotObservation((int)PieceType.None, 7); // 7 categories
+                    sensor.AddOneHotObservation((int)PieceType.None, 8); // 7 categories
                     sensor.AddOneHotObservation((int)PieceColor.None, 3);
                     sensor.AddObservation(-1);
                     sensor.AddObservation(-1);
@@ -250,7 +250,7 @@ public class PlayerAgent : Agent
             Debug.Log(color+"Won ! Recieved 1 reward");
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
-                //EndEpisode();
+                EndEpisode();
                 //StartCoroutine(ReloadScene());
             }
         }
@@ -258,7 +258,7 @@ public class PlayerAgent : Agent
             SetReward(-10f);
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
-                //EndEpisode();
+                EndEpisode();
                 //StartCoroutine(ReloadScene());
             }
             Debug.Log(this.color+"Lost ! Recieved -1 reward");
