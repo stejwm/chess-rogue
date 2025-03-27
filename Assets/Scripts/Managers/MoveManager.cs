@@ -62,7 +62,8 @@ public class MoveManager: MonoBehaviour
         {
             Chessman attackedPiece = match.GetPieceAtPosition(x,y).GetComponent<Chessman>();
             LogManager._instance.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"> {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} attacks <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(x, y)}");
-            HandleAttack(movingPiece, attackedPiece);   
+            Game._instance.OnAttackStart.Invoke(movingPiece, attackedPiece);
+            HandleAttack(movingPiece, attackedPiece);
         }
         else{
             LogManager._instance.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"> "+ BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)+" to "+ BoardPosition.ConvertToChessNotation(x, y));

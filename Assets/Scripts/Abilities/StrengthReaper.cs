@@ -8,14 +8,14 @@ public class StrengthReaper : Ability
     private Chessman piece;
     private int bonus;
     
-    public StrengthReaper() : base("Strength Reaper", "Adds half of attackers attack to defense when defending") {}
+    public StrengthReaper() : base("Strength Reaper", "Reduces attacks by half when defending") {}
 
 
     public override void Apply(Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnAttack.AddListener(AddBonus);
+        Game._instance.OnAttackStart.AddListener(AddBonus);
         Game._instance.OnAttackEnd.AddListener(RemoveBonus);
         piece.releaseCost+=Cost;
         base.Apply(piece);
@@ -25,23 +25,22 @@ public class StrengthReaper : Ability
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnAttack.RemoveListener(AddBonus); 
+        Game._instance.OnAttackStart.RemoveListener(AddBonus); 
         Game._instance.OnAttackEnd.RemoveListener(RemoveBonus); 
 
     }
-    public void AddBonus(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
-        if(piece!=attacker && isAttacking){
-            bonus=attacker.CalculateAttack()/2;
-        }
-        if (attacker==piece && !isAttacking){
-            piece.effectsFeedback.PlayFeedbacks();
-            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Strength Reaper</gradient></color>", $"<color=green>+{bonus}</color> defense");
-            piece.defenseBonus+=bonus;
+    public void AddBonus(Chessman attacker, Chessman defender){
+        if(piece==defender){
+            bonus = attacker.CalculateAttack()/2;
+            attacker.attackBonus-= bonus;
+             piece.effectsFeedback.PlayFeedbacks();
+            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Strength Reaper</gradient></color>", $" attack reduced by <color=red>-{bonus}</red>");
+        
         }
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int support, int defenseSupport){
         if (defender==piece)
-            piece.defenseBonus-=bonus;
+            attacker.attackBonus+=bonus;
     }
 
 }

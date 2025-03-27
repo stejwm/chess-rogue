@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StrengthReaper
   m_EditorClassIdentifier: 
   abilityName: Strength Reaper
-  description: Adds half of attackers attack to defense when defending
+  description: Reduces attacks by half when defending
   sprite: {fileID: -3586820168263423585, guid: 018a77226c1850549913733b84d82c40, type: 3}
   Cost: 3
   rarity: 0
