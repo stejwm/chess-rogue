@@ -216,6 +216,7 @@ public abstract class Chessman : MonoBehaviour
         }
         if (Game._instance.currentMatch !=null  && Game._instance.currentMatch.isSetUpPhase && Game._instance.hero.inventoryPieces.Contains(this.gameObject))
         {
+            Debug.Log("Place piece");
             HandlePiecePlacement();
             return;
         }

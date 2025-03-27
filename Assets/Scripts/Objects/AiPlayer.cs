@@ -18,23 +18,32 @@ public class AIPlayer : Player
         agent.pieces=pieces;
         agent.StartUp();
         openPositions = new List<BoardPosition>();
+        int startingRow;
+        if (pieces[0].GetComponent<Chessman>().startingPosition.y <= 2)
+            startingRow=2;
+        else
+            startingRow=7;
+            
+        for (int i =0; i<8; i++){
+            openPositions.Add(new BoardPosition(i,startingRow));
+        }
     }
 
     public override void CreateMoveCommandDictionary(){
         agent.CreateMoveCommandDictionary();
     }
 
-    public void SetSelectedPiece(Chessman piece){
+    public override void SetSelectedPiece(Chessman piece){
         agent.selectedPiece=piece;
     }
-    public void SetSelectedDestination(BoardPosition position){
+    public override void SetSelectedDestination(BoardPosition position){
         agent.destinationPosition=position;
     }
 
 
 
 
-    public void RequestDecision(){
+    public override void RequestDecision(){
         agent.RequestDecision();
     }
 
