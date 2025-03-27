@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Radiating Death
   description: Reduce all attackers stats by -1 when captured
-  sprite: {fileID: 0}
+  sprite: {fileID: -4953614335423255510, guid: 3132fbe096993ff4ea69145e50a42a81, type: 3}
   Cost: 3
   rarity: 0

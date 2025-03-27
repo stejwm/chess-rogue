@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Sentinel <sprite="WhiteRook" name="WhiteRook">
   description: +1 to all rooks, bonus increases for each rook added
-  sprite: {fileID: 0}
+  sprite: {fileID: 7408749440203845256, guid: 2131c87033b676f48a498a347c3548b0, type: 3}
   Cost: 6
   rarity: 2

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: 'General <sprite="WhiteKnight" name="WhiteKnight"> '
   description: +1 to all knights, bonus increases for each knight added
-  sprite: {fileID: 0}
+  sprite: {fileID: 5471465498612948007, guid: 1588b646853def94787fb404e1bf8132, type: 3}
   Cost: 6
   rarity: 2

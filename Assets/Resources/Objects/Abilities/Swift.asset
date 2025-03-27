@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Swift
   description: Move again if first move is not an attack
-  sprite: {fileID: 0}
+  sprite: {fileID: -7681401300499418449, guid: 3232e0d104697c445bf2e396f357f017, type: 3}
   Cost: 5
   rarity: 1

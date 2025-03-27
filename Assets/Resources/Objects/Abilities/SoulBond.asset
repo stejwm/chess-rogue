@@ -15,6 +15,6 @@ MonoBehaviour:
   abilityName: Soul Bond
   description: +5 to all stat for each other soul bonded piece, when any soul bonded
     piece is captured, all are decimated
-  sprite: {fileID: 0}
+  sprite: {fileID: 60633631088747032, guid: 9464aeeb83ec3b3478927b61698d705c, type: 3}
   Cost: 5
   rarity: 1

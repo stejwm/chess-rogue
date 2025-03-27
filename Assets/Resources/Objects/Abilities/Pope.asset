@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Pope <sprite="WhiteBishop" name="WhiteBishop">
   description: +1 to all bishops, bonus increases for each bishop added
-  sprite: {fileID: 0}
+  sprite: {fileID: -1793912131608922401, guid: 0c1c488ce5c7ddc48b3326992bd290f4, type: 3}
   Cost: 6
   rarity: 2
