@@ -4226,7 +4226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 5248
+    VectorObservationSize: 5312
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -4237,8 +4237,8 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: cf2cceffbdf9db54ba5f6391bbd33d23, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 2
-  m_BehaviorName: KnightsOfTheRoundTable
+  m_BehaviorType: 1
+  m_BehaviorName: GeneralBlack
   TeamId: 1
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -4291,10 +4291,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Record: 0
+  Record: 1
   NumStepsToRecord: 0
-  DemonstrationName: KnightsOfTheRoundTable
-  DemonstrationDirectory: KnightDemos
+  DemonstrationName: GeneralBlack
+  DemonstrationDirectory: GeneralBlackDemos
 --- !u!1 &275032187
 GameObject:
   m_ObjectHideFlags: 0
@@ -11202,7 +11202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1011825029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14287,6 +14287,127 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253406525}
   m_CullTransparentMesh: 1
+--- !u!1 &1256078905
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1256078910}
+  - component: {fileID: 1256078909}
+  - component: {fileID: 1256078908}
+  - component: {fileID: 1256078907}
+  - component: {fileID: 1256078906}
+  m_Layer: 0
+  m_Name: Opponent (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1256078906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256078905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Record: 1
+  NumStepsToRecord: 0
+  DemonstrationName: GeneralPlayer
+  DemonstrationDirectory: PlayerDemos
+--- !u!114 &1256078907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256078905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fc03b6fba6356e4eb093b143430f574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  pieces: []
+  color: 0
+  selectedPiece: {fileID: 0}
+--- !u!114 &1256078908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256078905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    VectorObservationSize: 5312
+    NumStackedVectorObservations: 1
+    m_ActionSpec:
+      m_NumContinuousActions: 0
+      BranchSizes: 00060000
+    VectorActionSize: 00060000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 0
+    hasUpgradedBrainParametersWithActionSpec: 1
+  m_Model: {fileID: 5022602860645237092, guid: b5743fffa18ad634a89e0981b13bb190, type: 3}
+  m_InferenceDevice: 0
+  m_BehaviorType: 1
+  m_BehaviorName: GeneralPlayer
+  TeamId: 0
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_ObservableAttributeHandling: 0
+--- !u!114 &1256078909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256078905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bc3daba33f3b1d4d9cafc8a730a674a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCoins: 0
+  playerBlood: 0
+  soulBondedPieces: 0
+  color: 0
+  pieces: []
+  capturedPieces: []
+  inventoryPieces: []
+  orders: []
+  agent: {fileID: 1256078907}
+--- !u!4 &1256078910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256078905}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.3863485, y: 1.1426044, z: -0.017811868}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1278904318
 GameObject:
   m_ObjectHideFlags: 0
@@ -17322,7 +17443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03049dea99ae9249bfb32b122e5ac40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hero: {fileID: 420987370}
+  hero: {fileID: 1256078909}
   opponent: {fileID: 240107101}
   card: {fileID: 3186847924759451737, guid: 213abdc1572143548af75a7c41f77bd7, type: 3}
   heroColor: 0
@@ -23190,6 +23311,7 @@ SceneRoots:
   - {fileID: 1895968343}
   - {fileID: 420987365}
   - {fileID: 240107102}
+  - {fileID: 1256078910}
   - {fileID: 1932296502}
   - {fileID: 1711020995}
   - {fileID: 1092423619}
