@@ -13,7 +13,7 @@ public class Sentinel : Ability
     private int bonus = 1;
     private Dictionary<Chessman, int> appliedBonus = new Dictionary<Chessman, int>();
     
-    public Sentinel() : base("Sentinel", "+1 to all rooks, bonus increases for each rook added") {}
+    public Sentinel() : base("Sentinel", "+1 to all rooks, bonus increases for each Rook added") {}
 
     public override void Apply(Chessman piece)
     {
@@ -24,7 +24,7 @@ public class Sentinel : Ability
         Game._instance.OnPieceAdded.AddListener(PieceAdded);
         Game._instance.OnChessMatchStart.AddListener(ApplyBonus);
         piece.releaseCost+=Cost;
-        CreateGeneral();
+        CreateSentinel();
         base.Apply(piece);
         piece.OnChessmanStateChanged += HandleChessmanStateChanged;
     }
@@ -37,7 +37,7 @@ public class Sentinel : Ability
         ResetBonus();
     }
 
-    public void CreateGeneral(){
+    public void CreateSentinel(){
         foreach (var piece in piece.owner.pieces){
             Chessman cm = piece.GetComponent<Chessman>();
             if(cm != null && cm.type==PieceType.Rook && !appliedBonus.ContainsKey(cm)){
@@ -63,10 +63,11 @@ public class Sentinel : Ability
                 if (appliedBonus.ContainsKey(cm))
                 {
                     var currentlyAppliedBonus = appliedBonus[cm];
-                    cm.attackBonus = Mathf.Max(-cm.attack, cm.attackBonus - currentlyAppliedBonus);
-                    cm.defenseBonus = Mathf.Max(-cm.defense, cm.defenseBonus - currentlyAppliedBonus);
-                    cm.supportBonus = Mathf.Max(-cm.support, cm.supportBonus - currentlyAppliedBonus);
+                    cm.attackBonus += bonus;
+                    cm.defenseBonus += bonus;
+                    cm.supportBonus += bonus;
                     appliedBonus[cm] = bonus;
+                    Debug.Log($"{cm.name} bonus applying, currently applied bonus {currentlyAppliedBonus} total bonus amount {bonus} amount to apply {bonus-currentlyAppliedBonus}");
                 }else{
                     Debug.Log($"Untracked Rook {cm.name} not in dictionary or destroyed while adding");
                 }
@@ -78,16 +79,17 @@ public class Sentinel : Ability
     {
         foreach (var piece in piece.owner.pieces){
             Chessman cm = piece.GetComponent<Chessman>();
-            if(cm != null && cm.type==PieceType.Bishop){
+            if(cm != null && cm.type==PieceType.Rook){
                 if (appliedBonus.ContainsKey(cm))
                 {
                     var currentlyAppliedBonus = appliedBonus[cm];
-                    cm.attackBonus -= currentlyAppliedBonus;
-                    cm.defenseBonus -= currentlyAppliedBonus;
-                    cm.supportBonus -= currentlyAppliedBonus;
+                    cm.attackBonus = Mathf.Max(-cm.attack, cm.attackBonus - currentlyAppliedBonus);
+                    cm.defenseBonus = Mathf.Max(-cm.defense, cm.defenseBonus - currentlyAppliedBonus);
+                    cm.supportBonus = Mathf.Max(-cm.support, cm.supportBonus - currentlyAppliedBonus);
                     appliedBonus[cm] = 0;
+                    Debug.Log($"{cm.name} bonus removing, currently applied bonus {currentlyAppliedBonus} total bonus amount {bonus} amount to remove {currentlyAppliedBonus}");
                 }else{
-                    Debug.LogWarning($"Untracked Bishop {cm.name} not in dictionary or destroyed while removing");
+                    Debug.LogWarning($"Untracked Rook {cm.name} not in dictionary or destroyed while removing");
                 }
             }
         }
