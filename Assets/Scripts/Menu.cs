@@ -31,6 +31,12 @@ public class Menu : MonoBehaviour
     }
 
     public void StartGame(){
+        SceneLoadManager.LoadPreviousSave=false;
+        SceneManager.LoadScene(1);
+    }
+
+    public void LoadGame(){
+        SceneLoadManager.LoadPreviousSave=true;
         SceneManager.LoadScene(1);
     }
 

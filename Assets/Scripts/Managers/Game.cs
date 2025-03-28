@@ -13,6 +13,7 @@ using System.Linq;
 using Rand= System.Random;
 using MoreMountains.Feedbacks;
 using System.Text.RegularExpressions;
+using CI.QuickSave;
 
 
 public enum ScreenState
@@ -103,10 +104,14 @@ public class Game : MonoBehaviour
     }
     public void Start()
     {
-        //Time.timeScale = 0.5f;
         NameDatabase.LoadNames();
-        BoardManager._instance.CreateBoard();
-        LetsBegin();
+        if(SceneLoadManager.LoadPreviousSave){
+            LoadGame();
+        }
+        else{
+            BoardManager._instance.CreateBoard();
+            LetsBegin();
+        }
         
     }
 
@@ -118,6 +123,33 @@ public class Game : MonoBehaviour
         hero.Initialize();
         opponent.Initialize();
         NewMatch(hero, opponent);
+    }
+
+    public void LoadGame(){
+        var quickSaveReader = QuickSaveReader.Create("Game");
+        quickSaveReader.Read<Player>("Player", (r) => { hero = r; });
+        quickSaveReader.Read<ScreenState>("State", (r) => { state = r; });
+        quickSaveReader.Read<ChessMatch>("Match", (r) => { currentMatch = r; });
+
+        switch (state){
+            case ScreenState.RewardScreen:
+                OpenReward();
+                break;
+            case ScreenState.PrisonersMarket:
+                OpenMarket();
+                break;
+            case ScreenState.ManagementScreen:
+                OpenArmyManagement();
+                break;
+            case ScreenState.ActiveMatch:
+                break;
+            case ScreenState.ShopScreen:
+                OpenShop();
+                break;
+            case ScreenState.Map:
+                OpenMap();
+                break;
+        }
     }
 
     public void Tutorial(){
@@ -162,6 +194,11 @@ public class Game : MonoBehaviour
         if(pause && !pauseOverride){
             currentMatch.NextTurn();
             pause=false;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isInMenu=true;
+            PauseMenuManager._instance.OpenMenu();
         }
     }
     private IEnumerator ApplyAbility(Chessman target){

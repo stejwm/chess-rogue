@@ -21,7 +21,8 @@ public class ShopManager : MonoBehaviour
     private static Rand rng = new Rand();
     private List<GameObject> cards = new List<GameObject>();
     private List<GameObject> orders = new List<GameObject>();
-    private int rerollCost = 5;
+    public int rerollCost = 5;
+    public int rerollCostIncrease = 5;
     private Dictionary<Rarity, float> rarityWeights = new Dictionary<Rarity, float>()
     {
         { Rarity.Common, 50f },
@@ -200,7 +201,7 @@ public class ShopManager : MonoBehaviour
     public void RerollAbilities(){
         if(Game._instance.hero.playerCoins>=rerollCost){
             Game._instance.hero.playerCoins-=rerollCost;
-            rerollCost+=5;
+            rerollCost+=rerollCostIncrease;
             rerollCostText.text = rerollCost.ToString();
             UpdateCurrency();
             ClearCards();
