@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.MLAgents.Integrations.Match3;
@@ -44,7 +45,23 @@ public class AIPlayer : Player
 
 
     public override void RequestDecision(){
-        agent.RequestDecision();
+        try{
+            agent.RequestDecision();
+        }
+        catch(Exception e){
+            Debug.Log($"Exception occured requesting decision {e.Message} retrying");
+            RetryDecisionRequest(0);
+        }
+        
+    }
+    public void RetryDecisionRequest(int retries =0){
+        try{
+            agent.RequestDecision();
+        }
+        catch(Exception e){
+            Debug.Log($"Exception occured requesting decision {e.Message} retrying");
+            RetryDecisionRequest(++retries);
+        }
     }
 
     public override void MakeMove(ChessMatch match)
