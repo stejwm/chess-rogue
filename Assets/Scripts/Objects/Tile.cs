@@ -173,12 +173,13 @@ public class Tile : MonoBehaviour
             else if(piece!=null && piece.owner!=Game._instance.hero && piece == StatBoxManager._instance.enemyLockedPiece){
                 StatBoxManager._instance.UnlockEnemyView();
                 piece.validMoves.Clear();
-                //piece.validMoves=piece.GetValidMoves();
+                BoardManager._instance.ClearTiles();
                 piece.DisplayValidMoves();
             }
             else if(piece!=null && piece.owner!=Game._instance.hero){
                 StatBoxManager._instance.UnlockEnemyView();
                 piece.validMoves.Clear();
+                BoardManager._instance.ClearTiles();
                 piece.validMoves=piece.GetValidMoves();
                 piece.DisplayValidMoves();
                 StatBoxManager._instance.SetAndShowEnemyStats(piece);
