@@ -180,7 +180,11 @@ public class PlayerAgent : Agent
             }
             
         }
-        //Debug.Log("Found all valid move commands. Count = "+validIndexes.Count);
+        if (validIndexes.Count == 0)
+        {
+            Debug.LogWarning("No valid moves found! Allowing all actions to prevent UnityAgentsException.");
+            return;  // Exit early, do NOT mask any actions
+        }
         foreach(int index in moveCommands.Keys)
         {
             if(!validIndexes.Contains(index))
