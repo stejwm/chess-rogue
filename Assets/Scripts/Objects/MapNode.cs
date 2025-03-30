@@ -18,8 +18,6 @@ public class MapNode : MonoBehaviour
     public NodeType nodeType; // Add this field
     public EnemyType enemyType; // Add this field for enemy nodes
     public EncounterType encounterType;
-
-    [System.NonSerialized]
     public Image nodeImage; // Reference to the Image component for changing the sprite
     
 

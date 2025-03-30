@@ -127,9 +127,22 @@ public class Game : MonoBehaviour
 
     public void LoadGame(){
         var quickSaveReader = QuickSaveReader.Create("Game");
-        quickSaveReader.Read<Player>("Player", (r) => { hero = r; });
-        quickSaveReader.Read<ScreenState>("State", (r) => { state = r; });
-        quickSaveReader.Read<ChessMatch>("Match", (r) => { currentMatch = r; });
+        PlayerData player;
+        List<MapNodeData> mapNodes;
+        quickSaveReader.TryRead<PlayerData>("Player", out player);
+        quickSaveReader.TryRead<ScreenState>("State", out state);
+        quickSaveReader.TryRead<int>("Level", out level);
+        quickSaveReader.TryRead<List<MapNodeData>>("MapNodes", out mapNodes);
+
+        Debug.Log($"Resuming state {state}");
+        MapManager._instance.LoadMap(mapNodes);
+        Game._instance.hero.playerBlood=player.blood;
+        Game._instance.hero.playerCoins=player.coins;
+
+        PieceFactory._instance.LoadPieces(player.pieces);
+
+
+        
 
         switch (state){
             case ScreenState.RewardScreen:
@@ -349,9 +362,6 @@ public class Game : MonoBehaviour
     }
 
     public void OpenShop(){
-        if(shopUsed){
-            return;
-        }
         state=ScreenState.ShopScreen;
         shopUsed=true;
         ShopManager._instance.OpenShop();

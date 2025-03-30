@@ -66,9 +66,12 @@ public class ShopManager : MonoBehaviour
             }
             
         }
-        CreatePieces();
-        CreateCards();
-        CreateOrders();
+        if(!Game._instance.shopUsed){
+            CreatePieces();
+            CreateCards();
+            CreateOrders();
+        }
+        
     }
 
     public void ModifyRarityWeight(Rarity rarity, float multiplier)

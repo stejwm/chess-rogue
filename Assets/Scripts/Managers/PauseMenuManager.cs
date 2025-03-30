@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using CI.QuickSave;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -41,6 +42,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void SaveGame(){
 
+        List<MapNodeData> Map = new List<MapNodeData>();
         PlayerData playerData = new PlayerData
         {
             coins = Game._instance.hero.playerCoins,
@@ -53,7 +55,8 @@ public class PauseMenuManager : MonoBehaviour
             Chessman piece = pieceObj.GetComponent<Chessman>();
             PieceData pieceData = new PieceData
             {
-                pieceType = piece.type.ToString(),
+                name= piece.name,
+                pieceType = piece.type,
                 attack = piece.attack,
                 defense = piece.defense,
                 support = piece.support,
@@ -72,12 +75,37 @@ public class PauseMenuManager : MonoBehaviour
             }
             playerData.pieces.Add(pieceData);
         }
+
+        foreach (var nodeObj in MapManager._instance.mapNodes)
+        {
+            var connectedNodes = new List<string>();
+            MapNode node = nodeObj.GetComponent<MapNode>();
+            MapNodeData nodeData = new MapNodeData
+            {
+                nodeName = node.nodeName,
+                isCompleted = node.isCompleted,
+                nodeType = node.nodeType, // Add this field
+                enemyType = node.enemyType, // Add this field for enemy nodes
+                encounterType = node.encounterType,
+                localX = node.transform.localPosition.x,
+                localY = node.transform.localPosition.y
+            };
+
+            foreach (var connectedNodeObj in node.connectedNodes)
+            {
+                connectedNodes.Add(connectedNodeObj.GetComponent<MapNode>().nodeName);
+            }
+            nodeData.connectedNodes=connectedNodes;
+            Map.Add(nodeData);
+        }
+
+        
         
         var writer = QuickSaveWriter.Create("Game");
             writer.Write("Player", playerData);
             writer.Write("State", Game._instance.state);
             writer.Write("Level", Game._instance.level);
-            //writer.Write("MapNodes", MapManager._instance.mapNodes);
+            writer.Write("MapNodes", Map);
             writer.Commit();
     }
 

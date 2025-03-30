@@ -15,10 +15,13 @@ public class PlayerData
 [System.Serializable]
 public class PieceData
 {
-    public string pieceType;  // E.g., "Knight", "Bishop"
+    public string name;
+    public int uniqueId;
+    public PieceType pieceType;  // E.g., "Knight", "Bishop"
     public int attack;
     public int defense;
     public int support;
+    public PieceColor color;
     public int posX, posY;    
     public List<AbilityData> abilities;
 }
@@ -28,4 +31,17 @@ public class AbilityData
 {
     public string abilityName;
     public string abilityDescription;
+}
+
+[System.Serializable]
+public class MapNodeData
+{
+    public string nodeName;
+    public bool isCompleted;
+    public List<string> connectedNodes;
+    public NodeType nodeType; // Add this field
+    public EnemyType enemyType; // Add this field for enemy nodes
+    public EncounterType encounterType;
+    public float localX;
+    public float localY;
 }
