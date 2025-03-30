@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CI.QuickSave;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -38,7 +39,8 @@ public class MapManager : MonoBehaviour
     public void Start()
     {
         gameObject.SetActive(false);
-        GenerateMap();
+        if(!SceneLoadManager.LoadPreviousSave)
+            GenerateMap();
     }
 
     public void OpenMap()
