@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using MoreMountains.Feedbacks;
 using TMPro;
 using Unity.Cinemachine;
@@ -17,16 +18,14 @@ public class ReturnToFormation : KingsOrder
         foreach (var pieceObj in hero.pieces)
         {   
             Chessman piece = pieceObj.GetComponent<Chessman>();
-            piece.xBoard=piece.startingPosition.x;
-            piece.yBoard=piece.startingPosition.y;
-            piece.UpdateUIPosition();
+            Game._instance.currentMatch.SetPositionEmpty(piece.xBoard, piece.yBoard);
+            Game._instance.currentMatch.MovePiece(piece, piece.startingPosition.x, piece.startingPosition.y);
         }
         foreach (var pieceObj in Game._instance.currentMatch.black.pieces)
         {   
             Chessman piece = pieceObj.GetComponent<Chessman>();
-            piece.xBoard=piece.startingPosition.x;
-            piece.yBoard=piece.startingPosition.y;
-            piece.UpdateUIPosition();
+            Game._instance.currentMatch.SetPositionEmpty(piece.xBoard, piece.yBoard);
+            Game._instance.currentMatch.MovePiece(piece, piece.startingPosition.x, piece.startingPosition.y);
         }         
         yield return null;
     }
