@@ -43,6 +43,7 @@ public class AvengingStrike : Ability
     public void RawMoveCheck(Chessman piece, BoardPosition destination)
     {
         if(readyToAvenge){
+            Game._instance.currentMatch.MyTurn(piece.color);
             Game._instance.currentMatch.AvengingStrikeOverride =false;
             readyToAvenge=false;
             Game._instance.currentMatch.AvengerActive=false;

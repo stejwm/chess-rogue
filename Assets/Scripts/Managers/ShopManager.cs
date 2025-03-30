@@ -216,6 +216,7 @@ public class ShopManager : MonoBehaviour
     public void UpdateCurrency(){
         bloodText.text = ": "+Game._instance.hero.playerBlood;
         coinText.text = ": "+Game._instance.hero.playerCoins;
+        rerollCostText.text = rerollCost.ToString();
     }
 
     public void CloseShop(){

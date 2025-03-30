@@ -363,8 +363,8 @@ public class Game : MonoBehaviour
 
     public void OpenShop(){
         state=ScreenState.ShopScreen;
-        shopUsed=true;
         ShopManager._instance.OpenShop();
+        shopUsed=true;
     }
     public void ResetPlayerPieces(){
         foreach (GameObject piece in hero.pieces)
