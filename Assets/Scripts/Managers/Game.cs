@@ -14,6 +14,7 @@ using Rand= System.Random;
 using MoreMountains.Feedbacks;
 using System.Text.RegularExpressions;
 using CI.QuickSave;
+using System.IO;
 
 
 public enum ScreenState
@@ -123,8 +124,8 @@ public class Game : MonoBehaviour
 
     public void AIStart(){
         heroColor=PieceColor.White;
-        opponent.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(opponent, opponent.color, Team.Enemy);
-        hero.pieces = PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
+        opponent.pieces = PieceFactory._instance.CreateOpponentPieces(opponent, (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length));
+        hero.pieces = CreateRandomHeroPiecesFromSave();
         hero.Initialize();
         opponent.Initialize();
         NewMatch(hero, opponent);
@@ -440,5 +441,27 @@ public class Game : MonoBehaviour
         {
             piece.GetComponent<Chessman>().highlightedParticles.Stop();
         }
+    }
+
+    public List<GameObject> CreateRandomHeroPiecesFromSave(){
+        // Get all save files matching pattern
+        var saveFiles = Directory.GetFiles("C:\\Users\\steve\\chess-rogue\\chess-rogue\\Saves")
+            .Where(f => Regex.IsMatch(f, @"^Game_\d+$"))
+            .ToList();
+
+        if (saveFiles.Count == 0)
+            return PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
+
+        // Select random save file
+        string selectedSave = saveFiles[Random.Range(0, saveFiles.Count)];
+        var quickSaveReader = QuickSaveReader.Create(selectedSave);
+        
+        PlayerData player;
+        quickSaveReader.TryRead<PlayerData>("Player", out player);
+        quickSaveReader.TryRead<int>("Level", out level);
+        
+        hero.playerBlood=player.blood;
+        hero.playerCoins=player.coins;
+        return PieceFactory._instance.LoadPieces(player.pieces);
     }
 }

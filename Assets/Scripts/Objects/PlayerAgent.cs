@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 
 public class PlayerAgent : Agent
@@ -20,6 +21,7 @@ public class PlayerAgent : Agent
     private List<MoveCommand> moveHistory = new List<MoveCommand>();
     public Chessman selectedPiece;
     public BoardPosition destinationPosition;
+    private float previousPotential;
 
     private const int MaxRepetitions = 8;
 
@@ -105,6 +107,18 @@ public class PlayerAgent : Agent
         //Debug.Log("branch 0: "+selectedMoveCommandIndex);
         MoveCommand selectedMoveCommand = GetMoveCommandFromIndex(selectedMoveCommandIndex);
 
+        // Add position-based reward before executing the move
+        float positionReward = GetPositionReward(selectedMoveCommand.piece, 
+                                               selectedMoveCommand.x, 
+                                               selectedMoveCommand.y);
+        AddReward(positionReward);
+
+        float currentPotential = CalculateBoardPotential();
+        float potentialBasedReward = currentPotential - previousPotential;
+        AddReward(potentialBasedReward);
+        
+        previousPotential = currentPotential;
+
         moveHistory.Add(selectedMoveCommand);
         if (moveHistory.Count > MaxRepetitions)
             moveHistory.RemoveAt(0);
@@ -118,6 +132,26 @@ public class PlayerAgent : Agent
         Debug.Log("Action Recieved attempting to execute move from "+ BoardPosition.ConvertToChessNotation(selectedMoveCommand.piece.xBoard, selectedMoveCommand.piece.yBoard)+" to "+BoardPosition.ConvertToChessNotation(selectedMoveCommand.x, selectedMoveCommand.y));
         Game._instance.currentMatch.ExecuteTurn(selectedMoveCommand.piece, selectedMoveCommand.x, selectedMoveCommand.y);
         
+    }
+
+    private float CalculateBoardPotential()
+    {
+        float potential = 0f;
+        foreach (GameObject pieceObj in pieces)
+        {
+            Chessman piece = pieceObj.GetComponent<Chessman>();
+            if (piece.color == color)
+            {
+                // Base piece value
+                potential += GetPieceReward(piece);
+                
+                // Safety value - how many attackers vs defenders
+                int attackers = CountThreateningPieces(piece, piece.xBoard, piece.yBoard);
+                int defenders = CountSupportingPieces(piece, piece.xBoard, piece.yBoard);
+                potential += (defenders - attackers) * 0.1f;
+            }
+        }
+        return potential;
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -255,7 +289,7 @@ public class PlayerAgent : Agent
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
                 EndEpisode();
-                //StartCoroutine(ReloadScene());
+                StartCoroutine(ReloadScene());
             }
         }
         else{
@@ -263,7 +297,7 @@ public class PlayerAgent : Agent
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
                 EndEpisode();
-                //StartCoroutine(ReloadScene());
+                StartCoroutine(ReloadScene());
             }
             Debug.Log(this.color+"Lost ! Recieved -1 reward");
         }
@@ -329,5 +363,90 @@ public class PlayerAgent : Agent
         else{
             SetReward(-0.05f);
         }
+    }
+
+    public float GetPositionReward(Chessman piece, int x, int y)
+    {
+        float reward = 0f;
+
+        // Center control bonus
+        if ((x == 3 || x == 4) && (y == 3 || y == 4))
+        {
+            reward += 0.2f;
+        }
+
+        // Forward progression for pawns
+        if (piece.type == PieceType.Pawn)
+        {
+            int forwardDirection = piece.color == PieceColor.White ? 1 : -1;
+            int progressionBonus = piece.color == PieceColor.White ? y : (7 - y);
+            reward += progressionBonus * 0.05f;
+        }
+
+        // Controlling key squares
+        if (IsKeySquare(x, y))
+        {
+            reward += 0.15f;
+        }
+
+        // Support network bonus
+        /* int supportingPieces = CountSupportingPieces(piece, x, y);
+        reward += supportingPieces * 0.05f; */
+
+        return reward;
+    }
+
+    private bool IsKeySquare(int x, int y)
+    {
+        // Central squares and advanced central squares
+        bool isCentralSquare = (x >= 2 && x <= 5) && (y >= 2 && y <= 5);
+        
+        // Enemy territory control
+        bool isEnemyTerritory = color == PieceColor.White ? 
+            y >= 5 : // White piece in black's territory
+            y <= 2;  // Black piece in white's territory
+
+        return isCentralSquare || isEnemyTerritory;
+    }
+
+    private int CountSupportingPieces(Chessman piece, int x, int y)
+    {
+        int count = 0;
+        foreach (GameObject pieceObj in pieces)
+        {
+            Chessman ally = pieceObj.GetComponent<Chessman>();
+            if (ally != piece)
+            {
+                var supportMoves = ally.GetValidSupportMoves();
+                if (supportMoves.Any(move => move.x == x && move.y == y))
+                {
+                    count+= ally.support;
+                }
+            }
+        }
+        return count;
+    }
+
+    private int CountThreateningPieces(Chessman piece, int x, int y)
+    {
+        int count = 0;
+        List<GameObject> opponentPieces;
+        if(color==PieceColor.Black)
+            opponentPieces=Game._instance.currentMatch.white.pieces;
+        else
+            opponentPieces=Game._instance.currentMatch.black.pieces;
+        foreach (GameObject pieceObj in opponentPieces)
+        {
+            Chessman ally = pieceObj.GetComponent<Chessman>();
+            if (ally != piece)
+            {
+                var supportMoves = ally.GetValidSupportMoves();
+                if (supportMoves.Any(move => move.x == x && move.y == y))
+                {
+                    count+= ally.attack;
+                }
+            }
+        }
+        return count;
     }
 }
