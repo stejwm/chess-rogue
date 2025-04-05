@@ -33,6 +33,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void CloseMenu(){
         Time.timeScale=1;
+        Game._instance.isInMenu=false;
         gameObject.SetActive(false);
     }
 
