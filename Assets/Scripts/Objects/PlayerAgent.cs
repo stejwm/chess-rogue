@@ -246,7 +246,7 @@ public class PlayerAgent : Agent
 
     public void GameEnd(PieceColor color){
         if(this.color==color){
-            SetReward(3f);
+            SetReward(10f);
             Debug.Log(color+"Won ! Recieved 1 reward");
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
@@ -255,7 +255,7 @@ public class PlayerAgent : Agent
             }
         }
         else{
-            SetReward(-3f);
+            SetReward(-10f);
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
                 //EndEpisode();
@@ -273,56 +273,45 @@ public class PlayerAgent : Agent
 
     public void CaptureReward(Chessman attacker, Chessman defender){
         if(attacker.color==color){
-            switch (defender.type)
+            SetReward(GetPieceReward(defender));
+        }
+        else{
+            SetReward(-GetPieceReward(defender));
+        }
+    }
+
+    public float GetPieceReward(Chessman piece){
+        float reward = 0f;
+        switch (piece.type)
             {
                 case PieceType.Queen:
-                    SetReward(0.9f);
+                    reward+= 0.9f;
                     break;
                 case PieceType.Knight:
-                    SetReward(0.3f);
+                    reward+= 0.3f;
                     break;               
                 case PieceType.Bishop:
-                    SetReward(0.3f);               
+                    reward+= 0.3f;              
                     break;
                 case PieceType.King:
-                    SetReward(1f);              
+                    reward+= 1f;            
                     break;
                 case PieceType.Rook:
-                    SetReward(0.5f);               
+                    reward+= 0.5f;               
                     break;
                 case PieceType.Pawn:
-                    SetReward(0.1f);                
+                    reward+= 0.1f;                
                     break;
                 default:
                     break;
             
             }
-        }
-        else{
-            switch (defender.type)
-            {
-                case PieceType.Queen:
-                    SetReward(-0.9f);
-                    break;
-                case PieceType.Knight:
-                    SetReward(-0.3f);
-                    break;               
-                case PieceType.Bishop:
-                    SetReward(-0.3f);               
-                    break;
-                case PieceType.King:
-                    SetReward(-1f);              
-                    break;
-                case PieceType.Rook:
-                    SetReward(-0.5f);               
-                    break;
-                case PieceType.Pawn:
-                    SetReward(-0.1f);                
-                    break;
-                default:
-                    break;  
-            }
-        }
+        reward += piece.attack * 0.1f;
+        reward+= piece.defense * 0.1f;
+        reward+= piece.support * 0.1f;
+        reward+= piece.releaseCost * 0.1f;
+
+        return reward;
     }
 
     public void SupportReward(Chessman supporter, Chessman attacker, Chessman defender){
