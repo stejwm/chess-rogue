@@ -57,6 +57,7 @@ public class PauseMenuManager : MonoBehaviour
             PieceData pieceData = new PieceData
             {
                 name= piece.name,
+                uniqueId = -piece.uniqueId,
                 pieceType = piece.type,
                 attack = piece.attack,
                 defense = piece.defense,

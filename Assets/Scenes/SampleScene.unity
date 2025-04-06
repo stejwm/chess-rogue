@@ -4237,7 +4237,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: cf2cceffbdf9db54ba5f6391bbd33d23, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: GeneralBlack
   TeamId: 1
   m_UseChildSensors: 1
@@ -4291,7 +4291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Record: 1
+  Record: 0
   NumStepsToRecord: 0
   DemonstrationName: GeneralBlack
   DemonstrationDirectory: GeneralBlackDemos
@@ -9989,7 +9989,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 680800561}
-  - {fileID: 253710676}
   - {fileID: 985286618}
   - {fileID: 1125026061}
   m_Father: {fileID: 697043090}
@@ -15230,7 +15229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Record: 1
+  Record: 0
   NumStepsToRecord: 0
   DemonstrationName: GeneralPlayer
   DemonstrationDirectory: PlayerDemos
@@ -15277,7 +15276,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: b5743fffa18ad634a89e0981b13bb190, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: GeneralPlayer
   TeamId: 0
   m_UseChildSensors: 1

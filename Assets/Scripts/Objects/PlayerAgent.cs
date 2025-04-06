@@ -114,8 +114,7 @@ public class PlayerAgent : Agent
         AddReward(positionReward);
 
         float currentPotential = CalculateBoardPotential();
-        float potentialBasedReward = currentPotential - previousPotential;
-        AddReward(potentialBasedReward);
+        AddReward(currentPotential);
         
         previousPotential = currentPotential;
 
@@ -143,8 +142,14 @@ public class PlayerAgent : Agent
             if (piece.color == color)
             {
                 // Base piece value
-                potential += GetPieceReward(piece);
+                //potential += GetPieceReward(piece);
                 
+                if(IsThreateningKing(piece, piece.xBoard, piece.yBoard)){
+                    potential += 0.5f; // Bonus for attacking the opponent's king
+                }
+                if(IsAttacking(piece, piece.xBoard, piece.yBoard)){
+                    potential += 0.7f; // Bonus for attacking
+                }
                 // Safety value - how many attackers vs defenders
                 int attackers = CountThreateningPieces(piece, piece.xBoard, piece.yBoard);
                 int defenders = CountSupportingPieces(piece, piece.xBoard, piece.yBoard);
@@ -284,7 +289,7 @@ public class PlayerAgent : Agent
 
     public void GameEnd(PieceColor color){
         if(this.color==color){
-            SetReward(10f);
+            AddReward(10f);
             Debug.Log(color+"Won ! Recieved 1 reward");
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
@@ -293,7 +298,7 @@ public class PlayerAgent : Agent
             }
         }
         else{
-            SetReward(-10f);
+            AddReward(-10f);
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
                 EndEpisode();
@@ -311,10 +316,10 @@ public class PlayerAgent : Agent
 
     public void CaptureReward(Chessman attacker, Chessman defender){
         if(attacker.color==color){
-            SetReward(GetPieceReward(defender));
+            AddReward(GetPieceReward(defender));
         }
         else{
-            SetReward(-GetPieceReward(defender));
+            AddReward(-GetPieceReward(defender));
         }
     }
 
@@ -332,7 +337,7 @@ public class PlayerAgent : Agent
                     reward+= 0.3f;              
                     break;
                 case PieceType.King:
-                    reward+= 1f;            
+                    reward+= 5f;            
                     break;
                 case PieceType.Rook:
                     reward+= 0.5f;               
@@ -354,15 +359,20 @@ public class PlayerAgent : Agent
 
     public void SupportReward(Chessman supporter, Chessman attacker, Chessman defender){
         if(supporter.color==color)
-            SetReward(0.05f);
+            AddReward(0.05f);
     }
 
     public void BounceReward(Chessman attacker, Chessman defender, bool didBounceReduce){
+        float reward = 0f;
         if(attacker.color==color && didBounceReduce)
-            SetReward(0.05f);
+            reward=0.05f;
         else{
-            SetReward(-0.05f);
+            reward=-0.05f;
         }
+        if(defender.type==PieceType.King)
+            reward *= 2;
+        
+        AddReward(reward);
     }
 
     public float GetPositionReward(Chessman piece, int x, int y)
@@ -374,7 +384,8 @@ public class PlayerAgent : Agent
         {
             reward += 0.2f;
         }
-
+        if(piece==null)
+            return 0f;
         // Forward progression for pawns
         if (piece.type == PieceType.Pawn)
         {
@@ -420,7 +431,7 @@ public class PlayerAgent : Agent
                 var supportMoves = ally.GetValidSupportMoves();
                 if (supportMoves.Any(move => move.x == x && move.y == y))
                 {
-                    count+= ally.support;
+                    count+= ally.CalculateSupport();
                 }
             }
         }
@@ -443,10 +454,34 @@ public class PlayerAgent : Agent
                 var supportMoves = ally.GetValidSupportMoves();
                 if (supportMoves.Any(move => move.x == x && move.y == y))
                 {
-                    count+= ally.attack;
+                    count+= ally.CalculateAttack();
                 }
             }
         }
         return count;
+    }
+    private bool IsThreateningKing(Chessman piece, int x, int y)
+    {
+        foreach(BoardPosition position in piece.GetValidSupportMoves()){
+            var threatenedPieceObj = Game._instance.currentMatch.GetPieceAtPosition(position.x, position.y);
+            if(threatenedPieceObj == null)
+                continue;
+            var threatenedPiece = threatenedPieceObj.GetComponent<Chessman>();
+            if (threatenedPiece.type == PieceType.King && threatenedPiece.color != piece.color)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsAttacking(Chessman piece, int x, int y)
+    {
+        
+        var threatenedPieceObj = Game._instance.currentMatch.GetPieceAtPosition(x, y);
+        if(threatenedPieceObj == null)
+            return false;
+        else
+            return true;
     }
 }

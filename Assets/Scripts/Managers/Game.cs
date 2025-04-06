@@ -124,10 +124,13 @@ public class Game : MonoBehaviour
 
     public void AIStart(){
         heroColor=PieceColor.White;
-        opponent.pieces = PieceFactory._instance.CreateOpponentPieces(opponent, (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length));
+        EnemyType enemyType = (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length);
+        opponent.pieces = PieceFactory._instance.CreateOpponentPieces(opponent, enemyType);
         hero.pieces = CreateRandomHeroPiecesFromSave();
         hero.Initialize();
         opponent.Initialize();
+        opponent.LevelUp(level, enemyType);
+        
         NewMatch(hero, opponent);
     }
 
@@ -445,16 +448,18 @@ public class Game : MonoBehaviour
 
     public List<GameObject> CreateRandomHeroPiecesFromSave(){
         // Get all save files matching pattern
+        QuickSaveGlobalSettings.StorageLocation = "C:\\Users\\steve\\chess-rogue\\chess-rogue\\Saves";
         var saveFiles = Directory.GetFiles("C:\\Users\\steve\\chess-rogue\\chess-rogue\\Saves")
-            .Where(f => Regex.IsMatch(f, @"^Game_\d+$"))
             .ToList();
 
+        Debug.Log($"Found {saveFiles.Count} save files.");
         if (saveFiles.Count == 0)
             return PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
 
         // Select random save file
         string selectedSave = saveFiles[Random.Range(0, saveFiles.Count)];
-        var quickSaveReader = QuickSaveReader.Create(selectedSave);
+        Debug.Log($"Selected save file: {Path.GetFileName(selectedSave)}");
+        var quickSaveReader = QuickSaveReader.Create(Path.GetFileName(selectedSave).Replace(".json", ""));
         
         PlayerData player;
         quickSaveReader.TryRead<PlayerData>("Player", out player);
