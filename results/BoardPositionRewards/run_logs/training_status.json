@@ -4,15 +4,6 @@
             {
                 "steps": 8059,
                 "file_path": "results\\BoardPositionRewards\\GeneralPlayer\\GeneralPlayer-8059.onnx",
-                "reward": 7.694916319038908,
-                "creation_time": 1743880357.3140771,
-                "auxillary_file_paths": [
-                    "results\\BoardPositionRewards\\GeneralPlayer\\GeneralPlayer-8059.pt"
-                ]
-            },
-            {
-                "steps": 8059,
-                "file_path": "results\\BoardPositionRewards\\GeneralPlayer\\GeneralPlayer-8059.onnx",
                 "reward": null,
                 "creation_time": 1743881338.2973032,
                 "auxillary_file_paths": [
@@ -45,29 +36,29 @@
                 "auxillary_file_paths": [
                     "results\\BoardPositionRewards\\GeneralPlayer\\GeneralPlayer-110274.pt"
                 ]
+            },
+            {
+                "steps": 139720,
+                "file_path": "results\\BoardPositionRewards\\GeneralPlayer\\GeneralPlayer-139720.onnx",
+                "reward": 587.1968338612429,
+                "creation_time": 1743959598.259392,
+                "auxillary_file_paths": [
+                    "results\\BoardPositionRewards\\GeneralPlayer\\GeneralPlayer-139720.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 110274,
+            "steps": 139720,
             "file_path": "results\\BoardPositionRewards\\GeneralPlayer.onnx",
-            "reward": 407.5029676610773,
-            "creation_time": 1743915732.592412,
+            "reward": 587.1968338612429,
+            "creation_time": 1743959598.259392,
             "auxillary_file_paths": [
-                "results\\BoardPositionRewards\\GeneralPlayer\\GeneralPlayer-110274.pt"
+                "results\\BoardPositionRewards\\GeneralPlayer\\GeneralPlayer-139720.pt"
             ]
         }
     },
     "GeneralBlack": {
         "checkpoints": [
-            {
-                "steps": 4035,
-                "file_path": "results\\BoardPositionRewards\\GeneralBlack\\GeneralBlack-4035.onnx",
-                "reward": 59.32250025272369,
-                "creation_time": 1743876865.0649824,
-                "auxillary_file_paths": [
-                    "results\\BoardPositionRewards\\GeneralBlack\\GeneralBlack-4035.pt"
-                ]
-            },
             {
                 "steps": 7913,
                 "file_path": "results\\BoardPositionRewards\\GeneralBlack\\GeneralBlack-7913.onnx",
@@ -103,15 +94,24 @@
                 "auxillary_file_paths": [
                     "results\\BoardPositionRewards\\GeneralBlack\\GeneralBlack-108823.pt"
                 ]
+            },
+            {
+                "steps": 137749,
+                "file_path": "results\\BoardPositionRewards\\GeneralBlack\\GeneralBlack-137749.onnx",
+                "reward": 1583.6472613811493,
+                "creation_time": 1743959598.338411,
+                "auxillary_file_paths": [
+                    "results\\BoardPositionRewards\\GeneralBlack\\GeneralBlack-137749.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 108823,
+            "steps": 137749,
             "file_path": "results\\BoardPositionRewards\\GeneralBlack.onnx",
-            "reward": 1896.8083200671456,
-            "creation_time": 1743915732.6925395,
+            "reward": 1583.6472613811493,
+            "creation_time": 1743959598.338411,
             "auxillary_file_paths": [
-                "results\\BoardPositionRewards\\GeneralBlack\\GeneralBlack-108823.pt"
+                "results\\BoardPositionRewards\\GeneralBlack\\GeneralBlack-137749.pt"
             ]
         }
     },
