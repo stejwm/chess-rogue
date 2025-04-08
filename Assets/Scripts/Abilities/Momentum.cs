@@ -7,28 +7,29 @@ public class Momentum : Ability
 {
     private Chessman piece;
     private int bonus;
-    public Momentum() : base("Momentum", "Gain +1 to attack per move without an attack, resets after attacking") {}
-    private int attackIncrease=0;
+    public Momentum() : base("Momentum", "Gain +1 to attack per move, resets after being bounced or not moving") {}
 
     public override void Apply(Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
         Game._instance.OnRawMoveEnd.AddListener(RawMoveEnd);
-        Game._instance.OnAttack.AddListener(Check);
+        Game._instance.OnPieceBounced.AddListener(RemoveBounce);
+        Game._instance.OnPieceCaptured.AddListener(AddCapture);
+        Game._instance.OnGameEnd.AddListener(GameEndRemove);
         piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnAttack.RemoveListener(Check); 
+        //Game._instance.OnAttack.RemoveListener(Check); 
         Game._instance.OnRawMoveEnd.RemoveListener(RawMoveEnd);
 
     }
     public void RawMoveEnd(Chessman movedPiece, BoardPosition targetPosition){
         if(movedPiece==piece){
-            AddBonus(piece, null);
+            AddBonus();
         }
         else if(movedPiece.color==piece.color && movedPiece!=piece){
             RemoveBonus();
@@ -40,9 +41,26 @@ public class Momentum : Ability
         bonus=0;
     }
 
+    public void RemoveBounce(Chessman attacker, Chessman defender, bool didBounceReduce){
+        if(attacker==piece){
+            RemoveBonus();
+        }
+    }
+
+    public void GameEndRemove(PieceColor color){
+        RemoveBonus();
+    }
+
     public void AddBonus(){
         bonus+=1;
-        piece.attackBonus+=bonus;
+        piece.attackBonus+=1;
+    }
+
+    public void AddCapture(Chessman attacker, Chessman defender){
+        if(attacker==piece){
+            AddBonus();
+        }
+        
     }
 
 }

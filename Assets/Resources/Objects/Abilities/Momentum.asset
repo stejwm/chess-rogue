@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 267689f2d5a8cfe49bd73b027bdcf63a, type: 3}
+  m_Name: Momentum
+  m_EditorClassIdentifier: 
+  abilityName: Momentum
+  description: Gain +1 to attack per move, resets after being bounced or not moving
+  sprite: {fileID: 0}
+  Cost: 3
+  rarity: 0
