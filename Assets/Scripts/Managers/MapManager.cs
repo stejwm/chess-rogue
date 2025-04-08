@@ -364,20 +364,29 @@ public class MapManager : MonoBehaviour
             mapNode.nodeName = nodeData.nodeName;
             mapNode.transform.localPosition = new Vector3(nodeData.localX, nodeData.localY);
             mappedNodes.Add(nodeData, mapNode);
+            nodes.Add(mapNode);
             
         }
         foreach (var nodeData in mapNodeData)
-        {
+        {   
+            Debug.Log("MapNodeData COunt: " + mapNodeData.Count);
             connectedNodes.Clear();
             foreach (string nodeName in nodeData.connectedNodes)
             {
+                /* foreach (var node in nodes){
+                    Debug.Log("NodeData connected node name: " + nodeName + " actual node name: " + node.nodeName);
+                    Debug.Log($"NodeNames = {nodeName==node.nodeName}");
+                } */
                 var matchingNode = nodes.FirstOrDefault(n=> n.nodeName == nodeName);
-                connectedNodes.Add(matchingNode);
+                if(matchingNode!=null)
+                    connectedNodes.Add(matchingNode);
             }
             mappedNodes[nodeData].connectedNodes=connectedNodes.ToArray();
+            Debug.Log("Node: " + nodeData.nodeName + " connected to: " + connectedNodes.Count + " nodes");
         }
 
-        this.mapNodes=nodes;
+        this.mapNodes=mappedNodes.Values.ToList();
+        Debug.Log("Loaded map with " + mapNodes.Count + " nodes.");
         DrawPaths();
     }
 

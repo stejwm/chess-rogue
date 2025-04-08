@@ -141,28 +141,8 @@ public class Game : MonoBehaviour
 
         PieceFactory._instance.LoadPieces(player.pieces);
 
-
+        OpenMap();
         
-
-        switch (state){
-            case ScreenState.RewardScreen:
-                OpenReward();
-                break;
-            case ScreenState.PrisonersMarket:
-                OpenMarket();
-                break;
-            case ScreenState.ManagementScreen:
-                OpenArmyManagement();
-                break;
-            case ScreenState.ActiveMatch:
-                break;
-            case ScreenState.ShopScreen:
-                OpenShop();
-                break;
-            case ScreenState.Map:
-                OpenMap();
-                break;
-        }
     }
 
     public void Tutorial(){
