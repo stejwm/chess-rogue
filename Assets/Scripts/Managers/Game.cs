@@ -13,6 +13,8 @@ using System.Linq;
 using Rand= System.Random;
 using MoreMountains.Feedbacks;
 using System.Text.RegularExpressions;
+using CI.QuickSave;
+using System.IO;
 
 
 public enum ScreenState
@@ -103,7 +105,6 @@ public class Game : MonoBehaviour
     }
     public void Start()
     {
-        //Time.timeScale = 0.5f;
         NameDatabase.LoadNames();
         BoardManager._instance.CreateBoard();
         //LetsBegin();
@@ -123,11 +124,54 @@ public class Game : MonoBehaviour
 
     public void AIStart(){
         heroColor=PieceColor.White;
-        opponent.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(opponent, opponent.color, Team.Enemy);
-        hero.pieces = PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
+        EnemyType enemyType = (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length);
+        opponent.pieces = PieceFactory._instance.CreateOpponentPieces(opponent, enemyType);
+        hero.pieces = CreateRandomHeroPiecesFromSave();
         hero.Initialize();
         opponent.Initialize();
+        opponent.LevelUp(level, enemyType);
+        
         NewMatch(hero, opponent);
+    }
+
+    public void LoadGame(){
+        var quickSaveReader = QuickSaveReader.Create("Game");
+        PlayerData player;
+        List<MapNodeData> mapNodes;
+        quickSaveReader.TryRead<PlayerData>("Player", out player);
+        quickSaveReader.TryRead<ScreenState>("State", out state);
+        quickSaveReader.TryRead<int>("Level", out level);
+        quickSaveReader.TryRead<List<MapNodeData>>("MapNodes", out mapNodes);
+
+        Debug.Log($"Resuming state {state}");
+        MapManager._instance.LoadMap(mapNodes);
+        Game._instance.hero.playerBlood=player.blood;
+        Game._instance.hero.playerCoins=player.coins;
+
+        PieceFactory._instance.LoadPieces(player.pieces);
+
+
+        
+
+        switch (state){
+            case ScreenState.RewardScreen:
+                OpenReward();
+                break;
+            case ScreenState.PrisonersMarket:
+                OpenMarket();
+                break;
+            case ScreenState.ManagementScreen:
+                OpenArmyManagement();
+                break;
+            case ScreenState.ActiveMatch:
+                break;
+            case ScreenState.ShopScreen:
+                OpenShop();
+                break;
+            case ScreenState.Map:
+                OpenMap();
+                break;
+        }
     }
 
     public void Tutorial(){
@@ -172,6 +216,11 @@ public class Game : MonoBehaviour
         if(pause && !pauseOverride){
             currentMatch.NextTurn();
             pause=false;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isInMenu=true;
+            PauseMenuManager._instance.OpenMenu();
         }
     }
     private IEnumerator ApplyAbility(Chessman target){
@@ -322,12 +371,9 @@ public class Game : MonoBehaviour
     }
 
     public void OpenShop(){
-        if(shopUsed){
-            return;
-        }
         state=ScreenState.ShopScreen;
-        shopUsed=true;
         ShopManager._instance.OpenShop();
+        shopUsed=true;
     }
     public void ResetPlayerPieces(){
         foreach (GameObject piece in hero.pieces)
@@ -398,5 +444,29 @@ public class Game : MonoBehaviour
         {
             piece.GetComponent<Chessman>().highlightedParticles.Stop();
         }
+    }
+
+    public List<GameObject> CreateRandomHeroPiecesFromSave(){
+        // Get all save files matching pattern
+        QuickSaveGlobalSettings.StorageLocation = "C:\\Users\\steve\\chess-rogue\\chess-rogue\\Saves";
+        var saveFiles = Directory.GetFiles("C:\\Users\\steve\\chess-rogue\\chess-rogue\\Saves")
+            .ToList();
+
+        Debug.Log($"Found {saveFiles.Count} save files.");
+        if (saveFiles.Count == 0)
+            return PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
+
+        // Select random save file
+        string selectedSave = saveFiles[Random.Range(0, saveFiles.Count)];
+        Debug.Log($"Selected save file: {Path.GetFileName(selectedSave)}");
+        var quickSaveReader = QuickSaveReader.Create(Path.GetFileName(selectedSave).Replace(".json", ""));
+        
+        PlayerData player;
+        quickSaveReader.TryRead<PlayerData>("Player", out player);
+        quickSaveReader.TryRead<int>("Level", out level);
+        
+        hero.playerBlood=player.blood;
+        hero.playerCoins=player.coins;
+        return PieceFactory._instance.LoadPieces(player.pieces);
     }
 }

@@ -49,3 +49,6 @@ TagManager:
   - name: Dialogue
     uniqueID: 4194663367
     locked: 0
+  - name: Pause
+    uniqueID: 2158339613
+    locked: 0

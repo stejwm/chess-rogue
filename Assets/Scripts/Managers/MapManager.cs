@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CI.QuickSave;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,6 +25,13 @@ public class MapManager : MonoBehaviour
     public Sprite bossImage;
     public Sprite shopImage;
 
+    float startX = -4.2f * 1.5f; // Adjust this value to start from the left side of the screen
+    float xOffset = 0.96f * 1.5f; // Horizontal distance between nodes
+    float maxYOffset = 2.5f; // Maximum vertical offset for randomness
+    float controlPointOffset = 1f; // Offset for control points to create curves
+    float verticalShift = 0.0f; // Shift the nodes up
+    float minVerticalDistance = 1.5f; // Minimum vertical distance between nodes from different paths
+
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -37,12 +46,15 @@ public class MapManager : MonoBehaviour
 
     public void Start()
     {
-        gameObject.SetActive(false);
-        GenerateMap();
+        if(Game._instance.state != ScreenState.Map)
+            gameObject.SetActive(false);
+        if(!SceneLoadManager.LoadPreviousSave)
+            GenerateMap();
     }
 
     public void OpenMap()
     {
+        Debug.Log("OpeningMap");
         gameObject.SetActive(true);
         Game._instance.isInMenu = true;
     }
@@ -122,16 +134,8 @@ public class MapManager : MonoBehaviour
 
     private void GenerateMap()
     {
-        float startX = -4.2f * 1.5f; // Adjust this value to start from the left side of the screen
-        float xOffset = 0.96f * 1.5f; // Horizontal distance between nodes
-        float maxYOffset = 2.5f; // Maximum vertical offset for randomness
-        float controlPointOffset = 1f; // Offset for control points to create curves
-        float verticalShift = 0.0f; // Shift the nodes up
-        float minVerticalDistance = 1.5f; // Minimum vertical distance between nodes from different paths
         // Create a parent GameObject for lines to ensure they are rendered behind nodes
-        GameObject linesParent = new GameObject("LinesParent");
-        linesParent.transform.SetParent(mapParent, false);
-        linesParent.transform.SetAsFirstSibling(); // Ensure linesParent is the first child of mapParent
+         // Ensure linesParent is the first child of mapParent
 
         // Create the starting node
         Vector3 startNodePosition = new Vector3(startX - xOffset, verticalShift, 0);
@@ -341,7 +345,46 @@ public class MapManager : MonoBehaviour
         
         
 
-        // Draw lines between connected nodes
+        DrawPaths();
+        
+    }
+
+    public void LoadMap(List<MapNodeData> mapNodeData){
+        List<MapNode> nodes = new List<MapNode>();
+        List<MapNode> connectedNodes = new List<MapNode>();
+        Dictionary<MapNodeData, MapNode> mappedNodes = new Dictionary<MapNodeData, MapNode>();
+        foreach (var nodeData in mapNodeData)
+        {
+            GameObject nodeObject = Instantiate(nodePrefab, new Vector3(0,0,0), Quaternion.identity, mapParent);
+            MapNode mapNode = nodeObject.GetComponent<MapNode>();
+            mapNode.encounterType = nodeData.encounterType;
+            mapNode.enemyType = nodeData.enemyType;
+            mapNode.nodeType = nodeData.nodeType;
+            mapNode.isCompleted = nodeData.isCompleted;
+            mapNode.nodeName = nodeData.nodeName;
+            mapNode.transform.localPosition = new Vector3(nodeData.localX, nodeData.localY);
+            mappedNodes.Add(nodeData, mapNode);
+            
+        }
+        foreach (var nodeData in mapNodeData)
+        {
+            connectedNodes.Clear();
+            foreach (string nodeName in nodeData.connectedNodes)
+            {
+                var matchingNode = nodes.FirstOrDefault(n=> n.nodeName == nodeName);
+                connectedNodes.Add(matchingNode);
+            }
+            mappedNodes[nodeData].connectedNodes=connectedNodes.ToArray();
+        }
+
+        this.mapNodes=nodes;
+        DrawPaths();
+    }
+
+    public void DrawPaths(){
+        GameObject linesParent = new GameObject("LinesParent");
+        linesParent.transform.SetParent(mapParent, false);
+        linesParent.transform.SetAsFirstSibling();
         foreach (MapNode node in mapNodes)
         {
             foreach (MapNode connectedNode in node.connectedNodes)

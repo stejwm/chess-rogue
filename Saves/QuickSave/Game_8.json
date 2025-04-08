@@ -1,0 +1,593 @@
+{
+    "Player": {
+        "coins": 50,
+        "blood": 1,
+        "pieces": [
+            {
+                "name": "Hundolf",
+                "uniqueId": -1,
+                "pieceType": 3,
+                "attack": 3,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 0,
+                "posY": 0,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Alviva",
+                "uniqueId": -2,
+                "pieceType": 1,
+                "attack": 2,
+                "defense": 2,
+                "support": 1,
+                "color": 0,
+                "posX": 1,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Switchstance",
+                        "abilityDescription": "Swap attack and defense values on every combat (Attacking or Defending)"
+                    }
+                ]
+            },
+            {
+                "name": "Hundolf",
+                "uniqueId": -3,
+                "pieceType": 2,
+                "attack": 2,
+                "defense": 1,
+                "support": 3,
+                "color": 0,
+                "posX": 2,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Vampire",
+                        "abilityDescription": "+1 to all stats on dark squares, -1 to all stats on light squares. transfer ability when attacking"
+                    },
+                    {
+                        "abilityName": "Pope <sprite=\"WhiteBishop\" name=\"WhiteBishop\">",
+                        "abilityDescription": "+1 to all bishops, bonus increases for each bishop added"
+                    }
+                ]
+            },
+            {
+                "name": "Arnbert",
+                "uniqueId": -4,
+                "pieceType": 4,
+                "attack": 3,
+                "defense": 3,
+                "support": 2,
+                "color": 0,
+                "posX": 3,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Increasing Strike",
+                        "abilityDescription": "Permanently gain +1 to attack for every capture"
+                    }
+                ]
+            },
+            {
+                "name": "Electo",
+                "uniqueId": -5,
+                "pieceType": 5,
+                "attack": 1,
+                "defense": 3,
+                "support": 1,
+                "color": 0,
+                "posX": 4,
+                "posY": 0,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Piat",
+                "uniqueId": -6,
+                "pieceType": 2,
+                "attack": 2,
+                "defense": 3,
+                "support": 1,
+                "color": 0,
+                "posX": 5,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Swift",
+                        "abilityDescription": "Move again if first move is not an attack"
+                    }
+                ]
+            },
+            {
+                "name": "Ratimir",
+                "uniqueId": -7,
+                "pieceType": 1,
+                "attack": 2,
+                "defense": 2,
+                "support": 1,
+                "color": 0,
+                "posX": 6,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Merchant",
+                        "abilityDescription": "10% chance of +1 attack per coin owned"
+                    },
+                    {
+                        "abilityName": "Critical Blow",
+                        "abilityDescription": "10% chance of x2 attack"
+                    }
+                ]
+            },
+            {
+                "name": "Donato",
+                "uniqueId": -8,
+                "pieceType": 3,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 7,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Sentinel <sprite=\"WhiteRook\" name=\"WhiteRook\">",
+                        "abilityDescription": "+1 to all rooks, bonus increases for each rook added"
+                    }
+                ]
+            },
+            {
+                "name": "Farberta",
+                "uniqueId": -9,
+                "pieceType": 0,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 0,
+                "posY": 1,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Tamar",
+                "uniqueId": -10,
+                "pieceType": 0,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 1,
+                "posY": 1,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Bertrick",
+                "uniqueId": -11,
+                "pieceType": 0,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 2,
+                "posY": 1,
+                "abilities": [
+                    {
+                        "abilityName": "Iron Resolve",
+                        "abilityDescription": "Permanently gain +1 to defense every time an enemy is bounced"
+                    }
+                ]
+            },
+            {
+                "name": "Berfrid",
+                "uniqueId": -12,
+                "pieceType": 0,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 3,
+                "posY": 1,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Joachimie",
+                "uniqueId": -13,
+                "pieceType": 0,
+                "attack": 2,
+                "defense": 2,
+                "support": 1,
+                "color": 0,
+                "posX": 4,
+                "posY": 1,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Sten",
+                "uniqueId": -14,
+                "pieceType": 0,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 5,
+                "posY": 1,
+                "abilities": [
+                    {
+                        "abilityName": "Adamant Assault",
+                        "abilityDescription": "Automatically trigger second attack after being bounced"
+                    }
+                ]
+            },
+            {
+                "name": "Bonifacia",
+                "uniqueId": -15,
+                "pieceType": 0,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 6,
+                "posY": 1,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Fionnghuala",
+                "uniqueId": -16,
+                "pieceType": 0,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 7,
+                "posY": 1,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Lucan",
+                "uniqueId": -17,
+                "pieceType": 3,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 0,
+                "posY": 2,
+                "abilities": [
+                ]
+            }
+        ]
+    },
+    "State": 3,
+    "Level": 5,
+    "MapNodes": [
+        {
+            "nodeName": "Start Node",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 0",
+                "Node 10"
+            ],
+            "nodeType": 0,
+            "enemyType": 0,
+            "encounterType": 0,
+            "localX": -835.92,
+            "localY": 0.0
+        },
+        {
+            "nodeName": "Node 0",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 1"
+            ],
+            "nodeType": 0,
+            "enemyType": 1,
+            "encounterType": 0,
+            "localX": -680.399963,
+            "localY": 50.29371
+        },
+        {
+            "nodeName": "Node 1",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 2",
+                "Node 12"
+            ],
+            "nodeType": 0,
+            "enemyType": 2,
+            "encounterType": 0,
+            "localX": -524.879944,
+            "localY": 6.049879
+        },
+        {
+            "nodeName": "Node 2",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 3",
+                "Node 13"
+            ],
+            "nodeType": 0,
+            "enemyType": 1,
+            "encounterType": 0,
+            "localX": -369.36,
+            "localY": -11.5912371
+        },
+        {
+            "nodeName": "Node 3",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 4",
+                "Node 14"
+            ],
+            "nodeType": 0,
+            "enemyType": 3,
+            "encounterType": 0,
+            "localX": -213.84,
+            "localY": 75.1695251
+        },
+        {
+            "nodeName": "Node 4",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 5",
+                "Node 15"
+            ],
+            "nodeType": 0,
+            "enemyType": 2,
+            "encounterType": 0,
+            "localX": -58.3199959,
+            "localY": -155.0439
+        },
+        {
+            "nodeName": "Node 5",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 6"
+            ],
+            "nodeType": 0,
+            "enemyType": 1,
+            "encounterType": 0,
+            "localX": 97.2,
+            "localY": 242.228836
+        },
+        {
+            "nodeName": "Node 6",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 7"
+            ],
+            "nodeType": 0,
+            "enemyType": 1,
+            "encounterType": 0,
+            "localX": 252.719986,
+            "localY": 133.881332
+        },
+        {
+            "nodeName": "Node 7",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 8"
+            ],
+            "nodeType": 0,
+            "enemyType": 2,
+            "encounterType": 0,
+            "localX": 408.23996,
+            "localY": -54.5506973
+        },
+        {
+            "nodeName": "Node 8",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 9",
+                "ShopFirst Path Node8"
+            ],
+            "nodeType": 0,
+            "enemyType": 6,
+            "encounterType": 0,
+            "localX": 563.759949,
+            "localY": -146.657822
+        },
+        {
+            "nodeName": "Node 9",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Final Node",
+                "EncounterFirst Path Node9"
+            ],
+            "nodeType": 0,
+            "enemyType": 1,
+            "encounterType": 0,
+            "localX": 719.279968,
+            "localY": 191.111313
+        },
+        {
+            "nodeName": "Node 10",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 11"
+            ],
+            "nodeType": 0,
+            "enemyType": 4,
+            "encounterType": 0,
+            "localX": -680.399963,
+            "localY": -159.5877
+        },
+        {
+            "nodeName": "Node 11",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 12",
+                "ShopSecond Path Node1",
+                "Node 2"
+            ],
+            "nodeType": 0,
+            "enemyType": 2,
+            "encounterType": 0,
+            "localX": -524.879944,
+            "localY": 246.6569
+        },
+        {
+            "nodeName": "Node 12",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 13",
+                "Node 3"
+            ],
+            "nodeType": 0,
+            "enemyType": 2,
+            "encounterType": 0,
+            "localX": -369.36,
+            "localY": -181.481125
+        },
+        {
+            "nodeName": "Node 13",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 14"
+            ],
+            "nodeType": 0,
+            "enemyType": 6,
+            "encounterType": 0,
+            "localX": -213.84,
+            "localY": -114.561722
+        },
+        {
+            "nodeName": "Node 14",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 15",
+                "Node 5"
+            ],
+            "nodeType": 0,
+            "enemyType": 4,
+            "encounterType": 0,
+            "localX": -58.3199959,
+            "localY": 96.29842
+        },
+        {
+            "nodeName": "Node 15",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 16"
+            ],
+            "nodeType": 0,
+            "enemyType": 0,
+            "encounterType": 0,
+            "localX": 97.2,
+            "localY": -146.2215
+        },
+        {
+            "nodeName": "Node 16",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 17"
+            ],
+            "nodeType": 0,
+            "enemyType": 0,
+            "encounterType": 0,
+            "localX": 252.719986,
+            "localY": -230.1721
+        },
+        {
+            "nodeName": "Node 17",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 18"
+            ],
+            "nodeType": 0,
+            "enemyType": 2,
+            "encounterType": 0,
+            "localX": 408.23996,
+            "localY": 108.103088
+        },
+        {
+            "nodeName": "Node 18",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 19",
+                "EncounterSecond Path Node8",
+                "Node 9"
+            ],
+            "nodeType": 0,
+            "enemyType": 1,
+            "encounterType": 0,
+            "localX": 563.759949,
+            "localY": 226.282867
+        },
+        {
+            "nodeName": "Node 19",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Final Node"
+            ],
+            "nodeType": 0,
+            "enemyType": 2,
+            "encounterType": 0,
+            "localX": 719.279968,
+            "localY": 10.8281593
+        },
+        {
+            "nodeName": "ShopFirst Path Node8",
+            "isCompleted": false,
+            "connectedNodes": [
+            ],
+            "nodeType": 1,
+            "enemyType": 0,
+            "encounterType": 0,
+            "localX": 546.743469,
+            "localY": -319.457855
+        },
+        {
+            "nodeName": "ShopSecond Path Node1",
+            "isCompleted": false,
+            "connectedNodes": [
+            ],
+            "nodeType": 1,
+            "enemyType": 0,
+            "encounterType": 1,
+            "localX": -509.888428,
+            "localY": 419.45694
+        },
+        {
+            "nodeName": "EncounterFirst Path Node9",
+            "isCompleted": false,
+            "connectedNodes": [
+            ],
+            "nodeType": 2,
+            "enemyType": 0,
+            "encounterType": 0,
+            "localX": 713.9028,
+            "localY": 363.911346
+        },
+        {
+            "nodeName": "EncounterSecond Path Node8",
+            "isCompleted": false,
+            "connectedNodes": [
+            ],
+            "nodeType": 2,
+            "enemyType": 0,
+            "encounterType": 0,
+            "localX": 584.700745,
+            "localY": 399.082916
+        },
+        {
+            "nodeName": "Final Node",
+            "isCompleted": false,
+            "connectedNodes": [
+            ],
+            "nodeType": 3,
+            "enemyType": 7,
+            "encounterType": 0,
+            "localX": 874.7999,
+            "localY": 0.0
+        }
+    ]
+}

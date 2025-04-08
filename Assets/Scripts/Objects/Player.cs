@@ -111,14 +111,14 @@ public abstract class Player: MonoBehaviour
 
     public virtual void SetSelectedPiece(Chessman piece){
          
-     }
-     public virtual void SetSelectedDestination(BoardPosition position){
-         
-     }
-
-     public virtual void RequestDecision(){
+    }
+    public virtual void SetSelectedDestination(BoardPosition position){
         
-     }
+    }
+
+    public virtual void RequestDecision(){
+    
+    }
 
     public virtual Chessman GetHighestCaptured(){
         Chessman highest = null;

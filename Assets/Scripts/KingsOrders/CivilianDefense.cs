@@ -20,7 +20,7 @@ public class CivilianDefense : KingsOrder
         BoardManager._instance.selectedPosition= null;
         for (int i=0; i<8; i++){
             if(Game._instance.currentMatch.GetPositions()[i, targetPosition.y] == null){
-                var piece = PieceFactory._instance.Create(PieceType.Pawn, "Civilian", i, targetPosition.y, hero.color, Team.Hero, hero);
+                var piece = PieceFactory._instance.Create(PieceType.Pawn, i, targetPosition.y, hero.color, Team.Hero, hero);
                 Game._instance.hero.pieces.Add(piece);
                 civilians.Add(piece);
                 Game._instance.currentMatch.MovePiece(piece.GetComponent<Chessman>(), i, targetPosition.y);

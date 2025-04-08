@@ -73,6 +73,7 @@ public class Vampire : Ability
 
     private void AdjustBonus(Chessman piece, int bonusChange)
     {
+        if(piece == null) return;
         Debug.Log($"piece {piece.name} current stats are {piece.attack},{piece.defense},{piece.support} bonus is {bonus} apply bonus change of {bonusChange}");
         piece.attackBonus = Mathf.Max(-piece.attack, piece.attackBonus+bonusChange);
         piece.defenseBonus = Mathf.Max(-piece.defense, piece.defenseBonus + bonusChange);

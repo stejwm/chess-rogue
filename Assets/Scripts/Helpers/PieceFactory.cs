@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using Rand= System.Random;
+using System.Linq;
 
 public enum EnemyType
 {
@@ -58,11 +59,11 @@ public class PieceFactory : MonoBehaviour
         for (int i=0; i<11; i++){
             if(i<6)
                 if(names[i].Equals("Arthur"))
-                    pieces.Add(Create(PieceType.King, $"{names[i]}", i+1, backRow, color, team, owner));
+                    pieces.Add(Create(PieceType.King,  i+1, backRow, color, team, owner, $"{names[i]}"));
                 else
-                    pieces.Add(Create(PieceType.Knight, $"{names[i]}", i+1, backRow, color, team, owner));
+                    pieces.Add(Create(PieceType.Knight,  i+1, backRow, color, team, owner, $"{names[i]}"));
             else{
-                pieces.Add(Create(PieceType.Knight, $"{names[i]}", i-5, pawnRow, color, team, owner));
+                pieces.Add(Create(PieceType.Knight,  i-5, pawnRow, color, team, owner, $"{names[i]}"));
             }
         }
         return pieces;
@@ -76,15 +77,15 @@ public class PieceFactory : MonoBehaviour
 
         for (int i=0; i<8; i++){
             if(i==3)
-                pieces.Add(Create(PieceType.Queen, $"name", i, backRow, color, team, owner));
+                pieces.Add(Create(PieceType.Queen, i, backRow, color, team, owner));
             else if(i==4)
-                pieces.Add(Create(PieceType.King, $"name", i, backRow, color, team, owner));
+                pieces.Add(Create(PieceType.King, i, backRow, color, team, owner));
 
             else
-                pieces.Add(Create(PieceType.Pawn, $"name", i, backRow, color, team, owner));
+                pieces.Add(Create(PieceType.Pawn, i, backRow, color, team, owner));
         }
         for (int i=2; i<6; i++){
-            pieces.Add(Create(PieceType.Pawn, $"name", i, pawnRow, color, team, owner));
+            pieces.Add(Create(PieceType.Pawn, i, pawnRow, color, team, owner));
         }
         
         foreach (var piece in pieces){
@@ -109,21 +110,21 @@ public class PieceFactory : MonoBehaviour
 
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
-            Create(PieceType.Rook, $"{prefix}_rook", 0, backRow, color, team, owner),
-            Create(PieceType.Knight, $"{prefix}_knight", 1, backRow, color, team, owner),
-            Create(PieceType.Bishop, $"{prefix}_bishop", 2, backRow, color, team, owner),
-            Create(PieceType.Queen, $"{prefix}_queen", 3, backRow, color, team, owner),
-            Create(PieceType.King, $"{prefix}_king", 4, backRow, color, team, owner),
-            Create(PieceType.Bishop, $"{prefix}_bishop", 5, backRow, color, team, owner),
-            Create(PieceType.Knight, $"{prefix}_knight", 6, backRow, color, team, owner),
-            Create(PieceType.Rook, $"{prefix}_rook", 7, backRow, color, team, owner)
+            Create(PieceType.Rook,  0, backRow, color, team, owner),
+            Create(PieceType.Knight,  1, backRow, color, team, owner),
+            Create(PieceType.Bishop,  2, backRow, color, team, owner),
+            Create(PieceType.Queen,  3, backRow, color, team, owner),
+            Create(PieceType.King, 4, backRow, color, team, owner),
+            Create(PieceType.Bishop,  5, backRow, color, team, owner),
+            Create(PieceType.Knight,  6, backRow, color, team, owner),
+            Create(PieceType.Rook,  7, backRow, color, team, owner)
         };
 
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
-            pieces.Add(Create(PieceType.Pawn, $"{prefix}_pawn_{file}", i, pawnRow, color, team, owner));
+            pieces.Add(Create(PieceType.Pawn, i, pawnRow, color, team, owner));
         }
 
         // Add pieces to appropriate player list
@@ -148,21 +149,21 @@ public class PieceFactory : MonoBehaviour
 
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
-            Create(PieceType.Rook, $"{prefix}_rook", 0, backRow, color, team, owner),
-            Create(PieceType.Knight, $"{prefix}_knight", 1, backRow, color, team, owner),
-            Create(PieceType.Bishop, $"{prefix}_bishop", 2, backRow, color, team, owner),
-            Create(PieceType.Queen, $"{prefix}_queen", 3, backRow, color, team, owner),
-            Create(PieceType.King, $"{prefix}_king", 4, backRow, color, team, owner),
-            Create(PieceType.Bishop, $"{prefix}_bishop", 5, backRow, color, team, owner),
-            Create(PieceType.Knight, $"{prefix}_knight", 6, backRow, color, team, owner),
-            Create(PieceType.Rook, $"{prefix}_rook", 7, backRow, color, team, owner)
+            Create(PieceType.Rook,  0, backRow, color, team, owner),
+            Create(PieceType.Knight,  1, backRow, color, team, owner),
+            Create(PieceType.Bishop,  2, backRow, color, team, owner),
+            Create(PieceType.Queen,  3, backRow, color, team, owner),
+            Create(PieceType.King, 4, backRow, color, team, owner),
+            Create(PieceType.Bishop,  5, backRow, color, team, owner),
+            Create(PieceType.Knight,  6, backRow, color, team, owner),
+            Create(PieceType.Rook,  7, backRow, color, team, owner)
         };
 
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
-            pieces.Add(Create(PieceType.Rook, $"{prefix}_rook", i, pawnRow, color, team, owner));
+            pieces.Add(Create(PieceType.Rook,  i, pawnRow, color, team, owner));
         }
 
         // Add pieces to appropriate player list
@@ -186,14 +187,14 @@ public class PieceFactory : MonoBehaviour
         
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
-            Create(PieceType.Rook, $"{prefix}_rook", 0, backRow, color, team, owner),
-            Create(PieceType.Knight, $"{prefix}_knight", 1, backRow, color, team, owner),
-            Create(PieceType.Bishop, $"{prefix}_bishop", 2, backRow, color, team, owner),
-            Create(PieceType.Queen, $"{prefix}_queen", 3, backRow, color, team, owner),
-            Create(PieceType.King, $"{prefix}_king", 4, backRow, color, team, owner),
-            Create(PieceType.Bishop, $"{prefix}_bishop", 5, backRow, color, team, owner),
-            Create(PieceType.Knight, $"{prefix}_knight", 6, backRow, color, team, owner),
-            Create(PieceType.Rook, $"{prefix}_rook", 7, backRow, color, team, owner)
+            Create(PieceType.Rook,  0, backRow, color, team, owner),
+            Create(PieceType.Knight,  1, backRow, color, team, owner),
+            Create(PieceType.Bishop,  2, backRow, color, team, owner),
+            Create(PieceType.Queen,  3, backRow, color, team, owner),
+            Create(PieceType.King, 4, backRow, color, team, owner),
+            Create(PieceType.Bishop,  5, backRow, color, team, owner),
+            Create(PieceType.Knight,  6, backRow, color, team, owner),
+            Create(PieceType.Rook,  7, backRow, color, team, owner)
         };
 
         foreach (var piece in pieces)
@@ -204,7 +205,7 @@ public class PieceFactory : MonoBehaviour
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
-            var pawn = Create(PieceType.Pawn, $"{prefix}_pawn", i, pawnRow, color, team, owner);
+            var pawn = Create(PieceType.Pawn, i, pawnRow, color, team, owner);
             pawn.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[16].Clone()); //Pickpocket ability
             pieces.Add(pawn);
         }
@@ -220,14 +221,14 @@ public class PieceFactory : MonoBehaviour
         owner.playerCoins= UnityEngine.Random.Range(10,30);
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
-            Create(PieceType.Rook, $"{prefix}_rook", 0, backRow, color, team, owner),
-            Create(PieceType.Knight, $"{prefix}_knight", 1, backRow, color, team, owner),
-            Create(PieceType.Bishop, $"{prefix}_bishop", 2, backRow, color, team, owner),
-            Create(PieceType.Queen, $"{prefix}_queen", 3, backRow, color, team, owner),
-            Create(PieceType.King, $"{prefix}_king", 4, backRow, color, team, owner),
-            Create(PieceType.Bishop, $"{prefix}_bishop", 5, backRow, color, team, owner),
-            Create(PieceType.Knight, $"{prefix}_knight", 6, backRow, color, team, owner),
-            Create(PieceType.Rook, $"{prefix}_rook", 7, backRow, color, team, owner)
+            Create(PieceType.Rook,  0, backRow, color, team, owner),
+            Create(PieceType.Knight,  1, backRow, color, team, owner),
+            Create(PieceType.Bishop,  2, backRow, color, team, owner),
+            Create(PieceType.Queen,  3, backRow, color, team, owner),
+            Create(PieceType.King, 4, backRow, color, team, owner),
+            Create(PieceType.Bishop,  5, backRow, color, team, owner),
+            Create(PieceType.Knight,  6, backRow, color, team, owner),
+            Create(PieceType.Rook,  7, backRow, color, team, owner)
         };
 
         foreach (var piece in pieces)
@@ -238,7 +239,7 @@ public class PieceFactory : MonoBehaviour
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
-            var pawn = Create(PieceType.Pawn, $"{prefix}_pawn", i, pawnRow, color, team, owner);
+            var pawn = Create(PieceType.Pawn, i, pawnRow, color, team, owner);
             pawn.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[20].Clone()); //Vampire ability
             pieces.Add(pawn);
         }
@@ -255,7 +256,7 @@ public class PieceFactory : MonoBehaviour
         owner.playerCoins= UnityEngine.Random.Range(10,30);
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
-            Create(PieceType.King, $"{prefix}_king", 4, backRow, color, team, owner)
+            Create(PieceType.King, 4, backRow, color, team, owner)
         };
 
         foreach (var piece in pieces)
@@ -265,16 +266,16 @@ public class PieceFactory : MonoBehaviour
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
-            var pawn = Create(PieceType.Pawn, $"{prefix}_pawn", i, pawnRow, color, team, owner);
+            var pawn = Create(PieceType.Pawn, i, pawnRow, color, team, owner);
             StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), Game._instance.AllAbilities[0].Clone()));
             RandomMobAbility(pawn); 
             pieces.Add(pawn);
-            pawn = Create(PieceType.Pawn, $"{prefix}_pawn", i, frontRow, color, team, owner);
+            pawn = Create(PieceType.Pawn, i, frontRow, color, team, owner);
             StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), Game._instance.AllAbilities[0].Clone()));
             RandomMobAbility(pawn); 
             pieces.Add(pawn);
             if(i!=4){
-                pawn = Create(PieceType.Pawn, $"{prefix}_pawn", i, backRow, color, team, owner);
+                pawn = Create(PieceType.Pawn,  i, backRow, color, team, owner);
                 StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), Game._instance.AllAbilities[0].Clone()));
                 RandomMobAbility(pawn); 
                 pieces.Add(pawn);
@@ -293,10 +294,10 @@ public class PieceFactory : MonoBehaviour
         owner.playerCoins= UnityEngine.Random.Range(10,30);
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
-            Create(PieceType.Queen, $"{prefix}_queen", 3, backRow, color, team, owner),
-            Create(PieceType.King, $"{prefix}_king", 4, backRow, color, team, owner),
-            Create(PieceType.Pawn, $"{prefix}_pawn", 3, pawnRow, color, team, owner),
-            Create(PieceType.Pawn, $"{prefix}_pawn", 4, pawnRow, color, team, owner),
+            Create(PieceType.Queen,  3, backRow, color, team, owner),
+            Create(PieceType.King,  4, backRow, color, team, owner),
+            Create(PieceType.Pawn,  3, pawnRow, color, team, owner),
+            Create(PieceType.Pawn,  4, pawnRow, color, team, owner),
         };
 
         foreach (var piece in pieces)
@@ -337,7 +338,7 @@ public class PieceFactory : MonoBehaviour
             }
         }
     }
-    public GameObject Create(PieceType type, string name, int x, int y, PieceColor color, Team team, Player owner)
+    public GameObject Create(PieceType type, int x, int y, PieceColor color, Team team, Player owner, string name="")
     {
         GameObject prefab = GetPrefab(type);
         if (prefab == null) return null;
@@ -347,7 +348,10 @@ public class PieceFactory : MonoBehaviour
         cm.owner = owner;
         cm.color = color;
         cm.team = team;
-        cm.name = NameDatabase.GetRandomName();
+        if(string.IsNullOrEmpty(name))
+            cm.name = NameDatabase.GetRandomName();
+        else
+            cm.name=name;
         cm.SetXBoard(x);
         cm.SetYBoard(y);
         cm.startingPosition = new BoardPosition(x,y);
@@ -356,7 +360,7 @@ public class PieceFactory : MonoBehaviour
     }
 
     public GameObject CreateAbilityPiece(PieceType type, string name, int x, int y, PieceColor color, Team team, Player owner, Ability ability){
-        var piece = Create(type, name, x, y, color, team, owner);
+        var piece = Create(type, x, y, color, team, owner);
         StartCoroutine(WaitForPieceToApplyAbility(piece.GetComponent<Chessman>(), ability));
         return piece;
     }
@@ -404,16 +408,35 @@ public class PieceFactory : MonoBehaviour
         Array values = Enum.GetValues(typeof(PieceType));
         System.Random random = new System.Random();
         if(random.Next(100)<16){
-            return Create(PieceType.Jester,"pieceName",-1,-1,Game._instance.heroColor,Team.Hero,null);
+            return Create(PieceType.Jester,-1,-1,Game._instance.heroColor,Team.Hero,null);
         }
         PieceType randPieceType = (PieceType)values.GetValue(random.Next(values.Length-3));
-        string pieceName = (Game._instance.heroColor+"_"+randPieceType).ToLower();
-        return Create(randPieceType,pieceName,-1,-1,Game._instance.heroColor,Team.Hero,null);
+        return Create(randPieceType,-1,-1,Game._instance.heroColor,Team.Hero,null);
     }
 
     public IEnumerator DelayedDestroy(Chessman piece){
         yield return null;
         if(piece !=null)
             piece.DestroyPiece();
+    }
+
+    public List<GameObject> LoadPieces(List<PieceData> pieces){
+
+        var chessmen = new List<GameObject>();
+        foreach (var pieceData in pieces)
+        {
+            var pieceObj = Create(pieceData.pieceType, pieceData.posX, pieceData.posY, pieceData.color, Team.Hero, Game._instance.hero, pieceData.name);
+            var piece = pieceObj.GetComponent<Chessman>();
+            piece.uniqueId = pieceData.uniqueId;
+
+            foreach (AbilityData abilityData in pieceData.abilities){
+                Ability ability = Game._instance.AllAbilities.FirstOrDefault(a => a.abilityName==abilityData.abilityName);
+                piece.AddAbility(ability);
+            }
+
+            chessmen.Add(pieceObj);
+        }
+
+        return chessmen;
     }
 }
