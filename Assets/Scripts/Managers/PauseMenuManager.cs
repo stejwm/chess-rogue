@@ -89,7 +89,8 @@ public class PauseMenuManager : MonoBehaviour
                 enemyType = node.enemyType, // Add this field for enemy nodes
                 encounterType = node.encounterType,
                 localX = node.transform.localPosition.x,
-                localY = node.transform.localPosition.y
+                localY = node.transform.localPosition.y,
+                isCurrentNode = MapManager._instance.currentNode == node,
             };
 
             foreach (var connectedNodeObj in node.connectedNodes)

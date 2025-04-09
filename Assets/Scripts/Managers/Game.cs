@@ -132,6 +132,7 @@ public class Game : MonoBehaviour
         quickSaveReader.TryRead<PlayerData>("Player", out player);
         quickSaveReader.TryRead<ScreenState>("State", out state);
         quickSaveReader.TryRead<int>("Level", out level);
+        quickSaveReader.TryRead<bool>("Shop", out shopUsed);
         quickSaveReader.TryRead<List<MapNodeData>>("MapNodes", out mapNodes);
 
         Debug.Log($"Resuming state {state}");
@@ -139,7 +140,7 @@ public class Game : MonoBehaviour
         Game._instance.hero.playerBlood=player.blood;
         Game._instance.hero.playerCoins=player.coins;
 
-        PieceFactory._instance.LoadPieces(player.pieces);
+        hero.pieces = PieceFactory._instance.LoadPieces(player.pieces);
 
         OpenMap();
         

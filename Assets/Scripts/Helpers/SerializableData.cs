@@ -44,4 +44,5 @@ public class MapNodeData
     public EncounterType encounterType;
     public float localX;
     public float localY;
+    public bool isCurrentNode;
 }

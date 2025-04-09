@@ -363,8 +363,16 @@ public class MapManager : MonoBehaviour
             mapNode.isCompleted = nodeData.isCompleted;
             mapNode.nodeName = nodeData.nodeName;
             mapNode.transform.localPosition = new Vector3(nodeData.localX, nodeData.localY);
+            Button nodeButton = mapNode.GetComponent<Button>();
+            nodeButton.onClick.AddListener(() => mapNode.OnNodeSelected());
             mappedNodes.Add(nodeData, mapNode);
             nodes.Add(mapNode);
+
+            if (mapNode.isCompleted)
+                mapNode.nodeImage.color = Color.black;
+
+            
+            
             
         }
         foreach (var nodeData in mapNodeData)
@@ -373,20 +381,18 @@ public class MapManager : MonoBehaviour
             connectedNodes.Clear();
             foreach (string nodeName in nodeData.connectedNodes)
             {
-                /* foreach (var node in nodes){
-                    Debug.Log("NodeData connected node name: " + nodeName + " actual node name: " + node.nodeName);
-                    Debug.Log($"NodeNames = {nodeName==node.nodeName}");
-                } */
                 var matchingNode = nodes.FirstOrDefault(n=> n.nodeName == nodeName);
                 if(matchingNode!=null)
                     connectedNodes.Add(matchingNode);
             }
+
+            if (nodeData.isCurrentNode)
+                currentNode = mappedNodes[nodeData];
+
             mappedNodes[nodeData].connectedNodes=connectedNodes.ToArray();
-            Debug.Log("Node: " + nodeData.nodeName + " connected to: " + connectedNodes.Count + " nodes");
         }
 
         this.mapNodes=mappedNodes.Values.ToList();
-        Debug.Log("Loaded map with " + mapNodes.Count + " nodes.");
         DrawPaths();
     }
 
