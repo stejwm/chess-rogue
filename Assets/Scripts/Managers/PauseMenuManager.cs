@@ -108,6 +108,7 @@ public class PauseMenuManager : MonoBehaviour
             writer.Write("Player", playerData);
             writer.Write("State", Game._instance.state);
             writer.Write("Level", Game._instance.level);
+            writer.Write("Shop", Game._instance.shopUsed);
             writer.Write("MapNodes", Map);
             writer.Commit();
     }
