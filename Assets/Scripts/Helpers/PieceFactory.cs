@@ -433,6 +433,11 @@ public class PieceFactory : MonoBehaviour
                 Ability ability = Game._instance.AllAbilities.FirstOrDefault(a => a.abilityName==abilityData.abilityName);
                 piece.AddAbility(ability);
             }
+            piece.attack = pieceData.attack;
+            piece.defense = pieceData.defense;
+            piece.support = pieceData.support;
+
+            //piece.uniqueId = pieceData.uniqueId;
 
             chessmen.Add(pieceObj);
         }

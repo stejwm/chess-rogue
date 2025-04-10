@@ -91,6 +91,7 @@ public class PauseMenuManager : MonoBehaviour
                 localX = node.transform.localPosition.x,
                 localY = node.transform.localPosition.y,
                 isCurrentNode = MapManager._instance.currentNode == node,
+                color = node.nodeImage.color
             };
 
             foreach (var connectedNodeObj in node.connectedNodes)

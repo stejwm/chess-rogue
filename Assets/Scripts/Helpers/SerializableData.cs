@@ -45,4 +45,6 @@ public class MapNodeData
     public float localX;
     public float localY;
     public bool isCurrentNode;
+
+    public Color color;
 }

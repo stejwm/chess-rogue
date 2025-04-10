@@ -57,6 +57,7 @@ public class MapManager : MonoBehaviour
         Debug.Log("OpeningMap");
         gameObject.SetActive(true);
         Game._instance.isInMenu = true;
+        PauseMenuManager._instance.SaveGame();
     }
 
     public void CloseMap()
@@ -363,6 +364,7 @@ public class MapManager : MonoBehaviour
             mapNode.isCompleted = nodeData.isCompleted;
             mapNode.nodeName = nodeData.nodeName;
             mapNode.transform.localPosition = new Vector3(nodeData.localX, nodeData.localY);
+            mapNode.nodeImage.color = nodeData.color;
             Button nodeButton = mapNode.GetComponent<Button>();
             nodeButton.onClick.AddListener(() => mapNode.OnNodeSelected());
             mappedNodes.Add(nodeData, mapNode);
