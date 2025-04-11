@@ -15,6 +15,7 @@ public class ArmyManager : MonoBehaviour
 
     public List<GameObject> pieces = new List<GameObject>();
     public Chessman selectedPiece;
+    public int pricePerPiece = 2;
 
     //current turn
     public static ArmyManager _instance;
@@ -69,7 +70,7 @@ public class ArmyManager : MonoBehaviour
             piece.yBoard=position1.y;
             selectedPiece.UpdateUIPosition();
             piece.UpdateUIPosition();
-            Game._instance.hero.playerCoins-=10;
+            Game._instance.hero.playerCoins-=pricePerPiece*2;
             UpdateCurrency();
             DeselectPiece(selectedPiece);
         }
@@ -88,7 +89,7 @@ public class ArmyManager : MonoBehaviour
             selectedPiece.xBoard=position.x;
             selectedPiece.yBoard=position.y;
             selectedPiece.UpdateUIPosition();
-            Game._instance.hero.playerCoins-=5;
+            Game._instance.hero.playerCoins-=pricePerPiece;
             UpdateCurrency();
             DeselectPiece(selectedPiece);
         }
@@ -133,6 +134,7 @@ public class ArmyManager : MonoBehaviour
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 1;
                 piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=0;
+                piece.GetComponent<Chessman>().highlightedParticles.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
             }
         }
         foreach (GameObject piece in Game._instance.hero.inventoryPieces)
@@ -142,6 +144,7 @@ public class ArmyManager : MonoBehaviour
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 1;
                 piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=0;
+                piece.GetComponent<Chessman>().highlightedParticles.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
             }
         }
         foreach (GameObject piece in pieces)

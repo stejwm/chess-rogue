@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ScoutPawn", menuName = "Abilities/ScoutPawn")]
@@ -13,9 +14,14 @@ public class ScoutPawn : Ability
     {
         if (piece.type != PieceType.Pawn)
             return;
-
         startingProfile=piece.moveProfile;
-        piece.moveProfile = new ScoutPawnMovement();
+        if (piece.abilities.OfType<Countermarch>().FirstOrDefault()!=null){
+            piece.moveProfile = new ScoutCounterMovement();
+        }
+        else{
+            piece.moveProfile = new ScoutPawnMovement();
+        }
+        
         piece.info += " "+abilityName;
         piece.releaseCost+=Cost;
         base.Apply(piece);

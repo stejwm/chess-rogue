@@ -39,7 +39,7 @@ public class Swift : Ability
     {
         List<GameObject> pieces;
 
-        if(mover==piece && !swifting){
+        if(mover==piece && !swifting && piece.moveProfile.GetValidMoves(piece).Count>=0){
             swifting=true;
             Game._instance.currentMatch.SwiftOverride =true;
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Countermarch", menuName = "Abilities/Countermarch")]
@@ -16,7 +17,14 @@ public class Countermarch : Ability
             return;
 
         startingProfile=piece.moveProfile;
-        piece.moveProfile = new CountermarchMovement();
+
+        if (piece.abilities.OfType<ScoutPawn>().FirstOrDefault()!=null){
+            piece.moveProfile = new ScoutCounterMovement();
+        }
+        else{
+            piece.moveProfile = new CountermarchMovement();
+        }
+        
         piece.info += " "+abilityName;
         piece.releaseCost+=Cost;
         base.Apply(piece);
