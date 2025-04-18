@@ -9,7 +9,7 @@ public class ScoutCounterMovement : MovementProfile
         HashSet<BoardPosition> moveSet = new HashSet<BoardPosition>();
         moveSet.UnionWith(Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard-1));
         moveSet.UnionWith(Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard+1));
-        moveSet.UnionWith(Movement.ValidScoutMoves(piece,piece.xBoard,piece.yBoard+1));
+        moveSet.UnionWith(Movement.ValidScoutMoves(piece,piece.xBoard,piece.yBoard));
 
         List<BoardPosition> validMoves = moveSet.ToList();
         if (allowFriendlyCapture)

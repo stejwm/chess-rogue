@@ -189,7 +189,7 @@ public class MapManager : MonoBehaviour
             Vector3 position = new Vector3(startX + i * xOffset, yOffset + verticalShift, 0); // Adjusted positions for the second path
             GameObject nodeObject = Instantiate(nodePrefab, position, Quaternion.identity, mapParent);
             MapNode mapNode = nodeObject.GetComponent<MapNode>();
-            mapNode.nodeName = "Node " + (i + 10);
+            mapNode.nodeName = "SecondNode " + (i + 10);
             mapNode.isCompleted = false;
 
             // Assign the node as an enemy
@@ -372,9 +372,6 @@ public class MapManager : MonoBehaviour
 
             if (mapNode.isCompleted)
                 mapNode.nodeImage.color = Color.black;
-
-            
-            
             
         }
         foreach (var nodeData in mapNodeData)
@@ -390,6 +387,10 @@ public class MapManager : MonoBehaviour
 
             if (nodeData.isCurrentNode)
                 currentNode = mappedNodes[nodeData];
+
+            if(nodeData.nodeName.Contains("Second"))
+                mappedNodes[nodeData].nodeImage.color = new Color(69/255f, 69/255f, 69/255f);
+                
 
             mappedNodes[nodeData].connectedNodes=connectedNodes.ToArray();
         }
