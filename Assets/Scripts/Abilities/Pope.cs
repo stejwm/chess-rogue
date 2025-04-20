@@ -23,7 +23,6 @@ public class Pope : Ability
         piece.info += " " + abilityName;
         Game._instance.OnPieceAdded.AddListener(PieceAdded);
         Game._instance.OnChessMatchStart.AddListener(ApplyBonus);
-        piece.releaseCost+=Cost;
         CreateGeneral();
         base.Apply(piece);
         piece.OnChessmanStateChanged += HandleChessmanStateChanged;

@@ -14,7 +14,6 @@ public class SpectralStride : Ability
         startingProfile=piece.moveProfile;
         piece.moveProfile = new SpectralStrideMovement(startingProfile);
         piece.info += " "+abilityName;
-        piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 

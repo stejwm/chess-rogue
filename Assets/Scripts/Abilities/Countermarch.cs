@@ -26,7 +26,6 @@ public class Countermarch : Ability
         }
         
         piece.info += " "+abilityName;
-        piece.releaseCost+=Cost;
         base.Apply(piece);
         
     }

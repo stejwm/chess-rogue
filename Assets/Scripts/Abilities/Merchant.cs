@@ -19,7 +19,6 @@ public class Merchant : Ability
         piece.info += " " + abilityName;
         Game._instance.OnAttack.AddListener(AddBonus);
         Game._instance.OnAttackEnd.AddListener(RemoveBonus);
-        piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 

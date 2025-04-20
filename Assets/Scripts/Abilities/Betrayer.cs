@@ -14,7 +14,6 @@ public class Betrayer : Ability
         startingProfile=piece.moveProfile;
         piece.moveProfile = new BetrayerMovement(startingProfile);
         piece.info += " "+abilityName;
-        piece.releaseCost+=Cost;
         base.Apply(piece);
         
     }

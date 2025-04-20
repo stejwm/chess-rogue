@@ -17,8 +17,6 @@ public class AdamantAssault : Ability
         //startingProfile=piece.moveProfile;
         this.piece = piece;
         piece.info += " " + abilityName;
-        piece.releaseCost+=Cost;
-
         Game._instance.OnPieceBounced.AddListener(Assault);
         Game._instance.OnPieceCaptured.AddListener(EndAssault);
         base.Apply(piece);

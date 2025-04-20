@@ -17,7 +17,6 @@ public class Momentum : Ability
         Game._instance.OnPieceBounced.AddListener(RemoveBounce);
         Game._instance.OnPieceCaptured.AddListener(AddCapture);
         Game._instance.OnGameEnd.AddListener(GameEndRemove);
-        piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 

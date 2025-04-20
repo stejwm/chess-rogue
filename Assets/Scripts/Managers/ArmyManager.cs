@@ -82,7 +82,7 @@ public class ArmyManager : MonoBehaviour
         if(selectedPiece==null){
             return;
         }
-        else if (selectedPiece && Game._instance.hero.playerCoins>=5){
+        else if (selectedPiece && Game._instance.hero.playerCoins>=pricePerPiece){
             selectedPiece.owner.openPositions.Add(new BoardPosition(selectedPiece.xBoard, selectedPiece.yBoard));
             selectedPiece.owner.openPositions.Remove(position);
             selectedPiece.startingPosition=position;

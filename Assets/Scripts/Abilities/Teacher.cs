@@ -6,32 +6,32 @@ using Unity.VisualScripting;
 using UnityEngine.UI.Extensions;
 using System.Runtime.InteropServices;
 
-[CreateAssetMenu(fileName = "General", menuName = "Abilities/General")]
-public class General : Ability
+[CreateAssetMenu(fileName = "Teacher", menuName = "Abilities/Teacher")]
+public class Teacher : Ability
 {
     private Chessman piece;
-    private int bonus = 1;
+    private int bonus = 5;
     private Dictionary<Chessman, int> appliedBonus = new Dictionary<Chessman, int>();
     
-    public General() : base("General", "+1 to all knights, bonus increases for each knight added") {}
+    public Teacher() : base("Teacher", "+5 to all pieces with no abilities") {}
 
     public override void Apply(Chessman piece)
     {
-        if(piece.type!=PieceType.Knight)
-            return;
         this.piece = piece;
         piece.info += " " + abilityName;
         Game._instance.OnPieceAdded.AddListener(PieceAdded);
         Game._instance.OnChessMatchStart.AddListener(ApplyBonus);
+        Game._instance.OnAbilityAdded.AddListener(RemoveBonusFromPiece);
+        piece.OnChessmanStateChanged += HandleChessmanStateChanged;
         CreateGeneral();
         base.Apply(piece);
-        piece.OnChessmanStateChanged += HandleChessmanStateChanged;
     }
 
     public override void Remove(Chessman piece)
     {
         Game._instance.OnPieceAdded.RemoveListener(PieceAdded);
         Game._instance.OnChessMatchStart.RemoveListener(ApplyBonus);
+        Game._instance.OnAbilityAdded.RemoveListener(RemoveBonusFromPiece);
         piece.OnChessmanStateChanged -= HandleChessmanStateChanged;
         ResetBonus();
     }
@@ -39,17 +39,16 @@ public class General : Ability
     public void CreateGeneral(){
         foreach (var piece in piece.owner.pieces){
             Chessman cm = piece.GetComponent<Chessman>();
-            if(cm != null && cm.type==PieceType.Knight && !appliedBonus.ContainsKey(cm)){
+            if(cm != null && cm.abilities.Count==0 && !appliedBonus.ContainsKey(cm)){
                 appliedBonus.Add(cm,0);
             }
         }
     }
 
     public void PieceAdded(Chessman addedPiece){
-        if(addedPiece.owner==piece.owner && addedPiece.type==PieceType.Knight){ 
+        if(addedPiece.owner==piece.owner && addedPiece.abilities.Count==0){ 
             if(!appliedBonus.ContainsKey(addedPiece)){
                 appliedBonus.Add(addedPiece,0);
-                bonus++;
             }
         }
     }
@@ -58,7 +57,7 @@ public class General : Ability
         foreach (var piece in piece.owner.pieces){
             Chessman cm = piece.GetComponent<Chessman>();
             //Debug.Log($"Piece name {cm.name} piece type {cm.type}");
-            if(cm != null && cm.type==PieceType.Knight){
+            if(cm != null && cm.abilities.Count==0){
                 if (appliedBonus.ContainsKey(cm))
                 {
                     var currentlyAppliedBonus = appliedBonus[cm];
@@ -73,11 +72,23 @@ public class General : Ability
         }
     }
 
+    public void RemoveBonusFromPiece(Chessman addedPiece, Ability ability){
+        if(addedPiece.owner==piece.owner && addedPiece.abilities.Count>0){ 
+            if(appliedBonus.ContainsKey(addedPiece)){
+                var currentlyAppliedBonus = appliedBonus[addedPiece];
+                addedPiece.attackBonus = Mathf.Max(-addedPiece.attack, addedPiece.attackBonus - currentlyAppliedBonus);
+                addedPiece.defenseBonus = Mathf.Max(-addedPiece.defense, addedPiece.defenseBonus - currentlyAppliedBonus);
+                addedPiece.supportBonus = Mathf.Max(-addedPiece.support, addedPiece.supportBonus - currentlyAppliedBonus);
+                appliedBonus.Remove(addedPiece);
+            }
+        }
+    }
+
     public void ResetBonus()
     {
         foreach (var piece in piece.owner.pieces){
             Chessman cm = piece.GetComponent<Chessman>();
-            if(cm != null && cm.type==PieceType.Knight){
+            if(cm != null && cm.abilities.Count==0){
                 if (appliedBonus.ContainsKey(cm))
                 {
                     var currentlyAppliedBonus = appliedBonus[cm];

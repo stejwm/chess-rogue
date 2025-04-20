@@ -23,7 +23,6 @@ public class Vampire : Ability
         Game._instance.OnAttackEnd.AddListener(SuckBlood);
         Game._instance.OnChessMatchStart.AddListener(MatchStartBonus);
         Game._instance.OnPieceBounced.AddListener(PossibleReset);
-        piece.releaseCost+=Cost;
         if(Game._instance.state==ScreenState.ActiveMatch){
             AddBonus(piece, new BoardPosition(piece.xBoard, piece.yBoard));
         }

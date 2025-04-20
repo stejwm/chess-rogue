@@ -25,7 +25,6 @@ public class SoulBond : Ability
         Game._instance.OnAttackEnd.AddListener(RemoveDecimate);
         piece.owner.soulBondedPieces++;
         Game._instance.OnSoulBonded.Invoke();
-        piece.releaseCost+=Cost;
         
         
         base.Apply(piece);

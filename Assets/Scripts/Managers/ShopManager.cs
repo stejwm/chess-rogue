@@ -25,9 +25,9 @@ public class ShopManager : MonoBehaviour
     public int rerollCostIncrease = 5;
     private Dictionary<Rarity, float> rarityWeights = new Dictionary<Rarity, float>()
     {
-        { Rarity.Common, 50f },
-        { Rarity.Uncommon, 30f },
-        { Rarity.Rare, 20f }
+        { Rarity.Common, 55f },
+        { Rarity.Uncommon, 35f },
+        { Rarity.Rare, 10f }
     };
 
 
@@ -88,7 +88,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void CreateCards(float rareMultiplier = 1f)
+    public void CreateCards()
     {
         GameObject obj;
         // Group abilities by rarity
@@ -127,12 +127,14 @@ public class ShopManager : MonoBehaviour
                 var availableAbilities = groupedAbilities[selectedRarity];
                 int randomIndex = rng.Next(availableAbilities.Count);
                 obj.GetComponent<Card>().ability = availableAbilities[randomIndex].Clone();
+                Debug.Log($"Selected a {selectedRarity} ability");
             }
             else
             {
                 // Fallback to any random ability if no abilities of selected rarity exist
                 List<Ability> shuffledcards = Game._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
                 obj.GetComponent<Card>().ability = shuffledcards[0].Clone();
+                Debug.Log($"Selected a random ability");
             }
 
             cards.Add(obj);
@@ -140,6 +142,7 @@ public class ShopManager : MonoBehaviour
                 obj.GetComponent<Card>().ShowPrice();
         }
     }
+
     public void CreateOrders(){
         GameObject obj;
         List<KingsOrder> shuffledcards = Game._instance.AllOrders.OrderBy(_ => rng.Next()).ToList();

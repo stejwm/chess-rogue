@@ -23,7 +23,6 @@ public class Sentinel : Ability
         piece.info += " " + abilityName;
         Game._instance.OnPieceAdded.AddListener(PieceAdded);
         Game._instance.OnChessMatchStart.AddListener(ApplyBonus);
-        piece.releaseCost+=Cost;
         CreateSentinel();
         base.Apply(piece);
         piece.OnChessmanStateChanged += HandleChessmanStateChanged;

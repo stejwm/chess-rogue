@@ -14,7 +14,6 @@ public class BloodOffering : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         Game._instance.OnPieceCaptured.AddListener(AddBonus);
-        piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 

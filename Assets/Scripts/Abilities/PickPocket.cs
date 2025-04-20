@@ -14,7 +14,6 @@ public class PickPocket : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         Game._instance.OnPieceBounced.AddListener(Steal);
-        piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 

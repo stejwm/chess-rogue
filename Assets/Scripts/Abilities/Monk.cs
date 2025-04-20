@@ -18,7 +18,6 @@ public class Monk : Ability
         piece.info += " " + abilityName;
         Game._instance.OnRawMoveEnd.AddListener(RawMoveEnd);
         Game._instance.OnAttack.AddListener(Check);
-        piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 

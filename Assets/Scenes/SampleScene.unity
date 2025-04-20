@@ -18353,6 +18353,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 468981321bf3c9846818606c1e58b8f3, type: 2}
   - {fileID: 11400000, guid: 3abe8e4ffe854df448fa78a2c8dd832e, type: 2}
   - {fileID: 11400000, guid: 9af518e57e91fc941ad4f327a4141620, type: 2}
+  - {fileID: 11400000, guid: fd0ba3f0eba4dab4d8fa40aea1545010, type: 2}
   AllOrders:
   - {fileID: 11400000, guid: 8812b8c1196501e4c85c6485c44955f7, type: 2}
   - {fileID: 11400000, guid: ef9345f117a80a540b88fd5d90c9610f, type: 2}
@@ -18409,6 +18410,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnSupportAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAbilityAdded:
     m_PersistentCalls:
       m_Calls: []
   OnChessMatchStart:

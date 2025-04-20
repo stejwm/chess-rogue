@@ -89,6 +89,7 @@ public class Game : MonoBehaviour
     public UnityEvent<Chessman, BoardPosition> OnRawMoveEnd = new UnityEvent<Chessman, BoardPosition>();
     public UnityEvent<Chessman, Chessman, bool> OnPieceBounced = new UnityEvent<Chessman,Chessman, bool>();
     public UnityEvent<Chessman, Chessman, Chessman> OnSupportAdded = new UnityEvent<Chessman, Chessman, Chessman>();
+    public UnityEvent<Chessman, Ability> OnAbilityAdded = new UnityEvent<Chessman, Ability>();
     public UnityEvent OnChessMatchStart = new UnityEvent();
     public UnityEvent<PieceColor> OnGameEnd= new UnityEvent<PieceColor>();
     public UnityEvent OnSoulBonded= new UnityEvent();

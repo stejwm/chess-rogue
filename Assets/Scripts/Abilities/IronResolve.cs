@@ -14,7 +14,6 @@ public class IronResolve : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         Game._instance.OnPieceBounced.AddListener(AddBonus);
-        piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 

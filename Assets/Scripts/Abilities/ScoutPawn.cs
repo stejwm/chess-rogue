@@ -23,7 +23,6 @@ public class ScoutPawn : Ability
         }
         
         piece.info += " "+abilityName;
-        piece.releaseCost+=Cost;
         base.Apply(piece);
         
     }

@@ -15,7 +15,6 @@ public class Switchstance : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         Game._instance.OnAttackEnd.AddListener(Swap);
-        piece.releaseCost+=Cost;
         base.Apply(piece);
     }
 

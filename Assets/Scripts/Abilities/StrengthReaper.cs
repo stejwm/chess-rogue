@@ -17,7 +17,6 @@ public class StrengthReaper : Ability
         piece.info += " " + abilityName;
         Game._instance.OnAttackStart.AddListener(AddBonus);
         Game._instance.OnAttackEnd.AddListener(RemoveBonus);
-        piece.releaseCost+=Cost;
         base.Apply(piece);
 
         

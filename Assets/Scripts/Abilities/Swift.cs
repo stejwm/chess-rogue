@@ -20,7 +20,6 @@ public class Swift : Ability
 
         Game._instance.OnRawMoveEnd.AddListener(Swifting);
         Game._instance.OnAttackEnd.AddListener(EndSwift);
-        piece.releaseCost+=Cost;
         base.Apply(piece);
 
     }
