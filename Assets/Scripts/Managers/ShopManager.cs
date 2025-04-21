@@ -13,6 +13,7 @@ public class ShopManager : MonoBehaviour
     public TMP_Text bloodText;
     public TMP_Text coinText;
     public TMP_Text rerollCostText;
+    public Material holoMaterial;
 
     public List<GameObject> pieces = new List<GameObject>();
 
@@ -171,6 +172,11 @@ public class ShopManager : MonoBehaviour
 
             GameObject obj = Instantiate(Game._instance.card, localPosition, Quaternion.identity);
             obj.GetComponent<Card>().ability = abilities[i];
+
+            if(obj.GetComponent<Card>().ability.rarity >0){
+                obj.GetComponent<SpriteRenderer>().material = holoMaterial;
+            }
+            
             cards.Add(obj);
 
             if (Game._instance.state == ScreenState.ShopScreen)

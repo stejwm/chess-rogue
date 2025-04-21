@@ -23,7 +23,7 @@ public class Card : MonoBehaviour
     
     public bool isDissolved=false;
     public GameObject price;
-    private Material dissolveMaterial;
+    public Material dissolveMaterial;
     public ParticleSystem flames;
 
     public Card(Ability ability)
@@ -46,9 +46,7 @@ public class Card : MonoBehaviour
     }
 
     public void Start(){
-        dissolveMaterial = new Material(GetComponent<Renderer>().material);
-        GetComponent<Renderer>().material = dissolveMaterial;
-        dissolveMaterial.SetFloat("_Weight", 0);
+        
     }
 
     void OnMouseDown(){
@@ -124,7 +122,9 @@ public class Card : MonoBehaviour
     }
 
     public IEnumerator Dissolve(){
-        
+        dissolveMaterial = new Material(dissolveMaterial);
+        GetComponent<Renderer>().material = dissolveMaterial;
+        dissolveMaterial.SetFloat("_Weight", 0);
         float dissolveAmount = 0f;
         float fadeAmount = 0.0f;
         float duration = .5f;

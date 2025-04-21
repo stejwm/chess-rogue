@@ -13241,9 +13241,10 @@ MonoBehaviour:
   bloodText: {fileID: 1023962342}
   coinText: {fileID: 531887117}
   rerollCostText: {fileID: 1473997752}
+  holoMaterial: {fileID: 2100000, guid: 0ed6c5d3345213c469cd51e325a5d1d6, type: 2}
   pieces: []
-  rerollCost: 5
-  rerollCostIncrease: 5
+  rerollCost: 2
+  rerollCostIncrease: 2
 --- !u!1 &1093783071
 GameObject:
   m_ObjectHideFlags: 0

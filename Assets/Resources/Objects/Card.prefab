@@ -5244,7 +5244,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2fdbe63a47dd7fd44a947924cb13a15a, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5353,6 +5353,7 @@ MonoBehaviour:
   cardFlipping: 0
   isDissolved: 0
   price: {fileID: 6553285503077187506}
+  dissolveMaterial: {fileID: 2100000, guid: 2fdbe63a47dd7fd44a947924cb13a15a, type: 2}
   flames: {fileID: 170751266578185227}
 --- !u!114 &6115267493482807903
 MonoBehaviour:
