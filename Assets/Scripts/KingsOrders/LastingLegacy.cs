@@ -24,10 +24,12 @@ public class LastingLegacy : KingsOrder
             yield break;
         }
         Chessman cm = Chessobj.GetComponent<Chessman>();
+        Game._instance.lastingLegacyAbility = cm.abilities[Random.Range(0, cm.abilities.Count)].Clone();
         Game._instance.hero.pieces.Remove(Chessobj);
         Game._instance.hero.openPositions.Add(cm.startingPosition);
         Chessobj.GetComponent<Chessman>().DestroyPiece();
         Game._instance.abandonedPieces++;
+        
         
 
 

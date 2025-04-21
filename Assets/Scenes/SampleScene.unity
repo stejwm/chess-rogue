@@ -18366,6 +18366,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6e865aecce03f8343a2231e0c0e88554, type: 2}
   - {fileID: 11400000, guid: 25bc2e0dd2babf44baa373ec7f2e92c0, type: 2}
   - {fileID: 11400000, guid: 641804392de432546b079f7e2cc88267, type: 2}
+  - {fileID: 11400000, guid: 942330b034141e746b271929d6060734, type: 2}
   AllDialogues:
   - {fileID: 11400000, guid: 351e97bd572da8d4c9376645155fead2, type: 2}
   AllOpponents:
@@ -18387,6 +18388,7 @@ MonoBehaviour:
   endEpisode: 0
   tileSelect: 0
   shopUsed: 0
+  lastingLegacyAbility: {fileID: 0}
   tutorial: 0
   OnPieceCaptured:
     m_PersistentCalls:

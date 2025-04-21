@@ -255,6 +255,7 @@ public class ChessMatch
         piece.yBoard = y;
         positions[x,y] = piece.gameObject;
         piece.UpdateUIPosition();
+        StatBoxManager._instance.SetAndShowStats(piece);
     } 
 
     public void MyTurn(PieceColor player){

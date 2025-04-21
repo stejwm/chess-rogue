@@ -76,6 +76,7 @@ public class Game : MonoBehaviour
     public bool endEpisode = false;
     public bool tileSelect = false;
     public bool shopUsed =false;
+    public Ability lastingLegacyAbility = null;
     public bool tutorial =false;
 
 

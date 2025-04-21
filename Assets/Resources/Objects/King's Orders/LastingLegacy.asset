@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c948ee9f4268c0c4f9348027a50d7b95, type: 3}
+  m_Name: LastingLegacy
+  m_EditorClassIdentifier: 
+  Name: Lasting Legacy
+  Description: Abandon a piece to create 3 copies of one of its ability in the next
+    shop
+  sprite: {fileID: 0}
+  Cost: 15

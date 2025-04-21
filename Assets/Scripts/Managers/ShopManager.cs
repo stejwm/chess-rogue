@@ -68,7 +68,15 @@ public class ShopManager : MonoBehaviour
         }
         if(!Game._instance.shopUsed){
             CreatePieces();
-            CreateCards();
+            if(Game._instance.lastingLegacyAbility!=null){
+                List<Ability> abilities = new List<Ability>{Game._instance.lastingLegacyAbility.Clone(), Game._instance.lastingLegacyAbility.Clone(), Game._instance.lastingLegacyAbility.Clone()};
+                CreateCardsWithAbilities(abilities);
+                Game._instance.lastingLegacyAbility = null;
+            }
+            else
+            {
+                CreateCards();
+            }
             CreateOrders();
         }
         
@@ -88,59 +96,92 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void CreateCards()
+    private List<Ability> SelectRandomAbilities(int count, Rarity? targetRarity = null)
     {
-        GameObject obj;
-        // Group abilities by rarity
+        List<Ability> selectedAbilities = new List<Ability>();
         var groupedAbilities = Game._instance.AllAbilities
             .GroupBy(a => a.rarity)
             .ToDictionary(g => g.Key, g => g.ToList());
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < count; i++)
         {
-            Vector2 localPosition;
-            if(Game._instance.state==ScreenState.ShopScreen)
-                localPosition = new Vector2(i + i - 4, 2);
-            else
-                localPosition = new Vector2(i+i, 2);
-                
-            obj = Instantiate(Game._instance.card, localPosition, Quaternion.identity);
-
-            // Select rarity based on weights
-            float random = Random.Range(0f, 100f);
-            float cumulative = 0f;
-            Rarity selectedRarity = Rarity.Common;
-
-            foreach (var rarity in rarityWeights.Keys)
+            Ability selectedAbility;
+            
+            if (targetRarity.HasValue)
             {
-                cumulative += rarityWeights[rarity];
-                if (random <= cumulative)
+                // Select from specific rarity
+                if (groupedAbilities.ContainsKey(targetRarity.Value) && groupedAbilities[targetRarity.Value].Any())
                 {
-                    selectedRarity = rarity;
-                    break;
+                    var availableAbilities = groupedAbilities[targetRarity.Value];
+                    int randomIndex = rng.Next(availableAbilities.Count);
+                    selectedAbility = availableAbilities[randomIndex].Clone();
+                }
+                else
+                {
+                    // Fallback if no abilities of target rarity exist
+                    List<Ability> shuffledCards = Game._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
+                    selectedAbility = shuffledCards[0].Clone();
+                }
+            }
+            else
+            {
+                // Select based on rarity weights
+                float random = Random.Range(0f, 100f);
+                float cumulative = 0f;
+                Rarity selectedRarity = Rarity.Common;
+
+                foreach (var rarity in rarityWeights.Keys)
+                {
+                    cumulative += rarityWeights[rarity];
+                    if (random <= cumulative)
+                    {
+                        selectedRarity = rarity;
+                        break;
+                    }
+                }
+
+                if (groupedAbilities.ContainsKey(selectedRarity) && groupedAbilities[selectedRarity].Any())
+                {
+                    var availableAbilities = groupedAbilities[selectedRarity];
+                    int randomIndex = rng.Next(availableAbilities.Count);
+                    selectedAbility = availableAbilities[randomIndex].Clone();
+                }
+                else
+                {
+                    List<Ability> shuffledCards = Game._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
+                    selectedAbility = shuffledCards[0].Clone();
                 }
             }
 
-            // Select random ability of chosen rarity
-            if (groupedAbilities.ContainsKey(selectedRarity) && groupedAbilities[selectedRarity].Any())
-            {
-                var availableAbilities = groupedAbilities[selectedRarity];
-                int randomIndex = rng.Next(availableAbilities.Count);
-                obj.GetComponent<Card>().ability = availableAbilities[randomIndex].Clone();
-                Debug.Log($"Selected a {selectedRarity} ability");
-            }
-            else
-            {
-                // Fallback to any random ability if no abilities of selected rarity exist
-                List<Ability> shuffledcards = Game._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
-                obj.GetComponent<Card>().ability = shuffledcards[0].Clone();
-                Debug.Log($"Selected a random ability");
-            }
+            selectedAbilities.Add(selectedAbility);
+        }
 
+        return selectedAbilities;
+    }
+
+    public void CreateCardsWithAbilities(List<Ability> abilities)
+    {
+        for (int i = 0; i < abilities.Count; i++)
+        {
+            Vector2 localPosition;
+            if (Game._instance.state == ScreenState.ShopScreen)
+                localPosition = new Vector2(i + i - 4, 2);
+            else
+                localPosition = new Vector2(i + i, 2);
+
+            GameObject obj = Instantiate(Game._instance.card, localPosition, Quaternion.identity);
+            obj.GetComponent<Card>().ability = abilities[i];
             cards.Add(obj);
-            if(Game._instance.state==ScreenState.ShopScreen)
+
+            if (Game._instance.state == ScreenState.ShopScreen)
                 obj.GetComponent<Card>().ShowPrice();
         }
+    }
+
+    public void CreateCards(int count = 3, Rarity? targetRarity = null)
+    {
+        List<Ability> abilities = SelectRandomAbilities(count, targetRarity);
+        CreateCardsWithAbilities(abilities);
     }
 
     public void CreateOrders(){
