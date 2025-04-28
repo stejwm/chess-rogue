@@ -35,7 +35,7 @@ public class InspiringPresence : Ability
     }
     public void IsBounce(Chessman attacker, Chessman defender, bool isBounceReduced){
         if(defender.team==piece.team){
-            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Inspiring Presence</gradient></color>", "happy to help!");
+            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Inspiring Presence</gradient></color>", "happy to help!");
             piece.support+=1;
             Debug.Log("Bounced, bonus added");
         }

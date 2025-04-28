@@ -53,7 +53,7 @@ public class Momentum : Ability
     public void AddBonus(){
         bonus+=1;
         piece.attackBonus+=1;
-        AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Momentum</gradient></color>", $"<color=green>+{bonus} attack, keep moving</color>");
+        AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Momentum</gradient></color>", $"<color=green>+{bonus} attack, keep moving</color>");
     }
 
     public void AddCapture(Chessman attacker, Chessman defender){

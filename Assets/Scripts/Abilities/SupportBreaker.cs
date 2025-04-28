@@ -47,7 +47,7 @@ public class SupportBreaker : Ability
                     }
             }
             piece.effectsFeedback.PlayFeedbacks();
-            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Support Breaker</gradient></color>",  supporters.Count +" pieces <color=red>-1</color> support");
+            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Support Breaker</gradient></color>",  supporters.Count +" pieces <color=red>-1</color> support");
             Game._instance.OnSupportAdded.RemoveListener(GatherSupporters);
             supporters.Clear();   
                

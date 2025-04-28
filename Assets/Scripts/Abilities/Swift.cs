@@ -51,7 +51,7 @@ public class Swift : Ability
             
             Game._instance.currentMatch.MyTurn(piece.color);
 
-            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Swift</gradient></color>",  " move again");
+            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Swift</gradient></color>",  " move again");
             piece.owner.MakeMove(Game._instance.currentMatch);
         }
         else if(mover==piece && swifting){

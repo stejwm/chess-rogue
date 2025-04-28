@@ -33,7 +33,7 @@ public class HexBolt : Ability
                 ability.Remove(defender);
             }
             piece.effectsFeedback.PlayFeedbacks();
-            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Hex Bolt</gradient></color>", " Hexed");
+            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Hex Bolt</gradient></color>", " Hexed");
         }
     }
 

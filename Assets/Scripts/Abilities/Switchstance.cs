@@ -33,7 +33,7 @@ public class Switchstance : Ability
             piece.defense=attack;
             piece.attackBonus=bonusDefense;
             piece.defenseBonus=bonusAttack;
-            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Switchstance</gradient></color>",  $"Defense set to {piece.CalculateDefense()} Attack set to {piece.CalculateAttack()}");
+            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Switchstance</gradient></color>",  $"Defense set to {piece.CalculateDefense()} Attack set to {piece.CalculateAttack()}");
         }
     }
 

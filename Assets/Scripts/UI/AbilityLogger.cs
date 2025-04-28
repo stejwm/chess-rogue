@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using TMPro;
 using Unity.VisualScripting;
@@ -11,6 +13,7 @@ public class AbilityLogger : MonoBehaviour
     [SerializeField] private GameObject AbilityPopUp;
     public static AbilityLogger _instance;
     bool currentlyLogging=false;
+    Queue<Tuple<string, string>> queue = new Queue<Tuple<string, string>>();
 
     void Awake()
     {
@@ -27,17 +30,28 @@ public class AbilityLogger : MonoBehaviour
         //gameObject.SetActive(false);
     }
 
-    public void LogAbilityUsage(string abilityName, string message)
-    {
-        StartCoroutine(ShowAbilityAndLog(abilityName, message));
+    public IEnumerator HandleQueue(){
+        if(currentlyLogging || queue.Count==0){
+            yield break;
+        }
         currentlyLogging=true;
+        StartCoroutine(ShowAbilityAndLog(queue.Peek().Item1, queue.Peek().Item2));
+        yield return new WaitForSeconds(Game._instance.waitTime);
+        queue.Dequeue();
+        currentlyLogging=false;
+        if(queue.Count>0){
+            StartCoroutine(HandleQueue());
+        }
+    }
+    public void AddLogToQueue(string abilityName, string message)
+    {
+        queue.Enqueue(new Tuple<string, string>(abilityName, message));
+        StartCoroutine(HandleQueue());
     }
 
     private IEnumerator ShowAbilityAndLog(string abilityName, string message)
     {
         PopUpMenu.SetActive(true);
-        if (currentlyLogging)
-            yield return new WaitForSeconds(Game._instance.waitTime);
         var abilityPopUp = Instantiate(AbilityPopUp, PopUpMenu.transform);
         abilityPopUp.GetComponentInChildren<TMP_Text>().text = abilityName;
         feedbacks = abilityPopUp.GetComponentInChildren<MMF_Player>();
@@ -48,11 +62,8 @@ public class AbilityLogger : MonoBehaviour
         // Wait for the feedback effect duration
         yield return new WaitForSeconds(feedbacks.TotalDuration);
         AddLogMessage(abilityName + " "+ message);
-        //PopUp.gameObject.SetActive(false);
-        //PopUp.transform.position = startingPosition;
         PopUpMenu.SetActive(false);
         Destroy(abilityPopUp);
-        currentlyLogging=false;
         yield return null;
     }
 

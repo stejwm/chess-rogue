@@ -44,7 +44,7 @@ public class AvengingStrike : Ability
             Game._instance.currentMatch.AvengingStrikeOverride =false;
             readyToAvenge=false;
             Game._instance.currentMatch.AvengerActive=false;
-            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">???</gradient></color>", "missed attack");
+            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">???</gradient></color>", "missed attack");
         }
     }
 
@@ -65,7 +65,7 @@ public class AvengingStrike : Ability
         {
             Debug.Log("Avenging");
             piece.effectsFeedback.PlayFeedbacks();
-            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Avenging Strike</gradient></color>", "attacking");
+            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Avenging Strike</gradient></color>", "attacking");
             Game._instance.currentMatch.AvengingStrikeOverride =true;
             if(Game._instance.currentMatch.BloodThirstOverride){
                 //Game._instance.currentMatch.MyTurn(piece.color);

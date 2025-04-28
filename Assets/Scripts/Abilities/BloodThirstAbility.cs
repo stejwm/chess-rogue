@@ -112,7 +112,7 @@ public class BloodThirstAbility : Ability
             Game._instance.isDecimating=false;
             return;
         }
-        AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Blood Thirst</gradient></color>",  " attack again");
+        AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Blood Thirst</gradient></color>",  " attack again");
         piece.owner.MakeMove(Game._instance.currentMatch);
     }
 

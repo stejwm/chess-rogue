@@ -34,7 +34,7 @@ public class CriticalBlow : Ability
             if (rng.Next(1,11)<=1){
                 attackBonus+= piece.CalculateAttack();
                 piece.effectsFeedback.PlayFeedbacks();
-                AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Critical Blow</gradient></color>",  " x2");
+                AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Critical Blow</gradient></color>",  " x2");
             }
             piece.attackBonus+=attackBonus;
         }

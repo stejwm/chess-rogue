@@ -50,7 +50,7 @@ public class General : Ability
             if(!appliedBonus.ContainsKey(addedPiece)){
                 appliedBonus.Add(addedPiece,0);
                 bonus++;
-                AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">General</gradient></color>", "bonus increased to " + bonus); 
+                AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">General</gradient></color>", "bonus increased to " + bonus); 
             }
         }
     }
