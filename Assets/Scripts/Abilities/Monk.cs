@@ -67,12 +67,17 @@ public class Monk : Ability
 
     public void AddBonus(Chessman attacker, Chessman defender){
         if(attacker==piece){
-            piece.effectsFeedback.PlayFeedbacks();
             int s = Random.Range (0, 3);
             switch(s){
-                case 0: attackIncrease++; piece.attackBonus++; break;
-                case 1: defenseIncrease++; piece.defenseBonus++; break;
-                case 2: supportIncrease++; piece.supportBonus++; break;
+                case 0: attackIncrease++; piece.attackBonus++; 
+                        AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Monk</gradient></color>", $"<color=green>+1</color> attack");
+                        break;
+                case 1: defenseIncrease++; piece.defenseBonus++; 
+                        AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Monk</gradient></color>", $"<color=green>+1</color> defense");
+                        break;
+                case 2: supportIncrease++; piece.supportBonus++; 
+                        AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Monk</gradient></color>", $"<color=green>+1</color> support");
+                        break;
 
             }
             Game._instance.OnPieceBounced.RemoveListener(AddBonusBounce);

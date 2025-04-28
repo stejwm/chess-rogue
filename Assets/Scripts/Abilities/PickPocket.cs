@@ -24,7 +24,7 @@ public class PickPocket : Ability
     }
     public void Steal(Chessman attacker, Chessman defender, bool isBounceReduced){
         if(attacker==piece){
-            piece.effectsFeedback.PlayFeedbacks();
+            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">PickPocket</gradient></color>", $"<color=yellow>+3</color> coins");
             piece.owner.playerCoins+=2;
         }
     }

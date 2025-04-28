@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "StationarySlash", menuName = "Abilities/StationarySlash")]
@@ -14,9 +15,12 @@ public class StationarySlash : Ability
 
     public override void Apply(Chessman piece)
     {
+        if (piece.abilities.OfType<StationarySlash>().FirstOrDefault()!=null){
+           return;
+        }
         this.piece = piece;
         piece.info += " " + abilityName;
-        //Game._instance.OnAttack.AddListener(AddBonus);
+        
         Game._instance.OnPieceCaptured.AddListener(ListenForEnd);
         Game._instance.OnPieceBounced.AddListener(ReplaceOnBoard);
         piece.canStationarySlash=true;
@@ -34,6 +38,7 @@ public class StationarySlash : Ability
     public void ListenForEnd(Chessman attacker, Chessman defender){
         if (attacker==piece){
             Game._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
+            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Stationary Slash</gradient></color>",  $"Staying put on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
         }
     }
 

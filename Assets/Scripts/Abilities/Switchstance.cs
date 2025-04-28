@@ -25,7 +25,6 @@ public class Switchstance : Ability
     }
     public void Swap(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if (defender==piece || attacker==piece){
-            piece.effectsFeedback.PlayFeedbacks();
             int attack = piece.attack;
             int defense = piece.defense;
             int bonusAttack= piece.attackBonus;
@@ -34,6 +33,7 @@ public class Switchstance : Ability
             piece.defense=attack;
             piece.attackBonus=bonusDefense;
             piece.defenseBonus=bonusAttack;
+            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Switchstance</gradient></color>",  $"Defense set to {piece.CalculateDefense()} Attack set to {piece.CalculateAttack()}");
         }
     }
 

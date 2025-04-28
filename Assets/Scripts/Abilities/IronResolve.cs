@@ -24,7 +24,8 @@ public class IronResolve : Ability
     }
     public void AddBonus(Chessman attacker, Chessman defender, bool isBounceReduced){
         if (defender==piece){
-            piece.effectsFeedback.PlayFeedbacks();
+                        AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Iron Resolve</gradient></color>", "Try harder next time!");
+
             piece.defense+=1;
         }
     }

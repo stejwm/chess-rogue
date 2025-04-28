@@ -252,6 +252,8 @@ public class ShopManager : MonoBehaviour
     }
 
     public void RerollAbilities(){
+        if(Game._instance.applyingAbility)
+            return;
         if(Game._instance.hero.playerCoins>=rerollCost){
             Game._instance.hero.playerCoins-=rerollCost;
             rerollCost+=rerollCostIncrease;

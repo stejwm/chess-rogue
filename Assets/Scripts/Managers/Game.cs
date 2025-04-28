@@ -241,14 +241,14 @@ public class Game : MonoBehaviour
             selectedCard.flames.Stop();
             selectedCard = card;
             sprite = selectedCard.GetComponent<SpriteRenderer>();
-            sprite.color = Color.green;
+            //sprite.color = Color.green;
             selectedCard.flames.Play();
             
         }
         else{
             selectedCard = card;
             sprite = selectedCard.GetComponent<SpriteRenderer>();
-            sprite.color = Color.green;
+            //sprite.color = Color.green;
             selectedCard.flames.Play();
         }
     }

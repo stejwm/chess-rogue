@@ -24,7 +24,8 @@ public class IncreasingStrike : Ability
     }
     public void AddBonus(Chessman attacker, Chessman defender){
         if (attacker==piece){
-            piece.effectsFeedback.PlayFeedbacks();
+            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Increasing Strike</gradient></color>", "I want more...");
+
             piece.attack+=1;
         }
     }

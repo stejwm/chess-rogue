@@ -77,6 +77,12 @@ public class Vampire : Ability
         piece.attackBonus = Mathf.Max(-piece.attack, piece.attackBonus+bonusChange);
         piece.defenseBonus = Mathf.Max(-piece.defense, piece.defenseBonus + bonusChange);
         piece.supportBonus = Mathf.Max(-piece.support, piece.supportBonus + bonusChange);
+        if (bonusChange > 0)  
+            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Vampire</gradient></color>",  $"<color=green>+1</color> to all stats on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
+        else
+            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Vampire</gradient></color>",  $"<color=red>-1</color> to all stats on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
+
+
     }
 
     public void SuckBlood(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport)
@@ -84,6 +90,8 @@ public class Vampire : Ability
         if (attacker == piece)
         {
             defender.AddAbility(Game._instance.AllAbilities[20].Clone());
+            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Vampire</gradient></color>",  $"fledgling created on {BoardPosition.ConvertToChessNotation(defender.xBoard, defender.yBoard)}");
+
         }
     }
     public void RemoveBonus(){

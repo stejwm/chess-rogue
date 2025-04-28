@@ -33,7 +33,7 @@ public class StrengthReaper : Ability
             bonus = attacker.CalculateAttack()/2;
             attacker.attackBonus-= bonus;
              piece.effectsFeedback.PlayFeedbacks();
-            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Strength Reaper</gradient></color>", $" attack reduced by <color=red>-{bonus}</red>");
+            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Strength Reaper</gradient></color>", $" attack reduced by <color=red>-{bonus}</color>");
         
         }
     }

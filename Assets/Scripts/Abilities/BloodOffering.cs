@@ -28,7 +28,9 @@ public class BloodOffering : Ability
             return;
         }
         if (defender.color==piece.color){
-            piece.effectsFeedback.PlayFeedbacks();
+            //piece.effectsFeedback.PlayFeedbacks();
+            AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Blood offering</gradient></color>", $"+1 all stats on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
+
             piece.attackBonus+=1;
             piece.defenseBonus+=1;
             piece.supportBonus+=1;

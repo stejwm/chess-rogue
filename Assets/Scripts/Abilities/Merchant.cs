@@ -35,6 +35,9 @@ public class Merchant : Ability
                     attackBonus+=1;
                 }
             }
+            if (attackBonus>0){
+                AbilityLogger._instance.LogAbilityUsage($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Merchant</gradient></color>", $"<color=green>+{attackBonus} attack from wares</color>");
+            }
             piece.attackBonus+=attackBonus;
         }
     }
