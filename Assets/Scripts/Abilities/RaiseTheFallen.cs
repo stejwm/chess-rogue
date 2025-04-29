@@ -52,7 +52,7 @@ public class RaiseTheFallen : Ability
             }
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Raise the Fallen</gradient></color>",  $"raised the dead at {BoardPosition.ConvertToChessNotation(defender.xBoard, defender.yBoard)}");
 
-            var undead = PieceFactory._instance.CreateAbilityPiece(PieceType.Pawn, $"undead {defender.name}", defender.xBoard, defender.yBoard, PieceColor.White, Team.Hero, piece.owner, Game._instance.AllAbilities[25]); //Create with radiating death
+            var undead = PieceFactory._instance.CreateAbilityPiece(PieceType.Pawn, $"undead {defender.name}", defender.xBoard, defender.yBoard, PieceColor.White, Team.Hero, piece.owner, Game._instance.AllAbilities[25].Clone()); //Create with radiating death
             undead.GetComponent<Collider2D>().enabled = false;
             piece.owner.pieces.Add(undead);
             Chessman undeadChessman = undead.GetComponent<Chessman>();

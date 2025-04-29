@@ -45,6 +45,9 @@ public class AbilityLogger : MonoBehaviour
     }
     public void AddLogToQueue(string abilityName, string message)
     {
+        if(Game._instance.state!=ScreenState.ActiveMatch){
+            return;
+        }
         queue.Enqueue(new Tuple<string, string>(abilityName, message));
         StartCoroutine(HandleQueue());
     }

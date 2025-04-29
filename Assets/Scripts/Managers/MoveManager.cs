@@ -286,10 +286,12 @@ public class MoveManager: MonoBehaviour
                 BattlePanel._instance.SetAndShowResults("Decimate!");
                 ResultFeedback.PlayFeedbacks();
                 yield return new WaitForSeconds(ResultFeedback.TotalDuration);
-                Game._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);
-                attackedPiece.DestroyPiece();
+                //attackedPiece.gameObject.SetActive(false);
                 BoardManager._instance.GetTileAt(targetedX, targetedY).SetBloodTile();
                 AttackCleanUp(movingPiece, attackedPiece);
+                Game._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);
+                yield return new WaitForSeconds(Game._instance.waitTime);
+                attackedPiece.DestroyPiece();
             }else{
                 BattlePanel._instance.SetAndShowResults("Capture!");
                 ResultFeedback.PlayFeedbacks();

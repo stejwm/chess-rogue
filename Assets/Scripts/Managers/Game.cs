@@ -160,6 +160,7 @@ public class Game : MonoBehaviour
     }
 
     public void OpenMarket(){
+        KingsOrderManager._instance.Hide();
         MarketManager._instance.OpenMarket();
         this.state=ScreenState.PrisonersMarket;
     }
@@ -362,7 +363,7 @@ public class Game : MonoBehaviour
 
     public void NextMatch(EnemyType enemyType){
         level++;
-        state=ScreenState.ActiveMatch;
+        //state=ScreenState.ActiveMatch;
         shopUsed=false;
         opponent.DestroyPieces();
         BoardManager._instance.CreateBoard();

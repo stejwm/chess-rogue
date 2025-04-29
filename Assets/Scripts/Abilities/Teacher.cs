@@ -76,9 +76,15 @@ public class Teacher : Ability
         if(addedPiece.owner==piece.owner && addedPiece.abilities.Count>0){ 
             if(appliedBonus.ContainsKey(addedPiece)){
                 var currentlyAppliedBonus = appliedBonus[addedPiece];
-                addedPiece.attackBonus = Mathf.Max(-addedPiece.attack, addedPiece.attackBonus - currentlyAppliedBonus);
-                addedPiece.defenseBonus = Mathf.Max(-addedPiece.defense, addedPiece.defenseBonus - currentlyAppliedBonus);
-                addedPiece.supportBonus = Mathf.Max(-addedPiece.support, addedPiece.supportBonus - currentlyAppliedBonus);
+                if(Game._instance.state == ScreenState.ActiveMatch){
+                    addedPiece.attackBonus = Mathf.Max(-addedPiece.attack, addedPiece.attackBonus - currentlyAppliedBonus);
+                    addedPiece.defenseBonus = Mathf.Max(-addedPiece.defense, addedPiece.defenseBonus - currentlyAppliedBonus);
+                    addedPiece.supportBonus = Mathf.Max(-addedPiece.support, addedPiece.supportBonus - currentlyAppliedBonus);
+                }else{
+                    addedPiece.attackBonus = Mathf.Max(0, addedPiece.attackBonus - currentlyAppliedBonus);
+                    addedPiece.defenseBonus = Mathf.Max(0, addedPiece.defenseBonus - currentlyAppliedBonus);
+                    addedPiece.supportBonus = Mathf.Max(0, addedPiece.supportBonus - currentlyAppliedBonus);
+                }
                 appliedBonus.Remove(addedPiece);
             }
         }
