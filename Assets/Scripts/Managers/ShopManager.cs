@@ -304,6 +304,42 @@ public class ShopManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void HideShop(){
+        this.gameObject.SetActive(false);
+        foreach (GameObject card in cards){
+            if(card!=null)
+                card.SetActive(false);
+        }
+        foreach (GameObject order in orders){
+            if(order!=null)
+                order.SetActive(false);
+        }
+        foreach (GameObject piece in pieces){
+            if(piece != null)
+                piece.SetActive(false);
+        }
+    }
+    public void UnHideShop(){
+        this.gameObject.SetActive(true);
+        UpdateCurrency();
+        foreach (GameObject card in cards){
+            if(card!=null){
+                card.SetActive(true);
+                card.GetComponent<Collider2D>().enabled = true;
+            }
+        }
+        foreach (GameObject order in orders){
+            if(order!=null){
+                order.SetActive(true);
+                order.GetComponent<Collider2D>().enabled = true;
+            }
+        }
+        foreach (GameObject piece in pieces){
+            if(piece != null)
+                piece.SetActive(false);
+        }
+    }
+
     
 
 

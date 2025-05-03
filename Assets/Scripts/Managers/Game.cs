@@ -323,9 +323,9 @@ public class Game : MonoBehaviour
         InventoryManager._instance.OpenInventory();
     }
     public void CloseReward(){
-        state=ScreenState.Map;
+        state=ScreenState.MainGameboard;
         this.currentMatch=null;
-        MapManager._instance.OpenMap();
+        OpenShop();
         //InventoryManager._instance.OpenInventory();
     }
 
@@ -341,8 +341,8 @@ public class Game : MonoBehaviour
 
     public void CloseArmyManagement(){
         //ResetPlayerPieces();
-        state=ScreenState.Map;
-        OpenMap();
+        state=ScreenState.ShopScreen;;
+        ShopManager._instance.UnHideShop();
     }
 
     public void OpenShop(){
@@ -374,7 +374,7 @@ public class Game : MonoBehaviour
     }
 
     public void CloseShop(){
-        state=ScreenState.Map;
+        state=ScreenState.ShopScreen;
         OpenMap();
     }
     public void OpenMap(){
