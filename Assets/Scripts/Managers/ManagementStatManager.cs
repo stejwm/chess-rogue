@@ -56,7 +56,7 @@ public class ManagementStatManager : MonoBehaviour
     }
 
     public void Purchase(){
-        if(Game._instance.hero.playerCoins>=piece.releaseCost){
+        if(Game._instance.hero.playerCoins>=piece.releaseCost && Game._instance.hero.openPositions.Count>0){
             Game._instance.hero.playerCoins-=piece.releaseCost;
             Game._instance.hero.inventoryPieces.Add(piece.gameObject);
             piece.owner=Game._instance.hero;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class RaiseTheFallen : Ability
 {
     private Chessman piece;
     int stacks =0;
+    public Ability brokenDeath;
     public RaiseTheFallen() : base("Raise The Fallen", "Decimates piece on capture, raises a friendly pawn in it's position") {}
 
 
@@ -56,6 +58,9 @@ public class RaiseTheFallen : Ability
             undead.GetComponent<Collider2D>().enabled = false;
             piece.owner.pieces.Add(undead);
             Chessman undeadChessman = undead.GetComponent<Chessman>();
+            if (Regex.Matches(undeadChessman.name, "undead").Count >= 10){
+                undeadChessman.AddAbility(brokenDeath.Clone());
+            }
             undeadChessman.startingPosition = piece.owner.openPositions[0];
             piece.owner.openPositions.RemoveAt(0);
             for (int i = 0; i < stacks; i++){

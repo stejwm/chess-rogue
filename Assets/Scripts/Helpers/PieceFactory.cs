@@ -360,7 +360,7 @@ public class PieceFactory : MonoBehaviour
     }
 
     public GameObject CreateAbilityPiece(PieceType type, string name, int x, int y, PieceColor color, Team team, Player owner, Ability ability){
-        var piece = Create(type, x, y, color, team, owner);
+        var piece = Create(type, x, y, color, team, owner, name);
         StartCoroutine(WaitForPieceToApplyAbility(piece.GetComponent<Chessman>(), ability));
         return piece;
     }

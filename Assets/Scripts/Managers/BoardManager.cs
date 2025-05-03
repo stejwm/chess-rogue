@@ -113,6 +113,7 @@ public class BoardManager : MonoBehaviour
         piece.xBoard=tile.position.x;
         piece.yBoard=tile.position.y;
         Game._instance.hero.inventoryPieces.Remove(piece.gameObject);
+        Debug.Log($"open positions contains position{Game._instance.hero.openPositions.Contains(tile.position)}");
         Game._instance.hero.openPositions.Remove(tile.position);
         Game._instance.hero.pieces.Add(piece.gameObject);
         Game._instance.OnPieceAdded.Invoke(piece);
