@@ -119,7 +119,8 @@ public class BoardManager : MonoBehaviour
         Game._instance.OnPieceAdded.Invoke(piece);
         ClearTiles();
         piece.UpdateUIPosition();
-        Game._instance.currentMatch.CheckInventory();
+        if(Game._instance.state!=ScreenState.ManagementScreen)
+            Game._instance.currentMatch.CheckInventory();
     }
 
 

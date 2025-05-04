@@ -17,3 +17,4 @@ MonoBehaviour:
     shop
   sprite: {fileID: 0}
   Cost: 15
+  canBeUsedFromManagement: 1

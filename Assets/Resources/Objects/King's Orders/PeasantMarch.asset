@@ -16,3 +16,4 @@ MonoBehaviour:
   Description: All pawns permanently gain +1 to all stats
   sprite: {fileID: 0}
   Cost: 20
+  canBeUsedFromManagement: 1

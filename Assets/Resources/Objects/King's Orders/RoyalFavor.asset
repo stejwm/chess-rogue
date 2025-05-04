@@ -16,3 +16,4 @@ MonoBehaviour:
   Description: One piece permanently gains +1 to all stats
   sprite: {fileID: 0}
   Cost: 10
+  canBeUsedFromManagement: 1

@@ -217,6 +217,7 @@ public class ShopManager : MonoBehaviour
             cm.yBoard = 3;
             cm.UpdateUIPosition();
             SpriteRenderer rend = obj.GetComponent<SpriteRenderer>();
+            cm.flames.GetComponent<Renderer>().sortingOrder=6;
             rend.sortingOrder = 5;
             pieces.Add(obj);
         }
@@ -336,7 +337,7 @@ public class ShopManager : MonoBehaviour
         }
         foreach (GameObject piece in pieces){
             if(piece != null)
-                piece.SetActive(false);
+                piece.SetActive(true);
         }
     }
 

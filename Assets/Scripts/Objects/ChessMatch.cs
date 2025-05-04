@@ -35,6 +35,13 @@ public class ChessMatch
         
     }
 
+    public ChessMatch(Player white)
+    {
+        this.white=white;
+        isSetUpPhase=false;
+        UpdateBoard();
+    }
+
     public void TutorialMatch(){
         Game._instance.tutorial=true;
         CoroutineRunner.instance.StartCoroutine(Tutorial());
@@ -111,6 +118,7 @@ public class ChessMatch
             Chessman cm = piece.GetComponent<Chessman>();
             positions[cm.xBoard,cm.yBoard]=piece; 
         }
+        if(black!=null)
         foreach (GameObject piece in black.pieces)
         {
             Chessman cm = piece.GetComponent<Chessman>();

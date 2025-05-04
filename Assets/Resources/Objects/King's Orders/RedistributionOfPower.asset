@@ -17,3 +17,4 @@ MonoBehaviour:
     your pieces
   sprite: {fileID: 0}
   Cost: 20
+  canBeUsedFromManagement: 1

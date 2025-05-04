@@ -16,6 +16,9 @@ public class ArmyManager : MonoBehaviour
     public List<GameObject> pieces = new List<GameObject>();
     public Chessman selectedPiece;
     public int pricePerPiece = 2;
+    public GameObject kingsOrderObject;
+    public GameObject KOCanvas;
+    public GameObject KOParent;
 
     //current turn
     public static ArmyManager _instance;
@@ -87,17 +90,7 @@ public class ArmyManager : MonoBehaviour
         if(selectedPiece==null){
             return;
         }
-        else if (selectedPiece && Game._instance.hero.playerCoins>=pricePerPiece){
-            selectedPiece.owner.openPositions.Add(new BoardPosition(selectedPiece.xBoard, selectedPiece.yBoard));
-            selectedPiece.owner.openPositions.Remove(position);
-            selectedPiece.startingPosition=position;
-            selectedPiece.xBoard=position.x;
-            selectedPiece.yBoard=position.y;
-            selectedPiece.UpdateUIPosition();
-            Game._instance.hero.playerCoins-=pricePerPiece;
-            UpdateCurrency();
-            DeselectPiece(selectedPiece);
-        }else if(Game._instance.hero.inventoryPieces.Contains(selectedPiece.gameObject)){
+        if(Game._instance.hero.inventoryPieces.Contains(selectedPiece.gameObject)){
             Game._instance.hero.inventoryPieces.Remove(selectedPiece.gameObject);
             Game._instance.hero.pieces.Add(selectedPiece.gameObject);
             selectedPiece.owner.openPositions.Add(new BoardPosition(selectedPiece.xBoard, selectedPiece.yBoard));
@@ -109,6 +102,16 @@ public class ArmyManager : MonoBehaviour
             UpdateCurrency();
             Game._instance.OnPieceAdded.Invoke(selectedPiece);
             DeselectPiece(selectedPiece);
+        }else if (selectedPiece && Game._instance.hero.playerCoins>=pricePerPiece){
+            selectedPiece.owner.openPositions.Add(new BoardPosition(selectedPiece.xBoard, selectedPiece.yBoard));
+            selectedPiece.owner.openPositions.Remove(position);
+            selectedPiece.startingPosition=position;
+            selectedPiece.xBoard=position.x;
+            selectedPiece.yBoard=position.y;
+            selectedPiece.UpdateUIPosition();
+            Game._instance.hero.playerCoins-=pricePerPiece;
+            UpdateCurrency();
+            DeselectPiece(selectedPiece);
         }
         else{
             selectedPiece.GetComponent<MMSpringPosition>().BumpRandom();
@@ -116,7 +119,8 @@ public class ArmyManager : MonoBehaviour
     }
 
     public void OpenShop(){
-        //Game._instance.isInMenu=false;
+        ChessMatch fakeMatch = new ChessMatch(Game._instance.hero);
+        Game._instance.currentMatch=fakeMatch;
         gameObject.SetActive(true);
         ShopManager._instance.HideShop();
         UpdateCurrency();
@@ -132,6 +136,21 @@ public class ArmyManager : MonoBehaviour
             }
             piece.GetComponent<Chessman>().UpdateUIPosition();
         }
+
+
+        SpriteRenderer KORend = kingsOrderObject.GetComponent<SpriteRenderer>();
+        KORend.sortingOrder = 7;
+        
+
+        Canvas KOCanvasRend = KOCanvas.GetComponent<Canvas>();
+        KOCanvasRend.sortingOrder = 8;
+
+        KingsOrderManager._instance.flames.GetComponent<Renderer>().sortingOrder=9;
+
+
+        KingsOrderManager._instance.Setup();
+        
+
         Game._instance.togglePieceColliders(myPieces, true);
         BoardManager._instance.CreateManagementBoard();
         CheckInventory();
@@ -193,6 +212,15 @@ public class ArmyManager : MonoBehaviour
         {
             Destroy(piece);
         }
+        SpriteRenderer KORend = kingsOrderObject.GetComponent<SpriteRenderer>();
+        KORend.sortingOrder = 1;
+
+        Canvas KOCanvasRend = KOCanvas.GetComponent<Canvas>();
+        KOCanvasRend.sortingOrder = 2;
+
+        KingsOrderManager._instance.flames.GetComponent<Renderer>().sortingOrder=5;
+
+        KingsOrderManager._instance.Hide();
         BoardManager._instance.DestroyBoard();
         Game._instance.CloseArmyManagement();
         gameObject.SetActive(false);

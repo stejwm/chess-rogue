@@ -11,7 +11,7 @@ public class KingsOrderManager : MonoBehaviour
     public TMP_Text title;
     public TMP_Text effect;
     public static KingsOrderManager _instance;
-    [SerializeField] private ParticleSystem flames;
+    public ParticleSystem flames;
     [SerializeField] private Material dissolveMaterial;
 
     public GameObject parent;
@@ -54,11 +54,19 @@ public class KingsOrderManager : MonoBehaviour
     }
     IEnumerator UseAndHandleUI()
     {
+        if (Game._instance.state==ScreenState.ManagementScreen){
+            if(!order.canBeUsedFromManagement){
+                this.GetComponent<MMSpringPosition>().BumpRandom();
+                yield break;
+            }
+        }
         int index = Game._instance.hero.orders.IndexOf(order);
-
+        Game._instance.togglePieceColliders(Game._instance.hero.pieces, false);
         Game._instance.hero.orders.Remove(order);
         flames.Play();
         yield return StartCoroutine(order.Use()); // Wait for King's Order effect
+        if(Game._instance.state==ScreenState.ManagementScreen)
+            Game._instance.togglePieceColliders(Game._instance.hero.pieces, true);
         flames.Stop();
         yield return StartCoroutine(Dissolve());
         

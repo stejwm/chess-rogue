@@ -78,6 +78,8 @@ public class Promotion : KingsOrder
         newPiece.team=piece.team;
         newPiece.type=piece.type;
         newPiece.uniqueId=piece.uniqueId;
+        newPieceObj.GetComponent<SpriteRenderer>().sortingOrder=piece.gameObject.GetComponent<SpriteRenderer>().sortingOrder;
+        newPiece.flames.GetComponent<Renderer>().sortingOrder=piece.flames.GetComponent<Renderer>().sortingOrder;
         //newPiece.abilities= new List<Ability>(piece.abilities);
         newPiece.isValidForAttack=piece.isValidForAttack;
         newPiece.name=piece.name;

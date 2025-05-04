@@ -16,6 +16,7 @@ MonoBehaviour:
   Description: Promotes a pawn to a new rank
   sprite: {fileID: 0}
   Cost: 20
+  canBeUsedFromManagement: 1
   Knight: {fileID: 1179102283785704673, guid: 05c3ca02eecb8374fbe7917141dfde5e, type: 3}
   Bishop: {fileID: 7515838367634678274, guid: 158c60feca9afb7409623cc12b48c718, type: 3}
   Queen: {fileID: 4455156182322048620, guid: ca4b3543593258c4fb48acebc9b0221f, type: 3}

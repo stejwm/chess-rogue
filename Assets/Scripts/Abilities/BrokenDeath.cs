@@ -24,9 +24,9 @@ public class BrokenDeath : Ability
     }
     public void BreakDeath(Chessman attacker, Chessman defender){
         if (defender==piece){
+            Game._instance.OnPieceCaptured.Invoke(defender, attacker);
             attacker.DestroyPiece();
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Broken Death</gradient></color>", $" dragged {attacker.name} to hell with them");
-
         }
     }
 

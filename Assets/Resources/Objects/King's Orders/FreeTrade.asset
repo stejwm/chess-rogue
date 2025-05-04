@@ -16,3 +16,4 @@ MonoBehaviour:
   Description: Sets reroll cost to 0, increases additional rerolls cost by +1
   sprite: {fileID: 0}
   Cost: 15
+  canBeUsedFromManagement: 1
