@@ -15,7 +15,6 @@ public enum EnemyType
     Cult,
     Mob,
     RoyalFamily,
-
     //Bosses
     SoulKing
 }
@@ -127,18 +126,7 @@ public class PieceFactory : MonoBehaviour
             pieces.Add(Create(PieceType.Pawn, i, pawnRow, color, team, owner));
         }
 
-        // Add pieces to appropriate player list
-        /* if (color == PieceColor.White)
-            boardManager.playerWhite = pieces;
-        else
-            boardManager.playerBlack = pieces; */
-
         return pieces;
-        // Add starting positions
-        /* foreach (GameObject piece in pieces)
-        {
-            boardManager.AddStartingPosition(piece);
-        } */
     }
 
     public List<GameObject> CreateRookArmy(Player owner, PieceColor color, Team team)
@@ -166,18 +154,7 @@ public class PieceFactory : MonoBehaviour
             pieces.Add(Create(PieceType.Rook,  i, pawnRow, color, team, owner));
         }
 
-        // Add pieces to appropriate player list
-        /* if (color == PieceColor.White)
-            boardManager.playerWhite = pieces;
-        else
-            boardManager.playerBlack = pieces; */
-
         return pieces;
-        // Add starting positions
-        /* foreach (GameObject piece in pieces)
-        {
-            boardManager.AddStartingPosition(piece);
-        } */
     }
     public List<GameObject> CreateThievesGuild(Player owner, PieceColor color, Team team)
     {

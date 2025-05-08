@@ -172,12 +172,14 @@ public class ShopManager : MonoBehaviour
 
             GameObject obj = Instantiate(Game._instance.card, localPosition, Quaternion.identity);
             obj.GetComponent<Card>().ability = abilities[i];
+            
 
             if(obj.GetComponent<Card>().ability.rarity >0){
                 obj.GetComponent<SpriteRenderer>().material = holoMaterial;
             }
             
             cards.Add(obj);
+
 
             if (Game._instance.state == ScreenState.ShopScreen)
                 obj.GetComponent<Card>().ShowPrice();

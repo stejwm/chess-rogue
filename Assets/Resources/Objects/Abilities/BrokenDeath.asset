@@ -16,4 +16,4 @@ MonoBehaviour:
   description: Decimates attacker when captured
   sprite: {fileID: 0}
   Cost: 5
-  rarity: 2
+  rarity: 3

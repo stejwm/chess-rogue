@@ -9,6 +9,7 @@ public enum Rarity
     Common,
     Uncommon,
     Rare,
+    Hidden,
 }
 public abstract class Ability : ScriptableObject
 {   
