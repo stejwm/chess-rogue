@@ -210,7 +210,7 @@ public class MapManager : MonoBehaviour
         }
 
         // Create additional nodes for Shop and Encounter
-        NodeType[] additionalNodeTypes = { NodeType.Shop, NodeType.Encounter };
+        NodeType[] additionalNodeTypes = { NodeType.Encounter };
         foreach (NodeType nodeType in additionalNodeTypes)
         {
             // Create one node for the first path
@@ -376,7 +376,7 @@ public class MapManager : MonoBehaviour
         }
         foreach (var nodeData in mapNodeData)
         {   
-            Debug.Log("MapNodeData COunt: " + mapNodeData.Count);
+            Debug.Log("MapNodeData Count: " + mapNodeData.Count);
             connectedNodes.Clear();
             foreach (string nodeName in nodeData.connectedNodes)
             {

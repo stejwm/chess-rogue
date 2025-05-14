@@ -20,7 +20,7 @@ public abstract class Ability : ScriptableObject
     public Rarity rarity;
 
     public virtual void Apply(Chessman piece){
-        piece.releaseCost+= (int)(rarity + 1);
+        //piece.releaseCost+= (int)(rarity + 1);
         piece.abilities.Add(this);
         Game._instance.OnAbilityAdded.Invoke(piece, this);
     }

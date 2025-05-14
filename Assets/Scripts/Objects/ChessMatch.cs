@@ -19,12 +19,13 @@ public class ChessMatch
     public bool AvengingStrikeOverride = false;
     public bool SwiftOverride = false;
     
-    public int reward = 40;
+    int turnReward = 30;
+    public int reward;
 
     public bool AvengerActive = false;
 
     public bool isSetUpPhase = true;
-    //[SerializeField] private GameObject tilePrefab;
+    public int turns = 0;
 
 
     public ChessMatch(Player white, Player black)
@@ -63,7 +64,7 @@ public class ChessMatch
     }
 
     public void StartMatch(){
-        reward= (Game._instance.level*5)+20;
+        reward= 4;
         Debug.Log("Match Starting");
         KingsOrderManager._instance.Setup();
         white.CreateMoveCommandDictionary();
@@ -223,8 +224,7 @@ public class ChessMatch
             currentPlayerColor = PieceColor.White;
             //currentPlayer=white;
             SetWhiteTurn();
-            if(reward>0)
-                reward-=2;
+            turns++;
         }
     }
 
@@ -278,6 +278,7 @@ public class ChessMatch
         Game._instance.toggleAllPieceColliders(true);
         BoardManager._instance.toggleTileColliders(false);
         white.playerCoins+=reward;
+        white.playerCoins+=(turnReward/turns);
         Game._instance.EndMatch();
     }
     public GameObject[,] GetPositions()
