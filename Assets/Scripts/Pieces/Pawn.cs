@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Pawn : Chessman
 {
-        public void Start(){
-        Activate();
+    protected override void Awake()
+    {
         moveProfile = new PawnMovement();
         type = PieceType.Pawn;
+        
+        base.Awake();
+    }
+
+    public void Start()
+    {
+        Activate();
     }
 
     public override List<BoardPosition> GetValidMoves() => moveProfile.GetValidMoves(this);

@@ -1,0 +1,51 @@
+{
+    "DefaultWhite": {
+        "checkpoints": [
+            {
+                "steps": 25,
+                "file_path": "results\\DefaultBoardStatus\\DefaultWhite\\DefaultWhite-25.onnx",
+                "reward": -0.15000003576278687,
+                "creation_time": 1749141720.6262217,
+                "auxillary_file_paths": [
+                    "results\\DefaultBoardStatus\\DefaultWhite\\DefaultWhite-25.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 25,
+            "file_path": "results\\DefaultBoardStatus\\DefaultWhite.onnx",
+            "reward": -0.15000003576278687,
+            "creation_time": 1749141720.6262217,
+            "auxillary_file_paths": [
+                "results\\DefaultBoardStatus\\DefaultWhite\\DefaultWhite-25.pt"
+            ]
+        }
+    },
+    "DefaultBlack": {
+        "checkpoints": [
+            {
+                "steps": 25,
+                "file_path": "results\\DefaultBoardStatus\\DefaultBlack\\DefaultBlack-25.onnx",
+                "reward": 1.2600001096725464,
+                "creation_time": 1749141720.6931367,
+                "auxillary_file_paths": [
+                    "results\\DefaultBoardStatus\\DefaultBlack\\DefaultBlack-25.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 25,
+            "file_path": "results\\DefaultBoardStatus\\DefaultBlack.onnx",
+            "reward": 1.2600001096725464,
+            "creation_time": 1749141720.6931367,
+            "auxillary_file_paths": [
+                "results\\DefaultBoardStatus\\DefaultBlack\\DefaultBlack-25.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

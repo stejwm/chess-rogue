@@ -443,14 +443,24 @@ public class Game : MonoBehaviour
         // Select random save file
         string selectedSave = saveFiles[Random.Range(0, saveFiles.Count)];
         Debug.Log($"Selected save file: {Path.GetFileName(selectedSave)}");
-        var quickSaveReader = QuickSaveReader.Create(Path.GetFileName(selectedSave).Replace(".json", ""));
         
-        PlayerData player;
-        quickSaveReader.TryRead<PlayerData>("Player", out player);
-        quickSaveReader.TryRead<int>("Level", out level);
+        try
+        {
+            var quickSaveReader = QuickSaveReader.Create(Path.GetFileName(selectedSave).Replace(".json", ""));
+            PlayerData player;
+            quickSaveReader.TryRead<PlayerData>("Player", out player);
+            quickSaveReader.TryRead<int>("Level", out level);
+            
+            hero.playerBlood=player.blood;
+            hero.playerCoins=player.coins;
+            return PieceFactory._instance.LoadPieces(player.pieces);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to load save file: {e.Message}");
+            return PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
+        }
         
-        hero.playerBlood=player.blood;
-        hero.playerCoins=player.coins;
-        return PieceFactory._instance.LoadPieces(player.pieces);
+        
     }
 }

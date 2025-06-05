@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class ChessMatch
 {
@@ -26,14 +28,16 @@ public class ChessMatch
 
     public bool isSetUpPhase = true;
     public int turns = 0;
+    public float boardState = 0f;
+    public float previousState = 0f;
 
 
     public ChessMatch(Player white, Player black)
     {
         //ResetPieces();
-        this.white=white;
-        this.black=black;
-        
+        this.white = white;
+        this.black = black;
+
     }
 
     public ChessMatch(Player white)
@@ -63,18 +67,20 @@ public class ChessMatch
         yield return null;
     }
 
-    public void StartMatch(){
-        reward= 4;
+    public void StartMatch()
+    {
+        reward = 4;
         Debug.Log("Match Starting");
         KingsOrderManager._instance.Setup();
         white.CreateMoveCommandDictionary();
         black.CreateMoveCommandDictionary();
-        isSetUpPhase=false;
+        isSetUpPhase = false;
         Game._instance.toggleAllPieceColliders(false);
         BoardManager._instance.toggleTileColliders(true);
         UpdateBoard();
         SetWhiteTurn();
         Game._instance.OnChessMatchStart.Invoke();
+        previousState = CalculateBoardState();
     }
     private void DestroyTiles()
     {
@@ -129,31 +135,39 @@ public class ChessMatch
         
     }
 
-    public float CalculateBoardState(Player player)
+    public float CalculateBoardState()
     {
         int boardState = 0;
         int mod = 1;
+        bool blackLost = true;
+        bool whiteLost = true;
         foreach (GameObject piece in positions)
         {
             if (piece != null)
             {
+
                 Chessman cm = piece.GetComponent<Chessman>();
                 if (cm != null)
                 {
-                    if (cm.color == player.color)
+                    if (cm.type == PieceType.King && cm.color == PieceColor.White)
+                        whiteLost = false;
+                    if (cm.type == PieceType.King && cm.color == PieceColor.Black)
+                        blackLost = false;
+                    if (cm.color == PieceColor.Black)
                     {
-                        mod = 1;
+                        mod = -1;
                     }
                     else
                     {
-                        mod = -1;
+                        mod = 1;
                     }
                     boardState += mod * cm.CalculateAttack();
                     boardState += mod * cm.CalculateDefense();
                     boardState += mod * cm.CalculateSupport();
                     boardState += mod * cm.abilities.Count;
 
-                    boardState += mod * cm.GetValidMoves().Count;
+                    cm.SetValidMoves();
+                    boardState += mod * cm.validMoves.Count; // Count valid moves
 
                     var supportMoves = cm.GetValidSupportMoves();
                     boardState += mod * supportMoves.Count;
@@ -173,7 +187,21 @@ public class ChessMatch
                 }
             }
         }
-        return boardState / 100f; // Normalize the score to a range of -1 to 1
+        Debug.Log("Current State: " + (boardState / 100f));
+        Debug.Log("Previous State: " + previousState);
+        Debug.Log($"State Change: {((boardState / 100f) - previousState)}");
+        float delta =((boardState / 100f) - previousState); // Normalize the score to a range of -1 to 1
+        previousState = boardState / 100f; // Update the previous state for the next calculation
+        if (whiteLost)
+        {
+            delta = -1f; // White lost
+            
+        }
+        else if (blackLost)
+        {
+            delta = 1f; // Black lost
+        }
+        return delta;
     }
 
     public void ResetPieces()

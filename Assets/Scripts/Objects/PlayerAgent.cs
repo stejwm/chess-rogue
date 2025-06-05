@@ -28,16 +28,11 @@ public class PlayerAgent : Agent
 
     public void StartUp(){
         Debug.Log("Starting up agent");
-        Game._instance.OnGameEnd.AddListener(GameEnd);
-        
-        
-        
 
     }
 
     public void ShutDown(){
         moveCommands.Clear();
-        Game._instance.OnGameEnd.RemoveListener(GameEnd);
     }
     public void CreateMoveCommandDictionary(){
         GenerateMoveCommandDictionary(color==PieceColor.White);
@@ -83,7 +78,6 @@ public class PlayerAgent : Agent
                 }
             }
         }
-        previousState = Game._instance.currentMatch.CalculateBoardState(player);
 
     }
     public MoveCommand GetMoveCommandFromIndex(int index)
@@ -103,16 +97,6 @@ public class PlayerAgent : Agent
         //Debug.Log("branch 0: "+selectedMoveCommandIndex);
         MoveCommand selectedMoveCommand = GetMoveCommandFromIndex(selectedMoveCommandIndex);
 
-        // Add position-based reward before executing the move
-        float positionReward = GetPositionReward(selectedMoveCommand.piece, 
-                                               selectedMoveCommand.x, 
-                                               selectedMoveCommand.y);
-        AddReward(positionReward);
-
-        float currentPotential = CalculateBoardPotential();
-        AddReward(currentPotential);
-        
-        previousPotential = currentPotential;
 
         moveHistory.Add(selectedMoveCommand);
         if (moveHistory.Count > MaxRepetitions)
@@ -121,44 +105,35 @@ public class PlayerAgent : Agent
         // Check if the last few moves form a back-and-forth pattern
         if (IsRepeatingPattern())
         {
-            GameEnd(PieceColor.None);
+            AddReward(-1);
+            EndEpisode();
+            StartCoroutine(ReloadScene());
         }
 
         Debug.Log("Action Recieved attempting to execute move from " + BoardPosition.ConvertToChessNotation(selectedMoveCommand.piece.xBoard, selectedMoveCommand.piece.yBoard) + " to " + BoardPosition.ConvertToChessNotation(selectedMoveCommand.x, selectedMoveCommand.y));
         Game._instance.currentMatch.ExecuteTurn(selectedMoveCommand.piece, selectedMoveCommand.x, selectedMoveCommand.y);
-        float currentState = Game._instance.currentMatch.CalculateBoardState(selectedMoveCommand.piece.owner);
-        Debug.Log("Current State: " + currentState);
-        Debug.Log($"State Change: {currentState - previousState}");
-        AddReward( currentState - previousState);
-        previousState = currentState;
+
+
+        var stateChange = Game._instance.currentMatch.CalculateBoardState();
+        if (color == PieceColor.White)
+        {
+            AddReward(stateChange);
+            Debug.Log("Reward for White: " + stateChange);
+        }
+        else
+        {
+            AddReward(-stateChange);
+            Debug.Log("Reward for Black: " + -stateChange);
+        }
+            
+        if (stateChange == 1f || stateChange == -1f)
+            {
+                EndEpisode();
+                StartCoroutine(ReloadScene());
+            }
         
     }
 
-    private float CalculateBoardPotential()
-    {
-        float potential = 0f;
-        foreach (GameObject pieceObj in pieces)
-        {
-            Chessman piece = pieceObj.GetComponent<Chessman>();
-            if (piece.color == color)
-            {
-                // Base piece value
-                //potential += GetPieceReward(piece);
-                
-                if(IsThreateningKing(piece, piece.xBoard, piece.yBoard)){
-                    potential += 0.5f; // Bonus for attacking the opponent's king
-                }
-                if(IsAttacking(piece, piece.xBoard, piece.yBoard)){
-                    potential += 0.7f; // Bonus for attacking
-                }
-                // Safety value - how many attackers vs defenders
-                int attackers = CountThreateningPieces(piece, piece.xBoard, piece.yBoard);
-                int defenders = CountSupportingPieces(piece, piece.xBoard, piece.yBoard);
-                potential += (defenders - attackers) * 0.1f;
-            }
-        }
-        return potential;
-    }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
@@ -288,25 +263,6 @@ public class PlayerAgent : Agent
         return abilitiesObservation;
     }
 
-    public void GameEnd(PieceColor color){
-        if(this.color==color){
-            AddReward(10f);
-            Debug.Log(color+"Won ! Recieved 1 reward");
-            if (!Game._instance.endEpisode){
-                Game._instance.endEpisode = true;
-                EndEpisode();
-                StartCoroutine(ReloadScene());
-            }
-        }
-        else{
-            AddReward(-10f);
-            if (!Game._instance.endEpisode){
-                Game._instance.endEpisode = true;
-            }
-            Debug.Log(this.color+"Lost ! Recieved -1 reward");
-        }
-        
-    }
     private IEnumerator ReloadScene()
     {
         yield return null; // Allow EndEpisode to complete
