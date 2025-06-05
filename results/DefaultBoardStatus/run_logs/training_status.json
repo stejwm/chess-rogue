@@ -2,44 +2,53 @@
     "DefaultWhite": {
         "checkpoints": [
             {
-                "steps": 25,
-                "file_path": "results\\DefaultBoardStatus\\DefaultWhite\\DefaultWhite-25.onnx",
-                "reward": -0.15000003576278687,
-                "creation_time": 1749141720.6262217,
+                "steps": 22418,
+                "file_path": "results\\DefaultBoardStatus\\DefaultWhite\\DefaultWhite-22418.onnx",
+                "reward": -5.509999860164731,
+                "creation_time": 1749147701.9049194,
                 "auxillary_file_paths": [
-                    "results\\DefaultBoardStatus\\DefaultWhite\\DefaultWhite-25.pt"
+                    "results\\DefaultBoardStatus\\DefaultWhite\\DefaultWhite-22418.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 25,
+            "steps": 22418,
             "file_path": "results\\DefaultBoardStatus\\DefaultWhite.onnx",
-            "reward": -0.15000003576278687,
-            "creation_time": 1749141720.6262217,
+            "reward": -5.509999860164731,
+            "creation_time": 1749147701.9049194,
             "auxillary_file_paths": [
-                "results\\DefaultBoardStatus\\DefaultWhite\\DefaultWhite-25.pt"
+                "results\\DefaultBoardStatus\\DefaultWhite\\DefaultWhite-22418.pt"
             ]
         }
     },
     "DefaultBlack": {
         "checkpoints": [
             {
-                "steps": 25,
-                "file_path": "results\\DefaultBoardStatus\\DefaultBlack\\DefaultBlack-25.onnx",
-                "reward": 1.2600001096725464,
-                "creation_time": 1749141720.6931367,
+                "steps": 21746,
+                "file_path": "results\\DefaultBoardStatus\\DefaultBlack\\DefaultBlack-21746.onnx",
+                "reward": -1.4726663472751775,
+                "creation_time": 1749147701.9862394,
                 "auxillary_file_paths": [
-                    "results\\DefaultBoardStatus\\DefaultBlack\\DefaultBlack-25.pt"
+                    "results\\DefaultBoardStatus\\DefaultBlack\\DefaultBlack-21746.pt"
+                ]
+            },
+            {
+                "steps": 21761,
+                "file_path": "results\\DefaultBoardStatus\\DefaultBlack\\DefaultBlack-21761.onnx",
+                "reward": 10.820003509521484,
+                "creation_time": 1749147954.0517514,
+                "auxillary_file_paths": [
+                    "results\\DefaultBoardStatus\\DefaultBlack\\DefaultBlack-21761.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 25,
+            "steps": 21761,
             "file_path": "results\\DefaultBoardStatus\\DefaultBlack.onnx",
-            "reward": 1.2600001096725464,
-            "creation_time": 1749141720.6931367,
+            "reward": 10.820003509521484,
+            "creation_time": 1749147954.0517514,
             "auxillary_file_paths": [
-                "results\\DefaultBoardStatus\\DefaultBlack\\DefaultBlack-25.pt"
+                "results\\DefaultBoardStatus\\DefaultBlack\\DefaultBlack-21761.pt"
             ]
         }
     },
