@@ -109,6 +109,17 @@ public abstract class Player: MonoBehaviour
         return highestCapturer;
     }
 
+    public virtual void SetSelectedPiece(Chessman piece){
+         
+    }
+    public virtual void SetSelectedDestination(BoardPosition position){
+        
+    }
+
+    public virtual void RequestDecision(){
+    
+    }
+
     public virtual Chessman GetHighestCaptured(){
         Chessman highest = null;
         int maxValue = -1;

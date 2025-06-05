@@ -7,9 +7,9 @@ using UnityEngine;
 public class AttackOnlyMovement : MovementProfile
 {
     MovementProfile oldProfile;
-    Game game;
     public AttackOnlyMovement(MovementProfile old){
         oldProfile=old;
+        Debug.Log($"Creating AttackOnlyMovement profile old profile null: {oldProfile==null}");
     }
     public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
         List<BoardPosition> moves = new List<BoardPosition>();

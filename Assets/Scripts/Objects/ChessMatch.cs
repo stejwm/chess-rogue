@@ -84,6 +84,7 @@ public class ChessMatch
     public void CheckInventory(){
         UpdateBoard();
         if (Game._instance.hero.inventoryPieces.Count>0){
+            isSetUpPhase=true;
             KingsOrderManager._instance.Hide();
             int i = 0;
             foreach (var obj in Game._instance.hero.inventoryPieces)

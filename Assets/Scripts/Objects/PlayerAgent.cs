@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 
 public class PlayerAgent : Agent
@@ -102,6 +103,17 @@ public class PlayerAgent : Agent
         //Debug.Log("branch 0: "+selectedMoveCommandIndex);
         MoveCommand selectedMoveCommand = GetMoveCommandFromIndex(selectedMoveCommandIndex);
 
+        // Add position-based reward before executing the move
+        float positionReward = GetPositionReward(selectedMoveCommand.piece, 
+                                               selectedMoveCommand.x, 
+                                               selectedMoveCommand.y);
+        AddReward(positionReward);
+
+        float currentPotential = CalculateBoardPotential();
+        AddReward(currentPotential);
+        
+        previousPotential = currentPotential;
+
         moveHistory.Add(selectedMoveCommand);
         if (moveHistory.Count > MaxRepetitions)
             moveHistory.RemoveAt(0);
@@ -120,6 +132,32 @@ public class PlayerAgent : Agent
         AddReward( currentState - previousState);
         previousState = currentState;
         
+    }
+
+    private float CalculateBoardPotential()
+    {
+        float potential = 0f;
+        foreach (GameObject pieceObj in pieces)
+        {
+            Chessman piece = pieceObj.GetComponent<Chessman>();
+            if (piece.color == color)
+            {
+                // Base piece value
+                //potential += GetPieceReward(piece);
+                
+                if(IsThreateningKing(piece, piece.xBoard, piece.yBoard)){
+                    potential += 0.5f; // Bonus for attacking the opponent's king
+                }
+                if(IsAttacking(piece, piece.xBoard, piece.yBoard)){
+                    potential += 0.7f; // Bonus for attacking
+                }
+                // Safety value - how many attackers vs defenders
+                int attackers = CountThreateningPieces(piece, piece.xBoard, piece.yBoard);
+                int defenders = CountSupportingPieces(piece, piece.xBoard, piece.yBoard);
+                potential += (defenders - attackers) * 0.1f;
+            }
+        }
+        return potential;
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -182,7 +220,11 @@ public class PlayerAgent : Agent
             }
             
         }
-        //Debug.Log("Found all valid move commands. Count = "+validIndexes.Count);
+        if (validIndexes.Count == 0)
+        {
+            Debug.LogWarning("No valid moves found! Allowing all actions to prevent UnityAgentsException.");
+            return;  // Exit early, do NOT mask any actions
+        }
         foreach(int index in moveCommands.Keys)
         {
             if(!validIndexes.Contains(index))
@@ -203,7 +245,7 @@ public class PlayerAgent : Agent
                     sensor.AddObservation(piece.xBoard);
                     sensor.AddObservation(piece.yBoard);
 
-                    sensor.AddOneHotObservation((int)piece.type, 7);
+                    sensor.AddOneHotObservation((int)piece.type, 8);
                     sensor.AddOneHotObservation((int)piece.color, 3);
 
                     // Add other stats
@@ -218,7 +260,7 @@ public class PlayerAgent : Agent
                 else{
                     sensor.AddObservation(-1);
                     sensor.AddObservation(-1);
-                    sensor.AddOneHotObservation((int)PieceType.None, 7); // 7 categories
+                    sensor.AddOneHotObservation((int)PieceType.None, 8); // 7 categories
                     sensor.AddOneHotObservation((int)PieceColor.None, 3);
                     sensor.AddObservation(-1);
                     sensor.AddObservation(-1);
@@ -248,16 +290,16 @@ public class PlayerAgent : Agent
 
     public void GameEnd(PieceColor color){
         if(this.color==color){
-            SetReward(10f);
+            AddReward(10f);
             Debug.Log(color+"Won ! Recieved 1 reward");
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
-                //EndEpisode();
-                //StartCoroutine(ReloadScene());
+                EndEpisode();
+                StartCoroutine(ReloadScene());
             }
         }
         else{
-            SetReward(-10f);
+            AddReward(-10f);
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
             }

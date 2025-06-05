@@ -18,11 +18,12 @@ public class BloodThirstAbility : Ability
     public override void Apply(Chessman piece)
     {
         startingProfile=piece.moveProfile;
+        Debug.Log($"Setting bloodthirst original profile, profile =null? {piece.moveProfile==null}");
         this.piece = piece;
         piece.info += " " + abilityName;
 
         Game._instance.OnPieceCaptured.AddListener(Thirst);
-        Game._instance.OnAttack.AddListener(Decimate);
+        Game._instance.OnAttackStart.AddListener(Decimate);
         Game._instance.OnPieceBounced.AddListener(EndThirst);
         Game._instance.OnGameEnd.AddListener(ResetMoveProfile);
         base.Apply(piece);
@@ -32,16 +33,17 @@ public class BloodThirstAbility : Ability
     public override void Remove(Chessman piece)
     {
         Game._instance.OnPieceCaptured.RemoveListener(Thirst);
-        Game._instance.OnAttack.RemoveListener(Decimate);
+        Game._instance.OnAttackStart.RemoveListener(Decimate);
         Game._instance.OnPieceBounced.RemoveListener(EndThirst);
         Game._instance.OnGameEnd.RemoveListener(ResetMoveProfile);
     }
 
-    public void Decimate(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
-        if(attacker==piece && isAttacking){
+    public void Decimate(Chessman attacker, Chessman defender){
+        if(attacker==piece){
             Game._instance.isDecimating=true;
-            if(!thirsting)
+            if(!thirsting){
                 startingProfile=piece.moveProfile;
+            }
         }
     }
     public void Thirst(Chessman attacker, Chessman defender)
@@ -95,7 +97,13 @@ public class BloodThirstAbility : Ability
             piece.moveProfile = new BetrayerMovement(new AttackOnlyMovement(startingProfile));
         }
         else
+        {
+            if(startingProfile==null){
+                Debug.Log("Starting profile is null, setting to default");
+                startingProfile = piece.moveProfile;
+            }
             piece.moveProfile = new AttackOnlyMovement(startingProfile);
+        }
         pieces = piece.owner.pieces;
         foreach (GameObject pieceObject in pieces)
         {
@@ -130,5 +138,6 @@ public class BloodThirstAbility : Ability
 
     private void ResetMoveProfile(PieceColor color){
         piece.moveProfile=startingProfile;
+        thirsting=false;
     }
 }

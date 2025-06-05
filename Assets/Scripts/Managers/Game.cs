@@ -14,6 +14,7 @@ using Rand= System.Random;
 using MoreMountains.Feedbacks;
 using System.Text.RegularExpressions;
 using CI.QuickSave;
+using System.IO;
 
 
 public enum ScreenState
@@ -107,13 +108,9 @@ public class Game : MonoBehaviour
     public void Start()
     {
         NameDatabase.LoadNames();
-        if(SceneLoadManager.LoadPreviousSave){
-            LoadGame();
-        }
-        else{
-            BoardManager._instance.CreateBoard();
-            LetsBegin();
-        }
+        BoardManager._instance.CreateBoard();
+        //LetsBegin();
+        AIStart();
         
     }
 
@@ -124,6 +121,18 @@ public class Game : MonoBehaviour
         hero.pieces = PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
         hero.Initialize();
         opponent.Initialize();
+        NewMatch(hero, opponent);
+    }
+
+    public void AIStart(){
+        heroColor=PieceColor.White;
+        EnemyType enemyType = (EnemyType)Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length);
+        opponent.pieces = PieceFactory._instance.CreateOpponentPieces(opponent, enemyType);
+        hero.pieces = CreateRandomHeroPiecesFromSave();
+        hero.Initialize();
+        opponent.Initialize();
+        opponent.LevelUp(level, enemyType);
+        
         NewMatch(hero, opponent);
     }
 
@@ -419,5 +428,29 @@ public class Game : MonoBehaviour
         {
             piece.GetComponent<Chessman>().highlightedParticles.Stop();
         }
+    }
+
+    public List<GameObject> CreateRandomHeroPiecesFromSave(){
+        // Get all save files matching pattern
+        QuickSaveGlobalSettings.StorageLocation = "C:\\Users\\steve\\chess-rogue\\chess-rogue\\Saves";
+        var saveFiles = Directory.GetFiles("C:\\Users\\steve\\chess-rogue\\chess-rogue\\Saves")
+            .ToList();
+
+        Debug.Log($"Found {saveFiles.Count} save files.");
+        if (saveFiles.Count == 0)
+            return PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
+
+        // Select random save file
+        string selectedSave = saveFiles[Random.Range(0, saveFiles.Count)];
+        Debug.Log($"Selected save file: {Path.GetFileName(selectedSave)}");
+        var quickSaveReader = QuickSaveReader.Create(Path.GetFileName(selectedSave).Replace(".json", ""));
+        
+        PlayerData player;
+        quickSaveReader.TryRead<PlayerData>("Player", out player);
+        quickSaveReader.TryRead<int>("Level", out level);
+        
+        hero.playerBlood=player.blood;
+        hero.playerCoins=player.coins;
+        return PieceFactory._instance.LoadPieces(player.pieces);
     }
 }

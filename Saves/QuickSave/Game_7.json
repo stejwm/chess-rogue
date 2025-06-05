@@ -1,0 +1,580 @@
+{
+    "Player": {
+        "coins": 38,
+        "blood": 4,
+        "pieces": [
+            {
+                "name": "Hademan",
+                "uniqueId": -1,
+                "pieceType": 3,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 0,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Monk",
+                        "abilityDescription": "Gain +1 to random stat every turn piece does not move, loses bonuses after first move is complete"
+                    }
+                ]
+            },
+            {
+                "name": "Alinhilde",
+                "uniqueId": -2,
+                "pieceType": 1,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 1,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Soul Bond",
+                        "abilityDescription": "+5 to all stat for each other soul bonded piece, when any soul bonded piece is captured, all are decimated"
+                    }
+                ]
+            },
+            {
+                "name": "Radax",
+                "uniqueId": -3,
+                "pieceType": 2,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 2,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Vampire",
+                        "abilityDescription": "+1 to all stats on dark squares, -1 to all stats on light squares. transfer ability when attacking"
+                    }
+                ]
+            },
+            {
+                "name": "Aclefrid",
+                "uniqueId": -4,
+                "pieceType": 4,
+                "attack": 1,
+                "defense": 1,
+                "support": 5,
+                "color": 0,
+                "posX": 3,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Spectral Stride",
+                        "abilityDescription": "Can move through it's own pieces according to it's typical movement"
+                    }
+                ]
+            },
+            {
+                "name": "George",
+                "uniqueId": -5,
+                "pieceType": 5,
+                "attack": 1,
+                "defense": 2,
+                "support": 1,
+                "color": 0,
+                "posX": 4,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Strength Reaper",
+                        "abilityDescription": "Reduces attacks by half when defending"
+                    }
+                ]
+            },
+            {
+                "name": "Engelfrid",
+                "uniqueId": -6,
+                "pieceType": 1,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 6,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Pickpocket",
+                        "abilityDescription": "+3 coins when bounced"
+                    }
+                ]
+            },
+            {
+                "name": "Fredegis",
+                "uniqueId": -7,
+                "pieceType": 0,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 0,
+                "posY": 1,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Otmar",
+                "uniqueId": -8,
+                "pieceType": 0,
+                "attack": 1,
+                "defense": 2,
+                "support": 1,
+                "color": 0,
+                "posX": 2,
+                "posY": 1,
+                "abilities": [
+                    {
+                        "abilityName": "Radiating Death",
+                        "abilityDescription": "Reduce all attackers stats by -1 when captured"
+                    }
+                ]
+            },
+            {
+                "name": "Mermeta",
+                "uniqueId": -9,
+                "pieceType": 0,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 7,
+                "posY": 1,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Osanna",
+                "uniqueId": -10,
+                "pieceType": 2,
+                "attack": 2,
+                "defense": 2,
+                "support": 1,
+                "color": 0,
+                "posX": 5,
+                "posY": 0,
+                "abilities": [
+                    {
+                        "abilityName": "Assassin",
+                        "abilityDescription": "+5 attack if attacking with no support"
+                    },
+                    {
+                        "abilityName": "Longshot",
+                        "abilityDescription": "+5 attack if attacking from 4 or more squares away"
+                    }
+                ]
+            },
+            {
+                "name": "April",
+                "uniqueId": -11,
+                "pieceType": 3,
+                "attack": 1,
+                "defense": 3,
+                "support": 1,
+                "color": 0,
+                "posX": 4,
+                "posY": 1,
+                "abilities": [
+                    {
+                        "abilityName": "Support Breaker",
+                        "abilityDescription": "When bounced, reduce all supporting enemies support by -1"
+                    }
+                ]
+            },
+            {
+                "name": "Snorri",
+                "uniqueId": -12,
+                "pieceType": 0,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 1,
+                "posY": 1,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Ursilda",
+                "uniqueId": -13,
+                "pieceType": 4,
+                "attack": 6,
+                "defense": 3,
+                "support": 1,
+                "color": 0,
+                "posX": 3,
+                "posY": 1,
+                "abilities": [
+                    {
+                        "abilityName": "Increasing Strike",
+                        "abilityDescription": "Permanently gain +1 to attack for every capture"
+                    }
+                ]
+            },
+            {
+                "name": "Wolfhelm",
+                "uniqueId": -14,
+                "pieceType": 0,
+                "attack": 1,
+                "defense": 2,
+                "support": 1,
+                "color": 0,
+                "posX": 5,
+                "posY": 1,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Hainfroy",
+                "uniqueId": -15,
+                "pieceType": 7,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 6,
+                "posY": 1,
+                "abilities": [
+                ]
+            },
+            {
+                "name": "Latino",
+                "uniqueId": -16,
+                "pieceType": 4,
+                "attack": 1,
+                "defense": 1,
+                "support": 1,
+                "color": 0,
+                "posX": 7,
+                "posY": 0,
+                "abilities": [
+                ]
+            }
+        ]
+    },
+    "State": 3,
+    "Level": 4,
+    "MapNodes": [
+        {
+            "nodeName": "Start Node",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 0",
+                "Node 10"
+            ],
+            "nodeType": 0,
+            "enemyType": 0,
+            "encounterType": 0,
+            "localX": -835.92,
+            "localY": 0.0
+        },
+        {
+            "nodeName": "Node 0",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 1"
+            ],
+            "nodeType": 0,
+            "enemyType": 5,
+            "encounterType": 0,
+            "localX": -680.399963,
+            "localY": 170.438751
+        },
+        {
+            "nodeName": "Node 1",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 2",
+                "Node 12"
+            ],
+            "nodeType": 0,
+            "enemyType": 1,
+            "encounterType": 0,
+            "localX": -524.879944,
+            "localY": 63.1312332
+        },
+        {
+            "nodeName": "Node 2",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 3",
+                "EncounterFirst Path Node2"
+            ],
+            "nodeType": 0,
+            "enemyType": 6,
+            "encounterType": 0,
+            "localX": -369.36,
+            "localY": -41.46289
+        },
+        {
+            "nodeName": "Node 3",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 4"
+            ],
+            "nodeType": 0,
+            "enemyType": 2,
+            "encounterType": 0,
+            "localX": -213.84,
+            "localY": -146.327545
+        },
+        {
+            "nodeName": "Node 4",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 5"
+            ],
+            "nodeType": 0,
+            "enemyType": 2,
+            "encounterType": 0,
+            "localX": -58.3199959,
+            "localY": -217.756409
+        },
+        {
+            "nodeName": "Node 5",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 6"
+            ],
+            "nodeType": 0,
+            "enemyType": 0,
+            "encounterType": 0,
+            "localX": 97.2,
+            "localY": 19.18782
+        },
+        {
+            "nodeName": "Node 6",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 7"
+            ],
+            "nodeType": 0,
+            "enemyType": 1,
+            "encounterType": 0,
+            "localX": 252.719986,
+            "localY": -83.52216
+        },
+        {
+            "nodeName": "Node 7",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 8",
+                "Node 18"
+            ],
+            "nodeType": 0,
+            "enemyType": 1,
+            "encounterType": 0,
+            "localX": 408.23996,
+            "localY": -146.589508
+        },
+        {
+            "nodeName": "Node 8",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 9",
+                "Node 19"
+            ],
+            "nodeType": 0,
+            "enemyType": 5,
+            "encounterType": 0,
+            "localX": 563.759949,
+            "localY": 39.0867538
+        },
+        {
+            "nodeName": "Node 9",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Final Node",
+                "ShopFirst Path Node9"
+            ],
+            "nodeType": 0,
+            "enemyType": 1,
+            "encounterType": 0,
+            "localX": 719.279968,
+            "localY": 117.003235
+        },
+        {
+            "nodeName": "Node 10",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 11"
+            ],
+            "nodeType": 0,
+            "enemyType": 3,
+            "encounterType": 0,
+            "localX": -680.399963,
+            "localY": -239.32811
+        },
+        {
+            "nodeName": "Node 11",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 12"
+            ],
+            "nodeType": 0,
+            "enemyType": 6,
+            "encounterType": 0,
+            "localX": -524.879944,
+            "localY": -246.111435
+        },
+        {
+            "nodeName": "Node 12",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 13",
+                "EncounterSecond Path Node2"
+            ],
+            "nodeType": 0,
+            "enemyType": 1,
+            "encounterType": 0,
+            "localX": -369.36,
+            "localY": 252.936569
+        },
+        {
+            "nodeName": "Node 13",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 14"
+            ],
+            "nodeType": 0,
+            "enemyType": 3,
+            "encounterType": 0,
+            "localX": -213.84,
+            "localY": 183.34639
+        },
+        {
+            "nodeName": "Node 14",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 15"
+            ],
+            "nodeType": 0,
+            "enemyType": 5,
+            "encounterType": 0,
+            "localX": -58.3199959,
+            "localY": 211.349533
+        },
+        {
+            "nodeName": "Node 15",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 16"
+            ],
+            "nodeType": 0,
+            "enemyType": 0,
+            "encounterType": 0,
+            "localX": 97.2,
+            "localY": 236.713791
+        },
+        {
+            "nodeName": "Node 16",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 17",
+                "ShopSecond Path Node6"
+            ],
+            "nodeType": 0,
+            "enemyType": 5,
+            "encounterType": 0,
+            "localX": 252.719986,
+            "localY": 163.846832
+        },
+        {
+            "nodeName": "Node 17",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 18"
+            ],
+            "nodeType": 0,
+            "enemyType": 3,
+            "encounterType": 0,
+            "localX": 408.23996,
+            "localY": 29.8597832
+        },
+        {
+            "nodeName": "Node 18",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Node 19",
+                "Node 9"
+            ],
+            "nodeType": 0,
+            "enemyType": 5,
+            "encounterType": 0,
+            "localX": 563.759949,
+            "localY": -212.143387
+        },
+        {
+            "nodeName": "Node 19",
+            "isCompleted": false,
+            "connectedNodes": [
+                "Final Node"
+            ],
+            "nodeType": 0,
+            "enemyType": 6,
+            "encounterType": 0,
+            "localX": 719.279968,
+            "localY": -101.096817
+        },
+        {
+            "nodeName": "ShopFirst Path Node9",
+            "isCompleted": false,
+            "connectedNodes": [
+            ],
+            "nodeType": 1,
+            "enemyType": 0,
+            "encounterType": 0,
+            "localX": 709.7456,
+            "localY": 289.803284
+        },
+        {
+            "nodeName": "ShopSecond Path Node6",
+            "isCompleted": false,
+            "connectedNodes": [
+            ],
+            "nodeType": 1,
+            "enemyType": 0,
+            "encounterType": 0,
+            "localX": 232.557053,
+            "localY": 336.646881
+        },
+        {
+            "nodeName": "EncounterFirst Path Node2",
+            "isCompleted": false,
+            "connectedNodes": [
+            ],
+            "nodeType": 2,
+            "enemyType": 0,
+            "encounterType": 0,
+            "localX": -387.029663,
+            "localY": -214.262909
+        },
+        {
+            "nodeName": "EncounterSecond Path Node2",
+            "isCompleted": false,
+            "connectedNodes": [
+            ],
+            "nodeType": 2,
+            "enemyType": 0,
+            "encounterType": 1,
+            "localX": -380.841431,
+            "localY": 425.7366
+        },
+        {
+            "nodeName": "Final Node",
+            "isCompleted": false,
+            "connectedNodes": [
+            ],
+            "nodeType": 3,
+            "enemyType": 7,
+            "encounterType": 0,
+            "localX": 874.7999,
+            "localY": 0.0
+        }
+    ]
+}

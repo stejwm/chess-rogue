@@ -172,10 +172,16 @@ public class Tile : MonoBehaviour
             }
             else if(piece!=null && piece.owner!=Game._instance.hero && piece == StatBoxManager._instance.enemyLockedPiece){
                 StatBoxManager._instance.UnlockEnemyView();
-                //piece.validMoves.Clear();
+                piece.validMoves.Clear();
+                BoardManager._instance.ClearTiles();
+                piece.DisplayValidMoves();
             }
             else if(piece!=null && piece.owner!=Game._instance.hero){
                 StatBoxManager._instance.UnlockEnemyView();
+                piece.validMoves.Clear();
+                BoardManager._instance.ClearTiles();
+                piece.validMoves=piece.GetValidMoves();
+                piece.DisplayValidMoves();
                 StatBoxManager._instance.SetAndShowEnemyStats(piece);
                 StatBoxManager._instance.LockEnemyView(piece);
             }
@@ -198,13 +204,13 @@ public class Tile : MonoBehaviour
             BoardManager._instance.PlacePiece(reference, this);
         }
         else if(reference!=null && reference.isValidForAttack){
-            /* Game._instance.currentMatch.currentPlayer.SetSelectedPiece(reference);
+            Game._instance.currentMatch.currentPlayer.SetSelectedPiece(reference);
             Game._instance.currentMatch.currentPlayer.SetSelectedDestination(new BoardPosition(position.x, position.y));
-            Game._instance.currentMatch.currentPlayer.RequestDecision(); */
+            Game._instance.currentMatch.currentPlayer.RequestDecision();
             Debug.Log("On Move true");
             StatBoxManager._instance.UnlockView(true);
             //reference.flames.Stop();
-            Game._instance.currentMatch.ExecuteTurn(reference, position.x, position.y);
+            //Game._instance.currentMatch.ExecuteTurn(reference, position.x, position.y);
         }
         
     }
