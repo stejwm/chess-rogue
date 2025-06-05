@@ -1,0 +1,51 @@
+{
+    "DefaultWhite": {
+        "checkpoints": [
+            {
+                "steps": 1097,
+                "file_path": "results\\ppo\\DefaultWhite\\DefaultWhite-1097.onnx",
+                "reward": 0.9814153155859779,
+                "creation_time": 1749163881.7316828,
+                "auxillary_file_paths": [
+                    "results\\ppo\\DefaultWhite\\DefaultWhite-1097.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1097,
+            "file_path": "results\\ppo\\DefaultWhite.onnx",
+            "reward": 0.9814153155859779,
+            "creation_time": 1749163881.7316828,
+            "auxillary_file_paths": [
+                "results\\ppo\\DefaultWhite\\DefaultWhite-1097.pt"
+            ]
+        }
+    },
+    "DefaultBlack": {
+        "checkpoints": [
+            {
+                "steps": 1087,
+                "file_path": "results\\ppo\\DefaultBlack\\DefaultBlack-1087.onnx",
+                "reward": 1.4807428121566772,
+                "creation_time": 1749163881.9582949,
+                "auxillary_file_paths": [
+                    "results\\ppo\\DefaultBlack\\DefaultBlack-1087.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1087,
+            "file_path": "results\\ppo\\DefaultBlack.onnx",
+            "reward": 1.4807428121566772,
+            "creation_time": 1749163881.9582949,
+            "auxillary_file_paths": [
+                "results\\ppo\\DefaultBlack\\DefaultBlack-1087.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.29.0",
+        "torch_version": "1.7.0+cu110"
+    }
+}

@@ -20,6 +20,7 @@ public class ChessMatch
     public bool BloodThirstOverride = false;
     public bool AvengingStrikeOverride = false;
     public bool SwiftOverride = false;
+    public bool isGameOver = false;
     
     int turnReward = 30;
     public int reward;
@@ -137,71 +138,91 @@ public class ChessMatch
 
     public float CalculateBoardState()
     {
-        int boardState = 0;
+        float boardState = 0;
         int mod = 1;
         bool blackLost = true;
         bool whiteLost = true;
+
         foreach (GameObject piece in positions)
         {
             if (piece != null)
             {
-
                 Chessman cm = piece.GetComponent<Chessman>();
                 if (cm != null)
                 {
+                    // Check if kings are still alive
                     if (cm.type == PieceType.King && cm.color == PieceColor.White)
                         whiteLost = false;
                     if (cm.type == PieceType.King && cm.color == PieceColor.Black)
                         blackLost = false;
-                    if (cm.color == PieceColor.Black)
-                    {
-                        mod = -1;
-                    }
-                    else
-                    {
-                        mod = 1;
-                    }
+
+                    // Adjust modifier based on piece color
+                    mod = (cm.color == PieceColor.Black) ? -1 : 1;
+
+                    // Simplify state calculation to focus on key metrics
                     boardState += mod * cm.CalculateAttack();
                     boardState += mod * cm.CalculateDefense();
                     boardState += mod * cm.CalculateSupport();
-                    boardState += mod * cm.abilities.Count;
 
-                    cm.SetValidMoves();
-                    boardState += mod * cm.validMoves.Count; // Count valid moves
+                    // Include valid moves as a metric for mobility
+                    
+                    boardState += mod * cm.DisplayValidMoves().Count;
 
-                    var supportMoves = cm.GetValidSupportMoves();
-                    boardState += mod * supportMoves.Count;
-                    foreach (var move in supportMoves)
-                    {
-                        var connectedPiece = GetPieceAtPosition(move.x, move.y);
-                        if (connectedPiece != null && connectedPiece.GetComponent<Chessman>().color == cm.color)
-                        {
-                            boardState += mod * cm.CalculateSupport(); // Count support moves that support own pieces
-                        }
-                        if (connectedPiece != null && connectedPiece.GetComponent<Chessman>().color != cm.color && connectedPiece.GetComponent<Chessman>().type == PieceType.King)
-                        {
-                            boardState += mod * Math.Max(cm.CalculateAttack(), cm.CalculateSupport());
-                        }
-
-                    }
+                    // Add support and attack metrics at the piece's position
+                    boardState += mod * GetSupportAtPosition(cm.xBoard, cm.yBoard, cm.color);
+                    boardState -= mod * GetAttackAtPosition(cm.xBoard, cm.yBoard, cm.color);
                 }
             }
         }
-        Debug.Log("Current State: " + (boardState / 100f));
-        Debug.Log("Previous State: " + previousState);
-        Debug.Log($"State Change: {((boardState / 100f) - previousState)}");
-        float delta =((boardState / 100f) - previousState); // Normalize the score to a range of -1 to 1
-        previousState = boardState / 100f; // Update the previous state for the next calculation
-        if (whiteLost)
+        BoardManager._instance.ClearTiles();
+
+        // Normalize the score to a range of -1 to 1 using tanh
+        boardState = NormalizeWithTanh(boardState, 100f);
+
+        // Log the board state for debugging
+        //Debug.Log("Current State: " + boardState);
+
+        // Return the calculated board state
+        return boardState;
+    }
+
+    public int GetSupportAtPosition(int x, int y, PieceColor color)
+    {
+        int supportCount = 0;
+        foreach (GameObject piece in positions)
         {
-            delta = -1f; // White lost
-            
+            if (piece != null)
+            {
+                Chessman cm = piece.GetComponent<Chessman>();
+                cm.SetValidMoves();
+                if (cm != null && cm.color == color && cm.validMoves.Contains(new BoardPosition(x, y)))
+                {
+                    supportCount += cm.CalculateSupport();
+                }
+            }
         }
-        else if (blackLost)
+        return supportCount;
+    }
+    public int GetAttackAtPosition(int x, int y, PieceColor color)
+    {
+        int attackCount = 0;
+        foreach (GameObject piece in positions)
         {
-            delta = 1f; // Black lost
+            if (piece != null)
+            {
+                Chessman cm = piece.GetComponent<Chessman>();
+                cm.SetValidMoves();
+                if (cm != null && cm.color != color && cm.validMoves.Contains(new BoardPosition(x, y)))
+                {
+                    attackCount += Mathf.Max(cm.CalculateAttack(), cm.CalculateSupport()); // Use max to consider both attack and support
+                }
+            }
         }
-        return delta;
+        return attackCount;
+    }
+    float NormalizeWithTanh(float rawScore, float scaleFactor)
+    {
+        return (float)Math.Tanh(rawScore / scaleFactor);
     }
 
     public void ResetPieces()
@@ -347,6 +368,8 @@ public class ChessMatch
         currentPlayerColor=player;
     }
     public void EndGame(){
+        Debug.Log("Game Over");
+        isGameOver = true;
         BattlePanel._instance.HideResults();   
         BattlePanel._instance.HideStats();
         LogManager._instance.ClearLogs();
@@ -357,6 +380,8 @@ public class ChessMatch
         white.playerCoins+=reward;
         white.playerCoins+=(turnReward/turns);
         Game._instance.EndMatch();
+        //Training
+        
     }
     public GameObject[,] GetPositions()
     {

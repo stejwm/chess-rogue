@@ -46,6 +46,13 @@ public class MoveManager: MonoBehaviour
             _instance=this;
         }
     }
+
+    public void GetMoveResults(Chessman piece, int x, int y){
+        //int support = GetSupportOnSquare(piece, x, y);
+        //int defense = GetDefenseOnSquare(piece, x, y);
+
+
+    }
     public void HandleMove(Chessman piece, int x, int y){
         Chessman movingPiece = piece;
         
@@ -73,8 +80,7 @@ public class MoveManager: MonoBehaviour
             movingPiece.flames.Stop();
             match.NextTurn();
             Game._instance.isInMenu=false;
-            
-
+            Debug.Log("Move completed, clearing tiles and resetting variables");
         }
     }
     public void HandleAttack(Chessman movingPiece, Chessman attackedPiece){
@@ -183,6 +189,7 @@ public class MoveManager: MonoBehaviour
         attackingUnits.Clear();
         attackingSupporters.Clear();
         defensiveSupporters.Clear();
+        Debug.Log("Move completed, clearing tiles and resetting variables");
         Game._instance.isInMenu=false;
         pitch=1f;
         movingPiece.flames.Stop();
@@ -303,9 +310,11 @@ public class MoveManager: MonoBehaviour
                 Game._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);    
             }
             if (gameOver){
+                Debug.Log("setting game over first");
+                Game._instance.currentMatch.isGameOver=true;
                 Game._instance.OnGameEnd.Invoke(movingPiece.color);
                 movingPiece.flames.Stop();
-                match.EndGame();
+                //match.EndGame();
                 gameOver=false;
                 yield break;
             }

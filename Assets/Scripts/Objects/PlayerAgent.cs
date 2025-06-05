@@ -23,7 +23,6 @@ public class PlayerAgent : Agent
     public Chessman selectedPiece;
     public BoardPosition destinationPosition;
     float previousState = 0f;
-
     private const int MaxRepetitions = 8;
 
     public void StartUp(){
@@ -70,9 +69,8 @@ public class PlayerAgent : Agent
                         MoveCommand moveCommand = new MoveCommand(piece, adjustedDestX, adjustedDestY);
                         moveCommands.Add(index, moveCommand);
                         if (piece != null)
-                            reverseMoveCommands.Add(moveCommand, index);
-
-
+                            if(!reverseMoveCommands.ContainsKey(moveCommand))
+                                reverseMoveCommands.Add(moveCommand, index);
                         index++; // Increment the index
                     }
                 }
@@ -90,13 +88,13 @@ public class PlayerAgent : Agent
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-
+        previousState = Game._instance.currentMatch.CalculateBoardState();
+        Debug.Log("Current Board State: " + previousState);
         var selectedMoveCommandIndex = actions.DiscreteActions[0];
         if (selectedMoveCommandIndex == -1)
             return;
-        //Debug.Log("branch 0: "+selectedMoveCommandIndex);
-        MoveCommand selectedMoveCommand = GetMoveCommandFromIndex(selectedMoveCommandIndex);
 
+        MoveCommand selectedMoveCommand = GetMoveCommandFromIndex(selectedMoveCommandIndex);
 
         moveHistory.Add(selectedMoveCommand);
         if (moveHistory.Count > MaxRepetitions)
@@ -110,11 +108,19 @@ public class PlayerAgent : Agent
             StartCoroutine(ReloadScene());
         }
 
-        Debug.Log("Action Recieved attempting to execute move from " + BoardPosition.ConvertToChessNotation(selectedMoveCommand.piece.xBoard, selectedMoveCommand.piece.yBoard) + " to " + BoardPosition.ConvertToChessNotation(selectedMoveCommand.x, selectedMoveCommand.y));
+        Debug.Log("Action Received attempting to execute move from " + BoardPosition.ConvertToChessNotation(selectedMoveCommand.piece.xBoard, selectedMoveCommand.piece.yBoard) + " to " + BoardPosition.ConvertToChessNotation(selectedMoveCommand.x, selectedMoveCommand.y));
         Game._instance.currentMatch.ExecuteTurn(selectedMoveCommand.piece, selectedMoveCommand.x, selectedMoveCommand.y);
 
+        // Wait for MoveManager to finish processing the move
+        StartCoroutine(WaitForMoveCompletion(selectedMoveCommand));
+    }
 
-        var stateChange = Game._instance.currentMatch.CalculateBoardState();
+    private IEnumerator WaitForMoveCompletion(MoveCommand selectedMoveCommand)
+    {
+        yield return new WaitUntil(() => !MoveManager._instance.gameOver && !Game._instance.isInMenu);
+        var currentState = Game._instance.currentMatch.CalculateBoardState();
+        var stateChange = currentState - previousState;
+        Debug.Log("State after move :" + currentState);
         if (color == PieceColor.White)
         {
             AddReward(stateChange);
@@ -125,15 +131,16 @@ public class PlayerAgent : Agent
             AddReward(-stateChange);
             Debug.Log("Reward for Black: " + -stateChange);
         }
-            
-        if (stateChange == 1f || stateChange == -1f)
-            {
-                EndEpisode();
-                StartCoroutine(ReloadScene());
-            }
-        
-    }
 
+        Debug.Log($"Checking if game is over isGameOver: {Game._instance.currentMatch.isGameOver}");
+        if (Game._instance.currentMatch.isGameOver == true)
+        {
+            Debug.Log("GG");
+            AddReward(1f);
+            EndEpisode();
+            StartCoroutine(ReloadScene());
+        }
+    }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
