@@ -12,6 +12,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerAgent : Agent
 {
+    public Player player;
     public List<GameObject> pieces;
     public PieceColor color;
     //public ChessMatch currentMatch;
@@ -20,15 +21,13 @@ public class PlayerAgent : Agent
     private List<MoveCommand> moveHistory = new List<MoveCommand>();
     public Chessman selectedPiece;
     public BoardPosition destinationPosition;
+    float previousState = 0f;
 
     private const int MaxRepetitions = 8;
 
     public void StartUp(){
         Debug.Log("Starting up agent");
         Game._instance.OnGameEnd.AddListener(GameEnd);
-        Game._instance.OnPieceCaptured.AddListener(CaptureReward);
-        Game._instance.OnPieceBounced.AddListener(BounceReward);
-        Game._instance.OnSupportAdded.AddListener(SupportReward);
         
         
         
@@ -38,14 +37,11 @@ public class PlayerAgent : Agent
     public void ShutDown(){
         moveCommands.Clear();
         Game._instance.OnGameEnd.RemoveListener(GameEnd);
-        Game._instance.OnPieceCaptured.RemoveListener(CaptureReward);
-        Game._instance.OnPieceBounced.RemoveListener(BounceReward);
-        Game._instance.OnSupportAdded.RemoveListener(SupportReward);
     }
     public void CreateMoveCommandDictionary(){
         GenerateMoveCommandDictionary(color==PieceColor.White);
     }
-    
+
     public void GenerateMoveCommandDictionary(bool isPlayerWhite)
     {
         Debug.Log("Generating Move Commands");
@@ -70,22 +66,23 @@ public class PlayerAgent : Agent
                 {
                     for (int destRelativeY = 0; destRelativeY < 8; destRelativeY++)
                     {
-                         // Adjust destination coordinates for perspective
+                        // Adjust destination coordinates for perspective
                         int adjustedDestX = isPlayerWhite ? destRelativeX : 7 - destRelativeX;
                         int adjustedDestY = isPlayerWhite ? destRelativeY : 7 - destRelativeY;
 
                         // Create a MoveCommand for this piece and destination
                         MoveCommand moveCommand = new MoveCommand(piece, adjustedDestX, adjustedDestY);
                         moveCommands.Add(index, moveCommand);
-                        if(piece!=null)
+                        if (piece != null)
                             reverseMoveCommands.Add(moveCommand, index);
-                        
+
 
                         index++; // Increment the index
                     }
                 }
             }
         }
+        previousState = Game._instance.currentMatch.CalculateBoardState(player);
 
     }
     public MoveCommand GetMoveCommandFromIndex(int index)
@@ -98,9 +95,9 @@ public class PlayerAgent : Agent
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-        
+
         var selectedMoveCommandIndex = actions.DiscreteActions[0];
-        if(selectedMoveCommandIndex == -1)
+        if (selectedMoveCommandIndex == -1)
             return;
         //Debug.Log("branch 0: "+selectedMoveCommandIndex);
         MoveCommand selectedMoveCommand = GetMoveCommandFromIndex(selectedMoveCommandIndex);
@@ -115,8 +112,13 @@ public class PlayerAgent : Agent
             GameEnd(PieceColor.None);
         }
 
-        Debug.Log("Action Recieved attempting to execute move from "+ BoardPosition.ConvertToChessNotation(selectedMoveCommand.piece.xBoard, selectedMoveCommand.piece.yBoard)+" to "+BoardPosition.ConvertToChessNotation(selectedMoveCommand.x, selectedMoveCommand.y));
+        Debug.Log("Action Recieved attempting to execute move from " + BoardPosition.ConvertToChessNotation(selectedMoveCommand.piece.xBoard, selectedMoveCommand.piece.yBoard) + " to " + BoardPosition.ConvertToChessNotation(selectedMoveCommand.x, selectedMoveCommand.y));
         Game._instance.currentMatch.ExecuteTurn(selectedMoveCommand.piece, selectedMoveCommand.x, selectedMoveCommand.y);
+        float currentState = Game._instance.currentMatch.CalculateBoardState(selectedMoveCommand.piece.owner);
+        Debug.Log("Current State: " + currentState);
+        Debug.Log($"State Change: {currentState - previousState}");
+        AddReward( currentState - previousState);
+        previousState = currentState;
         
     }
 
@@ -258,8 +260,6 @@ public class PlayerAgent : Agent
             SetReward(-10f);
             if (!Game._instance.endEpisode){
                 Game._instance.endEpisode = true;
-                //EndEpisode();
-                //StartCoroutine(ReloadScene());
             }
             Debug.Log(this.color+"Lost ! Recieved -1 reward");
         }
@@ -271,59 +271,6 @@ public class PlayerAgent : Agent
         SceneManager.LoadScene(1);
     }
 
-    public void CaptureReward(Chessman attacker, Chessman defender){
-        if(attacker.color==color){
-            SetReward(GetPieceReward(defender));
-        }
-        else{
-            SetReward(-GetPieceReward(defender));
-        }
-    }
 
-    public float GetPieceReward(Chessman piece){
-        float reward = 0f;
-        switch (piece.type)
-            {
-                case PieceType.Queen:
-                    reward+= 0.9f;
-                    break;
-                case PieceType.Knight:
-                    reward+= 0.3f;
-                    break;               
-                case PieceType.Bishop:
-                    reward+= 0.3f;              
-                    break;
-                case PieceType.King:
-                    reward+= 1f;            
-                    break;
-                case PieceType.Rook:
-                    reward+= 0.5f;               
-                    break;
-                case PieceType.Pawn:
-                    reward+= 0.1f;                
-                    break;
-                default:
-                    break;
-            
-            }
-        reward += piece.attack * 0.1f;
-        reward+= piece.defense * 0.1f;
-        reward+= piece.support * 0.1f;
-        reward+= piece.releaseCost * 0.1f;
 
-        return reward;
-    }
-
-    public void SupportReward(Chessman supporter, Chessman attacker, Chessman defender){
-        if(supporter.color==color)
-            SetReward(0.05f);
-    }
-
-    public void BounceReward(Chessman attacker, Chessman defender, bool didBounceReduce){
-        if(attacker.color==color && didBounceReduce)
-            SetReward(0.05f);
-        else{
-            SetReward(-0.05f);
-        }
-    }
 }

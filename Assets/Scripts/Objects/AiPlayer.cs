@@ -17,6 +17,7 @@ public class AIPlayer : Player
     {
         agent.pieces=pieces;
         agent.StartUp();
+        agent.player = this;
         openPositions = new List<BoardPosition>();
     }
 

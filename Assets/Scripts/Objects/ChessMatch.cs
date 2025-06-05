@@ -128,36 +128,84 @@ public class ChessMatch
         
     }
 
-    public void ResetPieces(){
+    public float CalculateBoardState(Player player)
+    {
+        int boardState = 0;
+        int mod = 1;
+        foreach (GameObject piece in positions)
+        {
+            if (piece != null)
+            {
+                Chessman cm = piece.GetComponent<Chessman>();
+                if (cm != null)
+                {
+                    if (cm.color == player.color)
+                    {
+                        mod = 1;
+                    }
+                    else
+                    {
+                        mod = -1;
+                    }
+                    boardState += mod * cm.CalculateAttack();
+                    boardState += mod * cm.CalculateDefense();
+                    boardState += mod * cm.CalculateSupport();
+                    boardState += mod * cm.abilities.Count;
+
+                    boardState += mod * cm.GetValidMoves().Count;
+
+                    var supportMoves = cm.GetValidSupportMoves();
+                    boardState += mod * supportMoves.Count;
+                    foreach (var move in supportMoves)
+                    {
+                        var connectedPiece = GetPieceAtPosition(move.x, move.y);
+                        if (connectedPiece != null && connectedPiece.GetComponent<Chessman>().color == cm.color)
+                        {
+                            boardState += mod * cm.CalculateSupport(); // Count support moves that support own pieces
+                        }
+                        if (connectedPiece != null && connectedPiece.GetComponent<Chessman>().color != cm.color && connectedPiece.GetComponent<Chessman>().type == PieceType.King)
+                        {
+                            boardState += mod * Math.Max(cm.CalculateAttack(), cm.CalculateSupport());
+                        }
+
+                    }
+                }
+            }
+        }
+        return boardState / 100f; // Normalize the score to a range of -1 to 1
+    }
+
+    public void ResetPieces()
+    {
         foreach (GameObject piece in white.pieces)
         {
             piece.SetActive(true);
             piece.GetComponent<Chessman>().ResetBonuses();
             Chessman cm = piece.GetComponent<Chessman>();
-            MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);
+            MovePiece(cm, cm.startingPosition.x, cm.startingPosition.y);
         }
         foreach (GameObject piece in black.pieces)
         {
             piece.SetActive(true);
             piece.GetComponent<Chessman>().ResetBonuses();
             Chessman cm = piece.GetComponent<Chessman>();
-            MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);        
+            MovePiece(cm, cm.startingPosition.x, cm.startingPosition.y);
         }
         foreach (GameObject piece in white.capturedPieces)
         {
             piece.SetActive(true);
             piece.GetComponent<Chessman>().ResetBonuses();
             Chessman cm = piece.GetComponent<Chessman>();
-            MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);        
+            MovePiece(cm, cm.startingPosition.x, cm.startingPosition.y);
         }
         foreach (GameObject piece in black.capturedPieces)
         {
             piece.SetActive(true);
             piece.GetComponent<Chessman>().ResetBonuses();
             Chessman cm = piece.GetComponent<Chessman>();
-            MovePiece(cm, cm.startingPosition.x,cm.startingPosition.y);        
+            MovePiece(cm, cm.startingPosition.x, cm.startingPosition.y);
         }
-        
+
     }
 
     public void SetWhiteTurn(){
