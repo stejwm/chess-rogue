@@ -432,8 +432,8 @@ public class Game : MonoBehaviour
 
     public List<GameObject> CreateRandomHeroPiecesFromSave(){
         // Get all save files matching pattern
-        QuickSaveGlobalSettings.StorageLocation = "C:\\Users\\steve\\Documents\\GitHub\\chess-rogue\\Saves";
-        var saveFiles = Directory.GetFiles("C:\\Users\\steve\\Documents\\GitHub\\chess-rogue\\Saves")
+        QuickSaveGlobalSettings.StorageLocation = "C:\\Users\\steve\\chess-rogue\\chess-rogue\\Saves";
+        var saveFiles = Directory.GetFiles("C:\\Users\\steve\\chess-rogue\\chess-rogue\\Saves")
             .ToList();
 
         Debug.Log($"Found {saveFiles.Count} save files.");
