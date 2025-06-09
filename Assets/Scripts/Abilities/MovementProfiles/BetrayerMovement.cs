@@ -7,7 +7,7 @@ using UnityEngine;
 public class BetrayerMovement : MovementProfile
 {
     MovementProfile oldProfile;
-    Game game;
+    GameManager game;
     public BetrayerMovement(MovementProfile old){
         oldProfile=old;
     }

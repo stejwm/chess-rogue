@@ -19,12 +19,12 @@ public class SoulBond : Ability
         }
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceCaptured.AddListener(Capture);
-        Game._instance.OnSoulBonded.AddListener(Increase);
-        Game._instance.OnMove.AddListener(Decimate);
-        Game._instance.OnAttackEnd.AddListener(RemoveDecimate);
+        GameManager._instance.OnPieceCaptured.AddListener(Capture);
+        GameManager._instance.OnSoulBonded.AddListener(Increase);
+        GameManager._instance.OnMove.AddListener(Decimate);
+        GameManager._instance.OnAttackEnd.AddListener(RemoveDecimate);
         piece.owner.soulBondedPieces++;
-        Game._instance.OnSoulBonded.Invoke();
+        GameManager._instance.OnSoulBonded.Invoke();
         
         
         base.Apply(piece);
@@ -32,12 +32,12 @@ public class SoulBond : Ability
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceCaptured.RemoveListener(Capture); 
-        Game._instance.OnSoulBonded.RemoveListener(Increase); 
-        Game._instance.OnMove.RemoveListener(Decimate);
-        Game._instance.OnAttackEnd.RemoveListener(RemoveDecimate);
+        GameManager._instance.OnPieceCaptured.RemoveListener(Capture); 
+        GameManager._instance.OnSoulBonded.RemoveListener(Increase); 
+        GameManager._instance.OnMove.RemoveListener(Decimate);
+        GameManager._instance.OnAttackEnd.RemoveListener(RemoveDecimate);
         piece.owner.soulBondedPieces--;
-        Game._instance.OnSoulBonded.Invoke();
+        GameManager._instance.OnSoulBonded.Invoke();
 
     }
 
@@ -45,10 +45,10 @@ public class SoulBond : Ability
     {
         if (piece != null)
         {
-            Game._instance.OnPieceCaptured.RemoveListener(Capture); 
-            Game._instance.OnSoulBonded.RemoveListener(Increase); 
-            Game._instance.OnMove.RemoveListener(Decimate);
-            Game._instance.OnAttackEnd.RemoveListener(RemoveDecimate);
+            GameManager._instance.OnPieceCaptured.RemoveListener(Capture); 
+            GameManager._instance.OnSoulBonded.RemoveListener(Increase); 
+            GameManager._instance.OnMove.RemoveListener(Decimate);
+            GameManager._instance.OnAttackEnd.RemoveListener(RemoveDecimate);
         }
     }
 
@@ -64,21 +64,21 @@ public class SoulBond : Ability
     }
     public void Decimate(Chessman attacker, BoardPosition position){
         if(position.x== piece.xBoard && position.y== piece.yBoard)
-            Game._instance.isDecimating=true;
+            GameManager._instance.isDecimating=true;
     }
     public void RemoveDecimate(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if(defender==piece || piece==null)
-            Game._instance.isDecimating=false;
+            GameManager._instance.isDecimating=false;
     }
     public void Capture(Chessman attacker, Chessman defender){
         if(defender.color == piece.color && defender!=piece && defender.abilities.OfType<SoulBond>().FirstOrDefault()!=null && !defender.hexed && !piece.hexed){
             if(piece.type==PieceType.King){
                 MoveManager._instance.gameOver=true;
             }
-            Game._instance.OnPieceCaptured.RemoveListener(Capture); 
-            Game._instance.currentMatch.SetPositionEmpty(piece.xBoard, piece.yBoard);
-            BoardManager._instance.GetTileAt(piece.xBoard, piece.yBoard).SetBloodTile();
-            Game._instance.OnPieceCaptured.Invoke(attacker, piece);
+            GameManager._instance.OnPieceCaptured.RemoveListener(Capture); 
+            GameManager._instance.currentMatch.SetPositionEmpty(piece.xBoard, piece.yBoard);
+            Board._instance.GetTileAt(piece.xBoard, piece.yBoard).SetBloodTile();
+            GameManager._instance.OnPieceCaptured.Invoke(attacker, piece);
             piece.owner.pieces.Remove(piece.gameObject);
             CoroutineRunner.instance.StartCoroutine(PieceFactory._instance.DelayedDestroy(piece));
             

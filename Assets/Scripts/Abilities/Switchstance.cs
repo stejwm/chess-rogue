@@ -14,13 +14,13 @@ public class Switchstance : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnAttackEnd.AddListener(Swap);
+        GameManager._instance.OnAttackEnd.AddListener(Swap);
         base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnAttackEnd.RemoveListener(Swap); 
+        GameManager._instance.OnAttackEnd.RemoveListener(Swap); 
 
     }
     public void Swap(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){

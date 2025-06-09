@@ -13,13 +13,13 @@ public class IronResolve : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceBounced.AddListener(AddBonus);
+        GameManager._instance.OnPieceBounced.AddListener(AddBonus);
         base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceBounced.RemoveListener(AddBonus); 
+        GameManager._instance.OnPieceBounced.RemoveListener(AddBonus); 
 
     }
     public void AddBonus(Chessman attacker, Chessman defender, bool isBounceReduced){

@@ -49,30 +49,30 @@ public class MoveManager: MonoBehaviour
     public void HandleMove(Chessman piece, int x, int y){
         Chessman movingPiece = piece;
         
-        Game._instance.OnMove.Invoke(piece, new BoardPosition(x,y));
+        GameManager._instance.OnMove.Invoke(piece, new BoardPosition(x,y));
         //Set the Chesspiece's original location to be empty
         match.SetPositionEmpty(movingPiece.xBoard, movingPiece.yBoard);
-        Game._instance.audioSource.clip = Game._instance.move; 
+        GameManager._instance.audioSource.clip = GameManager._instance.move; 
 
-        Game._instance.audioSource.pitch=pitch;
-        Game._instance.audioSource.Play();
+        GameManager._instance.audioSource.pitch=pitch;
+        GameManager._instance.audioSource.Play();
         pitch+=.1f;
         
         if (match.GetPieceAtPosition(x,y)!=null)
         {
             Chessman attackedPiece = match.GetPieceAtPosition(x,y).GetComponent<Chessman>();
             LogManager._instance.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"> {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} attacks <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(x, y)}");
-            Game._instance.OnAttackStart.Invoke(movingPiece, attackedPiece);
+            GameManager._instance.OnAttackStart.Invoke(movingPiece, attackedPiece);
             HandleAttack(movingPiece, attackedPiece);
         }
         else{
             LogManager._instance.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"> "+ BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)+" to "+ BoardPosition.ConvertToChessNotation(x, y));
             match.MovePiece(movingPiece, x,y);
-            Game._instance.OnRawMoveEnd.Invoke(movingPiece, new BoardPosition(x,y));
-            BoardManager._instance.ClearTiles();
+            GameManager._instance.OnRawMoveEnd.Invoke(movingPiece, new BoardPosition(x,y));
+            Board._instance.ClearTiles();
             movingPiece.flames.Stop();
             match.NextTurn();
-            Game._instance.isInMenu=false;
+            GameManager._instance.isInMenu=false;
             
 
         }
@@ -129,16 +129,16 @@ public class MoveManager: MonoBehaviour
                     //piece.showSupportFloatingText();
                     //Debug.Log("Spawned bonus for " + piece.name + " at position " + BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard));
                     LogManager._instance.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\">{BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} <color=green>+{pieceSupport}</color> on {BoardPosition.ConvertToChessNotation(targetedX, targetedY)}");
-                    yield return new WaitForSeconds(Game._instance.waitTime/2);
+                    yield return new WaitForSeconds(GameManager._instance.waitTime/2);
                     supporters.Add(piece);
-                    Game._instance.OnSupportAdded.Invoke(piece, movingPiece, attackedPiece);
+                    GameManager._instance.OnSupportAdded.Invoke(piece, movingPiece, attackedPiece);
                     pitch+=.05f;
                     break;
                 }
             }
         }
-        Game._instance.OnAttack.Invoke(targetPiece, supportPower, isAttacking, new BoardPosition(targetedX, targetedY)); 
-        yield return new WaitForSeconds(Game._instance.waitTime);
+        GameManager._instance.OnAttack.Invoke(targetPiece, supportPower, isAttacking, new BoardPosition(targetedX, targetedY)); 
+        yield return new WaitForSeconds(GameManager._instance.waitTime);
         if(isAttacking){
             baseAttack=targetPiece.CalculateAttack();
             totalAttackPower=baseAttack+supportPower;
@@ -166,8 +166,8 @@ public class MoveManager: MonoBehaviour
         //Move reference chess piece to this position
         if(!movingPiece.canStationarySlash)
             match.MovePiece(movingPiece, targetedX, targetedY);
-        Game._instance.OnAttackEnd.Invoke(movingPiece, attackedPiece, attackSupport, defenseSupport); 
-        BoardManager._instance.ClearTiles();
+        GameManager._instance.OnAttackEnd.Invoke(movingPiece, attackedPiece, attackSupport, defenseSupport); 
+        Board._instance.ClearTiles();
         
         //reset all variables
         targetedX = -1;
@@ -183,7 +183,7 @@ public class MoveManager: MonoBehaviour
         attackingUnits.Clear();
         attackingSupporters.Clear();
         defensiveSupporters.Clear();
-        Game._instance.isInMenu=false;
+        GameManager._instance.isInMenu=false;
         pitch=1f;
         movingPiece.flames.Stop();
 
@@ -193,7 +193,7 @@ public class MoveManager: MonoBehaviour
     }
 
     private IEnumerator CallNextTurn(){
-        yield return new WaitForSeconds(Game._instance.waitTime);
+        yield return new WaitForSeconds(GameManager._instance.waitTime);
         match.NextTurn();
     }
 
@@ -215,19 +215,19 @@ public class MoveManager: MonoBehaviour
             sprite,defendVal.ToString(),defendSupportVal.ToString(),totalDefensePower.ToString(),attackedPiece.name,defendSprite);
             BattlePanel._instance.SetAndShowHeroAttack(attackVal, pitch);
             pitch+=attackVal*.05f;
-            yield return new WaitForSeconds(Game._instance.waitTime/2);
+            yield return new WaitForSeconds(GameManager._instance.waitTime/2);
             BattlePanel._instance.SetAndShowHeroSupport(supportVal,pitch);
             pitch+=supportVal*.05f;
-            yield return new WaitForSeconds(Game._instance.waitTime/2);
+            yield return new WaitForSeconds(GameManager._instance.waitTime/2);
             BattlePanel._instance.SetAndShowHeroTotal(totalAttackPower,pitch);
             
 
-            yield return new WaitForSeconds(Game._instance.waitTime/2);
+            yield return new WaitForSeconds(GameManager._instance.waitTime/2);
             BattlePanel._instance.SetAndShowEnemyAttack(defendVal,pitch);
-            yield return new WaitForSeconds(Game._instance.waitTime/2);
+            yield return new WaitForSeconds(GameManager._instance.waitTime/2);
             pitch+=scale;
             BattlePanel._instance.SetAndShowEnemySupport(defendSupportVal,pitch);
-            yield return new WaitForSeconds(Game._instance.waitTime/2);
+            yield return new WaitForSeconds(GameManager._instance.waitTime/2);
             pitch+=scale;
             BattlePanel._instance.SetAndShowEnemyTotal(totalDefensePower,pitch);
         }
@@ -241,19 +241,19 @@ public class MoveManager: MonoBehaviour
             
             BattlePanel._instance.SetAndShowEnemyAttack(attackVal,pitch);
             pitch+=.05f;
-            yield return new WaitForSeconds(Game._instance.waitTime/2);
+            yield return new WaitForSeconds(GameManager._instance.waitTime/2);
             BattlePanel._instance.SetAndShowEnemySupport(supportVal,pitch);
             pitch+=.05f;
-            yield return new WaitForSeconds(Game._instance.waitTime/2);
+            yield return new WaitForSeconds(GameManager._instance.waitTime/2);
             BattlePanel._instance.SetAndShowEnemyTotal(totalAttackPower,pitch);
-            yield return new WaitForSeconds(Game._instance.waitTime/2);
+            yield return new WaitForSeconds(GameManager._instance.waitTime/2);
 
             
             BattlePanel._instance.SetAndShowHeroAttack(defendVal,pitch);
-            yield return new WaitForSeconds(Game._instance.waitTime/2);
+            yield return new WaitForSeconds(GameManager._instance.waitTime/2);
             pitch+=scale;
             BattlePanel._instance.SetAndShowHeroSupport(defendSupportVal,pitch);
-            yield return new WaitForSeconds(Game._instance.waitTime/2);
+            yield return new WaitForSeconds(GameManager._instance.waitTime/2);
             pitch+=scale;
             BattlePanel._instance.SetAndShowHeroTotal(totalDefensePower,pitch);
             
@@ -262,7 +262,7 @@ public class MoveManager: MonoBehaviour
         }
         
 
-        yield return new WaitForSeconds(Game._instance.waitTime);
+        yield return new WaitForSeconds(GameManager._instance.waitTime);
         if(totalAttackPower>=totalDefensePower){
             attackedPiece.captured++;
             movingPiece.captures++;
@@ -280,17 +280,17 @@ public class MoveManager: MonoBehaviour
             if(match.white.pieces.Contains(attackedPiece.gameObject))
                 match.white.pieces.Remove(attackedPiece.gameObject);
             
-            Game._instance.audioSource.clip = Game._instance.capture; 
-            Game._instance.audioSource.pitch=pitch;
-            if(Game._instance.isDecimating){
+            GameManager._instance.audioSource.clip = GameManager._instance.capture; 
+            GameManager._instance.audioSource.pitch=pitch;
+            if(GameManager._instance.isDecimating){
                 BattlePanel._instance.SetAndShowResults("Decimate!");
                 ResultFeedback.PlayFeedbacks();
                 yield return new WaitForSeconds(ResultFeedback.TotalDuration);
                 //attackedPiece.gameObject.SetActive(false);
-                BoardManager._instance.GetTileAt(targetedX, targetedY).SetBloodTile();
+                Board._instance.GetTileAt(targetedX, targetedY).SetBloodTile();
                 AttackCleanUp(movingPiece, attackedPiece);
-                Game._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);
-                yield return new WaitForSeconds(Game._instance.waitTime);
+                GameManager._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);
+                yield return new WaitForSeconds(GameManager._instance.waitTime);
                 attackedPiece.DestroyPiece();
             }else{
                 BattlePanel._instance.SetAndShowResults("Capture!");
@@ -298,12 +298,12 @@ public class MoveManager: MonoBehaviour
                 yield return new WaitForSeconds(ResultFeedback.TotalDuration);
                 attackedPiece.gameObject.SetActive(false);
                 movingPiece.owner.capturedPieces.Add(attackedPiece.gameObject);
-                BoardManager._instance.GetTileAt(targetedX, targetedY).SetBloodTile();
+                Board._instance.GetTileAt(targetedX, targetedY).SetBloodTile();
                 AttackCleanUp(movingPiece, attackedPiece);
-                Game._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);    
+                GameManager._instance.OnPieceCaptured.Invoke(movingPiece, attackedPiece);    
             }
             if (gameOver){
-                Game._instance.OnGameEnd.Invoke(movingPiece.color);
+                GameManager._instance.OnGameEnd.Invoke(movingPiece.color);
                 movingPiece.flames.Stop();
                 match.EndGame();
                 gameOver=false;
@@ -338,14 +338,14 @@ public class MoveManager: MonoBehaviour
             //Debug.Log("Setting attacked piece Position back to: "+attackingPiece.xBoard+", "+attackedPiece)
             match.MovePiece(attackedPiece, attackedPiece.xBoard, attackedPiece.yBoard);
             //Debug.Log("Setting bounce tone");
-            Game._instance.audioSource.clip = Game._instance.bounce;
-            Game._instance.audioSource.pitch=pitch;
+            GameManager._instance.audioSource.clip = GameManager._instance.bounce;
+            GameManager._instance.audioSource.pitch=pitch;
             //Game._instance.audioSource.Play();
             BattlePanel._instance.SetAndShowResults("Bounce!"); 
             ResultFeedback.PlayFeedbacks();
             yield return new WaitForSeconds(ResultFeedback.TotalDuration);
             AttackCleanUp(movingPiece, attackedPiece);
-            Game._instance.OnPieceBounced.Invoke(movingPiece, attackedPiece, isBounceReduced);
+            GameManager._instance.OnPieceBounced.Invoke(movingPiece, attackedPiece, isBounceReduced);
             
             
             
@@ -354,7 +354,7 @@ public class MoveManager: MonoBehaviour
         
         //Debug.Log("Playing audio");
         
-        yield return new WaitForSeconds(Game._instance.waitTime);
+        yield return new WaitForSeconds(GameManager._instance.waitTime);
         
         BattlePanel._instance.HideResults();   
         BattlePanel._instance.HideStats();

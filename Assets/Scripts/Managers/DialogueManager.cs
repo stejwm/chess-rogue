@@ -58,7 +58,7 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueBox.maxVisibleCharacters = 0;
         currentMessage = message;
-        dialogueBox.text = message.message.Replace("{name}", Game._instance.hero.name);
+        dialogueBox.text = message.message.Replace("{name}", GameManager._instance.hero.name);
         
     }
 
@@ -116,13 +116,13 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         gameObject.SetActive(false);
-        Game._instance.isInMenu = false;
+        GameManager._instance.isInMenu = false;
     }
 
     public void StartDialogue(Dialogue dialogue){
         this.gameObject.SetActive(true);
         ClearOptions();
-        Game._instance.isInMenu=true;
+        GameManager._instance.isInMenu=true;
         speakerSprite.sprite = dialogue.sprite;
         dialogueIndex=0;
         this.dialogue=dialogue;
@@ -131,9 +131,9 @@ public class DialogueManager : MonoBehaviour
 
 
     public void EscapeeTeachings(){
-        if(Game._instance.hero.orders.Count>0){
-            Game._instance.hero.orders.RemoveAt(UnityEngine.Random.Range(0,Game._instance.hero.orders.Count));
-            foreach (var pieceObj in Game._instance.hero.pieces){
+        if(GameManager._instance.hero.orders.Count>0){
+            GameManager._instance.hero.orders.RemoveAt(UnityEngine.Random.Range(0,GameManager._instance.hero.orders.Count));
+            foreach (var pieceObj in GameManager._instance.hero.pieces){
                 var piece = pieceObj.GetComponent<Chessman>();
                 if (piece.type != PieceType.King && piece.type != PieceType.Queen)
                 {
@@ -145,9 +145,9 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void UpgradeAttack(){
-        if(Game._instance.hero.playerCoins>=75){
-            Game._instance.hero.playerCoins-=75;
-            foreach (var pieceObj in Game._instance.hero.pieces){
+        if(GameManager._instance.hero.playerCoins>=75){
+            GameManager._instance.hero.playerCoins-=75;
+            foreach (var pieceObj in GameManager._instance.hero.pieces){
                 var piece = pieceObj.GetComponent<Chessman>();
                 piece.attack++;
             }
@@ -159,8 +159,8 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void UpgradeAttackCost(){
-        Game._instance.hero.playerCoins=0;
-        foreach (var pieceObj in Game._instance.hero.pieces){
+        GameManager._instance.hero.playerCoins=0;
+        foreach (var pieceObj in GameManager._instance.hero.pieces){
             var piece = pieceObj.GetComponent<Chessman>();
             piece.attack++;
         }
@@ -169,7 +169,7 @@ public class DialogueManager : MonoBehaviour
 
     public void DowngradeAttack(){
         
-        foreach (var pieceObj in Game._instance.hero.pieces){
+        foreach (var pieceObj in GameManager._instance.hero.pieces){
             var piece = pieceObj.GetComponent<Chessman>();
             piece.attack--;
         }
@@ -178,8 +178,8 @@ public class DialogueManager : MonoBehaviour
 
     public void DowngradeAttackCost(){
         
-        Game._instance.hero.playerCoins=0;
-        foreach (var pieceObj in Game._instance.hero.pieces){
+        GameManager._instance.hero.playerCoins=0;
+        foreach (var pieceObj in GameManager._instance.hero.pieces){
             var piece = pieceObj.GetComponent<Chessman>();
             piece.attack--;
         }
@@ -187,12 +187,12 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void AddEscapee(){
-        var hero = Game._instance.hero;
+        var hero = GameManager._instance.hero;
         var pieceObj = PieceFactory._instance.CreateAbilityPiece(
-                PieceType.Pawn, "s", -1, -1, PieceColor.White, Team.Hero, hero, Game._instance.AllAbilities[18].Clone());
+                PieceType.Pawn, "s", -1, -1, PieceColor.White, Team.Hero, hero, GameManager._instance.AllAbilities[18].Clone());
         hero.inventoryPieces.Add(pieceObj);
         Chessman piece = pieceObj.GetComponent<Chessman>();
-        piece.LevelUp(Game._instance.level+2);
+        piece.LevelUp(GameManager._instance.level+2);
     }
 
     public void LaunchEncounterDialogue(EncounterType encounterType){

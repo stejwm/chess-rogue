@@ -14,7 +14,7 @@ public class ParalyzingBlow : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceBounced.AddListener(Paralyze);
+        GameManager._instance.OnPieceBounced.AddListener(Paralyze);
         base.Apply(piece);
 
         
@@ -22,7 +22,7 @@ public class ParalyzingBlow : Ability
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceBounced.RemoveListener(Paralyze); 
+        GameManager._instance.OnPieceBounced.RemoveListener(Paralyze); 
 
     }
     public void Paralyze(Chessman attacker, Chessman defender, bool isBounceReduced){

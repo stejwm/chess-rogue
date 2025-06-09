@@ -13,25 +13,25 @@ public class InspiringPresence : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnSupportAdded.AddListener(CheckForResult);
+        GameManager._instance.OnSupportAdded.AddListener(CheckForResult);
         base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnSupportAdded.RemoveListener(CheckForResult); 
+        GameManager._instance.OnSupportAdded.RemoveListener(CheckForResult); 
 
     }
     public void CheckForResult(Chessman supporter, Chessman attacker, Chessman defender){
         if(supporter==piece){
-            Game._instance.OnPieceBounced.AddListener(IsBounce);
-            Game._instance.OnPieceCaptured.AddListener(RemoveListener);
+            GameManager._instance.OnPieceBounced.AddListener(IsBounce);
+            GameManager._instance.OnPieceCaptured.AddListener(RemoveListener);
             Debug.Log("Inspiring Presence Listening for Bounce");
         }
     }
 
     public void RemoveListener(Chessman attacker, Chessman defender){
-        Game._instance.OnPieceBounced.RemoveListener(IsBounce);
+        GameManager._instance.OnPieceBounced.RemoveListener(IsBounce);
     }
     public void IsBounce(Chessman attacker, Chessman defender, bool isBounceReduced){
         if(defender.team==piece.team){
@@ -40,8 +40,8 @@ public class InspiringPresence : Ability
             Debug.Log("Bounced, bonus added");
         }
         Debug.Log("Removing Bounce Listener");
-        Game._instance.OnPieceBounced.RemoveListener(IsBounce);
-        Game._instance.OnPieceCaptured.RemoveListener(RemoveListener);
+        GameManager._instance.OnPieceBounced.RemoveListener(IsBounce);
+        GameManager._instance.OnPieceCaptured.RemoveListener(RemoveListener);
     }
 
 }

@@ -7,21 +7,28 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
-public class Tile : MonoBehaviour
+public class Tile : MonoBehaviour, IPointerClickHandler
 {
-    public BoardPosition position;
+    int x;
+    int y;
     public Sprite lightTileSprite;
     public Sprite darkTileSprite;
 
+    private Chessman currentPiece;
+    private Chessman startingPiece;
     private Chessman reference;
     private bool isValidMove = false;
     private bool isLightTile;
     private int bloodCount=0;
     [SerializeField] private Material bloodMat;
 
+    public Chessman StartingPiece { get => startingPiece; set => startingPiece = value; }
+    public Chessman CurrentPiece { get => currentPiece; set => currentPiece = value; }
+
     private void OnMouseEnter(){
-        Chessman piece = getPiece();
+        Chessman piece = currentPiece;
         if(piece){
             if(piece.team==Team.Hero)
                 StatBoxManager._instance.SetAndShowStats(piece);
@@ -32,36 +39,22 @@ public class Tile : MonoBehaviour
         }
     }
 
-    private void OnMouseExit()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        /* Chessman piece = getPiece();
-        if(piece){
-            if(piece.owner != Game._instance.hero && StatBoxManager._instance.enemyLockedPiece==piece)
-                return;
-            else
-                piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        } */
+        FindObjectOfType<GameInputRouter>().OnClick(gameObject);
     }
 
-    public Chessman getPiece(){
-        GameObject obj =null;
-        if (Game._instance.currentMatch!=null)
-            obj = Game._instance.currentMatch.GetPieceAtPosition(position.x, position.y);
-        if(obj !=null)
-            return obj.GetComponent<Chessman>();
-        else
-            return null;
-    }
-
-    public PieceColor GetColor(){
+    public PieceColor GetColor()
+    {
         if (isLightTile)
             return PieceColor.White;
         else
             return PieceColor.Black;
     }
 
-    public void Initialize(BoardPosition boardPosition){
-        position = boardPosition;
+    public void Initialize(int x, int y){
+        this.x = x;
+        this.y = y;
         SetUIPosition();
     }
 
@@ -78,23 +71,23 @@ public class Tile : MonoBehaviour
     public void SetUIPosition(){
 
 
-        float x = position.x;
-        float y = position.y;
+        float UIx = x;
+        float UIy = y;
 
         //Adjust by variable offset
-        x *= .96f;
-        y *= .96f;
+        UIx *= .96f;
+        UIy *= .96f;
 
         //Add constants (pos 0,0)
-        x += -3.33f;
-        y += -3.33f;
+        UIx += -3.33f;
+        UIy += -3.33f;
         
-        name = $"Tile ({position.x}, {position.y})";
+        name = $"Tile ({x}, {y})";
         //Debug.Log("positions: "+x+","+y);
         //Set actual unity values
-        this.transform.position = new Vector3(x, y, -1.0f);
+        this.transform.position = new Vector3(UIx, UIy, -1.0f);
 
-        isLightTile = !((position.x + position.y) % 2 == 0); // Even sum for light, odd for dark
+        isLightTile = !((x + y) % 2 == 0); // Even sum for light, odd for dark
 
     // Get the SpriteRenderer component
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -123,7 +116,7 @@ public class Tile : MonoBehaviour
     public void SetValidMove(){
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 
-        if (getPiece() != null)
+        if (currentPiece != null)
             spriteRenderer.color = Color.red;
         else    
             spriteRenderer.color=Color.green;
@@ -139,28 +132,28 @@ public class Tile : MonoBehaviour
     }
 
     private void OnMouseDown(){
-        if (Game._instance.tileSelect)
+        /* if (GameManager._instance.tileSelect)
         {
-            BoardManager._instance.selectedPosition= this.position;
+            Board._instance.selectedPosition= this.position;
         }
-        else if (Game._instance.isInMenu)
+        else if (GameManager._instance.isInMenu)
         {
             return;
         }
-        else if(Game._instance.state == ScreenState.ManagementScreen){
+        else if(GameManager._instance.state == ScreenState.ManagementScreen){
             ArmyManager._instance.PositionSelect(this.position);
         }
-        else if(!isValidMove && !Game._instance.currentMatch.isSetUpPhase){
+        else if(!isValidMove && !GameManager._instance.currentMatch.isSetUpPhase){
             
-            var piece =getPiece();
-            if(piece== null || piece.owner == Game._instance.hero)
-                BoardManager._instance.ClearTiles();
-            if(piece!=null && piece.owner==Game._instance.hero && piece==StatBoxManager._instance.lockedPiece){
+            var piece = currentPiece;
+            if(piece== null || piece.owner == GameManager._instance.hero)
+                Board._instance.ClearTiles();
+            if(piece!=null && piece.owner==GameManager._instance.hero && piece==StatBoxManager._instance.lockedPiece){
                 StatBoxManager._instance.UnlockView();
                 //piece.flames.Stop();
                 piece.validMoves.Clear();
             }
-            else if(piece!=null && piece.isValidForAttack && piece.owner==Game._instance.hero){
+            else if(piece!=null && piece.isValidForAttack && piece.owner==GameManager._instance.hero){
                 //Game._instance.StopHeroFlames();
                 StatBoxManager._instance.UnlockView();
                 piece.validMoves.Clear();
@@ -170,11 +163,11 @@ public class Tile : MonoBehaviour
                 StatBoxManager._instance.SetAndShowStats(piece);
                 StatBoxManager._instance.LockView(piece);
             }
-            else if(piece!=null && piece.owner!=Game._instance.hero && piece == StatBoxManager._instance.enemyLockedPiece){
+            else if(piece!=null && piece.owner!=GameManager._instance.hero && piece == StatBoxManager._instance.enemyLockedPiece){
                 StatBoxManager._instance.UnlockEnemyView();
                 //piece.validMoves.Clear();
             }
-            else if(piece!=null && piece.owner!=Game._instance.hero){
+            else if(piece!=null && piece.owner!=GameManager._instance.hero){
                 StatBoxManager._instance.UnlockEnemyView();
                 StatBoxManager._instance.SetAndShowEnemyStats(piece);
                 StatBoxManager._instance.LockEnemyView(piece);
@@ -183,29 +176,27 @@ public class Tile : MonoBehaviour
                 StatBoxManager._instance.UnlockEnemyView();
                 StatBoxManager._instance.UnlockView();
             }
-        }
+        } */
         
         
     }
 
     
     private void OnMouseUp(){
-        if (Game._instance.isInMenu || Game._instance.currentMatch==null)
+        /* if (GameManager._instance.isInMenu || GameManager._instance.currentMatch==null)
         {
             return;
         }
-        else if (Game._instance.currentMatch.isSetUpPhase && reference !=null){
-            BoardManager._instance.PlacePiece(reference, this);
+        else if (GameManager._instance.currentMatch.isSetUpPhase && reference !=null){
+            Board._instance.PlacePiece(reference, this);
         }
         else if(reference!=null && reference.isValidForAttack){
-            /* Game._instance.currentMatch.currentPlayer.SetSelectedPiece(reference);
-            Game._instance.currentMatch.currentPlayer.SetSelectedDestination(new BoardPosition(position.x, position.y));
-            Game._instance.currentMatch.currentPlayer.RequestDecision(); */
+            
             Debug.Log("On Move true");
             StatBoxManager._instance.UnlockView(true);
             //reference.flames.Stop();
-            Game._instance.currentMatch.ExecuteTurn(reference, position.x, position.y);
-        }
+            GameManager._instance.currentMatch.ExecuteTurn(reference, position.x, position.y);
+        } */
         
     }
 
@@ -215,11 +206,11 @@ public class Tile : MonoBehaviour
             return false;
         
         Tile other = (Tile)obj;
-        return position.Equals(other.position);
+        return x == other.x && y == other.y;
     }
 
     public override int GetHashCode()
     {
-        return position.GetHashCode();
+        return x.GetHashCode() ^ y.GetHashCode();
     }
 }

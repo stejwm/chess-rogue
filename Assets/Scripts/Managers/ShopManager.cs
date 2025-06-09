@@ -52,10 +52,10 @@ public class ShopManager : MonoBehaviour
     }
 
     public void OpenShop(){
-        Game._instance.isInMenu=false;
+        GameManager._instance.isInMenu=false;
         gameObject.SetActive(true);
         UpdateCurrency();
-        myPieces=Game._instance.hero.pieces;
+        myPieces=GameManager._instance.hero.pieces;
 
         foreach (GameObject piece in myPieces)
         {
@@ -67,12 +67,12 @@ public class ShopManager : MonoBehaviour
             }
             
         }
-        if(!Game._instance.shopUsed){
+        if(!GameManager._instance.shopUsed){
             CreatePieces();
-            if(Game._instance.lastingLegacyAbility!=null){
-                List<Ability> abilities = new List<Ability>{Game._instance.lastingLegacyAbility.Clone(), Game._instance.lastingLegacyAbility.Clone(), Game._instance.lastingLegacyAbility.Clone()};
+            if(GameManager._instance.lastingLegacyAbility!=null){
+                List<Ability> abilities = new List<Ability>{GameManager._instance.lastingLegacyAbility.Clone(), GameManager._instance.lastingLegacyAbility.Clone(), GameManager._instance.lastingLegacyAbility.Clone()};
                 CreateCardsWithAbilities(abilities);
-                Game._instance.lastingLegacyAbility = null;
+                GameManager._instance.lastingLegacyAbility = null;
             }
             else
             {
@@ -100,7 +100,7 @@ public class ShopManager : MonoBehaviour
     private List<Ability> SelectRandomAbilities(int count, Rarity? targetRarity = null)
     {
         List<Ability> selectedAbilities = new List<Ability>();
-        var groupedAbilities = Game._instance.AllAbilities
+        var groupedAbilities = GameManager._instance.AllAbilities
             .GroupBy(a => a.rarity)
             .ToDictionary(g => g.Key, g => g.ToList());
 
@@ -120,7 +120,7 @@ public class ShopManager : MonoBehaviour
                 else
                 {
                     // Fallback if no abilities of target rarity exist
-                    List<Ability> shuffledCards = Game._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
+                    List<Ability> shuffledCards = GameManager._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
                     selectedAbility = shuffledCards[0].Clone();
                 }
             }
@@ -149,7 +149,7 @@ public class ShopManager : MonoBehaviour
                 }
                 else
                 {
-                    List<Ability> shuffledCards = Game._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
+                    List<Ability> shuffledCards = GameManager._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
                     selectedAbility = shuffledCards[0].Clone();
                 }
             }
@@ -165,12 +165,12 @@ public class ShopManager : MonoBehaviour
         for (int i = 0; i < abilities.Count; i++)
         {
             Vector2 localPosition;
-            if (Game._instance.state == ScreenState.ShopScreen)
+            if (GameManager._instance.state == ScreenState.ShopScreen)
                 localPosition = new Vector2(i + i - 4, 2);
             else
                 localPosition = new Vector2(i + i, 2);
 
-            GameObject obj = Instantiate(Game._instance.card, localPosition, Quaternion.identity);
+            GameObject obj = Instantiate(GameManager._instance.card, localPosition, Quaternion.identity);
             obj.GetComponent<Card>().ability = abilities[i];
             
 
@@ -181,7 +181,7 @@ public class ShopManager : MonoBehaviour
             cards.Add(obj);
 
 
-            if (Game._instance.state == ScreenState.ShopScreen)
+            if (GameManager._instance.state == ScreenState.ShopScreen)
                 obj.GetComponent<Card>().ShowPrice();
         }
     }
@@ -194,10 +194,10 @@ public class ShopManager : MonoBehaviour
 
     public void CreateOrders(){
         GameObject obj;
-        List<KingsOrder> shuffledcards = Game._instance.AllOrders.OrderBy(_ => rng.Next()).ToList();
+        List<KingsOrder> shuffledcards = GameManager._instance.AllOrders.OrderBy(_ => rng.Next()).ToList();
         for(int i=0; i<2;i++){
             Vector2 localPosition = new Vector2(i+i+4, 2);
-            obj = Instantiate(Game._instance.card, localPosition, Quaternion.identity);
+            obj = Instantiate(GameManager._instance.card, localPosition, Quaternion.identity);
             //AllAbilities.Sort();
             //int s = Random.Range (0, AllAbilities.Count);
             orders.Add(obj);
@@ -255,10 +255,10 @@ public class ShopManager : MonoBehaviour
     }
 
     public void RerollAbilities(){
-        if(Game._instance.applyingAbility)
+        if(GameManager._instance.applyingAbility)
             return;
-        if(Game._instance.hero.playerCoins>=rerollCost){
-            Game._instance.hero.playerCoins-=rerollCost;
+        if(GameManager._instance.hero.playerCoins>=rerollCost){
+            GameManager._instance.hero.playerCoins-=rerollCost;
             rerollCost+=rerollCostIncrease;
             rerollCostText.text = rerollCost.ToString();
             UpdateCurrency();
@@ -269,8 +269,8 @@ public class ShopManager : MonoBehaviour
     }
 
     public void UpdateCurrency(){
-        bloodText.text = ": "+Game._instance.hero.playerBlood;
-        coinText.text = ": "+Game._instance.hero.playerCoins;
+        bloodText.text = ": "+GameManager._instance.hero.playerBlood;
+        coinText.text = ": "+GameManager._instance.hero.playerCoins;
         rerollCostText.text = rerollCost.ToString();
     }
 
@@ -288,7 +288,7 @@ public class ShopManager : MonoBehaviour
                 piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=0;
             }
         }
-        foreach (GameObject piece in Game._instance.hero.inventoryPieces)
+        foreach (GameObject piece in GameManager._instance.hero.inventoryPieces)
         {
             if (piece != null &&  piece.GetComponent<SpriteRenderer>())
             {
@@ -303,7 +303,7 @@ public class ShopManager : MonoBehaviour
             if(piece != null)
                 Destroy(piece);
         }
-        Game._instance.CloseShop();
+        GameManager._instance.CloseShop();
         gameObject.SetActive(false);
     }
 

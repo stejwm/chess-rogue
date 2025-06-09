@@ -46,7 +46,7 @@ public class MapManager : MonoBehaviour
 
     public void Start()
     {
-        if(Game._instance.state != ScreenState.Map)
+        if(GameManager._instance.state != ScreenState.Map)
             gameObject.SetActive(false);
         if(!SceneLoadManager.LoadPreviousSave)
             GenerateMap();
@@ -56,35 +56,35 @@ public class MapManager : MonoBehaviour
     {
         Debug.Log("OpeningMap");
         gameObject.SetActive(true);
-        Game._instance.isInMenu = true;
+        GameManager._instance.isInMenu = true;
         PauseMenuManager._instance.SaveGame();
     }
 
     public void CloseMap()
     {
-        Game._instance.isInMenu = false;
-        Game._instance.CloseMap();
+        GameManager._instance.isInMenu = false;
+        GameManager._instance.CloseMap();
         gameObject.SetActive(false);
     }
 
     public void NextMatch(EnemyType enemyType)
     {
         CloseMap();
-        Game._instance.NextMatch(enemyType);
+        GameManager._instance.NextMatch(enemyType);
     }
 
     public void OpenShop()
     {
-        if(Game._instance.shopUsed)
+        if(GameManager._instance.shopUsed)
             return;
         CloseMap();
-        Game._instance.OpenShop();
+        GameManager._instance.OpenShop();
     }
 
     public void OpenArmyManagement()
     {
         CloseMap();
-        Game._instance.OpenArmyManagement();
+        GameManager._instance.OpenArmyManagement();
     }
 
     public void SelectEnemyNode(MapNode node, EnemyType enemyType)

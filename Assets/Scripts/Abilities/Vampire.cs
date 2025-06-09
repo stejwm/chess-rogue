@@ -19,11 +19,11 @@ public class Vampire : Ability
         }
         this.piece = piece;
         
-        Game._instance.OnMove.AddListener(AddBonus);
-        Game._instance.OnAttackEnd.AddListener(SuckBlood);
-        Game._instance.OnChessMatchStart.AddListener(MatchStartBonus);
-        Game._instance.OnPieceBounced.AddListener(PossibleReset);
-        if(Game._instance.state==ScreenState.ActiveMatch){
+        GameManager._instance.OnMove.AddListener(AddBonus);
+        GameManager._instance.OnAttackEnd.AddListener(SuckBlood);
+        GameManager._instance.OnChessMatchStart.AddListener(MatchStartBonus);
+        GameManager._instance.OnPieceBounced.AddListener(PossibleReset);
+        if(GameManager._instance.state==ScreenState.ActiveMatch){
             AddBonus(piece, new BoardPosition(piece.xBoard, piece.yBoard));
         }
         base.Apply(piece);
@@ -31,10 +31,10 @@ public class Vampire : Ability
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnMove.RemoveListener(AddBonus);
-        Game._instance.OnAttackEnd.RemoveListener(SuckBlood);
-        Game._instance.OnChessMatchStart.RemoveListener(MatchStartBonus);
-        Game._instance.OnPieceBounced.RemoveListener(PossibleReset);
+        GameManager._instance.OnMove.RemoveListener(AddBonus);
+        GameManager._instance.OnAttackEnd.RemoveListener(SuckBlood);
+        GameManager._instance.OnChessMatchStart.RemoveListener(MatchStartBonus);
+        GameManager._instance.OnPieceBounced.RemoveListener(PossibleReset);
     }
     public void MatchStartBonus(){
         Debug.Log("Applying vamp at match start");
@@ -50,7 +50,7 @@ public class Vampire : Ability
         int currentBonus = bonus;
         if (mover == piece)
         {
-            if (BoardManager._instance.GetTileAt(targetPosition.x, targetPosition.y).GetColor() == PieceColor.Black)
+            if (Board._instance.GetTileAt(targetPosition.x, targetPosition.y).GetColor() == PieceColor.Black)
             {
                 bonus = 1;
             }
@@ -89,7 +89,7 @@ public class Vampire : Ability
     {
         if (attacker == piece)
         {
-            defender.AddAbility(Game._instance.AllAbilities[20].Clone());
+            defender.AddAbility(GameManager._instance.AllAbilities[20].Clone());
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Vampire</gradient></color>",  $"fledgling created on {BoardPosition.ConvertToChessNotation(defender.xBoard, defender.yBoard)}");
 
         }

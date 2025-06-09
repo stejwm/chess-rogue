@@ -12,22 +12,22 @@ public class LostToLuck : KingsOrder
     public LostToLuck() : base("Lost To Luck", "Abandon a piece in order to increase odds uncommon and rare abilities") {}
 
     public override IEnumerator Use(){
-        Player hero = Game._instance.hero;
-        Game._instance.tileSelect=true;
-        yield return new WaitUntil(() => BoardManager._instance.selectedPosition !=null);
-        Game._instance.tileSelect=false;
-        BoardPosition targetPosition = BoardManager._instance.selectedPosition;
-        BoardManager._instance.selectedPosition= null;
-        var Chessobj = Game._instance.currentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
+        Player hero = GameManager._instance.hero;
+        GameManager._instance.tileSelect=true;
+        yield return new WaitUntil(() => Board._instance.selectedPosition !=null);
+        GameManager._instance.tileSelect=false;
+        BoardPosition targetPosition = Board._instance.selectedPosition;
+        Board._instance.selectedPosition= null;
+        var Chessobj = GameManager._instance.currentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
         if(Chessobj==null){
             Debug.Log("No piece at possition");
             yield break;
         }
         Chessman cm = Chessobj.GetComponent<Chessman>();
-        Game._instance.hero.pieces.Remove(Chessobj);
-        Game._instance.hero.openPositions.Add(cm.startingPosition);
+        GameManager._instance.hero.pieces.Remove(Chessobj);
+        GameManager._instance.hero.openPositions.Add(cm.startingPosition);
         Chessobj.GetComponent<Chessman>().DestroyPiece();
-        Game._instance.abandonedPieces++;
+        GameManager._instance.abandonedPieces++;
         ShopManager._instance.ModifyRarityWeight(Rarity.Uncommon, 1.5f);
         ShopManager._instance.ModifyRarityWeight(Rarity.Rare, 1.5f);
 
@@ -37,8 +37,8 @@ public class LostToLuck : KingsOrder
     public void RemoveCivilians(PieceColor color){
         foreach (var piece in civilians)
         {
-            Game._instance.currentMatch.black.capturedPieces.Remove(piece);
-            Game._instance.hero.pieces.Remove(piece);
+            GameManager._instance.currentMatch.black.capturedPieces.Remove(piece);
+            GameManager._instance.hero.pieces.Remove(piece);
             Destroy(piece);
         }
     }

@@ -16,23 +16,23 @@ public class SupportBreaker : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnAttack.AddListener(CheckForSupport);
-        Game._instance.OnPieceBounced.AddListener(ReduceSupport);
-        Game._instance.OnPieceCaptured.AddListener(ClearSupporters);
+        GameManager._instance.OnAttack.AddListener(CheckForSupport);
+        GameManager._instance.OnPieceBounced.AddListener(ReduceSupport);
+        GameManager._instance.OnPieceCaptured.AddListener(ClearSupporters);
         base.Apply(piece);
     }
 
     public void CheckForSupport(Chessman targetPiece, int support, bool isAttacking, BoardPosition targetedPosition){
         if (targetPiece==piece && isAttacking){
-            Game._instance.OnSupportAdded.AddListener(GatherSupporters);
+            GameManager._instance.OnSupportAdded.AddListener(GatherSupporters);
         }
 
     }
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnAttack.RemoveListener(CheckForSupport); 
-        Game._instance.OnPieceCaptured.RemoveListener(ClearSupporters); 
-        Game._instance.OnPieceBounced.RemoveListener(ReduceSupport); 
+        GameManager._instance.OnAttack.RemoveListener(CheckForSupport); 
+        GameManager._instance.OnPieceCaptured.RemoveListener(ClearSupporters); 
+        GameManager._instance.OnPieceBounced.RemoveListener(ReduceSupport); 
 
     }
     public void GatherSupporters(Chessman supporter, Chessman attacker, Chessman defender){
@@ -48,7 +48,7 @@ public class SupportBreaker : Ability
             }
             piece.effectsFeedback.PlayFeedbacks();
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Support Breaker</gradient></color>",  supporters.Count +" pieces <color=red>-1</color> support");
-            Game._instance.OnSupportAdded.RemoveListener(GatherSupporters);
+            GameManager._instance.OnSupportAdded.RemoveListener(GatherSupporters);
             supporters.Clear();   
                
         }
@@ -57,7 +57,7 @@ public class SupportBreaker : Ability
     }
     public void ClearSupporters(Chessman attacker, Chessman defender){
         if(attacker==piece){
-            Game._instance.OnSupportAdded.RemoveListener(GatherSupporters);
+            GameManager._instance.OnSupportAdded.RemoveListener(GatherSupporters);
             supporters.Clear();  
         }
     }

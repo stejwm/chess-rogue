@@ -20,10 +20,10 @@ public class AvengingStrike : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
 
-        Game._instance.OnSupportAdded.AddListener(Target);
-        Game._instance.OnPieceCaptured.AddListener(Avenge);
-        Game._instance.OnPieceBounced.AddListener(EndAvenge);
-        Game._instance.OnRawMoveEnd.AddListener(RawMoveCheck);
+        GameManager._instance.OnSupportAdded.AddListener(Target);
+        GameManager._instance.OnPieceCaptured.AddListener(Avenge);
+        GameManager._instance.OnPieceBounced.AddListener(EndAvenge);
+        GameManager._instance.OnRawMoveEnd.AddListener(RawMoveCheck);
         
         base.Apply(piece);
     }
@@ -31,52 +31,52 @@ public class AvengingStrike : Ability
     public override void Remove(Chessman piece)
     {
 
-        Game._instance.OnSupportAdded.RemoveListener(Target);
-        Game._instance.OnPieceCaptured.RemoveListener(Avenge);
-        Game._instance.OnPieceBounced.RemoveListener(EndAvenge);
-        Game._instance.OnRawMoveEnd.RemoveListener(RawMoveCheck);
+        GameManager._instance.OnSupportAdded.RemoveListener(Target);
+        GameManager._instance.OnPieceCaptured.RemoveListener(Avenge);
+        GameManager._instance.OnPieceBounced.RemoveListener(EndAvenge);
+        GameManager._instance.OnRawMoveEnd.RemoveListener(RawMoveCheck);
 
     }
     public void RawMoveCheck(Chessman piece, BoardPosition destination)
     {
         if(readyToAvenge){
-            Game._instance.currentMatch.MyTurn(piece.color);
-            Game._instance.currentMatch.AvengingStrikeOverride =false;
+            GameManager._instance.currentMatch.MyTurn(piece.color);
+            GameManager._instance.currentMatch.AvengingStrikeOverride =false;
             readyToAvenge=false;
-            Game._instance.currentMatch.AvengerActive=false;
+            GameManager._instance.currentMatch.AvengerActive=false;
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">???</gradient></color>", "missed attack");
         }
     }
 
     public void EndAvenge(Chessman attacker, Chessman defender, bool isBounceReduced){
-        Game._instance.currentMatch.AvengingStrikeOverride =false;
+        GameManager._instance.currentMatch.AvengingStrikeOverride =false;
         readyToAvenge=false;
-        Game._instance.currentMatch.AvengerActive=false;
+        GameManager._instance.currentMatch.AvengerActive=false;
     }
 
     public void Avenge(Chessman attacker, Chessman defender)
     {
         if(attacker==piece && readyToAvenge){
-            Game._instance.currentMatch.AvengingStrikeOverride =false;
+            GameManager._instance.currentMatch.AvengingStrikeOverride =false;
             readyToAvenge=false; 
-            Game._instance.currentMatch.AvengerActive=false;    
+            GameManager._instance.currentMatch.AvengerActive=false;    
         }
         else if (readyToAvenge)
         {
             Debug.Log("Avenging");
             piece.effectsFeedback.PlayFeedbacks();
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Avenging Strike</gradient></color>", "attacking");
-            Game._instance.currentMatch.AvengingStrikeOverride =true;
-            if(Game._instance.currentMatch.BloodThirstOverride){
+            GameManager._instance.currentMatch.AvengingStrikeOverride =true;
+            if(GameManager._instance.currentMatch.BloodThirstOverride){
                 //Game._instance.currentMatch.MyTurn(piece.color);
                 Debug.Log("Bloodthirst is active not setting turn tho");
             }
-            Game._instance.currentMatch.ExecuteTurn(piece, targetPosition.x, targetPosition.y);
+            GameManager._instance.currentMatch.ExecuteTurn(piece, targetPosition.x, targetPosition.y);
         }
     }
     public void Target(Chessman supporter, Chessman attacker, Chessman defender){
-        if(supporter==piece && defender.color==piece.color && !Game._instance.currentMatch.AvengerActive){
-            Game._instance.currentMatch.AvengerActive=true;
+        if(supporter==piece && defender.color==piece.color && !GameManager._instance.currentMatch.AvengerActive){
+            GameManager._instance.currentMatch.AvengerActive=true;
             Debug.Log("Avenger activated");
             readyToAvenge=true;
             targetPosition = new BoardPosition(defender.xBoard, defender.yBoard);

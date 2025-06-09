@@ -18,21 +18,21 @@ public class Swift : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
 
-        Game._instance.OnRawMoveEnd.AddListener(Swifting);
-        Game._instance.OnAttackEnd.AddListener(EndSwift);
+        GameManager._instance.OnRawMoveEnd.AddListener(Swifting);
+        GameManager._instance.OnAttackEnd.AddListener(EndSwift);
         base.Apply(piece);
 
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnRawMoveEnd.RemoveListener(Swifting);
-        Game._instance.OnAttackEnd.RemoveListener(EndSwift);
+        GameManager._instance.OnRawMoveEnd.RemoveListener(Swifting);
+        GameManager._instance.OnAttackEnd.RemoveListener(EndSwift);
     }
 
     public void Decimate(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
         if(attacker==piece && isAttacking)
-            Game._instance.isDecimating=true;
+            GameManager._instance.isDecimating=true;
     }
     public void Swifting(Chessman mover, BoardPosition destination)
     {
@@ -40,7 +40,7 @@ public class Swift : Ability
 
         if(mover==piece && !swifting && piece.moveProfile.GetValidMoves(piece).Count>=0){
             swifting=true;
-            Game._instance.currentMatch.SwiftOverride =true;
+            GameManager._instance.currentMatch.SwiftOverride =true;
 
             pieces = piece.owner.pieces;
             foreach (GameObject pieceObject in pieces)
@@ -49,21 +49,21 @@ public class Swift : Ability
             }
             piece.isValidForAttack=true;
             
-            Game._instance.currentMatch.MyTurn(piece.color);
+            GameManager._instance.currentMatch.MyTurn(piece.color);
 
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Swift</gradient></color>",  " move again");
-            piece.owner.MakeMove(Game._instance.currentMatch);
+            piece.owner.MakeMove(GameManager._instance.currentMatch);
         }
         else if(mover==piece && swifting){
             swifting=false;
-            Game._instance.currentMatch.SwiftOverride =false;
+            GameManager._instance.currentMatch.SwiftOverride =false;
         }
     }
 
     private void EndSwift(Chessman attackingPiece, Chessman defendingPiece, int attackSupport, int defenseSupport){
         if(attackingPiece==piece){
             swifting=false;
-            Game._instance.currentMatch.SwiftOverride =false;
+            GameManager._instance.currentMatch.SwiftOverride =false;
         }
     }
 }

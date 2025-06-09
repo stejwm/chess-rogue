@@ -88,8 +88,8 @@ public abstract class Player: MonoBehaviour
         {
             Chessman cm = piece.GetComponent<Chessman>();
             int index = rng.Next(30);
-            if (Game._instance.AllAbilities.Count>index){
-                cm.AddAbility(Game._instance.AllAbilities[index].Clone());
+            if (GameManager._instance.AllAbilities.Count>index){
+                cm.AddAbility(GameManager._instance.AllAbilities[index].Clone());
             }
         }
     }

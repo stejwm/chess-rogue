@@ -23,38 +23,38 @@ public class RaiseTheFallen : Ability
             originalAbility.stacks++;
            return;
         }
-        Game._instance.OnAttackStart.AddListener(SetDecimating);
-        Game._instance.OnPieceCaptured.AddListener(ListenForEnd);
-        Game._instance.OnPieceBounced.AddListener(ReplaceOnBoard);
+        GameManager._instance.OnAttackStart.AddListener(SetDecimating);
+        GameManager._instance.OnPieceCaptured.AddListener(ListenForEnd);
+        GameManager._instance.OnPieceBounced.AddListener(ReplaceOnBoard);
         piece.canStationarySlash=true;
         base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceCaptured.RemoveListener(ListenForEnd);
-        Game._instance.OnAttackStart.RemoveListener(SetDecimating);
-        Game._instance.OnPieceBounced.RemoveListener(ReplaceOnBoard);
+        GameManager._instance.OnPieceCaptured.RemoveListener(ListenForEnd);
+        GameManager._instance.OnAttackStart.RemoveListener(SetDecimating);
+        GameManager._instance.OnPieceBounced.RemoveListener(ReplaceOnBoard);
         piece.canStationarySlash=false; 
 
     }
     
     public void SetDecimating(Chessman attacker, Chessman defender){
         if (attacker==piece){
-            Game._instance.isDecimating=true;
+            GameManager._instance.isDecimating=true;
         }
     }
     public void ListenForEnd(Chessman attacker, Chessman defender){
         if (attacker==piece){
-            Game._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
+            GameManager._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
             if(piece.owner.openPositions.Count==0){
                 AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Raise the Fallen</gradient></color>",  "no open positions, cannot raise the dead");
-                Game._instance.isDecimating=false;
+                GameManager._instance.isDecimating=false;
                 return;
             }
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Raise the Fallen</gradient></color>",  $"raised the dead at {BoardPosition.ConvertToChessNotation(defender.xBoard, defender.yBoard)}");
 
-            var undead = PieceFactory._instance.CreateAbilityPiece(PieceType.Pawn, $"undead {defender.name}", defender.xBoard, defender.yBoard, PieceColor.White, Team.Hero, piece.owner, Game._instance.AllAbilities[25].Clone()); //Create with radiating death
+            var undead = PieceFactory._instance.CreateAbilityPiece(PieceType.Pawn, $"undead {defender.name}", defender.xBoard, defender.yBoard, PieceColor.White, Team.Hero, piece.owner, GameManager._instance.AllAbilities[25].Clone()); //Create with radiating death
             undead.GetComponent<Collider2D>().enabled = false;
             piece.owner.pieces.Add(undead);
             Chessman undeadChessman = undead.GetComponent<Chessman>();
@@ -68,15 +68,15 @@ public class RaiseTheFallen : Ability
                 undeadChessman.defense++;
                 undeadChessman.support++;
             }
-            Game._instance.currentMatch.MovePiece(undeadChessman, undeadChessman.xBoard, undeadChessman.yBoard);
-            Game._instance.isDecimating=false;
+            GameManager._instance.currentMatch.MovePiece(undeadChessman, undeadChessman.xBoard, undeadChessman.yBoard);
+            GameManager._instance.isDecimating=false;
         }
     }
 
     public void ReplaceOnBoard(Chessman attacker, Chessman defender, bool isReduced){
         if (attacker==piece){
-            Game._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
-            Game._instance.isDecimating=false;
+            GameManager._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
+            GameManager._instance.isDecimating=false;
         }
     }
 

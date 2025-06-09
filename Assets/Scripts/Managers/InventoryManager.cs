@@ -31,11 +31,11 @@ public class InventoryManager : MonoBehaviour
 
     public void OpenInventory(){
         gameObject.SetActive(true);
-        Game._instance.togglePieceColliders(Game._instance.opponent.pieces, false);
-        Game._instance.togglePieceColliders(Game._instance.hero.pieces, true);
+        GameManager._instance.togglePieceColliders(GameManager._instance.opponent.pieces, false);
+        GameManager._instance.togglePieceColliders(GameManager._instance.hero.pieces, true);
 
         ShopManager._instance.CreateCards();
-        myPieces=Game._instance.hero.pieces;
+        myPieces=GameManager._instance.hero.pieces;
 
         foreach (GameObject piece in myPieces)
         {
@@ -51,7 +51,7 @@ public class InventoryManager : MonoBehaviour
 
     public void CloseInventory(){
         ShopManager._instance.ClearCards();
-        Game._instance.ClearPiece();
+        GameManager._instance.ClearPiece();
         foreach (GameObject piece in myPieces)
         {
             if (piece !=null && piece.GetComponent<SpriteRenderer>())
@@ -61,7 +61,7 @@ public class InventoryManager : MonoBehaviour
                 piece.GetComponent<Chessman>().flames.GetComponent<Renderer>().sortingOrder=2;
             }
         }
-        Game._instance.CloseReward();
+        GameManager._instance.CloseReward();
         gameObject.SetActive(false);
     }
 

@@ -1,0 +1,139 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.Collections;
+using Unity.PlasticSCM.Editor.WebApi;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public interface IBoardInputReceiver
+{
+    void HandleTileClick(Tile tile);
+    void HandleObjectClick(GameObject obj); // for other types of input
+}
+public class Board : MonoBehaviour
+{
+    public Dictionary<BoardPosition, Tile> tiles = new Dictionary<BoardPosition, Tile>();
+    public List<Tile> validTiles = new List<Tile>();
+
+    public BoardPosition selectedPosition;
+
+    private ChessMatch currentMatch;
+
+
+    public bool IsPositionOnBoard(int x, int y)
+    {
+        if (x < 0 || y < 0 || x >= 8 || y >= 8) return false;
+        return true;
+    }
+
+    public void CreateNewMatch(Player white, Player black)
+    {
+        currentMatch = new ChessMatch(white, black);
+    }
+    public void SetActiveTile(Chessman piece, BoardPosition position)
+    {
+        var tile = tiles[position];
+        validTiles.Add(tile);
+        tile.SetReference(piece);
+        tile.SetValidMove();
+    }
+
+    public Tile GetTileAt(int x, int y)
+    {
+        //Debug.Log("X: "+x+" Y: "+y);
+        return tiles[new BoardPosition(x, y)];
+    }
+
+    public void CreateBoard()
+    {
+
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                BoardPosition pos = new BoardPosition(i, j);
+                tiles.Add(pos, TileFactory._instance.CreateTile(pos));
+            }
+        }
+    }
+
+    public void CreateManagementBoard()
+    {
+
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                BoardPosition pos = new BoardPosition(i, j);
+                Tile tile = TileFactory._instance.CreateTile(pos);
+                tiles.Add(pos, tile);
+                Vector3 currentPosition = tile.transform.position;
+                Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y, -0.5f);
+                tile.transform.position = newPosition;
+            }
+        }
+        foreach (var tile in tiles.Values)
+        {
+            SpriteRenderer rend = tile.GetComponent<SpriteRenderer>();
+            rend.sortingOrder = 4;
+        }
+    }
+
+    public void DestroyBoard()
+    {
+        foreach (var item in tiles.Values)
+        {
+            Destroy(item.gameObject);
+        }
+        tiles.Clear();
+        validTiles.Clear();
+    }
+
+    public void ClearTiles()
+    {
+        foreach (var tile in validTiles)
+        {
+            tile.Clear();
+        }
+        validTiles.Clear();
+    }
+
+    public void toggleTileColliders(bool active)
+    {
+
+        foreach (var tile in tiles.Values)
+        {
+            tile.GetComponent<BoxCollider2D>().enabled = active;
+        }
+    }
+
+
+
+    public void SelectPieceToPlace(Chessman piece)
+    {
+        foreach (var item in GameManager._instance.hero.openPositions)
+        {
+            SetActiveTile(piece, item);
+        }
+    }
+
+    public void PlacePiece(Chessman piece, Tile tile)
+    {
+        piece.startingPosition = tile.position;
+        piece.xBoard = tile.position.x;
+        piece.yBoard = tile.position.y;
+        GameManager._instance.hero.inventoryPieces.Remove(piece.gameObject);
+        Debug.Log($"open positions contains position{GameManager._instance.hero.openPositions.Contains(tile.position)}");
+        GameManager._instance.hero.openPositions.Remove(tile.position);
+        GameManager._instance.hero.pieces.Add(piece.gameObject);
+        GameManager._instance.OnPieceAdded.Invoke(piece);
+        ClearTiles();
+        piece.UpdateUIPosition();
+        if (GameManager._instance.state != ScreenState.ManagementScreen)
+            GameManager._instance.currentMatch.CheckInventory();
+    }
+
+
+}

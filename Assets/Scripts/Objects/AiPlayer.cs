@@ -45,7 +45,7 @@ public class AIPlayer : Player
     }
 
     public IEnumerator Move(){
-        yield return new WaitForSeconds(Game._instance.waitTime);
+        yield return new WaitForSeconds(GameManager._instance.waitTime);
         Debug.Log("Requested move from "+color);
         agent.RequestDecision();
     }

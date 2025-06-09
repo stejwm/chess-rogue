@@ -210,16 +210,16 @@ public abstract class Chessman : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (Game._instance.isInMenu || Game._instance.applyingAbility)
+        if (GameManager._instance.isInMenu || GameManager._instance.applyingAbility)
         {
             return;
         }
-        if (Game._instance.currentMatch !=null  && Game._instance.currentMatch.isSetUpPhase && Game._instance.hero.inventoryPieces.Contains(this.gameObject))
+        if (GameManager._instance.currentMatch !=null  && GameManager._instance.currentMatch.isSetUpPhase && GameManager._instance.hero.inventoryPieces.Contains(this.gameObject))
         {
             HandlePiecePlacement();
             return;
         }
-        switch (Game._instance.state)
+        switch (GameManager._instance.state)
         {
             case ScreenState.RewardScreen:
                 HandleRewardScreenClick();
@@ -239,16 +239,16 @@ public abstract class Chessman : MonoBehaviour
     }
 
     public void HandleRewardScreenClick(){        
-        Game._instance.PieceSelected(this);
+        GameManager._instance.PieceSelected(this);
     }
     public void HandleShopClick(){   
         if(this.owner==null) 
             ManagementStatManager._instance.SetAndShowStats(this);     
         else 
-            if (Game._instance.selectedCard==null)
+            if (GameManager._instance.selectedCard==null)
                 ManagementStatManager._instance.SetAndShowStats(this); 
             else
-                Game._instance.PieceSelected(this);
+                GameManager._instance.PieceSelected(this);
     }
     public void HandleManagementClick(){        
         ArmyManager._instance.PieceSelect(this);
@@ -259,7 +259,7 @@ public abstract class Chessman : MonoBehaviour
     }
 
     public void HandlePiecePlacement(){        
-        BoardManager._instance.SelectPieceToPlace(this);
+        Board._instance.SelectPieceToPlace(this);
     }
 
     public List<BoardPosition> DisplayValidMoves(){
@@ -267,7 +267,7 @@ public abstract class Chessman : MonoBehaviour
 
         foreach (var coordinate in validMoves)
         {
-            if (Game._instance.PositionOnBoard(coordinate.x, coordinate.y))
+            if (board.IsPositionOnBoard(coordinate.x, coordinate.y))
             {
                 SetTileValidMove(coordinate.x, coordinate.y);
                 theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
@@ -281,9 +281,9 @@ public abstract class Chessman : MonoBehaviour
 
         foreach (var coordinate in validMoves)
         {
-            if (Game._instance.PositionOnBoard(coordinate.x, coordinate.y))
+            if (board.IsPositionOnBoard(coordinate.x, coordinate.y))
             {
-                GameObject cp = Game._instance.currentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
+                GameObject cp = GameManager._instance.currentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
                 if (cp == null)
                 {
                     theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
@@ -298,9 +298,9 @@ public abstract class Chessman : MonoBehaviour
     }
      public void PointMovePlate(int x, int y)
     {
-        if (Game._instance.PositionOnBoard(x, y))
+        if (board.IsPositionOnBoard(x, y))
         {
-            GameObject cp = Game._instance.currentMatch.GetPieceAtPosition(x, y);
+            GameObject cp = GameManager._instance.currentMatch.GetPieceAtPosition(x, y);
 
             if (cp == null)
             {
@@ -319,21 +319,21 @@ public abstract class Chessman : MonoBehaviour
 
      public void SetTileValidMove(int x, int y)
     {
-        BoardManager._instance.SetActiveTile(this, new BoardPosition(x,y));
+        Board._instance.SetActiveTile(this, new BoardPosition(x,y));
     } 
 
     private void OnMouseEnter(){
-        if (Game._instance.isInMenu)
+        if (GameManager._instance.isInMenu)
         {
             return;
         }
-        if(Game._instance.state==ScreenState.PrisonersMarket)
+        if(GameManager._instance.state==ScreenState.PrisonersMarket)
             PopUpManager._instance.SetAndShowValues(this);
         StatBoxManager._instance.SetAndShowStats(this);
     } 
 
     private void OnMouseExit(){
-        if(Game._instance.state==ScreenState.PrisonersMarket)
+        if(GameManager._instance.state==ScreenState.PrisonersMarket)
             PopUpManager._instance.HideValues();
     }
 

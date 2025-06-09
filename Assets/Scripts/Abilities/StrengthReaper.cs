@@ -15,8 +15,8 @@ public class StrengthReaper : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnAttackStart.AddListener(AddBonus);
-        Game._instance.OnAttackEnd.AddListener(RemoveBonus);
+        GameManager._instance.OnAttackStart.AddListener(AddBonus);
+        GameManager._instance.OnAttackEnd.AddListener(RemoveBonus);
         base.Apply(piece);
 
         
@@ -24,8 +24,8 @@ public class StrengthReaper : Ability
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnAttackStart.RemoveListener(AddBonus); 
-        Game._instance.OnAttackEnd.RemoveListener(RemoveBonus); 
+        GameManager._instance.OnAttackStart.RemoveListener(AddBonus); 
+        GameManager._instance.OnAttackEnd.RemoveListener(RemoveBonus); 
 
     }
     public void AddBonus(Chessman attacker, Chessman defender){

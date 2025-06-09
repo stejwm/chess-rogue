@@ -11,7 +11,7 @@ public class HexManiac : KingsOrder
     public HexManiac() : base("Hex Maniac", "Hexes all opponent pieces") {}
 
     public override IEnumerator Use(){
-        List<GameObject> enemies = Game._instance.opponent.pieces;
+        List<GameObject> enemies = GameManager._instance.opponent.pieces;
         foreach (var obj in enemies)
         {
             Chessman piece = obj.GetComponent<Chessman>();

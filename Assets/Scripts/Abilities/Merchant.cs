@@ -17,15 +17,15 @@ public class Merchant : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnAttack.AddListener(AddBonus);
-        Game._instance.OnAttackEnd.AddListener(RemoveBonus);
+        GameManager._instance.OnAttack.AddListener(AddBonus);
+        GameManager._instance.OnAttackEnd.AddListener(RemoveBonus);
         base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnAttack.RemoveListener(AddBonus);
-        Game._instance.OnAttackEnd.RemoveListener(RemoveBonus);
+        GameManager._instance.OnAttack.RemoveListener(AddBonus);
+        GameManager._instance.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
     public void AddBonus(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){

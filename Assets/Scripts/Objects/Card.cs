@@ -50,13 +50,13 @@ public class Card : MonoBehaviour
     }
 
     void OnMouseDown(){
-        if (Game._instance.isInMenu || Game._instance.applyingAbility)
+        if (GameManager._instance.isInMenu || GameManager._instance.applyingAbility)
         {
             return;
         }
         if(ability != null){
-            if(Game._instance.hero.playerCoins>=ability.Cost || !price.activeSelf){
-                Game._instance.GetComponent<Game>().CardSelected(this);
+            if(GameManager._instance.hero.playerCoins>=ability.Cost || !price.activeSelf){
+                GameManager._instance.GetComponent<GameManager>().CardSelected(this);
                 this.GetComponent<MMSpringPosition>().BumpRandom();
             }
             else{
@@ -65,9 +65,9 @@ public class Card : MonoBehaviour
         }
         else
             if(order != null){
-                if(Game._instance.hero.playerCoins>=order.Cost){
-                    Game._instance.hero.orders.Add(order);
-                    Game._instance.hero.playerCoins-=order.Cost;
+                if(GameManager._instance.hero.playerCoins>=order.Cost){
+                    GameManager._instance.hero.orders.Add(order);
+                    GameManager._instance.hero.playerCoins-=order.Cost;
                     ShopManager._instance.UpdateCurrency();
                     Destroy(this.gameObject);
                 }else{
@@ -76,7 +76,7 @@ public class Card : MonoBehaviour
             }
     }
     void OnMouseEnter(){
-        if (Game._instance.isInMenu)
+        if (GameManager._instance.isInMenu)
         {
             return;
         }

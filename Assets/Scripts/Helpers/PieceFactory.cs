@@ -88,7 +88,7 @@ public class PieceFactory : MonoBehaviour
         }
         
         foreach (var piece in pieces){
-            StartCoroutine(WaitForPieceToApplyAbility(piece.GetComponent<Chessman>(), Game._instance.AllAbilities[27].Clone()));
+            StartCoroutine(WaitForPieceToApplyAbility(piece.GetComponent<Chessman>(), GameManager._instance.AllAbilities[27].Clone()));
         }
         return pieces;
     }
@@ -176,14 +176,14 @@ public class PieceFactory : MonoBehaviour
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[15].Clone()); //Merchant ability
+            piece.GetComponent<Chessman>().AddAbility(GameManager._instance.AllAbilities[15].Clone()); //Merchant ability
         }
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
             var pawn = Create(PieceType.Pawn, i, pawnRow, color, team, owner);
-            pawn.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[16].Clone()); //Pickpocket ability
+            pawn.GetComponent<Chessman>().AddAbility(GameManager._instance.AllAbilities[16].Clone()); //Pickpocket ability
             pieces.Add(pawn);
         }
 
@@ -210,14 +210,14 @@ public class PieceFactory : MonoBehaviour
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[17].Clone()); //Blood offering ability
+            piece.GetComponent<Chessman>().AddAbility(GameManager._instance.AllAbilities[17].Clone()); //Blood offering ability
         }
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
             var pawn = Create(PieceType.Pawn, i, pawnRow, color, team, owner);
-            pawn.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[20].Clone()); //Vampire ability
+            pawn.GetComponent<Chessman>().AddAbility(GameManager._instance.AllAbilities[20].Clone()); //Vampire ability
             pieces.Add(pawn);
         }
 
@@ -238,22 +238,22 @@ public class PieceFactory : MonoBehaviour
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[17].Clone()); //Blood offering ability
+            piece.GetComponent<Chessman>().AddAbility(GameManager._instance.AllAbilities[17].Clone()); //Blood offering ability
         }
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             var pawn = Create(PieceType.Pawn, i, pawnRow, color, team, owner);
-            StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), Game._instance.AllAbilities[0].Clone()));
+            StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), GameManager._instance.AllAbilities[0].Clone()));
             RandomMobAbility(pawn); 
             pieces.Add(pawn);
             pawn = Create(PieceType.Pawn, i, frontRow, color, team, owner);
-            StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), Game._instance.AllAbilities[0].Clone()));
+            StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), GameManager._instance.AllAbilities[0].Clone()));
             RandomMobAbility(pawn); 
             pieces.Add(pawn);
             if(i!=4){
                 pawn = Create(PieceType.Pawn,  i, backRow, color, team, owner);
-                StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), Game._instance.AllAbilities[0].Clone()));
+                StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), GameManager._instance.AllAbilities[0].Clone()));
                 RandomMobAbility(pawn); 
                 pieces.Add(pawn);
             }
@@ -279,7 +279,7 @@ public class PieceFactory : MonoBehaviour
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[17].Clone()); //Blood offering ability
+            piece.GetComponent<Chessman>().AddAbility(GameManager._instance.AllAbilities[17].Clone()); //Blood offering ability
         }
         
 
@@ -298,19 +298,19 @@ public class PieceFactory : MonoBehaviour
             rand = UnityEngine.Random.Range(0,4);
             switch(rand){
                 case 0:
-                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[14].Clone())); //Blood thirst
+                    StartCoroutine(WaitForPieceToApplyAbility(piece, GameManager._instance.AllAbilities[14].Clone())); //Blood thirst
                     break;
                 case 1:
-                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[8].Clone())); //Blood thirst
+                    StartCoroutine(WaitForPieceToApplyAbility(piece, GameManager._instance.AllAbilities[8].Clone())); //Blood thirst
                     break;
                 case 2:
-                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[10].Clone())); //Blood thirst
+                    StartCoroutine(WaitForPieceToApplyAbility(piece, GameManager._instance.AllAbilities[10].Clone())); //Blood thirst
                     break;
                 case 3:
-                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[23].Clone())); //Blood thirst
+                    StartCoroutine(WaitForPieceToApplyAbility(piece, GameManager._instance.AllAbilities[23].Clone())); //Blood thirst
                     break;
                 case 4:
-                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[19].Clone())); //Blood thirst
+                    StartCoroutine(WaitForPieceToApplyAbility(piece, GameManager._instance.AllAbilities[19].Clone())); //Blood thirst
                     break;
             }
         }
@@ -351,7 +351,7 @@ public class PieceFactory : MonoBehaviour
             case EnemyType.Fortress:
                 return CreateRookArmy(opponent, opponent.color, Team.Enemy);
             case EnemyType.Assassins:
-                return CreateAbilityPiecesBlack(opponent, Game._instance.AllAbilities[2].Clone()); //Assassin ability
+                return CreateAbilityPiecesBlack(opponent, GameManager._instance.AllAbilities[2].Clone()); //Assassin ability
             case EnemyType.Thieves:
                 return CreateThievesGuild(opponent, opponent.color, Team.Enemy);
             case EnemyType.Cult:
@@ -385,10 +385,10 @@ public class PieceFactory : MonoBehaviour
         Array values = Enum.GetValues(typeof(PieceType));
         System.Random random = new System.Random();
         if(random.Next(100)<16){
-            return Create(PieceType.Jester,-1,-1,Game._instance.heroColor,Team.Hero,null);
+            return Create(PieceType.Jester,-1,-1,GameManager._instance.heroColor,Team.Hero,null);
         }
         PieceType randPieceType = (PieceType)values.GetValue(random.Next(values.Length-3));
-        return Create(randPieceType,-1,-1,Game._instance.heroColor,Team.Hero,null);
+        return Create(randPieceType,-1,-1,GameManager._instance.heroColor,Team.Hero,null);
     }
 
     public IEnumerator DelayedDestroy(Chessman piece){
@@ -402,12 +402,12 @@ public class PieceFactory : MonoBehaviour
         var chessmen = new List<GameObject>();
         foreach (var pieceData in pieces)
         {
-            var pieceObj = Create(pieceData.pieceType, pieceData.posX, pieceData.posY, pieceData.color, Team.Hero, Game._instance.hero, pieceData.name);
+            var pieceObj = Create(pieceData.pieceType, pieceData.posX, pieceData.posY, pieceData.color, Team.Hero, GameManager._instance.hero, pieceData.name);
             var piece = pieceObj.GetComponent<Chessman>();
             piece.uniqueId = pieceData.uniqueId;
 
             foreach (AbilityData abilityData in pieceData.abilities){
-                Ability ability = Game._instance.AllAbilities.FirstOrDefault(a => a.abilityName==abilityData.abilityName);
+                Ability ability = GameManager._instance.AllAbilities.FirstOrDefault(a => a.abilityName==abilityData.abilityName);
                 piece.AddAbility(ability);
             }
             piece.attack = pieceData.attack;

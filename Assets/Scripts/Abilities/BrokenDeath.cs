@@ -13,18 +13,18 @@ public class BrokenDeath : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceCaptured.AddListener(BreakDeath);
+        GameManager._instance.OnPieceCaptured.AddListener(BreakDeath);
         base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceCaptured.RemoveListener(BreakDeath); 
+        GameManager._instance.OnPieceCaptured.RemoveListener(BreakDeath); 
 
     }
     public void BreakDeath(Chessman attacker, Chessman defender){
         if (defender==piece){
-            Game._instance.OnPieceCaptured.Invoke(defender, attacker);
+            GameManager._instance.OnPieceCaptured.Invoke(defender, attacker);
             attacker.DestroyPiece();
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Broken Death</gradient></color>", $" dragged {attacker.name} to hell with them");
         }

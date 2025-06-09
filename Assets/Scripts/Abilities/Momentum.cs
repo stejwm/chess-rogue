@@ -13,17 +13,17 @@ public class Momentum : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnRawMoveEnd.AddListener(RawMoveEnd);
-        Game._instance.OnPieceBounced.AddListener(RemoveBounce);
-        Game._instance.OnPieceCaptured.AddListener(AddCapture);
-        Game._instance.OnGameEnd.AddListener(GameEndRemove);
+        GameManager._instance.OnRawMoveEnd.AddListener(RawMoveEnd);
+        GameManager._instance.OnPieceBounced.AddListener(RemoveBounce);
+        GameManager._instance.OnPieceCaptured.AddListener(AddCapture);
+        GameManager._instance.OnGameEnd.AddListener(GameEndRemove);
         base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
         //Game._instance.OnAttack.RemoveListener(Check); 
-        Game._instance.OnRawMoveEnd.RemoveListener(RawMoveEnd);
+        GameManager._instance.OnRawMoveEnd.RemoveListener(RawMoveEnd);
 
     }
     public void RawMoveEnd(Chessman movedPiece, BoardPosition targetPosition){

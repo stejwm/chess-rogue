@@ -60,14 +60,14 @@ public class ArmyManager : MonoBehaviour
         if(selectedPiece==null){
             SelectPiece(piece);
         }
-        else if((Game._instance.hero.inventoryPieces.Contains(piece.gameObject) && selectedPiece!=null) || Game._instance.hero.inventoryPieces.Contains(selectedPiece.gameObject)){
+        else if((GameManager._instance.hero.inventoryPieces.Contains(piece.gameObject) && selectedPiece!=null) || GameManager._instance.hero.inventoryPieces.Contains(selectedPiece.gameObject)){
             DeselectPiece(selectedPiece);
             return;
         }
         else if (selectedPiece==piece){
             DeselectPiece(piece);
         }
-        else if (selectedPiece && Game._instance.hero.playerCoins>=pricePerPiece*2){
+        else if (selectedPiece && GameManager._instance.hero.playerCoins>=pricePerPiece*2){
             BoardPosition position1 = selectedPiece.startingPosition;
             BoardPosition position2 = piece.startingPosition;
             selectedPiece.startingPosition=position2;
@@ -78,7 +78,7 @@ public class ArmyManager : MonoBehaviour
             piece.yBoard=position1.y;
             selectedPiece.UpdateUIPosition();
             piece.UpdateUIPosition();
-            Game._instance.hero.playerCoins-=pricePerPiece*2;
+            GameManager._instance.hero.playerCoins-=pricePerPiece*2;
             UpdateCurrency();
             DeselectPiece(selectedPiece);
         }
@@ -90,9 +90,9 @@ public class ArmyManager : MonoBehaviour
         if(selectedPiece==null){
             return;
         }
-        if(Game._instance.hero.inventoryPieces.Contains(selectedPiece.gameObject)){
-            Game._instance.hero.inventoryPieces.Remove(selectedPiece.gameObject);
-            Game._instance.hero.pieces.Add(selectedPiece.gameObject);
+        if(GameManager._instance.hero.inventoryPieces.Contains(selectedPiece.gameObject)){
+            GameManager._instance.hero.inventoryPieces.Remove(selectedPiece.gameObject);
+            GameManager._instance.hero.pieces.Add(selectedPiece.gameObject);
             selectedPiece.owner.openPositions.Add(new BoardPosition(selectedPiece.xBoard, selectedPiece.yBoard));
             selectedPiece.owner.openPositions.Remove(position);
             selectedPiece.startingPosition=position;
@@ -100,16 +100,16 @@ public class ArmyManager : MonoBehaviour
             selectedPiece.yBoard=position.y;
             selectedPiece.UpdateUIPosition();
             UpdateCurrency();
-            Game._instance.OnPieceAdded.Invoke(selectedPiece);
+            GameManager._instance.OnPieceAdded.Invoke(selectedPiece);
             DeselectPiece(selectedPiece);
-        }else if (selectedPiece && Game._instance.hero.playerCoins>=pricePerPiece){
+        }else if (selectedPiece && GameManager._instance.hero.playerCoins>=pricePerPiece){
             selectedPiece.owner.openPositions.Add(new BoardPosition(selectedPiece.xBoard, selectedPiece.yBoard));
             selectedPiece.owner.openPositions.Remove(position);
             selectedPiece.startingPosition=position;
             selectedPiece.xBoard=position.x;
             selectedPiece.yBoard=position.y;
             selectedPiece.UpdateUIPosition();
-            Game._instance.hero.playerCoins-=pricePerPiece;
+            GameManager._instance.hero.playerCoins-=pricePerPiece;
             UpdateCurrency();
             DeselectPiece(selectedPiece);
         }
@@ -119,13 +119,13 @@ public class ArmyManager : MonoBehaviour
     }
 
     public void OpenShop(){
-        ChessMatch fakeMatch = new ChessMatch(Game._instance.hero);
-        Game._instance.currentMatch=fakeMatch;
+        ChessMatch fakeMatch = new ChessMatch(GameManager._instance.hero);
+        GameManager._instance.currentMatch=fakeMatch;
         gameObject.SetActive(true);
         ShopManager._instance.HideShop();
         UpdateCurrency();
-        myPieces=Game._instance.hero.pieces;
-        Game._instance.toggleAllPieceColliders(false);
+        myPieces=GameManager._instance.hero.pieces;
+        GameManager._instance.toggleAllPieceColliders(false);
         foreach (GameObject piece in myPieces)
         {
             if (piece !=null && piece.GetComponent<SpriteRenderer>())
@@ -151,15 +151,15 @@ public class ArmyManager : MonoBehaviour
         KingsOrderManager._instance.Setup();
         
 
-        Game._instance.togglePieceColliders(myPieces, true);
-        BoardManager._instance.CreateManagementBoard();
+        GameManager._instance.togglePieceColliders(myPieces, true);
+        Board._instance.CreateManagementBoard();
         CheckInventory();
     }
     public void CheckInventory(){
-        if (Game._instance.hero.inventoryPieces.Count>0){
+        if (GameManager._instance.hero.inventoryPieces.Count>0){
             //KingsOrderManager._instance.Hide();
             int i = 0;
-            foreach (var obj in Game._instance.hero.inventoryPieces)
+            foreach (var obj in GameManager._instance.hero.inventoryPieces)
             {
                 Chessman piece = obj.GetComponent<Chessman>();
                 obj.SetActive(true);
@@ -176,14 +176,14 @@ public class ArmyManager : MonoBehaviour
                 piece.UpdateUIPosition();
             }
             
-            Game._instance.togglePieceColliders(Game._instance.hero.inventoryPieces, true);
-            Game._instance.togglePieceColliders(Game._instance.hero.pieces, true);
+            GameManager._instance.togglePieceColliders(GameManager._instance.hero.inventoryPieces, true);
+            GameManager._instance.togglePieceColliders(GameManager._instance.hero.pieces, true);
         }
     }
 
     public void UpdateCurrency(){
-        bloodText.text = ": "+Game._instance.hero.playerBlood;
-        coinText.text = ": "+Game._instance.hero.playerCoins;
+        bloodText.text = ": "+GameManager._instance.hero.playerBlood;
+        coinText.text = ": "+GameManager._instance.hero.playerCoins;
     }
 
     public void CloseShop(){
@@ -198,7 +198,7 @@ public class ArmyManager : MonoBehaviour
                 piece.GetComponent<Chessman>().highlightedParticles.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
             }
         }
-        foreach (GameObject piece in Game._instance.hero.inventoryPieces)
+        foreach (GameObject piece in GameManager._instance.hero.inventoryPieces)
         {
             if (piece.GetComponent<SpriteRenderer>())
             {
@@ -221,8 +221,8 @@ public class ArmyManager : MonoBehaviour
         KingsOrderManager._instance.flames.GetComponent<Renderer>().sortingOrder=5;
 
         KingsOrderManager._instance.Hide();
-        BoardManager._instance.DestroyBoard();
-        Game._instance.CloseArmyManagement();
+        Board._instance.DestroyBoard();
+        GameManager._instance.CloseArmyManagement();
         gameObject.SetActive(false);
     }
 

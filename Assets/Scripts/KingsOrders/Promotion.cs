@@ -18,13 +18,13 @@ public class Promotion : KingsOrder
     public Promotion() : base("Promotion", "Promotes a pawn to a new rank") {}
 
     public override IEnumerator Use(){
-        Player hero = Game._instance.hero;
-        Game._instance.tileSelect=true;
-        yield return new WaitUntil(() => BoardManager._instance.selectedPosition !=null);
-        Game._instance.tileSelect=false;
-        BoardPosition targetPosition = BoardManager._instance.selectedPosition;
-        BoardManager._instance.selectedPosition=null;
-        var Chessobj = Game._instance.currentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
+        Player hero = GameManager._instance.hero;
+        GameManager._instance.tileSelect=true;
+        yield return new WaitUntil(() => Board._instance.selectedPosition !=null);
+        GameManager._instance.tileSelect=false;
+        BoardPosition targetPosition = Board._instance.selectedPosition;
+        Board._instance.selectedPosition=null;
+        var Chessobj = GameManager._instance.currentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
         if(Chessobj==null){
             Debug.Log("No piece at possition");
             yield break;
@@ -87,11 +87,11 @@ public class Promotion : KingsOrder
         foreach (var ability in piece.abilities){
             newPiece.AddAbility(ability.Clone());
         }
-        Game._instance.hero.pieces.Remove(piece.gameObject);
-        Game._instance.hero.pieces.Add(newPiece.gameObject);
+        GameManager._instance.hero.pieces.Remove(piece.gameObject);
+        GameManager._instance.hero.pieces.Add(newPiece.gameObject);
         Destroy(piece.gameObject);
-        Game._instance.togglePieceColliders(new List<GameObject> { newPiece.gameObject },false);
-        Game._instance.currentMatch.MovePiece(newPiece, targetPosition.x, targetPosition.y);        
+        GameManager._instance.togglePieceColliders(new List<GameObject> { newPiece.gameObject },false);
+        GameManager._instance.currentMatch.MovePiece(newPiece, targetPosition.x, targetPosition.y);        
 
     }
 

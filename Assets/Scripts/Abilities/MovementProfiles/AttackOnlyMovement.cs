@@ -7,7 +7,7 @@ using UnityEngine;
 public class AttackOnlyMovement : MovementProfile
 {
     MovementProfile oldProfile;
-    Game game;
+    GameManager game;
     public AttackOnlyMovement(MovementProfile old){
         oldProfile=old;
     }
@@ -16,7 +16,7 @@ public class AttackOnlyMovement : MovementProfile
         var StandardMoves =oldProfile.GetValidMoves(piece);
         foreach (var position in StandardMoves)
         {
-            if (Game._instance.currentMatch.GetPieceAtPosition(position.x,position.y)!=null)
+            if (GameManager._instance.currentMatch.GetPieceAtPosition(position.x,position.y)!=null)
                 moves.Add(position);
         }
         if (allowFriendlyCapture)

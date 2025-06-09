@@ -33,11 +33,11 @@ public class MovePlate : MonoBehaviour
 
     public void OnMouseUp()
     {
-        if (Game._instance.isInMenu)
+        if (GameManager._instance.isInMenu)
         {
             return;
         }
-        Game._instance.currentMatch.ExecuteTurn(reference.GetComponent<Chessman>(), matrixX, matrixY);
+        GameManager._instance.currentMatch.ExecuteTurn(reference.GetComponent<Chessman>(), matrixX, matrixY);
     }
     
 

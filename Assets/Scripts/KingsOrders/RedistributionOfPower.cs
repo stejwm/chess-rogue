@@ -10,7 +10,7 @@ public class RedistributionOfPower : KingsOrder
     public override IEnumerator Use()
     {
     
-        List<GameObject> allPieces = Game._instance.hero.pieces; // Assuming this gets all active pieces
+        List<GameObject> allPieces = GameManager._instance.hero.pieces; // Assuming this gets all active pieces
 
         if (allPieces.Count == 0) yield break;
 

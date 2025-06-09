@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
-public class ChessMatch
+
+public class ChessMatch : IGameInputReceiver
 {
     //public List<GameObject> playerWhite;
     //public List<GameObject> playerBlack;
@@ -18,50 +20,45 @@ public class ChessMatch
     public bool BloodThirstOverride = false;
     public bool AvengingStrikeOverride = false;
     public bool SwiftOverride = false;
-    
     int turnReward = 30;
     public int reward;
-
     public bool AvengerActive = false;
-
     public bool isSetUpPhase = true;
     public int turns = 0;
+    
+    public UnityEvent<Chessman, Chessman> OnPieceCaptured = new UnityEvent<Chessman, Chessman>();
+    public UnityEvent<Chessman, int, bool, BoardPosition> OnAttack = new UnityEvent<Chessman, int, bool, BoardPosition>();
+    public UnityEvent<Chessman, Chessman> OnAttackStart = new UnityEvent<Chessman, Chessman>();
+    public UnityEvent<Chessman, Chessman, int, int> OnAttackEnd = new UnityEvent<Chessman, Chessman, int, int>();
+    public UnityEvent<Chessman, BoardPosition> OnMove = new UnityEvent<Chessman, BoardPosition>();
+    public UnityEvent<Chessman, BoardPosition> OnRawMoveEnd = new UnityEvent<Chessman, BoardPosition>();
+    public UnityEvent<Chessman, Chessman, bool> OnPieceBounced = new UnityEvent<Chessman,Chessman, bool>();
+    public UnityEvent<Chessman, Chessman, Chessman> OnSupportAdded = new UnityEvent<Chessman, Chessman, Chessman>();
+    public UnityEvent OnChessMatchStart = new UnityEvent();
 
 
     public ChessMatch(Player white, Player black)
     {
         //ResetPieces();
-        this.white=white;
-        this.black=black;
-        
+        this.white = white;
+        this.black = black;
+
     }
 
-    public ChessMatch(Player white)
+    public void HandleClick(GameObject clicked)
     {
-        this.white=white;
-        isSetUpPhase=false;
-        UpdateBoard();
+        Tile tile = clicked.GetComponent<Tile>();
+        if (tile != null)
+        {
+            HandleTileClick(tile);
+        }
+    }
+    
+    private void HandleTileClick(Tile tile)
+    {
+        // Piece selection, move handling, etc.
     }
 
-    public void TutorialMatch(){
-        Game._instance.tutorial=true;
-        CoroutineRunner.instance.StartCoroutine(Tutorial());
-
-    }
-
-    public IEnumerator Tutorial(){
-        MovePiece(positions[1,0].GetComponent<Chessman>(), 0, 2); // White knight
-        MovePiece(positions[3,1].GetComponent<Chessman>(), 3, 1); // White D pawn
-        MovePiece(positions[4,1].GetComponent<Chessman>(), 4, 3); // White E pawn
-        MovePiece(positions[1,7].GetComponent<Chessman>(), 2, 5); // Black night 
-        MovePiece(positions[3,7].GetComponent<Chessman>(), 5, 5); //Black queen
-        MovePiece(positions[5,7].GetComponent<Chessman>(), 7, 3); //Black bishop
-        MovePiece(positions[6,7].GetComponent<Chessman>(), 6, 3); //Black night
-        MovePiece(positions[3,6].GetComponent<Chessman>(), 3, 5); //Black D pawn
-        MovePiece(positions[4,6].GetComponent<Chessman>(), 4, 4); //Black E pawn
-
-        yield return null;
-    }
 
     public void StartMatch(){
         reward= 4;
@@ -70,23 +67,19 @@ public class ChessMatch
         white.CreateMoveCommandDictionary();
         black.CreateMoveCommandDictionary();
         isSetUpPhase=false;
-        Game._instance.toggleAllPieceColliders(false);
-        BoardManager._instance.toggleTileColliders(true);
+        //GameManager._instance.toggleAllPieceColliders(false);
+        Board._instance.toggleTileColliders(true);
         UpdateBoard();
         SetWhiteTurn();
-        Game._instance.OnChessMatchStart.Invoke();
-    }
-    private void DestroyTiles()
-    {
-        BoardManager._instance.DestroyBoard();
+        OnChessMatchStart.Invoke();
     }
 
     public void CheckInventory(){
         UpdateBoard();
-        if (Game._instance.hero.inventoryPieces.Count>0){
+        if (white.inventoryPieces.Count>0){
             KingsOrderManager._instance.Hide();
             int i = 0;
-            foreach (var obj in Game._instance.hero.inventoryPieces)
+            foreach (var obj in white.inventoryPieces)
             {
                 Chessman piece = obj.GetComponent<Chessman>();
                 obj.SetActive(true);
@@ -95,21 +88,16 @@ public class ChessMatch
                 i++;
                 piece.UpdateUIPosition();
             }
-            Game._instance.toggleAllPieceColliders(false);
-            Game._instance.togglePieceColliders(Game._instance.hero.inventoryPieces, true);
+            //GameManager._instance.toggleAllPieceColliders(false);
+            //GameManager._instance.togglePieceColliders(GameManager._instance.hero.inventoryPieces, true);
         }
         else{
             StartMatch();
         }
     }
-    public ChessMatch(AIPlayer white)
-    {
-        this.white=white;
-        //playerWhite = white.pieces;
-    }
 
     public void ExecuteTurn(Chessman piece, int x, int y){
-        Game._instance.isInMenu=true;
+        //GameManager._instance.isInMenu=true;
         MoveManager._instance.Set(this, piece,x,y);
         MoveManager._instance.HandleMove(piece,x,y);
     }
@@ -211,7 +199,7 @@ public class ChessMatch
     public void NextTurn()
     {
         //Debug.Log("IsTurnOverride? "+turnOverride);
-        if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride || Game._instance.pauseOverride || SwiftOverride || Game._instance.tutorial)
+        if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride ||  SwiftOverride)
             return;
         if (currentPlayerColor == PieceColor.White)
         {
@@ -274,12 +262,12 @@ public class ChessMatch
         BattlePanel._instance.HideStats();
         LogManager._instance.ClearLogs();
         ResetPieces();
-        DestroyTiles();
-        Game._instance.toggleAllPieceColliders(true);
-        BoardManager._instance.toggleTileColliders(false);
+        //DestroyTiles();
+        //GameManager._instance.toggleAllPieceColliders(true);
+        Board._instance.toggleTileColliders(false);
         white.playerCoins+=reward;
         white.playerCoins+=(turnReward/turns);
-        Game._instance.EndMatch();
+        //GameManager._instance.EndMatch();
     }
     public GameObject[,] GetPositions()
     {

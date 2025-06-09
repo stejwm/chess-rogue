@@ -7,7 +7,7 @@ using UnityEngine;
 public class TravelersGraceMovement : MovementProfile
 {
     MovementProfile oldProfile;
-    Game game;
+    GameManager game;
     public TravelersGraceMovement(MovementProfile old){
         oldProfile=old;
     }

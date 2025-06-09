@@ -29,10 +29,10 @@ public class KingsOrderManager : MonoBehaviour
     }
 
     public void Setup(){
-        if (Game._instance.hero.orders.Count>0)
+        if (GameManager._instance.hero.orders.Count>0)
         {
             parent.SetActive(true);
-            order = Game._instance.hero.orders[0];
+            order = GameManager._instance.hero.orders[0];
             this.GetComponent<Renderer>().material = dissolveMaterial;
             dissolveMaterial.SetFloat("_Weight", 0);
             title.color = Color.white;
@@ -54,23 +54,23 @@ public class KingsOrderManager : MonoBehaviour
     }
     IEnumerator UseAndHandleUI()
     {
-        if (Game._instance.state==ScreenState.ManagementScreen){
+        if (GameManager._instance.state==ScreenState.ManagementScreen){
             if(!order.canBeUsedFromManagement){
                 this.GetComponent<MMSpringPosition>().BumpRandom();
                 yield break;
             }
         }
-        int index = Game._instance.hero.orders.IndexOf(order);
-        Game._instance.togglePieceColliders(Game._instance.hero.pieces, false);
-        Game._instance.hero.orders.Remove(order);
+        int index = GameManager._instance.hero.orders.IndexOf(order);
+        GameManager._instance.togglePieceColliders(GameManager._instance.hero.pieces, false);
+        GameManager._instance.hero.orders.Remove(order);
         flames.Play();
         yield return StartCoroutine(order.Use()); // Wait for King's Order effect
-        if(Game._instance.state==ScreenState.ManagementScreen)
-            Game._instance.togglePieceColliders(Game._instance.hero.pieces, true);
+        if(GameManager._instance.state==ScreenState.ManagementScreen)
+            GameManager._instance.togglePieceColliders(GameManager._instance.hero.pieces, true);
         flames.Stop();
         yield return StartCoroutine(Dissolve());
         
-        if (Game._instance.hero.orders.Count <= 0)
+        if (GameManager._instance.hero.orders.Count <= 0)
         {
             parent.SetActive(false); // Now deactivate it *after* the coroutine finishes
             order = null;
@@ -78,7 +78,7 @@ public class KingsOrderManager : MonoBehaviour
         else
         {
             dissolveMaterial.SetFloat("_Weight", 0);
-            order = Game._instance.hero.orders[0];
+            order = GameManager._instance.hero.orders[0];
             UpdateCardUI();
         }
     }
@@ -92,20 +92,20 @@ public class KingsOrderManager : MonoBehaviour
     }
 
     public void CardLeft(){
-        int index = Game._instance.hero.orders.IndexOf(order);
+        int index = GameManager._instance.hero.orders.IndexOf(order);
         if (index>0){
             index--;
-            order=Game._instance.hero.orders[index];
+            order=GameManager._instance.hero.orders[index];
             UpdateCardUI();
         }else{
             this.GetComponent<MMSpringPosition>().BumpRandom();
         }
     }
     public void CardRight(){
-        int index = Game._instance.hero.orders.IndexOf(order);
-        if (index<Game._instance.hero.orders.Count-1){
+        int index = GameManager._instance.hero.orders.IndexOf(order);
+        if (index<GameManager._instance.hero.orders.Count-1){
             index++;
-            order=Game._instance.hero.orders[index];
+            order=GameManager._instance.hero.orders[index];
             UpdateCardUI();
         }
         else{

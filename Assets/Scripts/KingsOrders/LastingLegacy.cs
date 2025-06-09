@@ -12,23 +12,23 @@ public class LastingLegacy : KingsOrder
     public LastingLegacy() : base("Lasting Legacy", "Abandon a piece to create 3 copies of one of its ability in the next shop") {}
 
     public override IEnumerator Use(){
-        Player hero = Game._instance.hero;
-        Game._instance.tileSelect=true;
-        yield return new WaitUntil(() => BoardManager._instance.selectedPosition !=null);
-        Game._instance.tileSelect=false;
-        BoardPosition targetPosition = BoardManager._instance.selectedPosition;
-        BoardManager._instance.selectedPosition= null;
-        var Chessobj = Game._instance.currentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
+        Player hero = GameManager._instance.hero;
+        GameManager._instance.tileSelect=true;
+        yield return new WaitUntil(() => Board._instance.selectedPosition !=null);
+        GameManager._instance.tileSelect=false;
+        BoardPosition targetPosition = Board._instance.selectedPosition;
+        Board._instance.selectedPosition= null;
+        var Chessobj = GameManager._instance.currentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
         if(Chessobj==null){
             Debug.Log("No piece at position");
             yield break;
         }
         Chessman cm = Chessobj.GetComponent<Chessman>();
-        Game._instance.lastingLegacyAbility = cm.abilities[Random.Range(0, cm.abilities.Count)].Clone();
-        Game._instance.hero.pieces.Remove(Chessobj);
-        Game._instance.hero.openPositions.Add(cm.startingPosition);
+        GameManager._instance.lastingLegacyAbility = cm.abilities[Random.Range(0, cm.abilities.Count)].Clone();
+        GameManager._instance.hero.pieces.Remove(Chessobj);
+        GameManager._instance.hero.openPositions.Add(cm.startingPosition);
         Chessobj.GetComponent<Chessman>().DestroyPiece();
-        Game._instance.abandonedPieces++;
+        GameManager._instance.abandonedPieces++;
         
         
 
@@ -38,8 +38,8 @@ public class LastingLegacy : KingsOrder
     public void RemoveCivilians(PieceColor color){
         foreach (var piece in civilians)
         {
-            Game._instance.currentMatch.black.capturedPieces.Remove(piece);
-            Game._instance.hero.pieces.Remove(piece);
+            GameManager._instance.currentMatch.black.capturedPieces.Remove(piece);
+            GameManager._instance.hero.pieces.Remove(piece);
             Destroy(piece);
         }
     }

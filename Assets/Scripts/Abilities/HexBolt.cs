@@ -14,7 +14,7 @@ public class HexBolt : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceBounced.AddListener(Hex);
+        GameManager._instance.OnPieceBounced.AddListener(Hex);
         base.Apply(piece);
 
         
@@ -22,7 +22,7 @@ public class HexBolt : Ability
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceBounced.RemoveListener(Hex); 
+        GameManager._instance.OnPieceBounced.RemoveListener(Hex); 
 
     }
     public void Hex(Chessman attacker, Chessman defender, bool isBounceReduced){

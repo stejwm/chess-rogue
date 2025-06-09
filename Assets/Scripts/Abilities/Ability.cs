@@ -22,7 +22,7 @@ public abstract class Ability : ScriptableObject
     public virtual void Apply(Chessman piece){
         //piece.releaseCost+= (int)(rarity + 1);
         piece.abilities.Add(this);
-        Game._instance.OnAbilityAdded.Invoke(piece, this);
+        GameManager._instance.OnAbilityAdded.Invoke(piece, this);
     }
     public abstract void Remove(Chessman piece);
 

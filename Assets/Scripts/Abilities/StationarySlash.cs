@@ -21,30 +21,30 @@ public class StationarySlash : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         
-        Game._instance.OnPieceCaptured.AddListener(ListenForEnd);
-        Game._instance.OnPieceBounced.AddListener(ReplaceOnBoard);
+        GameManager._instance.OnPieceCaptured.AddListener(ListenForEnd);
+        GameManager._instance.OnPieceBounced.AddListener(ReplaceOnBoard);
         piece.canStationarySlash=true;
         base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceCaptured.RemoveListener(ListenForEnd);
-        Game._instance.OnPieceBounced.RemoveListener(ReplaceOnBoard);
+        GameManager._instance.OnPieceCaptured.RemoveListener(ListenForEnd);
+        GameManager._instance.OnPieceBounced.RemoveListener(ReplaceOnBoard);
         piece.canStationarySlash=false; 
 
     }
     
     public void ListenForEnd(Chessman attacker, Chessman defender){
         if (attacker==piece){
-            Game._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
+            GameManager._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Stationary Slash</gradient></color>",  $"Staying put on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
         }
     }
 
     public void ReplaceOnBoard(Chessman attacker, Chessman defender, bool isReduced){
         if (attacker==piece){
-            Game._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
+            GameManager._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
         }
     }
 

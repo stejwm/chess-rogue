@@ -13,18 +13,18 @@ public class BloodOffering : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceCaptured.AddListener(AddBonus);
+        GameManager._instance.OnPieceCaptured.AddListener(AddBonus);
         base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceCaptured.RemoveListener(AddBonus); 
+        GameManager._instance.OnPieceCaptured.RemoveListener(AddBonus); 
 
     }
     public void AddBonus(Chessman attacker, Chessman defender){
         if(!piece){
-            Game._instance.OnPieceCaptured.RemoveListener(AddBonus); 
+            GameManager._instance.OnPieceCaptured.RemoveListener(AddBonus); 
             return;
         }
         if (defender.color==piece.color){

@@ -19,9 +19,9 @@ public class Teacher : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceAdded.AddListener(PieceAdded);
-        Game._instance.OnChessMatchStart.AddListener(ApplyBonus);
-        Game._instance.OnAbilityAdded.AddListener(RemoveBonusFromPiece);
+        GameManager._instance.OnPieceAdded.AddListener(PieceAdded);
+        GameManager._instance.OnChessMatchStart.AddListener(ApplyBonus);
+        GameManager._instance.OnAbilityAdded.AddListener(RemoveBonusFromPiece);
         piece.OnChessmanStateChanged += HandleChessmanStateChanged;
         CreateGeneral();
         base.Apply(piece);
@@ -29,9 +29,9 @@ public class Teacher : Ability
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceAdded.RemoveListener(PieceAdded);
-        Game._instance.OnChessMatchStart.RemoveListener(ApplyBonus);
-        Game._instance.OnAbilityAdded.RemoveListener(RemoveBonusFromPiece);
+        GameManager._instance.OnPieceAdded.RemoveListener(PieceAdded);
+        GameManager._instance.OnChessMatchStart.RemoveListener(ApplyBonus);
+        GameManager._instance.OnAbilityAdded.RemoveListener(RemoveBonusFromPiece);
         piece.OnChessmanStateChanged -= HandleChessmanStateChanged;
         ResetBonus();
     }
@@ -76,7 +76,7 @@ public class Teacher : Ability
         if(addedPiece.owner==piece.owner && addedPiece.abilities.Count>0){ 
             if(appliedBonus.ContainsKey(addedPiece)){
                 var currentlyAppliedBonus = appliedBonus[addedPiece];
-                if(Game._instance.state == ScreenState.ActiveMatch){
+                if(GameManager._instance.state == ScreenState.ActiveMatch){
                     addedPiece.attackBonus = Mathf.Max(-addedPiece.attack, addedPiece.attackBonus - currentlyAppliedBonus);
                     addedPiece.defenseBonus = Mathf.Max(-addedPiece.defense, addedPiece.defenseBonus - currentlyAppliedBonus);
                     addedPiece.supportBonus = Mathf.Max(-addedPiece.support, addedPiece.supportBonus - currentlyAppliedBonus);

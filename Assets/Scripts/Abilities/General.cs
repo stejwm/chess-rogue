@@ -21,8 +21,8 @@ public class General : Ability
             return;
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceAdded.AddListener(PieceAdded);
-        Game._instance.OnChessMatchStart.AddListener(ApplyBonus);
+        GameManager._instance.OnPieceAdded.AddListener(PieceAdded);
+        GameManager._instance.OnChessMatchStart.AddListener(ApplyBonus);
         CreateGeneral();
         base.Apply(piece);
         piece.OnChessmanStateChanged += HandleChessmanStateChanged;
@@ -30,8 +30,8 @@ public class General : Ability
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceAdded.RemoveListener(PieceAdded);
-        Game._instance.OnChessMatchStart.RemoveListener(ApplyBonus);
+        GameManager._instance.OnPieceAdded.RemoveListener(PieceAdded);
+        GameManager._instance.OnChessMatchStart.RemoveListener(ApplyBonus);
         piece.OnChessmanStateChanged -= HandleChessmanStateChanged;
         ResetBonus();
     }

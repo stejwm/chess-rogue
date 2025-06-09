@@ -13,7 +13,7 @@ public class PeasantMarch : KingsOrder
     public PeasantMarch() : base("Peasant March", "All pawns permanently gain +1 to all stats") {}
 
     public override IEnumerator Use(){
-        Player hero = Game._instance.hero;
+        Player hero = GameManager._instance.hero;
         foreach (var pieceObj in hero.pieces)
         {   
             Chessman piece = pieceObj.GetComponent<Chessman>();

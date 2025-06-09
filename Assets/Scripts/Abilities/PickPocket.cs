@@ -13,13 +13,13 @@ public class PickPocket : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceBounced.AddListener(Steal);
+        GameManager._instance.OnPieceBounced.AddListener(Steal);
         base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceBounced.RemoveListener(Steal); 
+        GameManager._instance.OnPieceBounced.RemoveListener(Steal); 
 
     }
     public void Steal(Chessman attacker, Chessman defender, bool isBounceReduced){

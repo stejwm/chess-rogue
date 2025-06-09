@@ -12,13 +12,13 @@ public class RoyalFavor : KingsOrder
     public RoyalFavor() : base("Royal Favor", "One piece permanently gains +1 to all stats") {}
 
     public override IEnumerator Use(){
-        Player hero = Game._instance.hero;
-        Game._instance.tileSelect=true;
-        yield return new WaitUntil(() => BoardManager._instance.selectedPosition !=null);
-        Game._instance.tileSelect=false;
-        BoardPosition targetPosition = BoardManager._instance.selectedPosition;
-        BoardManager._instance.selectedPosition=null;
-        var Chessobj = Game._instance.currentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
+        Player hero = GameManager._instance.hero;
+        GameManager._instance.tileSelect=true;
+        yield return new WaitUntil(() => Board._instance.selectedPosition !=null);
+        GameManager._instance.tileSelect=false;
+        BoardPosition targetPosition = Board._instance.selectedPosition;
+        Board._instance.selectedPosition=null;
+        var Chessobj = GameManager._instance.currentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
         if(Chessobj==null){
             Debug.Log("No piece at possition");
             yield break;

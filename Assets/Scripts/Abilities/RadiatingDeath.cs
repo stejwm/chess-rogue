@@ -13,13 +13,13 @@ public class RadiatingDeath : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceCaptured.AddListener(RadiateDeath);
+        GameManager._instance.OnPieceCaptured.AddListener(RadiateDeath);
         base.Apply(piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceCaptured.RemoveListener(RadiateDeath); 
+        GameManager._instance.OnPieceCaptured.RemoveListener(RadiateDeath); 
 
     }
     public void RadiateDeath(Chessman attacker, Chessman defender){

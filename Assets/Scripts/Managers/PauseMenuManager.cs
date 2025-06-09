@@ -33,7 +33,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void CloseMenu(){
         Time.timeScale=1;
-        Game._instance.isInMenu=false;
+        GameManager._instance.isInMenu=false;
         gameObject.SetActive(false);
     }
 
@@ -46,12 +46,12 @@ public class PauseMenuManager : MonoBehaviour
         List<MapNodeData> Map = new List<MapNodeData>();
         PlayerData playerData = new PlayerData
         {
-            coins = Game._instance.hero.playerCoins,
-            blood = Game._instance.hero.playerBlood,
+            coins = GameManager._instance.hero.playerCoins,
+            blood = GameManager._instance.hero.playerBlood,
             pieces = new List<PieceData>()
         };
 
-        foreach (var pieceObj in Game._instance.hero.pieces)
+        foreach (var pieceObj in GameManager._instance.hero.pieces)
         {
             Chessman piece = pieceObj.GetComponent<Chessman>();
             PieceData pieceData = new PieceData
@@ -106,9 +106,9 @@ public class PauseMenuManager : MonoBehaviour
         
         var writer = QuickSaveWriter.Create("Game");
             writer.Write("Player", playerData);
-            writer.Write("State", Game._instance.state);
-            writer.Write("Level", Game._instance.level);
-            writer.Write("Shop", Game._instance.shopUsed);
+            writer.Write("State", GameManager._instance.state);
+            writer.Write("Level", GameManager._instance.level);
+            writer.Write("Shop", GameManager._instance.shopUsed);
             writer.Write("MapNodes", Map);
             writer.Commit();
     }

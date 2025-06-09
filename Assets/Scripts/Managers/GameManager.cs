@@ -26,7 +26,8 @@ public enum ScreenState
     ShopScreen,
     ManagementScreen
 }
-public class Game : MonoBehaviour
+
+public class GameManager : MonoBehaviour
 {
     public Player hero;
     //public AIPlayer white;
@@ -39,7 +40,7 @@ public class Game : MonoBehaviour
     public AudioClip bounce;
     public AudioClip move;
     public AudioClip ability;
-    public ChessMatch currentMatch;
+    
     public int level=0;
     public float waitTime;
     public List<Ability> AllAbilities; // Drag-and-drop ScriptableObject assets here in the Inspector
@@ -62,7 +63,6 @@ public class Game : MonoBehaviour
     public int baseAttack;
     public int baseDefense;
     public int abandonedPieces;
-    public static Game _instance;
 
     //Variables for selecting cards
     public Card selectedCard;
@@ -82,28 +82,17 @@ public class Game : MonoBehaviour
 
 
     //Events
-    public UnityEvent<Chessman, Chessman> OnPieceCaptured = new UnityEvent<Chessman, Chessman>();
-    public UnityEvent<Chessman, int, bool, BoardPosition> OnAttack = new UnityEvent<Chessman, int, bool, BoardPosition>();
-    public UnityEvent<Chessman, Chessman> OnAttackStart = new UnityEvent<Chessman, Chessman>();
-    public UnityEvent<Chessman, Chessman, int, int> OnAttackEnd = new UnityEvent<Chessman, Chessman, int, int>();
-    public UnityEvent<Chessman, BoardPosition> OnMove = new UnityEvent<Chessman, BoardPosition>();
-    public UnityEvent<Chessman, BoardPosition> OnRawMoveEnd = new UnityEvent<Chessman, BoardPosition>();
-    public UnityEvent<Chessman, Chessman, bool> OnPieceBounced = new UnityEvent<Chessman,Chessman, bool>();
-    public UnityEvent<Chessman, Chessman, Chessman> OnSupportAdded = new UnityEvent<Chessman, Chessman, Chessman>();
+   
     public UnityEvent<Chessman, Ability> OnAbilityAdded = new UnityEvent<Chessman, Ability>();
-    public UnityEvent OnChessMatchStart = new UnityEvent();
+    
     public UnityEvent<PieceColor> OnGameEnd= new UnityEvent<PieceColor>();
     public UnityEvent OnSoulBonded= new UnityEvent();
     public UnityEvent<Chessman> OnPieceAdded = new UnityEvent<Chessman>();
 
-    public void Awake(){
-        if(_instance !=null && _instance !=this){
-            Destroy(this.gameObject);
-        }
-        else{
-            _instance=this;
-        }
-    }
+    public Board boardPrefab;
+    private ChessMatch currentMatch;
+    private Board board;
+
     public void Start()
     {
         NameDatabase.LoadNames();
@@ -111,20 +100,19 @@ public class Game : MonoBehaviour
             LoadGame();
         }
         else{
-            BoardManager._instance.CreateBoard();
             LetsBegin();
         }
         
     }
 
     public void LetsBegin(){
-        DialogueManager._instance.StartDialogue(AllDialogues[0]);
+        board = Instantiate(boardPrefab);
         heroColor=PieceColor.White;
         opponent.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(opponent, opponent.color, Team.Enemy);
         hero.pieces = PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
         hero.Initialize();
         opponent.Initialize();
-        NewMatch(hero, opponent);
+        board.CreateNewMatch(hero, opponent);
     }
 
     public void LoadGame(){
@@ -139,8 +127,8 @@ public class Game : MonoBehaviour
 
         Debug.Log($"Resuming state {state}");
         MapManager._instance.LoadMap(mapNodes);
-        Game._instance.hero.playerBlood=player.blood;
-        Game._instance.hero.playerCoins=player.coins;
+        hero.playerBlood=player.blood;
+        hero.playerCoins=player.coins;
 
         hero.pieces = PieceFactory._instance.LoadPieces(player.pieces);
 
@@ -148,39 +136,13 @@ public class Game : MonoBehaviour
         
     }
 
-    public void Tutorial(){
-        heroColor=PieceColor.White;
-        opponent.pieces = PieceFactory._instance.CreatePiecesForColor(opponent, opponent.color, Team.Enemy);
-        hero.pieces = PieceFactory._instance.CreatePiecesForColor(hero, hero.color, Team.Hero);
-        hero.Initialize();
-        opponent.Initialize();
-        ChessMatch match =  new ChessMatch(hero, opponent);
-        currentMatch = match;
-        match.TutorialMatch();
-    }
-
     public void OpenMarket(){
         KingsOrderManager._instance.Hide();
         MarketManager._instance.OpenMarket();
         this.state=ScreenState.PrisonersMarket;
     }
-    public void NewMatch(Player white, Player black){
-        state = ScreenState.ActiveMatch;
-        currentMatch = new ChessMatch(white, black);
-        currentMatch.CheckInventory();
-    }
 
-    public void Pause(){
-        pauseOverride=!pauseOverride;
-        pause=true;
-
-    }
-
-    public bool PositionOnBoard(int x, int y)
-    {
-        if (x < 0 || y < 0 || x >= positions.GetLength(0) || y >= positions.GetLength(1)) return false;
-        return true;
-    }
+    
 
     public void Update()
     {
@@ -262,20 +224,6 @@ public class Game : MonoBehaviour
         }
         
     }
-    /* public void CreateCards(){
-        GameObject obj;
-        List<Ability> shuffledcards = AllAbilities.OrderBy(_ => rng.Next()).ToList();
-        for(int i=0; i<3;i++){
-            Vector2 localPosition = new Vector2(i+i, 2);
-            obj = Instantiate(card, localPosition, Quaternion.identity);
-            //AllAbilities.Sort();
-            //int s = Random.Range (0, AllAbilities.Count);
-            
-            obj.GetComponent<Card>().ability = shuffledcards[i].Clone();
-            cards.Add(obj);
-        }
-        
-    } */
     public void PieceSelected(Chessman piece){
         if (selectedPiece != null && selectedPiece == piece){
             //sprite= selectedPiece.GetComponent<SpriteRenderer>();
@@ -366,11 +314,10 @@ public class Game : MonoBehaviour
         //state=ScreenState.ActiveMatch;
         shopUsed=false;
         opponent.DestroyPieces();
-        BoardManager._instance.CreateBoard();
         opponent.pieces = PieceFactory._instance.CreateOpponentPieces(opponent, enemyType);
         opponent.Initialize();
         opponent.LevelUp(level, enemyType);
-        NewMatch(hero, opponent);
+        board.CreateNewMatch(hero, opponent);
     }
 
     public void CloseShop(){
