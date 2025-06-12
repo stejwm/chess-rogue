@@ -6,16 +6,15 @@ public class SpectralStrideMovement : MovementProfile
 {
     private MovementProfile oldMovementProfile;
 
-    public SpectralStrideMovement(MovementProfile oldMovementProfile){
-        this.oldMovementProfile=oldMovementProfile;
-    }
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
-        if(allowFriendlyCapture)
-            return GetSpectralStrideMoves(piece, piece.xBoard, piece.yBoard);
+    public SpectralStrideMovement(Board board, MovementProfile old) : base(board) {oldMovementProfile = old;}
+    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture)
+    {
+        if (allowFriendlyCapture)
+            return GetSpectralStrideMoves(board, piece, piece.xBoard, piece.yBoard);
         else
-            return Movement.RemoveFriendlyPieces(GetSpectralStrideMoves(piece, piece.xBoard, piece.yBoard), piece);
+            return Movement.RemoveFriendlyPieces(board, GetSpectralStrideMoves(board, piece, piece.xBoard, piece.yBoard), piece);
     }
-    public List<BoardPosition> GetSpectralStrideMoves(Chessman piece, int xBoard, int yBoard)
+    public List<BoardPosition> GetSpectralStrideMoves(Board board, Chessman piece, int xBoard, int yBoard)
     {
         var spectralMoves = new List<BoardPosition>();
         var directions = oldMovementProfile.GetDirections(piece);
@@ -28,10 +27,10 @@ public class SpectralStrideMovement : MovementProfile
             int currentX = xBoard + direction.x;
             int currentY = yBoard + direction.y;
 
-            while (board.IsPositionOnBoard(currentX, currentY))
+            while (BoardPosition.IsPositionOnBoard(currentX, currentY))
             {
                 // Check if the position is blocked by an ally
-                var occupyingPiece = GameManager._instance.currentMatch.GetPieceAtPosition(currentX, currentY);
+                var occupyingPiece = board.CurrentMatch.GetPieceAtPosition(currentX, currentY);
                 if (occupyingPiece != null)
                 {
                     var occupyingChessman = occupyingPiece.GetComponent<Chessman>();
@@ -66,7 +65,7 @@ public class SpectralStrideMovement : MovementProfile
 
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
         if (piece.type!=PieceType.Pawn){
-            return GetSpectralStrideMoves(piece, piece.xBoard, piece.yBoard);
+            return GetSpectralStrideMoves(board, piece, piece.xBoard, piece.yBoard);
         }else{
             return oldMovementProfile.GetValidSupportMoves(piece);
         }

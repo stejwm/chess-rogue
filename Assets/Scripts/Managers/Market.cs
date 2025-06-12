@@ -19,6 +19,7 @@ public class MarketManager : MonoBehaviour
     public TMP_Text coinText;
     public int totalCost;
     public PieceColor selectedColor = PieceColor.None;
+    [SerializeField] private Board board;
 
 
     //current turn
@@ -48,15 +49,12 @@ public class MarketManager : MonoBehaviour
         totalCost=0;
         //Debug.Log("Opening market");
         gameObject.SetActive(true);
-        bloodText.text = ": "+GameManager._instance.hero.playerBlood;
-        coinText.text = ": "+GameManager._instance.hero.playerCoins;
-        myCapturedPieces=GameManager._instance.hero.capturedPieces;
-        opponentCapturedPieces= GameManager._instance.opponent.capturedPieces;
+        bloodText.text = ": "+board.Hero.playerBlood;
+        coinText.text = ": "+board.Hero.playerCoins;
+        myCapturedPieces=board.Hero.capturedPieces;
+        opponentCapturedPieces= board.CurrentMatch.black.capturedPieces;
 
-        GameManager._instance.opponent.pieces.AddRange(myCapturedPieces);
-        GameManager._instance.toggleAllPieceColliders(false);
-        GameManager._instance.togglePieceColliders(myCapturedPieces, true);
-        GameManager._instance.togglePieceColliders(opponentCapturedPieces, true);
+        board.CurrentMatch.black.pieces.AddRange(myCapturedPieces);
 
         /* var controller = GameObject.FindGameObjectWithTag("GameController");
         var game = controller.GetComponent<Game>(); */
@@ -87,7 +85,7 @@ public class MarketManager : MonoBehaviour
 
             }
             Chessman chessman = piece.GetComponent<Chessman>();
-            if(chessman.owner == GameManager._instance.hero){
+            if(chessman.owner == board.Hero){
                 if(chessman.abilities.Count>chessman.diplomacy){
                     Debug.Log("checking diplomacy for "+piece.name);
                     int survive = Random.Range(1,10);
@@ -107,17 +105,17 @@ public class MarketManager : MonoBehaviour
 
     public void CloseMarket(){
         selectedColor = PieceColor.None;
-        opponentCapturedPieces = GameManager._instance.opponent.capturedPieces;
+        opponentCapturedPieces = board.CurrentMatch.black.capturedPieces;
         if(opponentCapturedPieces.Count>0)
         foreach (GameObject piece in opponentCapturedPieces)
         {
             if(piece!=null){
                 Chessman cm = piece.GetComponent<Chessman>();
-                GameManager._instance.hero.pieces.Remove(piece);
-                GameManager._instance.hero.openPositions.Add(cm.startingPosition);
+                board.Hero.pieces.Remove(piece);
+                board.Hero.openPositions.Add(cm.startingPosition);
                 piece.GetComponent<Chessman>().DestroyPiece();
-                GameManager._instance.abandonedPieces++;
-                Debug.Log("AbandonedPieces :"+GameManager._instance.abandonedPieces);
+                board.Hero.AbandonedPieces++; 
+                Debug.Log("AbandonedPieces :"+ board.Hero.AbandonedPieces);
             }
             
         }
@@ -127,12 +125,12 @@ public class MarketManager : MonoBehaviour
             if(piece!=null)
                 piece.GetComponent<Chessman>().DestroyPiece();
         }
-        GameManager._instance.state=ScreenState.RewardScreen;
+        //GameManager._instance.state=ScreenState.RewardScreen;
         myCapturedPieces.Clear();
         opponentCapturedPieces.Clear();
         selectedPieces.Clear();
 
-        GameManager._instance.OpenReward();
+        //GameManager._instance.OpenReward();
         gameObject.SetActive(false);
         
         
@@ -141,35 +139,35 @@ public class MarketManager : MonoBehaviour
     public void ReleasePieces(){
         foreach (Chessman item in selectedPieces)
         {
-            GameManager._instance.hero.playerCoins+= item.releaseCost;
+            board.Hero.playerCoins+= item.releaseCost;
             item.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             item.gameObject.SetActive(false);
-            if(item.owner == GameManager._instance.hero){
+            if(item.owner == board.Hero){
                 item.DestroyPiece();
             }
         }
-        coinText.text = ": "+ GameManager._instance.hero.playerCoins;
+        coinText.text = ": "+ board.Hero.playerCoins;
         selectedPieces.Clear();
     }
 
     public void ReturnMyPieces(){
         foreach (Chessman piece in selectedPieces){
-            if(piece.owner != GameManager._instance.hero)
+            if(piece.owner != board.Hero)
                 break;
             if (selectedPieces.Contains(piece)){
-                GameManager._instance.hero.playerCoins-= piece.releaseCost;
+                board.Hero.playerCoins-= piece.releaseCost;
                 SpriteRenderer sprite= piece.GetComponent<SpriteRenderer>();
                 piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 piece.gameObject.SetActive(false);
-                GameManager._instance.hero.pieces.Add(piece.gameObject);
+                board.Hero.pieces.Add(piece.gameObject);
                 opponentCapturedPieces.Remove(piece.gameObject);
                 myCapturedPieces.Remove(piece.gameObject);
-                GameManager._instance.opponent.pieces.Remove(piece.gameObject);
+                board.CurrentMatch.black.pieces.Remove(piece.gameObject);
 
             }
         }
         totalCost=0;
-        coinText.text = ": "+GameManager._instance.hero.playerCoins;
+        coinText.text = ": "+board.Hero.playerCoins;
         selectedPieces.Clear();
     }
 
@@ -177,14 +175,14 @@ public class MarketManager : MonoBehaviour
         
         foreach (Chessman item in selectedPieces)
         {
-            GameManager._instance.hero.playerBlood+= item.blood;
+            board.Hero.playerBlood+= item.blood;
             myCapturedPieces.Remove(item.gameObject);
             item.gameObject.SetActive(false);
-            if(item.owner == GameManager._instance.hero){
+            if(item.owner == board.Hero){
                 item.DestroyPiece();
             }
         }
-        bloodText.text = ": "+GameManager._instance.hero.playerBlood;
+        bloodText.text = ": "+board.Hero.playerBlood;
         selectedPieces.Clear();
     }
 
@@ -194,7 +192,7 @@ public class MarketManager : MonoBehaviour
         //Debug.Log(piece.name);
         //Debug.Log(Game._instance.hero.playerCoins);
         //Debug.Log(selectedPieces.Count);
-        if(totalCost+piece.releaseCost>GameManager._instance.hero.playerCoins && piece.color==GameManager._instance.heroColor && !selectedPieces.Contains(piece))
+        if(totalCost+piece.releaseCost>board.Hero.playerCoins && piece.color== PieceColor.White && !selectedPieces.Contains(piece))
             return;
         if(piece.color != selectedColor)
             return;
@@ -202,13 +200,13 @@ public class MarketManager : MonoBehaviour
         if(selectedPieces.Contains(piece)){
             selectedPieces.Remove(piece);
             piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            if(piece.color==GameManager._instance.heroColor)
+            if(piece.color== PieceColor.White)
                 totalCost-=piece.releaseCost;
         }
         else{
             selectedPieces.Add(piece);
             piece.highlightedParticles.Play();
-            if(piece.color==GameManager._instance.heroColor)
+            if(piece.color== PieceColor.White)
                 totalCost+=piece.releaseCost;
         }
     }

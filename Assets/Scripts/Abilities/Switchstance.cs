@@ -10,17 +10,17 @@ public class Switchstance : Ability
     public Switchstance() : base("Switchstance", "Swap attack and defense values on every combat (Attacking or Defending)") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnAttackEnd.AddListener(Swap);
-        base.Apply(piece);
+        eventHub.OnAttackEnd.AddListener(Swap);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnAttackEnd.RemoveListener(Swap); 
+        eventHub.OnAttackEnd.RemoveListener(Swap); 
 
     }
     public void Swap(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){

@@ -10,7 +10,7 @@ public abstract class KingsOrder : ScriptableObject
     public string Description;
     public Sprite sprite;
     public int Cost = 15;
-    public abstract IEnumerator Use();
+    public abstract IEnumerator Use(Board board);
     public bool canBeUsedFromManagement;
     protected KingsOrder(string name, string description)
     {

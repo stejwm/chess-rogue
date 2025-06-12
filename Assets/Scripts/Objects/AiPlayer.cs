@@ -17,7 +17,7 @@ public class AIPlayer : Player
     {
         agent.pieces=pieces;
         agent.StartUp();
-        openPositions = new List<BoardPosition>();
+        openPositions = new List<Tile>();
     }
 
     public override void CreateMoveCommandDictionary(){
@@ -45,7 +45,7 @@ public class AIPlayer : Player
     }
 
     public IEnumerator Move(){
-        yield return new WaitForSeconds(GameManager._instance.waitTime);
+        yield return new WaitForSeconds(0.5f);
         Debug.Log("Requested move from "+color);
         agent.RequestDecision();
     }

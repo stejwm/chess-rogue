@@ -19,28 +19,10 @@ public class ArmyManager : MonoBehaviour
     public GameObject kingsOrderObject;
     public GameObject KOCanvas;
     public GameObject KOParent;
-
-    //current turn
-    public static ArmyManager _instance;
-
-
-    void Awake()
-    {
-        
-        if(_instance !=null && _instance !=this){
-            Destroy(this.gameObject);
-        }
-        else{
-            _instance=this;
-        }
-    }
-
-    //Unity calls this right when the game starts, there are a few built in functions
-    //that Unity can call for you
+    public Board board;
     public void Start()
     {
         gameObject.SetActive(false);
-        
     }
 
     public void SelectPiece(Chessman piece)
@@ -60,25 +42,25 @@ public class ArmyManager : MonoBehaviour
         if(selectedPiece==null){
             SelectPiece(piece);
         }
-        else if((GameManager._instance.hero.inventoryPieces.Contains(piece.gameObject) && selectedPiece!=null) || GameManager._instance.hero.inventoryPieces.Contains(selectedPiece.gameObject)){
+        else if((board.Hero.inventoryPieces.Contains(piece.gameObject) && selectedPiece!=null) || board.Hero.inventoryPieces.Contains(selectedPiece.gameObject)){
             DeselectPiece(selectedPiece);
             return;
         }
         else if (selectedPiece==piece){
             DeselectPiece(piece);
         }
-        else if (selectedPiece && GameManager._instance.hero.playerCoins>=pricePerPiece*2){
-            BoardPosition position1 = selectedPiece.startingPosition;
-            BoardPosition position2 = piece.startingPosition;
+        else if (selectedPiece && board.Hero.playerCoins>=pricePerPiece*2){
+            Tile position1 = selectedPiece.startingPosition;
+            Tile position2 = piece.startingPosition;
             selectedPiece.startingPosition=position2;
             piece.startingPosition=position1;
-            selectedPiece.xBoard=position2.x;
-            selectedPiece.yBoard=position2.y;
-            piece.xBoard=position1.x;
-            piece.yBoard=position1.y;
+            selectedPiece.xBoard=position2.X;
+            selectedPiece.yBoard=position2.Y;
+            piece.xBoard=position1.X;
+            piece.yBoard=position1.Y;
             selectedPiece.UpdateUIPosition();
             piece.UpdateUIPosition();
-            GameManager._instance.hero.playerCoins-=pricePerPiece*2;
+            board.Hero.playerCoins-=pricePerPiece*2;
             UpdateCurrency();
             DeselectPiece(selectedPiece);
         }
@@ -86,30 +68,30 @@ public class ArmyManager : MonoBehaviour
             piece.GetComponent<MMSpringPosition>().BumpRandom();
         }
     }
-    public void PositionSelect(BoardPosition position){
+    public void PositionSelect(Tile position){
         if(selectedPiece==null){
             return;
         }
-        if(GameManager._instance.hero.inventoryPieces.Contains(selectedPiece.gameObject)){
-            GameManager._instance.hero.inventoryPieces.Remove(selectedPiece.gameObject);
-            GameManager._instance.hero.pieces.Add(selectedPiece.gameObject);
-            selectedPiece.owner.openPositions.Add(new BoardPosition(selectedPiece.xBoard, selectedPiece.yBoard));
+        if(board.Hero.inventoryPieces.Contains(selectedPiece.gameObject)){
+            board.Hero.inventoryPieces.Remove(selectedPiece.gameObject);
+            board.Hero.pieces.Add(selectedPiece.gameObject);
+            selectedPiece.owner.openPositions.Add(selectedPiece.startingPosition);
             selectedPiece.owner.openPositions.Remove(position);
             selectedPiece.startingPosition=position;
-            selectedPiece.xBoard=position.x;
-            selectedPiece.yBoard=position.y;
+            selectedPiece.xBoard=position.X;
+            selectedPiece.yBoard=position.Y;
             selectedPiece.UpdateUIPosition();
             UpdateCurrency();
-            GameManager._instance.OnPieceAdded.Invoke(selectedPiece);
+            board.EventHub.RaisePieceAdded(selectedPiece);
             DeselectPiece(selectedPiece);
-        }else if (selectedPiece && GameManager._instance.hero.playerCoins>=pricePerPiece){
-            selectedPiece.owner.openPositions.Add(new BoardPosition(selectedPiece.xBoard, selectedPiece.yBoard));
+        }else if (selectedPiece && board.Hero.playerCoins>=pricePerPiece){
+            selectedPiece.owner.openPositions.Add(selectedPiece.startingPosition);
             selectedPiece.owner.openPositions.Remove(position);
             selectedPiece.startingPosition=position;
-            selectedPiece.xBoard=position.x;
-            selectedPiece.yBoard=position.y;
+            selectedPiece.xBoard=position.X;
+            selectedPiece.yBoard=position.Y;
             selectedPiece.UpdateUIPosition();
-            GameManager._instance.hero.playerCoins-=pricePerPiece;
+            board.Hero.playerCoins-=pricePerPiece;
             UpdateCurrency();
             DeselectPiece(selectedPiece);
         }
@@ -119,47 +101,13 @@ public class ArmyManager : MonoBehaviour
     }
 
     public void OpenShop(){
-        ChessMatch fakeMatch = new ChessMatch(GameManager._instance.hero);
-        GameManager._instance.currentMatch=fakeMatch;
-        gameObject.SetActive(true);
-        ShopManager._instance.HideShop();
-        UpdateCurrency();
-        myPieces=GameManager._instance.hero.pieces;
-        GameManager._instance.toggleAllPieceColliders(false);
-        foreach (GameObject piece in myPieces)
-        {
-            if (piece !=null && piece.GetComponent<SpriteRenderer>())
-            {
-                SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                rend.sortingOrder = 7;
-                piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=5;
-            }
-            piece.GetComponent<Chessman>().UpdateUIPosition();
-        }
-
-
-        SpriteRenderer KORend = kingsOrderObject.GetComponent<SpriteRenderer>();
-        KORend.sortingOrder = 7;
-        
-
-        Canvas KOCanvasRend = KOCanvas.GetComponent<Canvas>();
-        KOCanvasRend.sortingOrder = 8;
-
-        KingsOrderManager._instance.flames.GetComponent<Renderer>().sortingOrder=9;
-
-
-        KingsOrderManager._instance.Setup();
-        
-
-        GameManager._instance.togglePieceColliders(myPieces, true);
-        Board._instance.CreateManagementBoard();
-        CheckInventory();
+        //NEED to rewrite this
     }
     public void CheckInventory(){
-        if (GameManager._instance.hero.inventoryPieces.Count>0){
+        if (board.Hero.inventoryPieces.Count>0){
             //KingsOrderManager._instance.Hide();
             int i = 0;
-            foreach (var obj in GameManager._instance.hero.inventoryPieces)
+            foreach (var obj in board.Hero.inventoryPieces)
             {
                 Chessman piece = obj.GetComponent<Chessman>();
                 obj.SetActive(true);
@@ -175,19 +123,16 @@ public class ArmyManager : MonoBehaviour
                 }
                 piece.UpdateUIPosition();
             }
-            
-            GameManager._instance.togglePieceColliders(GameManager._instance.hero.inventoryPieces, true);
-            GameManager._instance.togglePieceColliders(GameManager._instance.hero.pieces, true);
         }
     }
 
     public void UpdateCurrency(){
-        bloodText.text = ": "+GameManager._instance.hero.playerBlood;
-        coinText.text = ": "+GameManager._instance.hero.playerCoins;
+        bloodText.text = ": "+board.Hero.playerBlood;
+        coinText.text = ": "+board.Hero.playerCoins;
     }
 
     public void CloseShop(){
-        ManagementStatManager._instance.HideStats();
+        //ManagementStatManager._instance.HideStats();
         foreach (GameObject piece in myPieces)
         {
             if (piece.GetComponent<SpriteRenderer>())
@@ -198,7 +143,7 @@ public class ArmyManager : MonoBehaviour
                 piece.GetComponent<Chessman>().highlightedParticles.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
             }
         }
-        foreach (GameObject piece in GameManager._instance.hero.inventoryPieces)
+        foreach (GameObject piece in board.Hero.inventoryPieces)
         {
             if (piece.GetComponent<SpriteRenderer>())
             {
@@ -218,11 +163,9 @@ public class ArmyManager : MonoBehaviour
         Canvas KOCanvasRend = KOCanvas.GetComponent<Canvas>();
         KOCanvasRend.sortingOrder = 2;
 
-        KingsOrderManager._instance.flames.GetComponent<Renderer>().sortingOrder=5;
+       // KingsOrderManager._instance.flames.GetComponent<Renderer>().sortingOrder=5;
 
-        KingsOrderManager._instance.Hide();
-        Board._instance.DestroyBoard();
-        GameManager._instance.CloseArmyManagement();
+        //KingsOrderManager._instance.Hide();
         gameObject.SetActive(false);
     }
 

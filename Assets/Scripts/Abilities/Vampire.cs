@@ -12,29 +12,29 @@ public class Vampire : Ability
 
     public Vampire() : base("Vampire", "+1 to all stats on dark squares, -1 to all stats on light squares. transfer ability when attacking") {}
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         if(piece.abilities.Contains(this)){
             return;
         }
         this.piece = piece;
         
-        GameManager._instance.OnMove.AddListener(AddBonus);
-        GameManager._instance.OnAttackEnd.AddListener(SuckBlood);
-        GameManager._instance.OnChessMatchStart.AddListener(MatchStartBonus);
-        GameManager._instance.OnPieceBounced.AddListener(PossibleReset);
-        if(GameManager._instance.state==ScreenState.ActiveMatch){
-            AddBonus(piece, new BoardPosition(piece.xBoard, piece.yBoard));
+        eventHub.OnMove.AddListener(AddBonus);
+        eventHub.OnAttackEnd.AddListener(SuckBlood);
+        eventHub.OnChessMatchStart.AddListener(MatchStartBonus);
+        eventHub.OnPieceBounced.AddListener(PossibleReset);
+        if(board.CurrentMatch!=null){
+            AddBonus(piece, board.GetTileAt(piece.xBoard, piece.yBoard));
         }
-        base.Apply(piece);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnMove.RemoveListener(AddBonus);
-        GameManager._instance.OnAttackEnd.RemoveListener(SuckBlood);
-        GameManager._instance.OnChessMatchStart.RemoveListener(MatchStartBonus);
-        GameManager._instance.OnPieceBounced.RemoveListener(PossibleReset);
+        eventHub.OnMove.RemoveListener(AddBonus);
+        eventHub.OnAttackEnd.RemoveListener(SuckBlood);
+        eventHub.OnChessMatchStart.RemoveListener(MatchStartBonus);
+        eventHub.OnPieceBounced.RemoveListener(PossibleReset);
     }
     public void MatchStartBonus(){
         Debug.Log("Applying vamp at match start");
@@ -45,12 +45,12 @@ public class Vampire : Ability
         AddBonus(piece, piece.startingPosition);
     }
 
-    public void AddBonus(Chessman mover, BoardPosition targetPosition)
+    public void AddBonus(Chessman mover, Tile targetPosition)
     {
         int currentBonus = bonus;
         if (mover == piece)
         {
-            if (Board._instance.GetTileAt(targetPosition.x, targetPosition.y).GetColor() == PieceColor.Black)
+            if (targetPosition.GetColor() == PieceColor.Black)
             {
                 bonus = 1;
             }
@@ -89,7 +89,7 @@ public class Vampire : Ability
     {
         if (attacker == piece)
         {
-            defender.AddAbility(GameManager._instance.AllAbilities[20].Clone());
+            defender.AddAbility(board, AbilityDatabase._instance.GetAbilityByName("Vampire"));
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Vampire</gradient></color>",  $"fledgling created on {BoardPosition.ConvertToChessNotation(defender.xBoard, defender.yBoard)}");
 
         }
@@ -100,11 +100,11 @@ public class Vampire : Ability
         piece.supportBonus = Mathf.Max(-piece.support, piece.supportBonus - bonus);
         bonus=0;
     }
-    public void PossibleReset(Chessman attacker, Chessman defender, bool isBounceReduced)
+    public void PossibleReset(Chessman attacker, Chessman defender)
     {
         if (attacker == piece)
         {
-            AddBonus(piece, new BoardPosition(piece.xBoard, piece.yBoard));
+            AddBonus(piece, board.GetTileAt(piece.xBoard, piece.yBoard));
         }
     }
 }

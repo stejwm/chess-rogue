@@ -8,13 +8,12 @@ public class TravelersGraceMovement : MovementProfile
 {
     MovementProfile oldProfile;
     GameManager game;
-    public TravelersGraceMovement(MovementProfile old){
-        oldProfile=old;
+    public TravelersGraceMovement(Board board, MovementProfile old) : base(board) {oldProfile = old;}
+    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture = false)
+    {
+        return Movement.AllOpenSquares(board);
     }
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture=false) {
-        return Movement.AllOpenSquares();
-     }
-    public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
+    public override List<BoardPosition> GetValidSupportMoves( Chessman piece){
         return oldProfile.GetValidSupportMoves(piece);
     }
 

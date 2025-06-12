@@ -19,7 +19,7 @@ public class TileFactory : MonoBehaviour
         }
     }
 
-    public Tile CreateTile(BoardPosition boardPosition)
+    public Tile CreateTile(int x, int y)
     {
         // Instantiate the tile prefab
         GameObject tileObject = Instantiate(tilePrefab, boardParent.transform);
@@ -33,7 +33,7 @@ public class TileFactory : MonoBehaviour
         }
 
         // Initialize the tile
-        tile.Initialize(boardPosition);
+        tile.Initialize(x, y);
 
         return tile;
     }

@@ -9,16 +9,9 @@ public class PauseMenuManager : MonoBehaviour
 {
     public static PauseMenuManager _instance;
     public AudioSource audioSource;
-    void Awake()
-    {
-        
-        if(_instance !=null && _instance !=this){
-            Destroy(this.gameObject);
-        }
-        else{
-            _instance=this;
-        }
-    }
+    [SerializeField] private Board board;
+    [SerializeField] private MapManager mapManager;
+    
 
     // Update is called once per frame
     void Start()
@@ -33,7 +26,6 @@ public class PauseMenuManager : MonoBehaviour
 
     public void CloseMenu(){
         Time.timeScale=1;
-        GameManager._instance.isInMenu=false;
         gameObject.SetActive(false);
     }
 
@@ -46,12 +38,12 @@ public class PauseMenuManager : MonoBehaviour
         List<MapNodeData> Map = new List<MapNodeData>();
         PlayerData playerData = new PlayerData
         {
-            coins = GameManager._instance.hero.playerCoins,
-            blood = GameManager._instance.hero.playerBlood,
+            coins = board.Hero.playerCoins,
+            blood = board.Hero.playerBlood,
             pieces = new List<PieceData>()
         };
 
-        foreach (var pieceObj in GameManager._instance.hero.pieces)
+        foreach (var pieceObj in board.Hero.pieces)
         {
             Chessman piece = pieceObj.GetComponent<Chessman>();
             PieceData pieceData = new PieceData
@@ -77,7 +69,7 @@ public class PauseMenuManager : MonoBehaviour
             playerData.pieces.Add(pieceData);
         }
 
-        foreach (var nodeObj in MapManager._instance.mapNodes)
+        foreach (var nodeObj in mapManager.mapNodes)
         {
             var connectedNodes = new List<string>();
             MapNode node = nodeObj.GetComponent<MapNode>();
@@ -90,7 +82,7 @@ public class PauseMenuManager : MonoBehaviour
                 encounterType = node.encounterType,
                 localX = node.transform.localPosition.x,
                 localY = node.transform.localPosition.y,
-                isCurrentNode = MapManager._instance.currentNode == node,
+                isCurrentNode = mapManager.currentNode == node,
                 color = node.nodeImage.color
             };
 
@@ -106,9 +98,9 @@ public class PauseMenuManager : MonoBehaviour
         
         var writer = QuickSaveWriter.Create("Game");
             writer.Write("Player", playerData);
-            writer.Write("State", GameManager._instance.state);
-            writer.Write("Level", GameManager._instance.level);
-            writer.Write("Shop", GameManager._instance.shopUsed);
+            writer.Write("State", "s");
+            writer.Write("Level", "s");
+            writer.Write("Shop", "s");
             writer.Write("MapNodes", Map);
             writer.Commit();
     }

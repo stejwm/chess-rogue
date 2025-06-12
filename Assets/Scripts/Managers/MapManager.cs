@@ -10,8 +10,6 @@ using UnityEngine.UI.Extensions;
 
 public class MapManager : MonoBehaviour
 {
-    public static MapManager _instance;
-
     public List<MapNode> mapNodes;
     public MapNode currentNode;
     public GameObject nodePrefab; // Prefab for the node UI element
@@ -32,21 +30,10 @@ public class MapManager : MonoBehaviour
     float verticalShift = 0.0f; // Shift the nodes up
     float minVerticalDistance = 1.5f; // Minimum vertical distance between nodes from different paths
 
-    void Awake()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
-    }
 
     public void Start()
     {
-        if(GameManager._instance.state != ScreenState.Map)
+        //if(GameManager._instance.state != ScreenState.Map)
             gameObject.SetActive(false);
         if(!SceneLoadManager.LoadPreviousSave)
             GenerateMap();
@@ -56,35 +43,33 @@ public class MapManager : MonoBehaviour
     {
         Debug.Log("OpeningMap");
         gameObject.SetActive(true);
-        GameManager._instance.isInMenu = true;
         PauseMenuManager._instance.SaveGame();
     }
 
     public void CloseMap()
     {
-        GameManager._instance.isInMenu = false;
-        GameManager._instance.CloseMap();
+        //GameManager._instance.CloseMap();
         gameObject.SetActive(false);
     }
 
     public void NextMatch(EnemyType enemyType)
     {
         CloseMap();
-        GameManager._instance.NextMatch(enemyType);
+        //GameManager._instance.NextMatch(enemyType);
     }
 
     public void OpenShop()
     {
-        if(GameManager._instance.shopUsed)
+        //if(GameManager._instance.shopUsed)
             return;
-        CloseMap();
-        GameManager._instance.OpenShop();
+        //CloseMap();
+        //GameManager._instance.OpenShop();
     }
 
     public void OpenArmyManagement()
     {
         CloseMap();
-        GameManager._instance.OpenArmyManagement();
+        //GameManager._instance.OpenArmyManagement();
     }
 
     public void SelectEnemyNode(MapNode node, EnemyType enemyType)

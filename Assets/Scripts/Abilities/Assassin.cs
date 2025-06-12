@@ -10,25 +10,25 @@ public class Assassin : Ability
     public Assassin() : base("Assassin", "+5 attack if attacking with no support") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnAttack.AddListener(AddBonus);
-        GameManager._instance.OnAttackEnd.AddListener(RemoveBonus);
-        base.Apply(piece);
+        eventHub.OnAttack.AddListener(AddBonus);
+        eventHub.OnAttackEnd.AddListener(RemoveBonus);
+        base.Apply(board, piece);
 
         
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnAttack.RemoveListener(AddBonus); 
-        GameManager._instance.OnAttackEnd.RemoveListener(RemoveBonus); 
+        eventHub.OnAttack.RemoveListener(AddBonus); 
+        eventHub.OnAttackEnd.RemoveListener(RemoveBonus); 
 
     }
-    public void AddBonus(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
-        if (attacker==piece && support==0 && isAttacking){
+    public void AddBonus(Chessman attacker, int support, Tile targetedPosition){
+        if (attacker==piece && support==0){
             piece.effectsFeedback.PlayFeedbacks();
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Assassin</gradient></color>", "<color=green>+5</color> attack");
             piece.attackBonus+=5;

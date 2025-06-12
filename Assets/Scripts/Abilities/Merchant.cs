@@ -13,23 +13,23 @@ public class Merchant : Ability
     public Merchant() : base("Merchant", "10% chance of +1 attack per coin owned") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnAttack.AddListener(AddBonus);
-        GameManager._instance.OnAttackEnd.AddListener(RemoveBonus);
-        base.Apply(piece);
+        eventHub.OnAttack.AddListener(AddBonus);
+        eventHub.OnAttackEnd.AddListener(RemoveBonus);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnAttack.RemoveListener(AddBonus);
-        GameManager._instance.OnAttackEnd.RemoveListener(RemoveBonus);
+        eventHub.OnAttack.RemoveListener(AddBonus);
+        eventHub.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
-    public void AddBonus(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
-        if (attacker==piece && isAttacking){
+    public void AddBonus(Chessman attacker, int support, Tile targetedPosition){
+        if (attacker==piece){
             for (int i =0; i<piece.owner.playerCoins; i++){
                 if (rng.Next(1,11)<=1){
                     attackBonus+=1;

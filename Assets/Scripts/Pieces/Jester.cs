@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Jester : Chessman
 {
-        public void Start(){
+        public override void Initialize(Board board){
         Activate();
-        moveProfile = new JesterMovement();
+        moveProfile = new JesterMovement(board);
         type = PieceType.Jester;
     }
     public override List<BoardPosition> GetValidMoves() => moveProfile.GetValidMoves(this);

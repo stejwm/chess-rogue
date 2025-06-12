@@ -16,9 +16,6 @@ public class ShopManager : MonoBehaviour
     public Material holoMaterial;
 
     public List<GameObject> pieces = new List<GameObject>();
-
-    //current turn
-    public static ShopManager _instance;
     private static Rand rng = new Rand();
     private List<GameObject> cards = new List<GameObject>();
     private List<GameObject> orders = new List<GameObject>();
@@ -30,32 +27,24 @@ public class ShopManager : MonoBehaviour
         { Rarity.Uncommon, 35f },
         { Rarity.Rare, 10f }
     };
+    [SerializeField] private Board board;
 
-
-    void Awake()
-    {
-        
-        if(_instance !=null && _instance !=this){
-            Destroy(this.gameObject);
-        }
-        else{
-            _instance=this;
-        }
-    }
 
     //Unity calls this right when the game starts, there are a few built in functions
     //that Unity can call for you
+
     public void Start()
     {
         gameObject.SetActive(false);
-        
+
     }
 
-    public void OpenShop(){
-        GameManager._instance.isInMenu=false;
+/* 
+    public void OpenShop()
+    {
         gameObject.SetActive(true);
         UpdateCurrency();
-        myPieces=GameManager._instance.hero.pieces;
+        myPieces = board.Hero.pieces;
 
         foreach (GameObject piece in myPieces)
         {
@@ -63,14 +52,16 @@ public class ShopManager : MonoBehaviour
             {
                 SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
                 rend.sortingOrder = 5;
-                piece.GetComponent<Chessman>().flames.GetComponent<Renderer>().sortingOrder=6;
+                piece.GetComponent<Chessman>().flames.GetComponent<Renderer>().sortingOrder = 6;
             }
-            
+
         }
-        if(!GameManager._instance.shopUsed){
+        if (!GameManager._instance.shopUsed)
+        {
             CreatePieces();
-            if(GameManager._instance.lastingLegacyAbility!=null){
-                List<Ability> abilities = new List<Ability>{GameManager._instance.lastingLegacyAbility.Clone(), GameManager._instance.lastingLegacyAbility.Clone(), GameManager._instance.lastingLegacyAbility.Clone()};
+            if (GameManager._instance.lastingLegacyAbility != null)
+            {
+                List<Ability> abilities = new List<Ability> { GameManager._instance.lastingLegacyAbility.Clone(), GameManager._instance.lastingLegacyAbility.Clone(), GameManager._instance.lastingLegacyAbility.Clone() };
                 CreateCardsWithAbilities(abilities);
                 GameManager._instance.lastingLegacyAbility = null;
             }
@@ -80,7 +71,7 @@ public class ShopManager : MonoBehaviour
             }
             CreateOrders();
         }
-        
+
     }
 
     public void ModifyRarityWeight(Rarity rarity, float multiplier)
@@ -96,7 +87,7 @@ public class ShopManager : MonoBehaviour
             }
         }
     }
-
+ 
     private List<Ability> SelectRandomAbilities(int count, Rarity? targetRarity = null)
     {
         List<Ability> selectedAbilities = new List<Ability>();
@@ -159,7 +150,7 @@ public class ShopManager : MonoBehaviour
 
         return selectedAbilities;
     }
-
+ 
     public void CreateCardsWithAbilities(List<Ability> abilities)
     {
         for (int i = 0; i < abilities.Count; i++)
@@ -198,11 +189,8 @@ public class ShopManager : MonoBehaviour
         for(int i=0; i<2;i++){
             Vector2 localPosition = new Vector2(i+i+4, 2);
             obj = Instantiate(GameManager._instance.card, localPosition, Quaternion.identity);
-            //AllAbilities.Sort();
-            //int s = Random.Range (0, AllAbilities.Count);
             orders.Add(obj);
             obj.GetComponent<Card>().order = shuffledcards[i].Clone();
-            //cards.Add(obj);
             obj.GetComponent<Card>().ShowPrice();
         }
         
@@ -212,7 +200,7 @@ public class ShopManager : MonoBehaviour
         GameObject obj;
         for(int i=0; i<3;i++){
             Vector2 localPosition = new Vector2(i, 2);
-            obj = PieceFactory._instance.CreateRandomPiece();
+            obj = PieceFactory._instance.CreateRandomPiece(board);
             obj.transform.position=localPosition;
             Chessman cm = obj.GetComponent<Chessman>();
             cm.xBoard=7+i;
@@ -241,24 +229,12 @@ public class ShopManager : MonoBehaviour
         
     }
 
-    public void toggleCardColliders(){
-        foreach (var card in cards)
-        {
-            if(card!=null)
-                card.GetComponent<BoxCollider2D>().enabled = !card.GetComponent<BoxCollider2D>().enabled;
-        }
-        foreach (var order in orders)
-        {
-            if(order!=null)
-                order.GetComponent<BoxCollider2D>().enabled = !order.GetComponent<BoxCollider2D>().enabled;
-        }
-    }
 
     public void RerollAbilities(){
         if(GameManager._instance.applyingAbility)
             return;
-        if(GameManager._instance.hero.playerCoins>=rerollCost){
-            GameManager._instance.hero.playerCoins-=rerollCost;
+        if(board.Hero.playerCoins>=rerollCost){
+            board.Hero.playerCoins-=rerollCost;
             rerollCost+=rerollCostIncrease;
             rerollCostText.text = rerollCost.ToString();
             UpdateCurrency();
@@ -269,8 +245,8 @@ public class ShopManager : MonoBehaviour
     }
 
     public void UpdateCurrency(){
-        bloodText.text = ": "+GameManager._instance.hero.playerBlood;
-        coinText.text = ": "+GameManager._instance.hero.playerCoins;
+        bloodText.text = ": "+board.Hero.playerBlood;
+        coinText.text = ": "+board.Hero.playerCoins;
         rerollCostText.text = rerollCost.ToString();
     }
 
@@ -288,7 +264,7 @@ public class ShopManager : MonoBehaviour
                 piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=0;
             }
         }
-        foreach (GameObject piece in GameManager._instance.hero.inventoryPieces)
+        foreach (GameObject piece in board.Hero.inventoryPieces)
         {
             if (piece != null &&  piece.GetComponent<SpriteRenderer>())
             {
@@ -343,7 +319,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    
+     */
 
 
 }

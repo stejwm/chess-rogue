@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Knight : Chessman
 {
-        public void Start(){
+        public override void Initialize(Board board){
         Activate();
-        moveProfile = new KnightMovement();
+        moveProfile = new KnightMovement(board);
         type = PieceType.Knight;
     }
     public override List<BoardPosition> GetValidMoves() => moveProfile.GetValidMoves(this);

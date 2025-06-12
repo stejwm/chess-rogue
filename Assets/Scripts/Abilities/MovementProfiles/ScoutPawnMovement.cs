@@ -4,24 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ScoutPawnMovement : MovementProfile
 {
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
+    public ScoutPawnMovement(Board board) : base(board) { }
+    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture)
+    {
         List<BoardPosition> validMoves = new List<BoardPosition>();
-        validMoves.AddRange(Movement.ValidScoutMoves(piece,piece.xBoard,piece.yBoard));
+        validMoves.AddRange(Movement.ValidScoutMoves(board, piece, piece.xBoard, piece.yBoard));
 
-        if(piece.color==PieceColor.White)
-            validMoves.AddRange(Movement.ValidPawnSupportMoves(piece,piece.xBoard,piece.yBoard+1));
+        if (piece.color == PieceColor.White)
+            validMoves.AddRange(Movement.ValidPawnSupportMoves(board, piece, piece.xBoard, piece.yBoard + 1));
         else
-            validMoves.AddRange(Movement.ValidPawnSupportMoves(piece,piece.xBoard,piece.yBoard-1));
+            validMoves.AddRange(Movement.ValidPawnSupportMoves(board, piece, piece.xBoard, piece.yBoard - 1));
         if (allowFriendlyCapture)
             return validMoves;
         else
-            return Movement.RemoveFriendlyPieces(validMoves,piece);
-     }
+            return Movement.RemoveFriendlyPieces(board, validMoves, piece);
+    }
     public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
         if(piece.color==PieceColor.White)
-            return Movement.ValidPawnSupportMoves(piece,piece.xBoard,piece.yBoard+1);
+            return Movement.ValidPawnSupportMoves(board, piece,piece.xBoard,piece.yBoard+1);
         else
-            return Movement.ValidPawnSupportMoves(piece,piece.xBoard,piece.yBoard-1);
+            return Movement.ValidPawnSupportMoves(board, piece,piece.xBoard,piece.yBoard-1);
     }
     public override List<Vector2Int> GetDirections(Chessman piece){
         return new List<Vector2Int>

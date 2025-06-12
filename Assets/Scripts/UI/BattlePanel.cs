@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class BattlePanel : MonoBehaviour
 {
-    
-    public static BattlePanel _instance;
     public TMP_Text heroAttack;
     public TMP_Text heroDefense;
     public TMP_Text heroSupport;
@@ -23,21 +21,12 @@ public class BattlePanel : MonoBehaviour
     public TMP_Text result;
     public GameObject enemyImage;
     // Start is called before the first frame update
-    void Awake()
-    {
-        if(_instance !=null && _instance !=this){
-            Destroy(this.gameObject);
-        }
-        else{
-            _instance=this;
-        }
-    }
 
     void Start(){
         Cursor.visible=true;
         gameObject.SetActive(false);
     }
-    public void SetAndShowAttackingStats(string attack, string support, string total, string name, GameObject sprite, string enemyAttack, string enemySupport, string enemyTotal, string enemyPieceName, GameObject enemySprite){
+    public void DropIn(string name, GameObject sprite, string enemyPieceName, GameObject enemySprite){
         gameObject.SetActive(true);
         this.heroAttack.text="attack: ";
         this.heroSupport.text="support: ";

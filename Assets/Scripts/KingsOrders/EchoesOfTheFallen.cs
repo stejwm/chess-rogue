@@ -10,8 +10,9 @@ public class EchoesOfTheFallen : KingsOrder
 {
     public EchoesOfTheFallen() : base("Echoes of the Fallen", "All pieces gain +1 to random stat for each piece abandoned this run") {}
 
-    public override IEnumerator Use(){
-        List<GameObject> pieces = GameManager._instance.hero.pieces;
+    public override IEnumerator Use(Board board)
+    {
+        /* List<GameObject> pieces = GameManager._instance.hero.pieces;
         for (int i=0; i< GameManager._instance.abandonedPieces; i++){
         foreach (var obj in pieces)
             {
@@ -31,7 +32,8 @@ public class EchoesOfTheFallen : KingsOrder
                 
             }
         }
-        yield break;
+        yield break; */
+        yield return null;
     }
 
 }

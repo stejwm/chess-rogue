@@ -9,17 +9,17 @@ public class RadiatingDeath : Ability
     
     public RadiatingDeath() : base("Radiating Death", "Reduce all attackers stats by -1 when captured") {}
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnPieceCaptured.AddListener(RadiateDeath);
-        base.Apply(piece);
+        eventHub.OnPieceCaptured.AddListener(RadiateDeath);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnPieceCaptured.RemoveListener(RadiateDeath); 
+        eventHub.OnPieceCaptured.RemoveListener(RadiateDeath); 
 
     }
     public void RadiateDeath(Chessman attacker, Chessman defender){

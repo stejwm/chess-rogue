@@ -7,37 +7,25 @@ using UnityEngine;
 
 public class KingsOrderManager : MonoBehaviour
 {
-    public KingsOrder order;
+
     public TMP_Text title;
     public TMP_Text effect;
-    public static KingsOrderManager _instance;
     public ParticleSystem flames;
+    [SerializeField] Board board;
     [SerializeField] private Material dissolveMaterial;
-
     public GameObject parent;
 
 
-    void Awake()
-    {
-        
-        if(_instance !=null && _instance !=this){
-            Destroy(this.gameObject);
-        }
-        else{
-            _instance=this;
-        }
-    }
-
     public void Setup(){
-        if (GameManager._instance.hero.orders.Count>0)
+        if (board.Hero.orders.Count>0)
         {
             parent.SetActive(true);
-            order = GameManager._instance.hero.orders[0];
+            KingsOrder order = board.Hero.orders[0];
             this.GetComponent<Renderer>().material = dissolveMaterial;
             dissolveMaterial.SetFloat("_Weight", 0);
             title.color = Color.white;
             effect.color = Color.white;
-            UpdateCardUI();
+            UpdateCardUI(order);
         }
         else{
             parent.SetActive(false);
@@ -45,45 +33,41 @@ public class KingsOrderManager : MonoBehaviour
         
     }
 
-    void OnMouseDown(){
-        
-        
-        StartCoroutine(UseAndHandleUI());
-        
-        
-    }
-    IEnumerator UseAndHandleUI()
+    public void HandleClick(GameObject clicked)
     {
-        if (GameManager._instance.state==ScreenState.ManagementScreen){
-            if(!order.canBeUsedFromManagement){
-                this.GetComponent<MMSpringPosition>().BumpRandom();
-                yield break;
-            }
+        KingsOrder order = clicked.GetComponent<KingsOrder>();
+        if (order != null)
+        {
+            StartCoroutine(HandleOrderClick(order));
         }
-        int index = GameManager._instance.hero.orders.IndexOf(order);
-        GameManager._instance.togglePieceColliders(GameManager._instance.hero.pieces, false);
-        GameManager._instance.hero.orders.Remove(order);
+    }
+
+    private IEnumerator HandleOrderClick(KingsOrder order)
+    {
+        if (!order.canBeUsedFromManagement) {
+            this.GetComponent<MMSpringPosition>().BumpRandom();
+            yield break;
+        }
+        
+        
+        board.Hero.orders.Remove(order);
         flames.Play();
-        yield return StartCoroutine(order.Use()); // Wait for King's Order effect
-        if(GameManager._instance.state==ScreenState.ManagementScreen)
-            GameManager._instance.togglePieceColliders(GameManager._instance.hero.pieces, true);
+        yield return StartCoroutine(order.Use(board));
         flames.Stop();
         yield return StartCoroutine(Dissolve());
         
-        if (GameManager._instance.hero.orders.Count <= 0)
+        if (board.Hero.orders.Count <= 0)
         {
-            parent.SetActive(false); // Now deactivate it *after* the coroutine finishes
-            order = null;
+            parent.SetActive(false);
         }
         else
         {
             dissolveMaterial.SetFloat("_Weight", 0);
-            order = GameManager._instance.hero.orders[0];
-            UpdateCardUI();
+            UpdateCardUI(order);
         }
     }
 
-    public void UpdateCardUI(){
+    public void UpdateCardUI(KingsOrder order){
         title.color = Color.white;
         effect.color = Color.white;
 
@@ -92,25 +76,25 @@ public class KingsOrderManager : MonoBehaviour
     }
 
     public void CardLeft(){
-        int index = GameManager._instance.hero.orders.IndexOf(order);
-        if (index>0){
+       // int index = board.Hero.orders.IndexOf(order);
+        /* if (index>0){
             index--;
-            order=GameManager._instance.hero.orders[index];
-            UpdateCardUI();
+            KingsOrder order=board.Hero.orders[index];
+            UpdateCardUI(order);
         }else{
             this.GetComponent<MMSpringPosition>().BumpRandom();
-        }
+        } */
     }
     public void CardRight(){
-        int index = GameManager._instance.hero.orders.IndexOf(order);
-        if (index<GameManager._instance.hero.orders.Count-1){
+        //int index = board.Hero.orders.IndexOf(order);
+        /* if (index<board.Hero.orders.Count-1){
             index++;
-            order=GameManager._instance.hero.orders[index];
-            UpdateCardUI();
+            KingsOrder order = board.Hero.orders[index];
+            UpdateCardUI(order);
         }
         else{
             this.GetComponent<MMSpringPosition>().BumpRandom();
-        }
+        } */
     }
 
     public IEnumerator Dissolve(){

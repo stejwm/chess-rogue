@@ -15,31 +15,31 @@ public class BloodThirstAbility : Ability
     public BloodThirstAbility() : base("Blood Thirst", "Attack again after capture, Decimates all captured pieces") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         startingProfile=piece.moveProfile;
         this.piece = piece;
         piece.info += " " + abilityName;
 
-        GameManager._instance.OnPieceCaptured.AddListener(Thirst);
-        GameManager._instance.OnAttack.AddListener(Decimate);
-        GameManager._instance.OnPieceBounced.AddListener(EndThirst);
-        GameManager._instance.OnGameEnd.AddListener(ResetMoveProfile);
-        base.Apply(piece);
+        eventHub.OnPieceCaptured.AddListener(Thirst);
+        eventHub.OnAttack.AddListener(Decimate);
+        eventHub.OnPieceBounced.AddListener(EndThirst);
+        eventHub.OnGameEnd.AddListener(ResetMoveProfile);
+        base.Apply(board, piece);
 
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnPieceCaptured.RemoveListener(Thirst);
-        GameManager._instance.OnAttack.RemoveListener(Decimate);
-        GameManager._instance.OnPieceBounced.RemoveListener(EndThirst);
-        GameManager._instance.OnGameEnd.RemoveListener(ResetMoveProfile);
+        eventHub.OnPieceCaptured.RemoveListener(Thirst);
+        eventHub.OnAttack.RemoveListener(Decimate);
+        eventHub.OnPieceBounced.RemoveListener(EndThirst);
+        eventHub.OnGameEnd.RemoveListener(ResetMoveProfile);
     }
 
-    public void Decimate(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
-        if(attacker==piece && isAttacking){
-            GameManager._instance.isDecimating=true;
+    public void Decimate(Chessman attacker, int support, Tile targetedPosition){
+        if(attacker==piece){
+            board.CurrentMatch.isDecimating=true;
             if(!thirsting)
                 startingProfile=piece.moveProfile;
         }
@@ -53,11 +53,11 @@ public class BloodThirstAbility : Ability
         if (attacker == piece)
         {
             thirsting=true;
-            GameManager._instance.isDecimating=false;
+            board.CurrentMatch.isDecimating=false;
             CoroutineRunner.instance.StartCoroutine(EnableSecondAttackCoroutine());
         }
         if(defender == piece && thirsting){
-            GameManager._instance.isDecimating=false;
+            board.CurrentMatch.isDecimating=false;
             List<GameObject> pieces;
             pieces = piece.owner.pieces;
             foreach (GameObject pieceObject in pieces)
@@ -67,16 +67,16 @@ public class BloodThirstAbility : Ability
             Debug.Log("Piece captured thirst over");
             thirsting=false;
             piece.moveProfile=startingProfile;
-            GameManager._instance.currentMatch.BloodThirstOverride =false;
+            board.CurrentMatch.BloodThirstOverride =false;
         }
     }
 
     public IEnumerator EnableSecondAttackCoroutine()
     {
-        if (GameManager._instance.currentMatch.AvengerActive)
+        if (board.CurrentMatch.AvengerActive)
         {
             Debug.Log("Waiting for Avenging Strike to resolve...");
-            yield return new WaitUntil(() => !GameManager._instance.currentMatch.AvengerActive); // Wait for AvengingStrike to finish
+            yield return new WaitUntil(() => !board.CurrentMatch.AvengerActive); // Wait for AvengingStrike to finish
         }
         else{
            Debug.Log("No avenging strike "); 
@@ -87,15 +87,15 @@ public class BloodThirstAbility : Ability
     {   
         if(piece==null || !piece.gameObject.activeSelf)
             return;
-        GameManager._instance.currentMatch.BloodThirstOverride =true;
+        board.CurrentMatch.BloodThirstOverride =true;
         Debug.Log("Blood thirst activated");
         piece.effectsFeedback.PlayFeedbacks();
         List<GameObject> pieces;
         if (piece.abilities.OfType<Betrayer>().FirstOrDefault()!=null){
-            piece.moveProfile = new BetrayerMovement(new AttackOnlyMovement(startingProfile));
+            piece.moveProfile = new BetrayerMovement(board, new AttackOnlyMovement(board, startingProfile));
         }
         else
-            piece.moveProfile = new AttackOnlyMovement(startingProfile);
+            piece.moveProfile = new AttackOnlyMovement(board, startingProfile);
         pieces = piece.owner.pieces;
         foreach (GameObject pieceObject in pieces)
         {
@@ -103,28 +103,28 @@ public class BloodThirstAbility : Ability
         }
         piece.isValidForAttack=true;
         
-        GameManager._instance.currentMatch.MyTurn(piece.color);
+        board.CurrentMatch.MyTurn(piece.color);
         
         if (piece.moveProfile.GetValidMoves(piece).Count<=0){
             thirsting=false;
             piece.moveProfile=startingProfile;
-            GameManager._instance.currentMatch.BloodThirstOverride =false;
-            GameManager._instance.isDecimating=false;
+            board.CurrentMatch.BloodThirstOverride =false;
+            board.CurrentMatch.isDecimating=false;
             return;
         }
         AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Blood Thirst</gradient></color>",  " attack again");
-        piece.owner.MakeMove(GameManager._instance.currentMatch);
+        piece.owner.MakeMove(board.CurrentMatch);
     }
 
-    private void EndThirst(Chessman attackingPiece, Chessman defendingPiece, bool isBounceReduced){
+    private void EndThirst(Chessman attackingPiece, Chessman defendingPiece){
         if(attackingPiece==piece)
-            GameManager._instance.isDecimating=false;
+            board.CurrentMatch.isDecimating=false;
         if(attackingPiece==piece && thirsting){
             Debug.Log("Bounced, thirst over");
             thirsting=false;
             piece.moveProfile=startingProfile;
-            GameManager._instance.currentMatch.BloodThirstOverride =false;
-            GameManager._instance.isDecimating=false;
+            board.CurrentMatch.BloodThirstOverride =false;
+            board.CurrentMatch.isDecimating=false;
         }
     }
 

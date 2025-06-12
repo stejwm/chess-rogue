@@ -5,7 +5,7 @@ using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
 public interface IBoardInputReceiver
 {
@@ -14,83 +14,64 @@ public interface IBoardInputReceiver
 }
 public class Board : MonoBehaviour
 {
-    public Dictionary<BoardPosition, Tile> tiles = new Dictionary<BoardPosition, Tile>();
+    public Tile[,] tiles = new Tile[8, 8];
     public List<Tile> validTiles = new List<Tile>();
-
     public BoardPosition selectedPosition;
-
     private ChessMatch currentMatch;
+    private Player hero;
+    private EventHub eventHub;
+    private BattlePanel battlePanel;
+    [SerializeField] private GameObject tilePrefab;
 
+    public ChessMatch CurrentMatch { get => currentMatch; set => currentMatch = value; }
+    public BattlePanel BattlePanel { get => battlePanel; set => battlePanel = value; }
+    public EventHub EventHub { get => eventHub; set => eventHub = value; }
+    public Player Hero { get => hero; set => hero = value; }
 
-    public bool IsPositionOnBoard(int x, int y)
+    public void Start()
     {
-        if (x < 0 || y < 0 || x >= 8 || y >= 8) return false;
-        return true;
+        EventHub = new EventHub();
+        CreateTiles();
     }
 
     public void CreateNewMatch(Player white, Player black)
     {
-        currentMatch = new ChessMatch(white, black);
-    }
-    public void SetActiveTile(Chessman piece, BoardPosition position)
-    {
-        var tile = tiles[position];
-        validTiles.Add(tile);
-        tile.SetReference(piece);
-        tile.SetValidMove();
+        currentMatch = new ChessMatch(this, white, black, EventHub);
+        currentMatch.StartMatch();
     }
 
-    public Tile GetTileAt(int x, int y)
-    {
-        //Debug.Log("X: "+x+" Y: "+y);
-        return tiles[new BoardPosition(x, y)];
-    }
 
-    public void CreateBoard()
+    public void CreateTiles()
     {
-
         for (int i = 0; i < 8; i++)
         {
             for (int j = 0; j < 8; j++)
             {
-                BoardPosition pos = new BoardPosition(i, j);
-                tiles.Add(pos, TileFactory._instance.CreateTile(pos));
+                GameObject tileObject = Instantiate(tilePrefab, this.transform);
+
+                // Get the Tile component
+                Tile tile = tileObject.GetComponent<Tile>();
+                if (tile == null)
+                {
+                    Debug.LogError("Tile prefab must have a Tile component!");
+                }
+
+                // Initialize the tile
+                tile.Initialize(i, j);
+                tiles[i, j] = tile;
             }
         }
     }
-
-    public void CreateManagementBoard()
+    public void SetActiveTile(Chessman piece, Tile tile)
     {
-
-        for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                BoardPosition pos = new BoardPosition(i, j);
-                Tile tile = TileFactory._instance.CreateTile(pos);
-                tiles.Add(pos, tile);
-                Vector3 currentPosition = tile.transform.position;
-                Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y, -0.5f);
-                tile.transform.position = newPosition;
-            }
-        }
-        foreach (var tile in tiles.Values)
-        {
-            SpriteRenderer rend = tile.GetComponent<SpriteRenderer>();
-            rend.sortingOrder = 4;
-        }
+        validTiles.Add(tile);
+        tile.SetReference(piece);
+        tile.SetValidMove();
     }
-
-    public void DestroyBoard()
+    public Tile GetTileAt(int x, int y)
     {
-        foreach (var item in tiles.Values)
-        {
-            Destroy(item.gameObject);
-        }
-        tiles.Clear();
-        validTiles.Clear();
+        return tiles[x, y];
     }
-
     public void ClearTiles()
     {
         foreach (var tile in validTiles)
@@ -99,40 +80,30 @@ public class Board : MonoBehaviour
         }
         validTiles.Clear();
     }
-
-    public void toggleTileColliders(bool active)
+    public void ResetPlayerPieces()
     {
-
-        foreach (var tile in tiles.Values)
+        foreach (GameObject piece in hero.pieces)
         {
-            tile.GetComponent<BoxCollider2D>().enabled = active;
+            piece.SetActive(true);
+            Chessman cm = piece.GetComponent<Chessman>();
+            piece.GetComponent<Chessman>().ResetBonuses();
+            PlacePiece(cm, cm.startingPosition);
         }
     }
-
-
-
-    public void SelectPieceToPlace(Chessman piece)
-    {
-        foreach (var item in GameManager._instance.hero.openPositions)
-        {
-            SetActiveTile(piece, item);
-        }
-    }
-
     public void PlacePiece(Chessman piece, Tile tile)
     {
-        piece.startingPosition = tile.position;
-        piece.xBoard = tile.position.x;
-        piece.yBoard = tile.position.y;
-        GameManager._instance.hero.inventoryPieces.Remove(piece.gameObject);
-        Debug.Log($"open positions contains position{GameManager._instance.hero.openPositions.Contains(tile.position)}");
-        GameManager._instance.hero.openPositions.Remove(tile.position);
-        GameManager._instance.hero.pieces.Add(piece.gameObject);
-        GameManager._instance.OnPieceAdded.Invoke(piece);
-        ClearTiles();
+        piece.xBoard = tile.X;
+        piece.yBoard = tile.Y;
         piece.UpdateUIPosition();
-        if (GameManager._instance.state != ScreenState.ManagementScreen)
-            GameManager._instance.currentMatch.CheckInventory();
+
+    }
+    public void AddPiece(Chessman piece, Tile tile)
+    {
+        PlacePiece(piece, tile);
+        Hero.inventoryPieces.Remove(piece.gameObject);
+        Hero.openPositions.Remove(tile);
+        Hero.pieces.Add(piece.gameObject);
+        eventHub.RaisePieceAdded(piece);
     }
 
 

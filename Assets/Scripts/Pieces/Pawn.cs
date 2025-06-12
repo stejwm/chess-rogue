@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Pawn : Chessman
 {
-        public void Start(){
+        public override void Initialize(Board board){
         Activate();
-        moveProfile = new PawnMovement();
+        moveProfile = new PawnMovement(board);
         type = PieceType.Pawn;
     }
 

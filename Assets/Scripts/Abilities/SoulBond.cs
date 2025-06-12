@@ -12,32 +12,32 @@ public class SoulBond : Ability
     
     public SoulBond() : base("Soul Bond", "Permanently gain +5 to each stat for each soul bonded piece, when any soul bonded piece is captured, all are decimated") {}
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         if(piece.abilities.Contains(this)){
             return;
         }
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnPieceCaptured.AddListener(Capture);
-        GameManager._instance.OnSoulBonded.AddListener(Increase);
-        GameManager._instance.OnMove.AddListener(Decimate);
-        GameManager._instance.OnAttackEnd.AddListener(RemoveDecimate);
+        eventHub.OnPieceCaptured.AddListener(Capture);
+        eventHub.OnSoulBonded.AddListener(Increase);
+        eventHub.OnMove.AddListener(Decimate);
+        eventHub.OnAttackEnd.AddListener(RemoveDecimate);
         piece.owner.soulBondedPieces++;
-        GameManager._instance.OnSoulBonded.Invoke();
+        eventHub.OnSoulBonded.Invoke();
         
         
-        base.Apply(piece);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnPieceCaptured.RemoveListener(Capture); 
-        GameManager._instance.OnSoulBonded.RemoveListener(Increase); 
-        GameManager._instance.OnMove.RemoveListener(Decimate);
-        GameManager._instance.OnAttackEnd.RemoveListener(RemoveDecimate);
+        eventHub.OnPieceCaptured.RemoveListener(Capture); 
+        eventHub.OnSoulBonded.RemoveListener(Increase); 
+        eventHub.OnMove.RemoveListener(Decimate);
+        eventHub.OnAttackEnd.RemoveListener(RemoveDecimate);
         piece.owner.soulBondedPieces--;
-        GameManager._instance.OnSoulBonded.Invoke();
+        eventHub.OnSoulBonded.Invoke();
 
     }
 
@@ -45,10 +45,10 @@ public class SoulBond : Ability
     {
         if (piece != null)
         {
-            GameManager._instance.OnPieceCaptured.RemoveListener(Capture); 
-            GameManager._instance.OnSoulBonded.RemoveListener(Increase); 
-            GameManager._instance.OnMove.RemoveListener(Decimate);
-            GameManager._instance.OnAttackEnd.RemoveListener(RemoveDecimate);
+            eventHub.OnPieceCaptured.RemoveListener(Capture); 
+            eventHub.OnSoulBonded.RemoveListener(Increase); 
+            eventHub.OnMove.RemoveListener(Decimate);
+            eventHub.OnAttackEnd.RemoveListener(RemoveDecimate);
         }
     }
 
@@ -62,23 +62,23 @@ public class SoulBond : Ability
         piece.support+=bonus;
         
     }
-    public void Decimate(Chessman attacker, BoardPosition position){
-        if(position.x== piece.xBoard && position.y== piece.yBoard)
-            GameManager._instance.isDecimating=true;
+    public void Decimate(Chessman attacker, Tile position){
+        if(position.X== piece.xBoard && position.Y== piece.yBoard)
+            board.CurrentMatch.isDecimating=true;
     }
     public void RemoveDecimate(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if(defender==piece || piece==null)
-            GameManager._instance.isDecimating=false;
+            board.CurrentMatch.isDecimating=false;
     }
     public void Capture(Chessman attacker, Chessman defender){
         if(defender.color == piece.color && defender!=piece && defender.abilities.OfType<SoulBond>().FirstOrDefault()!=null && !defender.hexed && !piece.hexed){
             if(piece.type==PieceType.King){
-                MoveManager._instance.gameOver=true;
+                board.CurrentMatch.EndGame();
             }
-            GameManager._instance.OnPieceCaptured.RemoveListener(Capture); 
-            GameManager._instance.currentMatch.SetPositionEmpty(piece.xBoard, piece.yBoard);
-            Board._instance.GetTileAt(piece.xBoard, piece.yBoard).SetBloodTile();
-            GameManager._instance.OnPieceCaptured.Invoke(attacker, piece);
+            eventHub.OnPieceCaptured.RemoveListener(Capture); 
+            board.CurrentMatch.SetPositionEmpty(piece.xBoard, piece.yBoard);
+            board.GetTileAt(piece.xBoard, piece.yBoard).SetBloodTile();
+            eventHub.OnPieceCaptured.Invoke(attacker, piece);
             piece.owner.pieces.Remove(piece.gameObject);
             CoroutineRunner.instance.StartCoroutine(PieceFactory._instance.DelayedDestroy(piece));
             

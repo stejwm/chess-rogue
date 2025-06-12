@@ -9,20 +9,20 @@ public class IronResolve : Ability
     
     public IronResolve() : base("Iron Resolve", "Permanently gain +1 to defense every time an enemy is bounced") {}
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnPieceBounced.AddListener(AddBonus);
-        base.Apply(piece);
+        eventHub.OnPieceBounced.AddListener(AddBonus);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnPieceBounced.RemoveListener(AddBonus); 
+        eventHub.OnPieceBounced.RemoveListener(AddBonus); 
 
     }
-    public void AddBonus(Chessman attacker, Chessman defender, bool isBounceReduced){
+    public void AddBonus(Chessman attacker, Chessman defender){
         if (defender==piece){
                         AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Iron Resolve</gradient></color>", "Try harder next time!");
 

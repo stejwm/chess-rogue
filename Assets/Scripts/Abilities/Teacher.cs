@@ -15,23 +15,23 @@ public class Teacher : Ability
     
     public Teacher() : base("Teacher", "+5 to all pieces with no abilities") {}
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnPieceAdded.AddListener(PieceAdded);
-        GameManager._instance.OnChessMatchStart.AddListener(ApplyBonus);
-        GameManager._instance.OnAbilityAdded.AddListener(RemoveBonusFromPiece);
+        eventHub.OnPieceAdded.AddListener(PieceAdded);
+        eventHub.OnChessMatchStart.AddListener(ApplyBonus);
+        eventHub.OnAbilityAdded.AddListener(RemoveBonusFromPiece);
         piece.OnChessmanStateChanged += HandleChessmanStateChanged;
         CreateGeneral();
-        base.Apply(piece);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnPieceAdded.RemoveListener(PieceAdded);
-        GameManager._instance.OnChessMatchStart.RemoveListener(ApplyBonus);
-        GameManager._instance.OnAbilityAdded.RemoveListener(RemoveBonusFromPiece);
+        eventHub.OnPieceAdded.RemoveListener(PieceAdded);
+        eventHub.OnChessMatchStart.RemoveListener(ApplyBonus);
+        eventHub.OnAbilityAdded.RemoveListener(RemoveBonusFromPiece);
         piece.OnChessmanStateChanged -= HandleChessmanStateChanged;
         ResetBonus();
     }
@@ -76,7 +76,7 @@ public class Teacher : Ability
         if(addedPiece.owner==piece.owner && addedPiece.abilities.Count>0){ 
             if(appliedBonus.ContainsKey(addedPiece)){
                 var currentlyAppliedBonus = appliedBonus[addedPiece];
-                if(GameManager._instance.state == ScreenState.ActiveMatch){
+                if(board.CurrentMatch!=null){
                     addedPiece.attackBonus = Mathf.Max(-addedPiece.attack, addedPiece.attackBonus - currentlyAppliedBonus);
                     addedPiece.defenseBonus = Mathf.Max(-addedPiece.defense, addedPiece.defenseBonus - currentlyAppliedBonus);
                     addedPiece.supportBonus = Mathf.Max(-addedPiece.support, addedPiece.supportBonus - currentlyAppliedBonus);

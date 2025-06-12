@@ -20,12 +20,16 @@ public abstract class Player: MonoBehaviour
     public List<GameObject> pieces;
     public List<GameObject> capturedPieces = new List<GameObject>();
     public List<GameObject> inventoryPieces = new List<GameObject>();
-    public List<BoardPosition> openPositions = new List<BoardPosition>();
+    public List<Tile> openPositions = new List<Tile>();
     public List<KingsOrder> orders = new List<KingsOrder>();
     private static Rand rng = new Rand();
+    private int abandonedPieces = 0;
+
+    public int AbandonedPieces { get => abandonedPieces; set => abandonedPieces = value; }
+
     public Player(List<GameObject> pieces)
     {
-        this.pieces=pieces;
+        this.pieces = pieces;
     }
 
     public abstract void Initialize();
@@ -82,17 +86,7 @@ public abstract class Player: MonoBehaviour
                 }
             }
     }
-    public virtual void RandomAbilities(){
-        
-        foreach (GameObject piece in pieces)
-        {
-            Chessman cm = piece.GetComponent<Chessman>();
-            int index = rng.Next(30);
-            if (GameManager._instance.AllAbilities.Count>index){
-                cm.AddAbility(GameManager._instance.AllAbilities[index].Clone());
-            }
-        }
-    }
+    
 
     public virtual Chessman GetHighestCapturer(){
         Chessman highestCapturer = null;

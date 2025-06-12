@@ -13,7 +13,7 @@ public class StationarySlash : Ability
     public StationarySlash() : base("Stationary Slash", "Does not move when capturing") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         if (piece.abilities.OfType<StationarySlash>().FirstOrDefault()!=null){
            return;
@@ -21,30 +21,30 @@ public class StationarySlash : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         
-        GameManager._instance.OnPieceCaptured.AddListener(ListenForEnd);
-        GameManager._instance.OnPieceBounced.AddListener(ReplaceOnBoard);
+        eventHub.OnPieceCaptured.AddListener(ListenForEnd);
+        eventHub.OnPieceBounced.AddListener(ReplaceOnBoard);
         piece.canStationarySlash=true;
-        base.Apply(piece);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnPieceCaptured.RemoveListener(ListenForEnd);
-        GameManager._instance.OnPieceBounced.RemoveListener(ReplaceOnBoard);
+        eventHub.OnPieceCaptured.RemoveListener(ListenForEnd);
+        eventHub.OnPieceBounced.RemoveListener(ReplaceOnBoard);
         piece.canStationarySlash=false; 
 
     }
     
     public void ListenForEnd(Chessman attacker, Chessman defender){
         if (attacker==piece){
-            GameManager._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
+            board.CurrentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Stationary Slash</gradient></color>",  $"Staying put on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
         }
     }
 
-    public void ReplaceOnBoard(Chessman attacker, Chessman defender, bool isReduced){
+    public void ReplaceOnBoard(Chessman attacker, Chessman defender){
         if (attacker==piece){
-            GameManager._instance.currentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
+            board.CurrentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
         }
     }
 

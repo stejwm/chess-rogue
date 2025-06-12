@@ -12,22 +12,22 @@ public class Monk : Ability
     private int defenseIncrease=0;
     private int supportIncrease=0;
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnRawMoveEnd.AddListener(RawMoveEnd);
-        GameManager._instance.OnAttack.AddListener(Check);
-        base.Apply(piece);
+        eventHub.OnRawMoveEnd.AddListener(RawMoveEnd);
+        eventHub.OnAttack.AddListener(Check);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnAttack.RemoveListener(Check); 
-        GameManager._instance.OnRawMoveEnd.RemoveListener(RawMoveEnd);
+        eventHub.OnAttack.RemoveListener(Check); 
+        eventHub.OnRawMoveEnd.RemoveListener(RawMoveEnd);
 
     }
-    public void RawMoveEnd(Chessman movedPiece, BoardPosition targetPosition){
+    public void RawMoveEnd(Chessman movedPiece, Tile targetPosition){
         if(movedPiece.color==piece.color && movedPiece!=piece){
             AddBonus(piece, null);
         }
@@ -35,19 +35,17 @@ public class Monk : Ability
             RemoveBonus(piece, null, 0, 0);
         }
     }
-    public void Check(Chessman movedPiece, int support, bool isAttacking, BoardPosition targetedPosition){
-        if(!isAttacking)
-            return;
+    public void Check(Chessman movedPiece, int support, Tile targetedPosition){
         if (movedPiece.color == piece.color && movedPiece!=piece){
             AddBonus(piece, null);
         }
         else if(movedPiece==piece && piece.canStationarySlash){
-            GameManager._instance.OnPieceBounced.AddListener(AddBonusBounce);
-            GameManager._instance.OnPieceCaptured.AddListener(AddBonus);
+            eventHub.OnPieceBounced.AddListener(AddBonusBounce);
+            eventHub.OnPieceCaptured.AddListener(AddBonus);
             
         }
         else if(movedPiece==piece){
-            GameManager._instance.OnAttackEnd.AddListener(RemoveBonus);
+            eventHub.OnAttackEnd.AddListener(RemoveBonus);
         }
     }
 
@@ -60,8 +58,8 @@ public class Monk : Ability
             attackIncrease=0;
             defenseIncrease=0;
             supportIncrease=0;
-            GameManager._instance.OnPieceBounced.RemoveListener(AddBonusBounce);
-            GameManager._instance.OnPieceCaptured.RemoveListener(AddBonus);
+            eventHub.OnPieceBounced.RemoveListener(AddBonusBounce);
+            eventHub.OnPieceCaptured.RemoveListener(AddBonus);
         }
     }
 
@@ -80,11 +78,11 @@ public class Monk : Ability
                         break;
 
             }
-            GameManager._instance.OnPieceBounced.RemoveListener(AddBonusBounce);
-            GameManager._instance.OnPieceCaptured.RemoveListener(AddBonus);
+            eventHub.OnPieceBounced.RemoveListener(AddBonusBounce);
+            eventHub.OnPieceCaptured.RemoveListener(AddBonus);
         }
     }
-    public void AddBonusBounce(Chessman attacker, Chessman defender, bool isReduced){
+    public void AddBonusBounce(Chessman attacker, Chessman defender){
         if(attacker==piece){
             piece.effectsFeedback.PlayFeedbacks();
             int s = Random.Range (0, 3);
@@ -94,8 +92,8 @@ public class Monk : Ability
                 case 2: supportIncrease++; piece.supportBonus++; break;
 
             }
-            GameManager._instance.OnPieceBounced.RemoveListener(AddBonusBounce);
-            GameManager._instance.OnPieceCaptured.RemoveListener(AddBonus);
+            eventHub.OnPieceBounced.RemoveListener(AddBonusBounce);
+            eventHub.OnPieceCaptured.RemoveListener(AddBonus);
         }
     }
 

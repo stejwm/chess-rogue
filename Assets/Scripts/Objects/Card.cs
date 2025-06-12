@@ -31,9 +31,9 @@ public class Card : MonoBehaviour
         this.ability = ability;
     }
 
-    public void Use(Chessman target)
+    public void Use(Board board, Chessman target)
     {
-        target.AddAbility(ability.Clone());
+        target.AddAbility(board, ability.Clone());
         target.flames.Stop();
     }
 
@@ -49,7 +49,7 @@ public class Card : MonoBehaviour
         
     }
 
-    void OnMouseDown(){
+ /*    void OnMouseDown(){
         if (GameManager._instance.isInMenu || GameManager._instance.applyingAbility)
         {
             return;
@@ -82,7 +82,7 @@ public class Card : MonoBehaviour
         }
         StartCoroutine(CardHovered());
 
-    }
+    } */
     public IEnumerator CardHovered(){
         if (!cardFlipped && !cardFlipping){
             cardFlipping=true;

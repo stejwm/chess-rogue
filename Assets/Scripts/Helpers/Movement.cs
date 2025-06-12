@@ -5,23 +5,23 @@ using System.Linq;
 
 public static class Movement
 {
-    public static List<BoardPosition> ValidPawnMoves(Chessman piece, int x, int y)
+    public static List<BoardPosition> ValidPawnMoves(Board board, Chessman piece, int x, int y)
     {
         var validMoves = new List<BoardPosition>();
-        if (board.IsPositionOnBoard(x, y))
+        if (BoardPosition.IsPositionOnBoard(x, y))
         {
             
-            if (GameManager._instance.currentMatch.GetPieceAtPosition(x, y) == null)
+            if (board.CurrentMatch.GetPieceAtPosition(x, y) == null)
             {
                 validMoves.Add(new BoardPosition(x,y));
             }
 
-            if (board.IsPositionOnBoard(x + 1, y) && GameManager._instance.currentMatch.GetPieceAtPosition(x + 1, y) != null )
+            if (BoardPosition.IsPositionOnBoard(x + 1, y) && board.CurrentMatch.GetPieceAtPosition(x + 1, y) != null )
             {
                 validMoves.Add(new BoardPosition(x+1,y));
             }
 
-            if (board.IsPositionOnBoard(x - 1, y) && GameManager._instance.currentMatch.GetPieceAtPosition(x - 1, y) != null)
+            if (BoardPosition.IsPositionOnBoard(x - 1, y) && board.CurrentMatch.GetPieceAtPosition(x - 1, y) != null)
             {
                 validMoves.Add(new BoardPosition(x-1,y));
             }
@@ -29,17 +29,17 @@ public static class Movement
         return validMoves;
     }
 
-    public static List<BoardPosition> ValidPawnSupportMoves(Chessman piece, int x, int y)
+    public static List<BoardPosition> ValidPawnSupportMoves(Board board, Chessman piece, int x, int y)
     {
         var validMoves = new List<BoardPosition>();
-        if (board.IsPositionOnBoard(x, y))
+        if (BoardPosition.IsPositionOnBoard(x, y))
         {
-            if (board.IsPositionOnBoard(x + 1, y))
+            if (BoardPosition.IsPositionOnBoard(x + 1, y))
             {
                 validMoves.Add(new BoardPosition(x+1,y));
             }
 
-            if (board.IsPositionOnBoard(x - 1, y))
+            if (BoardPosition.IsPositionOnBoard(x - 1, y))
             {
                 validMoves.Add(new BoardPosition(x-1,y));
             }
@@ -116,68 +116,68 @@ public static class Movement
 
     private static bool IsWithinBounds(int x, int y)
     {
-        return board.IsPositionOnBoard(x,y);
+        return BoardPosition.IsPositionOnBoard(x,y);
     }
 
-    private static bool IsFriendlyPieceAtPosition(Chessman piece, int x, int y)
+    private static bool IsFriendlyPieceAtPosition(Board board, Chessman piece, int x, int y)
     {
-        var otherPiece = GameManager._instance.currentMatch.GetPieceAtPosition(x, y); // Get the piece at the given position
+        var otherPiece = board.CurrentMatch.GetPieceAtPosition(x, y); // Get the piece at the given position
         return otherPiece != null && otherPiece.GetComponent<Chessman>().color == piece.color;
     }
 
-    public static List<BoardPosition> ValidRookMoves(Chessman piece, int xBoard, int yBoard){
+    public static List<BoardPosition> ValidRookMoves(Board board, Chessman piece, int xBoard, int yBoard){
         List<BoardPosition> thisValidMoves = new List<BoardPosition>();
-        thisValidMoves.AddRange(LineMovePlate(piece, 1, 0, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,0, 1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,-1, 0, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,0, -1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece, 1, 0, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,0, 1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,-1, 0, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,0, -1, xBoard, yBoard));
         return thisValidMoves;
     }
 
-    public static List<BoardPosition> ValidBishopMoves(Chessman piece, int xBoard, int yBoard){
+    public static List<BoardPosition> ValidBishopMoves(Board board, Chessman piece, int xBoard, int yBoard){
 
         List<BoardPosition> thisValidMoves = new List<BoardPosition>();
-        thisValidMoves.AddRange(LineMovePlate(piece, 1, 1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,1, -1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,-1, 1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,-1, -1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece, 1, 1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,1, -1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,-1, 1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,-1, -1, xBoard, yBoard));
         return thisValidMoves;
     }
 
-    public static List<BoardPosition> ValidQueenMoves(Chessman piece, int xBoard, int yBoard){
+    public static List<BoardPosition> ValidQueenMoves(Board board, Chessman piece, int xBoard, int yBoard){
         List<BoardPosition> thisValidMoves = new List<BoardPosition>();
-        thisValidMoves.AddRange(LineMovePlate(piece,1, 0, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,0, 1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,1, 1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,-1, 0, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,0, -1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,-1, -1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,-1, 1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlate(piece,1, -1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,1, 0, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,0, 1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,1, 1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,-1, 0, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,0, -1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,-1, -1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,-1, 1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlate(board, piece,1, -1, xBoard, yBoard));
         return thisValidMoves;
     }
 
-    public static List<BoardPosition> ValidScoutMoves(Chessman piece, int xBoard, int yBoard){
+    public static List<BoardPosition> ValidScoutMoves(Board board, Chessman piece, int xBoard, int yBoard){
         List<BoardPosition> thisValidMoves = new List<BoardPosition>();
-        thisValidMoves.AddRange(LineMovePlateNoCapture(piece,1, 0, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlateNoCapture(piece,0, 1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlateNoCapture(piece,1, 1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlateNoCapture(piece,-1, 0, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlateNoCapture(piece,0, -1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlateNoCapture(piece,-1, -1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlateNoCapture(piece,-1, 1, xBoard, yBoard));
-        thisValidMoves.AddRange(LineMovePlateNoCapture(piece,1, -1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlateNoCapture(board, piece,1, 0, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlateNoCapture(board, piece,0, 1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlateNoCapture(board, piece,1, 1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlateNoCapture(board, piece,-1, 0, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlateNoCapture(board, piece,0, -1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlateNoCapture(board, piece,-1, -1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlateNoCapture(board, piece,-1, 1, xBoard, yBoard));
+        thisValidMoves.AddRange(LineMovePlateNoCapture(board, piece,1, -1, xBoard, yBoard));
         return thisValidMoves;
     }
 
 
-    public static List<BoardPosition> AllOpenSquares(){
+    public static List<BoardPosition> AllOpenSquares(Board board){
         List<BoardPosition> thisValidMoves = new List<BoardPosition>();
         for (int i = 0; i < 8; i++)
         {
             for (int j = 0; j < 8; j++)
             {   
-                if(GameManager._instance.currentMatch.GetPieceAtPosition(i,j)==null)
+                if(board.CurrentMatch.GetPieceAtPosition(i,j)==null)
                 thisValidMoves.Add(new BoardPosition(i,j));
             }
         }
@@ -185,19 +185,19 @@ public static class Movement
     }
 
 
-    public static List<BoardPosition> LineMovePlate(Chessman piece, int xIncrement, int yIncrement, int xBoard, int yBoard)
+    public static List<BoardPosition> LineMovePlate(Board board, Chessman piece, int xIncrement, int yIncrement, int xBoard, int yBoard)
     {
         var validMoves = new List<BoardPosition>();
         int x = xBoard + xIncrement;
         int y = yBoard + yIncrement;
         
-        while (board.IsPositionOnBoard(x, y) && GameManager._instance.currentMatch.GetPieceAtPosition(x, y) == null)
+        while (BoardPosition.IsPositionOnBoard(x, y) && board.CurrentMatch.GetPieceAtPosition(x, y) == null)
         {
             validMoves.Add(new BoardPosition(x,y));
             x += xIncrement;
             y += yIncrement;
         }
-        if (board.IsPositionOnBoard(x, y))
+        if (BoardPosition.IsPositionOnBoard(x, y))
         {
             validMoves.Add(new BoardPosition(x,y));
         }
@@ -206,17 +206,17 @@ public static class Movement
         
     } 
 
-    public static List<BoardPosition> UnhinderedSelfLineMovePlate(Chessman piece, int xIncrement, int yIncrement, int xBoard, int yBoard)
+    public static List<BoardPosition> UnhinderedSelfLineMovePlate(Board board, Chessman piece, int xIncrement, int yIncrement, int xBoard, int yBoard)
     {
         var validMoves = new List<BoardPosition>();
         int x = xBoard + xIncrement;
         int y = yBoard + yIncrement;
         
-        while (board.IsPositionOnBoard(x, y) && GameManager._instance.currentMatch.GetPieceAtPosition(x, y))
+        while (BoardPosition.IsPositionOnBoard(x, y) && board.CurrentMatch.GetPieceAtPosition(x, y))
         {
-            if(GameManager._instance.currentMatch.GetPieceAtPosition(x, y)==null)
+            if(board.CurrentMatch.GetPieceAtPosition(x, y)==null)
                 validMoves.Add(new BoardPosition(x,y));
-            else if (board.IsPositionOnBoard(x, y) && GameManager._instance.currentMatch.GetPieceAtPosition(x, y).GetComponent<Chessman>().color != piece.color)
+            else if (BoardPosition.IsPositionOnBoard(x, y) && board.CurrentMatch.GetPieceAtPosition(x, y).GetComponent<Chessman>().color != piece.color)
             {
                 validMoves.Add(new BoardPosition(x,y));
                 break;
@@ -229,13 +229,13 @@ public static class Movement
         return validMoves;
         
     } 
-    public static List<BoardPosition> LineMovePlateNoCapture(Chessman piece, int xIncrement, int yIncrement, int xBoard, int yBoard)
+    public static List<BoardPosition> LineMovePlateNoCapture(Board board, Chessman piece, int xIncrement, int yIncrement, int xBoard, int yBoard)
     {
         var validMoves = new List<BoardPosition>();
         int x = xBoard + xIncrement;
         int y = yBoard + yIncrement;
         
-        while (board.IsPositionOnBoard(x, y) && GameManager._instance.currentMatch.GetPieceAtPosition(x, y) == null)
+        while (BoardPosition.IsPositionOnBoard(x, y) && board.CurrentMatch.GetPieceAtPosition(x, y) == null)
         {
             validMoves.Add(new BoardPosition(x,y));
             x += xIncrement;
@@ -246,9 +246,9 @@ public static class Movement
         
     } 
 
-    public static List<BoardPosition> RemoveFriendlyPieces(List<BoardPosition> validMoves, Chessman piece){
+    public static List<BoardPosition> RemoveFriendlyPieces(Board board, List<BoardPosition> validMoves, Chessman piece){
         return validMoves.Where(pos =>         // Check if within board boundaries
-        !IsFriendlyPieceAtPosition(piece, pos.x, pos.y) // Check if not occupied by a friendly piece
+        !IsFriendlyPieceAtPosition(board, piece, pos.x, pos.y) // Check if not occupied by a friendly piece
         ).ToList();
     }
 }

@@ -10,23 +10,23 @@ public class LoneGuard : Ability
     public LoneGuard() : base("Lone Guard", "+5 defense if defending with no support") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnAttack.AddListener(AddBonus);
-        GameManager._instance.OnAttackEnd.AddListener(RemoveBonus);
-        base.Apply(piece);
+        eventHub.OnAttack.AddListener(AddBonus);
+        eventHub.OnAttackEnd.AddListener(RemoveBonus);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnAttack.RemoveListener(AddBonus); 
-        GameManager._instance.OnAttackEnd.RemoveListener(RemoveBonus);
+        eventHub.OnAttack.RemoveListener(AddBonus); 
+        eventHub.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
-    public void AddBonus(Chessman cm, int support, bool isAttacking, BoardPosition targetedPosition){
-        if (cm==piece && support==0 && !isAttacking){
+    public void AddBonus(Chessman cm, int support, Tile targetedPosition){
+        if (cm==piece && support==0){
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Lone Guard</gradient></color>", "<color=green>+5 defense</color>");
 
             piece.defenseBonus+=5;

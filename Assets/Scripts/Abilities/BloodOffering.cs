@@ -9,22 +9,22 @@ public class BloodOffering : Ability
     
     public BloodOffering() : base("Blood Offering", "+1 to all stats when a friendly piece is captured") {}
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnPieceCaptured.AddListener(AddBonus);
-        base.Apply(piece);
+        eventHub.OnPieceCaptured.AddListener(AddBonus);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnPieceCaptured.RemoveListener(AddBonus); 
+        eventHub.OnPieceCaptured.RemoveListener(AddBonus); 
 
     }
     public void AddBonus(Chessman attacker, Chessman defender){
         if(!piece){
-            GameManager._instance.OnPieceCaptured.RemoveListener(AddBonus); 
+            eventHub.OnPieceCaptured.RemoveListener(AddBonus); 
             return;
         }
         if (defender.color==piece.color){

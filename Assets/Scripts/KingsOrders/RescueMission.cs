@@ -11,49 +11,51 @@ public class RescueMission : KingsOrder
 {
     public RescueMission() : base("Rescue Mission", "Place a captured piece on the board") {}
 
-    public override IEnumerator Use(){
-        Player hero = GameManager._instance.hero;
-        GameManager._instance.tileSelect=true;
-        bool gotSomething=false;
-        foreach (var piece in GameManager._instance.currentMatch.black.capturedPieces)
-        {
-            if(Board._instance.GetTileAt(piece.GetComponent<Chessman>().xBoard, piece.GetComponent<Chessman>().yBoard).CurrentPiece==null){
-                piece.SetActive(true);
-                piece.GetComponent<SpriteRenderer>().color=Color.red;
-                gotSomething=true;
-            }
-            GameManager._instance.togglePieceColliders(GameManager._instance.currentMatch.black.capturedPieces, false);
-        }
-        if(!gotSomething){
-            GameManager._instance.currentMatch.SetPiecesValidForAttack(hero);
-            GameManager._instance.tileSelect=false;
-            yield break;
-        }
-        yield return new WaitUntil(() => Board._instance.selectedPosition !=null);
-        GameManager._instance.tileSelect=false;
-        BoardPosition targetPosition = Board._instance.selectedPosition;
-        Board._instance.selectedPosition= null;
-        GameObject rescuedPiece = null;
-        foreach (var piece in GameManager._instance.currentMatch.black.capturedPieces)
-        {
-            if(targetPosition.x == piece.GetComponent<Chessman>().xBoard && targetPosition.y == piece.GetComponent<Chessman>().yBoard){
-                rescuedPiece = piece;
-                piece.GetComponent<Chessman>().GetComponent<SpriteRenderer>().color=Color.white;
+    public override IEnumerator Use(Board board)
+    {
+        /*  Player hero = board.Hero;
+         GameManager._instance.tileSelect=true;
+         bool gotSomething=false;
+         foreach (var piece in board.CurrentMatch.black.capturedPieces)
+         {
+             if(board.GetTileAt(piece.GetComponent<Chessman>().xBoard, piece.GetComponent<Chessman>().yBoard).CurrentPiece==null){
+                 piece.SetActive(true);
+                 piece.GetComponent<SpriteRenderer>().color=Color.red;
+                 gotSomething=true;
+             }
+             GameManager._instance.togglePieceColliders(board.CurrentMatch.black.capturedPieces, false);
+         }
+         if(!gotSomething){
+             board.CurrentMatch.SetPiecesValidForAttack(hero);
+             GameManager._instance.tileSelect=false;
+             yield break;
+         }
+         yield return new WaitUntil(() => board.selectedPosition !=null);
+         GameManager._instance.tileSelect=false;
+         BoardPosition targetPosition = board.selectedPosition;
+         board.selectedPosition= null;
+         GameObject rescuedPiece = null;
+         foreach (var piece in board.CurrentMatch.black.capturedPieces)
+         {
+             if(targetPosition.x == piece.GetComponent<Chessman>().xBoard && targetPosition.y == piece.GetComponent<Chessman>().yBoard){
+                 rescuedPiece = piece;
+                 piece.GetComponent<Chessman>().GetComponent<SpriteRenderer>().color=Color.white;
 
-            }else{
-                piece.GetComponent<Chessman>().GetComponent<SpriteRenderer>().color=Color.white;
-                piece.SetActive(false);
-            }
-        }
-        GameManager._instance.currentMatch.MovePiece(rescuedPiece.GetComponent<Chessman>(), targetPosition.x, targetPosition.y);
-        
-        GameManager._instance.currentMatch.black.capturedPieces.Remove(rescuedPiece);
-        GameManager._instance.hero.pieces.Add(rescuedPiece);
-        GameManager._instance.togglePieceColliders(GameManager._instance.currentMatch.black.capturedPieces, true);
+             }else{
+                 piece.GetComponent<Chessman>().GetComponent<SpriteRenderer>().color=Color.white;
+                 piece.SetActive(false);
+             }
+         }
+         board.CurrentMatch.MovePiece(rescuedPiece.GetComponent<Chessman>(), targetPosition.x, targetPosition.y);
 
-        
-        //Game._instance.togglePieceColliders(civilians, false);
-        GameManager._instance.currentMatch.SetPiecesValidForAttack(hero);
+         board.CurrentMatch.black.capturedPieces.Remove(rescuedPiece);
+         board.Hero.pieces.Add(rescuedPiece);
+         //GameManager._instance.togglePieceColliders(board.CurrentMatch.black.capturedPieces, true);
+
+
+         //Game._instance.togglePieceColliders(civilians, false);
+         board.CurrentMatch.SetPiecesValidForAttack(hero); */
+        yield return null;
     }
 
 }

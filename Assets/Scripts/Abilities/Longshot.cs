@@ -12,24 +12,24 @@ public class Longshot : Ability
     public Longshot() : base("Longshot", "+5 attack if attacking from 4 or more squares away") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnAttack.AddListener(AddBonus);
-        GameManager._instance.OnAttackEnd.AddListener(RemoveBonus);
-        base.Apply(piece);
+        eventHub.OnAttack.AddListener(AddBonus);
+        eventHub.OnAttackEnd.AddListener(RemoveBonus);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnAttack.RemoveListener(AddBonus); 
-        GameManager._instance.OnAttackEnd.RemoveListener(RemoveBonus);
+        eventHub.OnAttack.RemoveListener(AddBonus); 
+        eventHub.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
-    public void AddBonus(Chessman cm, int support, bool isAttacking, BoardPosition targetedPosition){
+    public void AddBonus(Chessman cm, int support, Tile targetedPosition){
         //Debug.Log("starting position: "+cm.xBoard+","+cm.yBoard + " attacking position "+targetedPosition.x+","+targetedPosition.y);
-        if (cm==piece && isAttacking && (!Enumerable.Range(cm.xBoard-4,8).Contains(targetedPosition.x) ||!Enumerable.Range(cm.yBoard-4,8).Contains(targetedPosition.y))){
+        if (cm==piece && (!Enumerable.Range(cm.xBoard-4,8).Contains(targetedPosition.X) ||!Enumerable.Range(cm.yBoard-4,8).Contains(targetedPosition.Y))){
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Longshot</gradient></color>", "<color=green>+5</color> attack");
             piece.effectsFeedback.PlayFeedbacks();
 

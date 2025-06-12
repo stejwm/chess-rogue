@@ -20,27 +20,16 @@ public class PlayerAgent : Agent
     private List<MoveCommand> moveHistory = new List<MoveCommand>();
     public Chessman selectedPiece;
     public BoardPosition destinationPosition;
+    [SerializeField] private Board board;
 
     private const int MaxRepetitions = 8;
 
     public void StartUp(){
         Debug.Log("Starting up agent");
-        GameManager._instance.OnGameEnd.AddListener(GameEnd);
-        GameManager._instance.OnPieceCaptured.AddListener(CaptureReward);
-        GameManager._instance.OnPieceBounced.AddListener(BounceReward);
-        GameManager._instance.OnSupportAdded.AddListener(SupportReward);
-        
-        
-        
-
     }
 
     public void ShutDown(){
         moveCommands.Clear();
-        GameManager._instance.OnGameEnd.RemoveListener(GameEnd);
-        GameManager._instance.OnPieceCaptured.RemoveListener(CaptureReward);
-        GameManager._instance.OnPieceBounced.RemoveListener(BounceReward);
-        GameManager._instance.OnSupportAdded.RemoveListener(SupportReward);
     }
     public void CreateMoveCommandDictionary(){
         GenerateMoveCommandDictionary(color==PieceColor.White);
@@ -62,7 +51,7 @@ public class PlayerAgent : Agent
             {
                 int actualX = isPlayerWhite ? relativeX : 7 - relativeX; // Adjust for left-to-right perspective
 
-                Tile tile = Board._instance.GetTileAt(actualX, actualY); // Get the tile at this position
+                Tile tile = board.GetTileAt(actualX, actualY); // Get the tile at this position
                 Chessman piece = tile.CurrentPiece; // Get the piece on the tile (can be null)
 
                 // Loop through all 64 positions on the board for possible destinations
@@ -112,11 +101,11 @@ public class PlayerAgent : Agent
         // Check if the last few moves form a back-and-forth pattern
         if (IsRepeatingPattern())
         {
-            GameEnd(PieceColor.None);
+            //GameEnd(PieceColor.None);
         }
 
         Debug.Log("Action Recieved attempting to execute move from "+ BoardPosition.ConvertToChessNotation(selectedMoveCommand.piece.xBoard, selectedMoveCommand.piece.yBoard)+" to "+BoardPosition.ConvertToChessNotation(selectedMoveCommand.x, selectedMoveCommand.y));
-        GameManager._instance.currentMatch.ExecuteTurn(selectedMoveCommand.piece, selectedMoveCommand.x, selectedMoveCommand.y);
+        board.CurrentMatch.ExecuteTurn(selectedMoveCommand.piece, selectedMoveCommand.x, selectedMoveCommand.y);
         
     }
 
@@ -164,6 +153,7 @@ public class PlayerAgent : Agent
                 if(!selectedPiece.isValidForAttack)
                     continue;
                 selectedPiece.SetValidMoves();
+                /*
                 var moves = selectedPiece.GetAllValidMoves();
                 //Debug.Log(moves.Count);
                 
@@ -177,6 +167,7 @@ public class PlayerAgent : Agent
                         validIndexes.Add(entry.Key);
                     }
                 }
+                */
             }
             
         }
@@ -193,10 +184,10 @@ public class PlayerAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        for (int k = 0; k < GameManager._instance.currentMatch.GetPositions().GetLength(0); k++){
-            for (int l = 0; l < GameManager._instance.currentMatch.GetPositions().GetLength(1); l++){
-                if(GameManager._instance.currentMatch.GetPositions()[k, l] !=null){
-                    GameObject item = GameManager._instance.currentMatch.GetPositions()[k, l];
+        for (int k = 0; k < board.CurrentMatch.GetPositions().GetLength(0); k++){
+            for (int l = 0; l < board.CurrentMatch.GetPositions().GetLength(1); l++){
+                if(board.CurrentMatch.GetPositions()[k, l] !=null){
+                    GameObject item = board.CurrentMatch.GetPositions()[k, l];
                     Chessman piece = item.GetComponent<Chessman>();
                     sensor.AddObservation(piece.xBoard);
                     sensor.AddObservation(piece.yBoard);
@@ -235,36 +226,15 @@ public class PlayerAgent : Agent
     {
         float[] abilitiesObservation = new float[64];
 
-        foreach (Ability ability in piece.abilities)
+        /* foreach (Ability ability in piece.abilities)
         {
             int index = GameManager._instance.AllAbilities.IndexOf(ability);
             abilitiesObservation[index] = 1; // Mark the ability as present
-        }
+        } */
 
         return abilitiesObservation;
     }
 
-    public void GameEnd(PieceColor color){
-        if(this.color==color){
-            SetReward(10f);
-            Debug.Log(color+"Won ! Recieved 1 reward");
-            if (!GameManager._instance.endEpisode){
-                GameManager._instance.endEpisode = true;
-                //EndEpisode();
-                //StartCoroutine(ReloadScene());
-            }
-        }
-        else{
-            SetReward(-10f);
-            if (!GameManager._instance.endEpisode){
-                GameManager._instance.endEpisode = true;
-                //EndEpisode();
-                //StartCoroutine(ReloadScene());
-            }
-            Debug.Log(this.color+"Lost ! Recieved -1 reward");
-        }
-        
-    }
     private IEnumerator ReloadScene()
     {
         yield return null; // Allow EndEpisode to complete

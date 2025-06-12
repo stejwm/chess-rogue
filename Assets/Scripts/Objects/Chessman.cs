@@ -41,7 +41,7 @@ public abstract class Chessman : MonoBehaviour
     public int yBoard = -1;
     public Player owner;
 
-    public BoardPosition startingPosition;
+    public Tile startingPosition;
     public MovementProfile moveProfile;
     protected Sprite sprite;
 
@@ -98,6 +98,7 @@ public abstract class Chessman : MonoBehaviour
 
     public abstract List<BoardPosition> GetValidMoves();
     public abstract List<BoardPosition> GetValidSupportMoves();
+    public abstract void Initialize(Board board);
     public event Action<bool> OnChessmanStateChanged;
 
     protected virtual void Awake()
@@ -132,7 +133,7 @@ public abstract class Chessman : MonoBehaviour
     }
     public void Activate()
     {
-        //Take the instantiated location and adjust transform
+        Debug.Log("Activating Chessman: " + this.name);
         UpdateUIPosition();
         switch (this.color)
         {
@@ -171,27 +172,7 @@ public abstract class Chessman : MonoBehaviour
         //this.transform.position = new Vector3(x, y, -1.0f);
     }
 
-    public int GetXBoard()
-    {
-        return xBoard;
-    }
-
-    public int GetYBoard()
-    {
-        return yBoard;
-    }
-
-    public void SetXBoard(int x)
-    {
-        xBoard = x;
-    }
-
-    public void SetYBoard(int y)
-    {
-        yBoard = y;
-    }
-
-    public void AddAbility(Ability ability)
+    public void AddAbility(Board board, Ability ability)
     {
         Betrayer betrayerAbility = abilities.OfType<Betrayer>().FirstOrDefault();
         bool hadBetrayer = betrayerAbility != null;
@@ -200,21 +181,26 @@ public abstract class Chessman : MonoBehaviour
             betrayerAbility.Remove(this);
             abilities.Remove(betrayerAbility);
         }
-        ability.Apply(this);
+        ability.Apply(board, this);
 
         if (hadBetrayer)
         {
-            betrayerAbility.Apply(this);
+            betrayerAbility.Apply(board, this);
         }
     }
-
+    
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        FindObjectOfType<GameInputRouter>().OnClick(gameObject);
+    }
+    /*
     private void OnMouseDown()
     {
         if (GameManager._instance.isInMenu || GameManager._instance.applyingAbility)
         {
             return;
         }
-        if (GameManager._instance.currentMatch !=null  && GameManager._instance.currentMatch.isSetUpPhase && GameManager._instance.hero.inventoryPieces.Contains(this.gameObject))
+        if (board.CurrentMatch != null && board.CurrentMatch.isSetUpPhase && GameManager._instance.hero.inventoryPieces.Contains(this.gameObject))
         {
             HandlePiecePlacement();
             return;
@@ -259,7 +245,7 @@ public abstract class Chessman : MonoBehaviour
     }
 
     public void HandlePiecePlacement(){        
-        Board._instance.SelectPieceToPlace(this);
+        //.SelectPieceToPlace(this);
     }
 
     public List<BoardPosition> DisplayValidMoves(){
@@ -267,7 +253,7 @@ public abstract class Chessman : MonoBehaviour
 
         foreach (var coordinate in validMoves)
         {
-            if (board.IsPositionOnBoard(coordinate.x, coordinate.y))
+            if (BoardPosition.IsPositionOnBoard(coordinate.x, coordinate.y))
             {
                 SetTileValidMove(coordinate.x, coordinate.y);
                 theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
@@ -281,9 +267,9 @@ public abstract class Chessman : MonoBehaviour
 
         foreach (var coordinate in validMoves)
         {
-            if (board.IsPositionOnBoard(coordinate.x, coordinate.y))
+            if (BoardPosition.IsPositionOnBoard(coordinate.x, coordinate.y))
             {
-                GameObject cp = GameManager._instance.currentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
+                GameObject cp = board.CurrentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
                 if (cp == null)
                 {
                     theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
@@ -296,31 +282,6 @@ public abstract class Chessman : MonoBehaviour
         }
         return theseValidMoves;
     }
-     public void PointMovePlate(int x, int y)
-    {
-        if (board.IsPositionOnBoard(x, y))
-        {
-            GameObject cp = GameManager._instance.currentMatch.GetPieceAtPosition(x, y);
-
-            if (cp == null)
-            {
-                SetTileValidMove(x, y);
-            }
-            else if (cp.GetComponent<Chessman>().player != player)
-            {
-                SetTileValidMove(x, y);
-            }
-        }
-    } 
-
-    public void showSupportFloatingText(){
-        supportFloatingText.PlayFeedbacks();
-    }
-
-     public void SetTileValidMove(int x, int y)
-    {
-        Board._instance.SetActiveTile(this, new BoardPosition(x,y));
-    } 
 
     private void OnMouseEnter(){
         if (GameManager._instance.isInMenu)
@@ -335,7 +296,7 @@ public abstract class Chessman : MonoBehaviour
     private void OnMouseExit(){
         if(GameManager._instance.state==ScreenState.PrisonersMarket)
             PopUpManager._instance.HideValues();
-    }
+    }*/
 
     public override bool Equals(object obj)
     {

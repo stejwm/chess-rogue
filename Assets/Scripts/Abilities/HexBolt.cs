@@ -10,22 +10,22 @@ public class HexBolt : Ability
     public HexBolt() : base("Hex Bolt", "When bounced, Removes all abilities from defender until end of their next turn") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnPieceBounced.AddListener(Hex);
-        base.Apply(piece);
+        eventHub.OnPieceBounced.AddListener(Hex);
+        base.Apply(board, piece);
 
         
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnPieceBounced.RemoveListener(Hex); 
+        eventHub.OnPieceBounced.RemoveListener(Hex); 
 
     }
-    public void Hex(Chessman attacker, Chessman defender, bool isBounceReduced){
+    public void Hex(Chessman attacker, Chessman defender){
         if (attacker==piece){
             defender.hexed=true;
             foreach (var ability in defender.abilities)

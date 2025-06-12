@@ -15,23 +15,23 @@ public class General : Ability
     
     public General() : base("General", "+1 to all knights, bonus increases for each knight added") {}
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         if(piece.type!=PieceType.Knight)
             return;
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnPieceAdded.AddListener(PieceAdded);
-        GameManager._instance.OnChessMatchStart.AddListener(ApplyBonus);
+        eventHub.OnPieceAdded.AddListener(PieceAdded);
+        eventHub.OnChessMatchStart.AddListener(ApplyBonus);
         CreateGeneral();
-        base.Apply(piece);
+        base.Apply(board, piece);
         piece.OnChessmanStateChanged += HandleChessmanStateChanged;
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnPieceAdded.RemoveListener(PieceAdded);
-        GameManager._instance.OnChessMatchStart.RemoveListener(ApplyBonus);
+        eventHub.OnPieceAdded.RemoveListener(PieceAdded);
+        eventHub.OnChessMatchStart.RemoveListener(ApplyBonus);
         piece.OnChessmanStateChanged -= HandleChessmanStateChanged;
         ResetBonus();
     }

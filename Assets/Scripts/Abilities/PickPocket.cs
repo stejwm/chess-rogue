@@ -9,20 +9,20 @@ public class PickPocket : Ability
     
     public PickPocket() : base("Pickpocket", "+3 coins when bounced") {}
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        GameManager._instance.OnPieceBounced.AddListener(Steal);
-        base.Apply(piece);
+        eventHub.OnPieceBounced.AddListener(Steal);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        GameManager._instance.OnPieceBounced.RemoveListener(Steal); 
+        eventHub.OnPieceBounced.RemoveListener(Steal); 
 
     }
-    public void Steal(Chessman attacker, Chessman defender, bool isBounceReduced){
+    public void Steal(Chessman attacker, Chessman defender){
         if(attacker==piece){
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">PickPocket</gradient></color>", $"<color=yellow>+3</color> coins");
             piece.owner.playerCoins+=2;

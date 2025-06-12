@@ -26,6 +26,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     public Chessman StartingPiece { get => startingPiece; set => startingPiece = value; }
     public Chessman CurrentPiece { get => currentPiece; set => currentPiece = value; }
+    public int X { get => x; set => x = value; }
+    public int Y { get => y; set => y = value; }
 
     private void OnMouseEnter(){
         Chessman piece = currentPiece;
@@ -41,6 +43,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log($"Tile clicked at position ({X}, {Y})");
         FindObjectOfType<GameInputRouter>().OnClick(gameObject);
     }
 
@@ -53,8 +56,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     }
 
     public void Initialize(int x, int y){
-        this.x = x;
-        this.y = y;
+        this.X = x;
+        this.Y = y;
         SetUIPosition();
     }
 
@@ -71,8 +74,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     public void SetUIPosition(){
 
 
-        float UIx = x;
-        float UIy = y;
+        float UIx = X;
+        float UIy = Y;
 
         //Adjust by variable offset
         UIx *= .96f;
@@ -82,12 +85,12 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         UIx += -3.33f;
         UIy += -3.33f;
         
-        name = $"Tile ({x}, {y})";
+        name = $"Tile ({X}, {Y})";
         //Debug.Log("positions: "+x+","+y);
         //Set actual unity values
         this.transform.position = new Vector3(UIx, UIy, -1.0f);
 
-        isLightTile = !((x + y) % 2 == 0); // Even sum for light, odd for dark
+        isLightTile = !((X + Y) % 2 == 0); // Even sum for light, odd for dark
 
     // Get the SpriteRenderer component
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -143,7 +146,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         else if(GameManager._instance.state == ScreenState.ManagementScreen){
             ArmyManager._instance.PositionSelect(this.position);
         }
-        else if(!isValidMove && !GameManager._instance.currentMatch.isSetUpPhase){
+        else if(!isValidMove && !board.CurrentMatch.isSetUpPhase){
             
             var piece = currentPiece;
             if(piece== null || piece.owner == GameManager._instance.hero)
@@ -183,11 +186,11 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     
     private void OnMouseUp(){
-        /* if (GameManager._instance.isInMenu || GameManager._instance.currentMatch==null)
+        /* if (GameManager._instance.isInMenu || board.CurrentMatch==null)
         {
             return;
         }
-        else if (GameManager._instance.currentMatch.isSetUpPhase && reference !=null){
+        else if (board.CurrentMatch.isSetUpPhase && reference !=null){
             Board._instance.PlacePiece(reference, this);
         }
         else if(reference!=null && reference.isValidForAttack){
@@ -195,7 +198,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             Debug.Log("On Move true");
             StatBoxManager._instance.UnlockView(true);
             //reference.flames.Stop();
-            GameManager._instance.currentMatch.ExecuteTurn(reference, position.x, position.y);
+            board.CurrentMatch.ExecuteTurn(reference, position.x, position.y);
         } */
         
     }
@@ -206,11 +209,11 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             return false;
         
         Tile other = (Tile)obj;
-        return x == other.x && y == other.y;
+        return X == other.X && Y == other.Y;
     }
 
     public override int GetHashCode()
     {
-        return x.GetHashCode() ^ y.GetHashCode();
+        return X.GetHashCode() ^ Y.GetHashCode();
     }
 }

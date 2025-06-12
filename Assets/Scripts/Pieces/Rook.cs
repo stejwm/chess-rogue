@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Rook : Chessman
 {
-    public void Start(){
+    public override void Initialize(Board board){
         Activate();
-        moveProfile = new RookMovement();
+        moveProfile = new RookMovement(board);
         type = PieceType.Rook;
     }
     public override List<BoardPosition> GetValidMoves() => moveProfile.GetValidMoves(this);
