@@ -5,15 +5,15 @@ using UnityEngine;
 public class KnightMovement : MovementProfile
 {
     public KnightMovement(Board board) : base(board) { }
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture = false)
+    public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture = false)
     {
         if (allowFriendlyCapture)
-            return Movement.ValidKnightMoves(piece, piece.xBoard, piece.yBoard);
+            return Movement.ValidKnightMoves(board, piece, piece.xBoard, piece.yBoard);
         else
-            return Movement.RemoveFriendlyPieces(board, Movement.ValidKnightMoves(piece, piece.xBoard, piece.yBoard), piece);
+            return Movement.RemoveFriendlyPieces(board, Movement.ValidKnightMoves(board, piece, piece.xBoard, piece.yBoard), piece);
     }
-    public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
-        return Movement.ValidKnightMoves(piece,piece.xBoard,piece.yBoard);
+    public override List<Tile> GetValidSupportMoves(Chessman piece){
+        return Movement.ValidKnightMoves(board, piece,piece.xBoard,piece.yBoard);
     }
     public override List<Vector2Int> GetDirections(Chessman piece)
     {

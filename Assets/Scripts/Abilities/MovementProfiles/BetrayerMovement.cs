@@ -10,11 +10,11 @@ public class BetrayerMovement : MovementProfile
     GameManager game;
     
     public BetrayerMovement(Board board, MovementProfile old) : base(board) {oldProfile = old;}
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
+    public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
         return oldProfile.GetValidMoves( piece, true);
      }
-    public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
-        return new List<BoardPosition>();
+    public override List<Tile> GetValidSupportMoves(Chessman piece){
+        return new List<Tile>();
     }
 
     public override List<Vector2Int> GetDirections(Chessman piece){

@@ -12,7 +12,6 @@ using System;
 
 public class LogManager : MonoBehaviour
 {
-    public static LogManager _instance;
     public TMP_Text LogText;
     [SerializeField] private ScrollRect scrollRect;
     public GameObject abilityTarget;

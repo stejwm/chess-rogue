@@ -13,7 +13,7 @@ public class RadiatingDeath : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnPieceCaptured.AddListener(RadiateDeath);
+        board.EventHub.OnPieceCaptured.AddListener(RadiateDeath);
         base.Apply(board, piece);
     }
 

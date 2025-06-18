@@ -16,8 +16,8 @@ public class Monk : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnRawMoveEnd.AddListener(RawMoveEnd);
-        eventHub.OnAttack.AddListener(Check);
+        board.EventHub.OnRawMoveEnd.AddListener(RawMoveEnd);
+        board.EventHub.OnAttack.AddListener(Check);
         base.Apply(board, piece);
     }
 

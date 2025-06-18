@@ -10,15 +10,10 @@ using MoreMountains.Feedbacks;
 public class ArmyManager : MonoBehaviour
 {
     public List<GameObject> myPieces;
-    public TMP_Text bloodText;
-    public TMP_Text coinText;
-
     public List<GameObject> pieces = new List<GameObject>();
+    public List<GameObject> cards = new List<GameObject>();
     public Chessman selectedPiece;
     public int pricePerPiece = 2;
-    public GameObject kingsOrderObject;
-    public GameObject KOCanvas;
-    public GameObject KOParent;
     public Board board;
     public void Start()
     {
@@ -61,7 +56,6 @@ public class ArmyManager : MonoBehaviour
             selectedPiece.UpdateUIPosition();
             piece.UpdateUIPosition();
             board.Hero.playerCoins-=pricePerPiece*2;
-            UpdateCurrency();
             DeselectPiece(selectedPiece);
         }
         else{
@@ -81,7 +75,6 @@ public class ArmyManager : MonoBehaviour
             selectedPiece.xBoard=position.X;
             selectedPiece.yBoard=position.Y;
             selectedPiece.UpdateUIPosition();
-            UpdateCurrency();
             board.EventHub.RaisePieceAdded(selectedPiece);
             DeselectPiece(selectedPiece);
         }else if (selectedPiece && board.Hero.playerCoins>=pricePerPiece){
@@ -92,7 +85,6 @@ public class ArmyManager : MonoBehaviour
             selectedPiece.yBoard=position.Y;
             selectedPiece.UpdateUIPosition();
             board.Hero.playerCoins-=pricePerPiece;
-            UpdateCurrency();
             DeselectPiece(selectedPiece);
         }
         else{
@@ -100,73 +92,35 @@ public class ArmyManager : MonoBehaviour
         }
     }
 
-    public void OpenShop(){
-        //NEED to rewrite this
-    }
-    public void CheckInventory(){
-        if (board.Hero.inventoryPieces.Count>0){
-            //KingsOrderManager._instance.Hide();
-            int i = 0;
-            foreach (var obj in board.Hero.inventoryPieces)
-            {
-                Chessman piece = obj.GetComponent<Chessman>();
-                obj.SetActive(true);
-                piece.xBoard=3+i;
-                piece.yBoard=4; 
-                i++;
-                piece.UpdateUIPosition();
-                if (piece !=null && obj.GetComponent<SpriteRenderer>())
-                {
-                    SpriteRenderer rend = obj.GetComponent<SpriteRenderer>();
-                    rend.sortingOrder = 7;
-                    piece.highlightedParticles.GetComponent<Renderer>().sortingOrder=5;
-                }
-                piece.UpdateUIPosition();
-            }
+    public void OpenManagement(Board board)
+    {
+        this.board = board;
+        int index = 0;
+        foreach (var piece in board.Hero.inventoryPieces)
+        {
+            piece.SetActive(true);
+            board.PlacePiece(piece.GetComponent<Chessman>(), board.GetTileAt(index, 4));
+            index++;
         }
+        cards = CardFactory.Instance.CreateCards(board.Hero.orders);
+        foreach (var card in cards)
+        {
+            Vector3 localPosition = new(index * 2 - ((1.96f * 2) / cards.Count), 2, -2);
+            card.transform.position = localPosition;
+            index++;
+            card.GetComponent<Card>().CardHovered();
+        }
+        this.gameObject.SetActive(true);
     }
 
-    public void UpdateCurrency(){
-        bloodText.text = ": "+board.Hero.playerBlood;
-        coinText.text = ": "+board.Hero.playerCoins;
-    }
+    public void CloseManagement()
+    {
+        foreach (var card in cards)
+            Destroy(card);
+        foreach (var piece in board.Hero.inventoryPieces)
+            piece.SetActive(false);
 
-    public void CloseShop(){
-        //ManagementStatManager._instance.HideStats();
-        foreach (GameObject piece in myPieces)
-        {
-            if (piece.GetComponent<SpriteRenderer>())
-            {
-                SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                rend.sortingOrder = 5;
-                piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=0;
-                piece.GetComponent<Chessman>().highlightedParticles.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
-            }
-        }
-        foreach (GameObject piece in board.Hero.inventoryPieces)
-        {
-            if (piece.GetComponent<SpriteRenderer>())
-            {
-                SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                rend.sortingOrder = 5;
-                piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=0;
-                piece.GetComponent<Chessman>().highlightedParticles.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
-            }
-        }
-        foreach (GameObject piece in pieces)
-        {
-            Destroy(piece);
-        }
-        SpriteRenderer KORend = kingsOrderObject.GetComponent<SpriteRenderer>();
-        KORend.sortingOrder = 1;
-
-        Canvas KOCanvasRend = KOCanvas.GetComponent<Canvas>();
-        KOCanvasRend.sortingOrder = 2;
-
-       // KingsOrderManager._instance.flames.GetComponent<Renderer>().sortingOrder=5;
-
-        //KingsOrderManager._instance.Hide();
-        gameObject.SetActive(false);
+        gameObject.SetActive(false);   
     }
 
     

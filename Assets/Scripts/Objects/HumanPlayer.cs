@@ -9,17 +9,12 @@ public class HumanPlayer : Player
 
     public override void Initialize()
     {
-        //pieces = PieceFactory._instance.CreateWhitePieces(this);
-        openPositions = new List<Tile>();
-        int startingRow;
-        if (pieces[0].GetComponent<Chessman>().startingPosition.Y <= 2)
-            startingRow=2;
-        else
-            startingRow=7;
-            
-        /* for (int i =0; i<8; i++){
-            openPositions.Add(new Tile());
-        } */
+       RarityWeights = new Dictionary<Rarity, int>()
+        {
+            { Rarity.Common, 55 },
+            { Rarity.Uncommon, 35 },
+            { Rarity.Rare, 10 }
+        };
     }
 
     public override void MakeMove(ChessMatch match)

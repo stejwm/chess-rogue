@@ -15,8 +15,8 @@ public class StrengthReaper : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnAttackStart.AddListener(AddBonus);
-        eventHub.OnAttackEnd.AddListener(RemoveBonus);
+        board.EventHub.OnAttackStart.AddListener(AddBonus);
+        board.EventHub.OnAttackEnd.AddListener(RemoveBonus);
         base.Apply(board, piece);
 
         

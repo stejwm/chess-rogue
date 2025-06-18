@@ -5,9 +5,9 @@ using UnityEngine;
 public class CountermarchMovement : MovementProfile
 {
     public CountermarchMovement(Board board) : base(board) {}
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture = false)
+    public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture = false)
     {
-        List<BoardPosition> validMoves = new List<BoardPosition>();
+        List<Tile> validMoves = new List<Tile>();
         validMoves.AddRange(Movement.ValidPawnMoves(board, piece, piece.xBoard, piece.yBoard - 1));
         validMoves.AddRange(Movement.ValidPawnMoves(board, piece, piece.xBoard, piece.yBoard + 1));
         if (allowFriendlyCapture)
@@ -15,8 +15,8 @@ public class CountermarchMovement : MovementProfile
         else
             return Movement.RemoveFriendlyPieces(board, validMoves, piece);
     }
-    public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
-        List<BoardPosition> validMoves = new List<BoardPosition>();
+    public override List<Tile> GetValidSupportMoves(Chessman piece){
+        List<Tile> validMoves = new List<Tile>();
         validMoves.AddRange(Movement.ValidPawnSupportMoves(board, piece,piece.xBoard,piece.yBoard-1));
         validMoves.AddRange(Movement.ValidPawnSupportMoves(board, piece,piece.xBoard,piece.yBoard+1));
         return validMoves;

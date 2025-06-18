@@ -13,7 +13,7 @@ public class PickPocket : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnPieceBounced.AddListener(Steal);
+        board.EventHub.OnPieceBounced.AddListener(Steal);
         base.Apply(board, piece);
     }
 

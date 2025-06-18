@@ -21,10 +21,10 @@ public class BloodThirstAbility : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
 
-        eventHub.OnPieceCaptured.AddListener(Thirst);
-        eventHub.OnAttack.AddListener(Decimate);
-        eventHub.OnPieceBounced.AddListener(EndThirst);
-        eventHub.OnGameEnd.AddListener(ResetMoveProfile);
+        board.EventHub.OnPieceCaptured.AddListener(Thirst);
+        board.EventHub.OnAttack.AddListener(Decimate);
+        board.EventHub.OnPieceBounced.AddListener(EndThirst);
+        board.EventHub.OnGameEnd.AddListener(ResetMoveProfile);
         base.Apply(board, piece);
 
     }

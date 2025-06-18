@@ -13,7 +13,7 @@ public class IncreasingStrike : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnPieceCaptured.AddListener(AddBonus);
+        board.EventHub.OnPieceCaptured.AddListener(AddBonus);
         base.Apply(board, piece);
     }
 

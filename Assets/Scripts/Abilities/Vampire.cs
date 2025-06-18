@@ -19,10 +19,10 @@ public class Vampire : Ability
         }
         this.piece = piece;
         
-        eventHub.OnMove.AddListener(AddBonus);
-        eventHub.OnAttackEnd.AddListener(SuckBlood);
-        eventHub.OnChessMatchStart.AddListener(MatchStartBonus);
-        eventHub.OnPieceBounced.AddListener(PossibleReset);
+        board.EventHub.OnMove.AddListener(AddBonus);
+        board.EventHub.OnAttackEnd.AddListener(SuckBlood);
+        board.EventHub.OnChessMatchStart.AddListener(MatchStartBonus);
+        board.EventHub.OnPieceBounced.AddListener(PossibleReset);
         if(board.CurrentMatch!=null){
             AddBonus(piece, board.GetTileAt(piece.xBoard, piece.yBoard));
         }
@@ -89,7 +89,7 @@ public class Vampire : Ability
     {
         if (attacker == piece)
         {
-            defender.AddAbility(board, AbilityDatabase._instance.GetAbilityByName("Vampire"));
+            defender.AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("Vampire"));
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Vampire</gradient></color>",  $"fledgling created on {BoardPosition.ConvertToChessNotation(defender.xBoard, defender.yBoard)}");
 
         }

@@ -14,8 +14,8 @@ public class Assassin : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnAttack.AddListener(AddBonus);
-        eventHub.OnAttackEnd.AddListener(RemoveBonus);
+        board.EventHub.OnAttack.AddListener(AddBonus);
+        board.EventHub.OnAttackEnd.AddListener(RemoveBonus);
         base.Apply(board, piece);
 
         

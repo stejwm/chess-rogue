@@ -21,8 +21,8 @@ public class StationarySlash : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
         
-        eventHub.OnPieceCaptured.AddListener(ListenForEnd);
-        eventHub.OnPieceBounced.AddListener(ReplaceOnBoard);
+        board.EventHub.OnPieceCaptured.AddListener(ListenForEnd);
+        board.EventHub.OnPieceBounced.AddListener(ReplaceOnBoard);
         piece.canStationarySlash=true;
         base.Apply(board, piece);
     }

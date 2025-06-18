@@ -188,7 +188,7 @@ public class DialogueManager : MonoBehaviour
     public void AddEscapee(){
         var hero = board.Hero;
         var pieceObj = PieceFactory._instance.CreateAbilityPiece(board,
-                PieceType.Pawn, "s", -1, -1, PieceColor.White,  hero, AbilityDatabase._instance.GetAbilityByName("Betrayer"));
+                PieceType.Pawn, "s", -1, -1, PieceColor.White,  hero, AbilityDatabase.Instance.GetAbilityByName("Betrayer"));
         hero.inventoryPieces.Add(pieceObj);
         Chessman piece = pieceObj.GetComponent<Chessman>();
         piece.LevelUp(5);

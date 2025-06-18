@@ -18,8 +18,8 @@ public class Swift : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
 
-        eventHub.OnRawMoveEnd.AddListener(Swifting);
-        eventHub.OnAttackEnd.AddListener(EndSwift);
+        board.EventHub.OnRawMoveEnd.AddListener(Swifting);
+        board.EventHub.OnAttackEnd.AddListener(EndSwift);
         base.Apply(board, piece);
 
     }

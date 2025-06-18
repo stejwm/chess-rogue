@@ -21,8 +21,8 @@ public class General : Ability
             return;
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnPieceAdded.AddListener(PieceAdded);
-        eventHub.OnChessMatchStart.AddListener(ApplyBonus);
+        board.EventHub.OnPieceAdded.AddListener(PieceAdded);
+        board.EventHub.OnChessMatchStart.AddListener(ApplyBonus);
         CreateGeneral();
         base.Apply(board, piece);
         piece.OnChessmanStateChanged += HandleChessmanStateChanged;

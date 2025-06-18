@@ -21,8 +21,8 @@ public class Sentinel : Ability
             return;
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnPieceAdded.AddListener(PieceAdded);
-        eventHub.OnChessMatchStart.AddListener(ApplyBonus);
+        board.EventHub.OnPieceAdded.AddListener(PieceAdded);
+        board.EventHub.OnChessMatchStart.AddListener(ApplyBonus);
         CreateSentinel();
         base.Apply(board, piece);
         piece.OnChessmanStateChanged += HandleChessmanStateChanged;

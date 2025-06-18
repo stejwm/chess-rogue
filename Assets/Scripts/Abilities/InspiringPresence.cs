@@ -13,7 +13,7 @@ public class InspiringPresence : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnSupportAdded.AddListener(CheckForResult);
+        board.EventHub.OnSupportAdded.AddListener(CheckForResult);
         base.Apply(board, piece);
     }
 

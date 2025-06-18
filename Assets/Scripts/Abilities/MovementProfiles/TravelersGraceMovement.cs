@@ -9,11 +9,11 @@ public class TravelersGraceMovement : MovementProfile
     MovementProfile oldProfile;
     GameManager game;
     public TravelersGraceMovement(Board board, MovementProfile old) : base(board) {oldProfile = old;}
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture = false)
+    public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture = false)
     {
         return Movement.AllOpenSquares(board);
     }
-    public override List<BoardPosition> GetValidSupportMoves( Chessman piece){
+    public override List<Tile> GetValidSupportMoves( Chessman piece){
         return oldProfile.GetValidSupportMoves(piece);
     }
 

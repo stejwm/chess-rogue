@@ -16,15 +16,15 @@ using System.Text.RegularExpressions;
 using CI.QuickSave;
 
 
-public enum ScreenState
+public enum BoardState
 {
-    MainGameboard,
     RewardScreen,
     PrisonersMarket,
     ActiveMatch,
     Map,
     ShopScreen,
-    ManagementScreen
+    ManagementScreen,
+    None
 }
 
 public class GameManager : MonoBehaviour
@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
     //public AIPlayer white;
     public Player opponent;
     [SerializeField] private Board board;
-    [SerializeField] private GameInputRouter inputRouter;
     [SerializeField] private MapManager mapManager;
     [SerializeField] private KingsOrderManager kingsOrderManager;
 
@@ -46,13 +45,8 @@ public class GameManager : MonoBehaviour
     public AudioClip ability;
 
     public int level = 0;
-    public float waitTime;
-    public ScreenState state = ScreenState.MainGameboard;
     private static Rand rng = new Rand();
-    public Card selectedCard;
     private List<GameObject> cards = new List<GameObject>();
-    private Chessman selectedPiece;
-    public bool applyingAbility = false;
     public bool shopUsed = false;
     
 
@@ -71,11 +65,6 @@ public class GameManager : MonoBehaviour
     }
     public void Update()
     {
-        if (selectedCard && selectedPiece)
-        {
-            if (!applyingAbility)
-                StartCoroutine(ApplyAbility(selectedPiece));
-        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseMenuManager._instance.OpenMenu();
@@ -89,20 +78,22 @@ public class GameManager : MonoBehaviour
         hero.Initialize();
         opponent.Initialize();
         board.CreateNewMatch(hero, opponent);
-        inputRouter.SetReceiver(board.CurrentMatch);
+        board.BoardState= BoardState.ActiveMatch; 
     }
     public void LoadGame()
     {
         var quickSaveReader = QuickSaveReader.Create("Game");
         PlayerData player;
         List<MapNodeData> mapNodes;
+        BoardState state;
         quickSaveReader.TryRead<PlayerData>("Player", out player);
-        quickSaveReader.TryRead<ScreenState>("State", out state);
+        quickSaveReader.TryRead<BoardState>("State", out state);
         quickSaveReader.TryRead<int>("Level", out level);
         quickSaveReader.TryRead<bool>("Shop", out shopUsed);
         quickSaveReader.TryRead<List<MapNodeData>>("MapNodes", out mapNodes);
+        board.BoardState= state;
 
-        Debug.Log($"Resuming state {state}");
+        Debug.Log($"Resuming board.BoardState{state}");
         mapManager.LoadMap(mapNodes);
         hero.playerBlood = player.blood;
         hero.playerCoins = player.coins;
@@ -112,54 +103,44 @@ public class GameManager : MonoBehaviour
         OpenMap();
 
     }
-    public void EndMatch()
-    {
-        OpenMarket();
-        state = ScreenState.PrisonersMarket;
-    }
-    public void OpenMarket()
-    {
-        kingsOrderManager.Hide();
-        MarketManager._instance.OpenMarket();
-        this.state = ScreenState.PrisonersMarket;
-    }
+    
 
 /*     public void OpenReward()
     {
         board.ResetPlayerPieces();
-        state = ScreenState.RewardScreen;
+        board.BoardState= BoardState.RewardScreen;
         InventoryManager._instance.OpenInventory();
     }
     public void CloseReward()
     {
-        state = ScreenState.MainGameboard;
+        board.BoardState= BoardState.MainGameboard;
         OpenShop();
     } */
     public void OpenShop()
     {
-        state = ScreenState.ShopScreen;
+        board.BoardState= BoardState.ShopScreen;
         //ShopManager._instance.OpenShop();
         shopUsed = true;
     }
     public void CloseShop()
     {
-        state = ScreenState.ShopScreen;
+        board.BoardState= BoardState.ShopScreen;
         OpenMap();
     }
     public void OpenMap()
     {
         //KingsOrderManager._instance.Hide();
         //MapManager._instance.OpenMap();
-        this.state = ScreenState.Map;
+        this.board.BoardState= BoardState.Map;
     }
     public void CloseMap()
     {
-        state = ScreenState.MainGameboard;
+        board.BoardState = BoardState.None;
     }
     public void NextMatch(EnemyType enemyType)
     {
         level++;
-        //state=ScreenState.ActiveMatch;
+        //state=BoardState.ActiveMatch;
         shopUsed = false;
         opponent.DestroyPieces();
         opponent.pieces = PieceFactory._instance.CreateOpponentPieces(board, opponent, enemyType);
@@ -170,147 +151,16 @@ public class GameManager : MonoBehaviour
 
     public void OpenArmyManagement()
     {
-        state = ScreenState.ManagementScreen;
+        board.BoardState= BoardState.ManagementScreen;
         //ArmyManager._instance.OpenShop();
     }
 
     public void CloseArmyManagement()
     {
         //ResetPlayerPieces();
-        state = ScreenState.ShopScreen; ;
+        board.BoardState= BoardState.ShopScreen; ;
         //ShopManager._instance.UnHideShop();
     }
-
-    
-
-    
-
-    
-    
-    #region These should be moved to a different class
-    private IEnumerator ApplyAbility(Chessman target)
-    {
-        if (selectedCard.price.activeSelf)
-        {
-            if (selectedCard.ability.Cost > hero.playerCoins)
-            {
-                selectedCard.GetComponent<MMSpringPosition>().BumpRandom();
-                selectedCard.GetComponent<SpriteRenderer>().color = Color.white;
-                selectedPiece.GetComponent<SpriteRenderer>().color = Color.white;
-                selectedCard = null;
-                selectedPiece = null;
-                yield break;
-            }
-            hero.playerCoins -= selectedCard.ability.Cost;
-            //ShopManager._instance.UpdateCurrency();
-        }
-        applyingAbility = true;
-        yield return new WaitForSeconds(waitTime);
-        StartCoroutine(selectedCard.Dissolve());
-        selectedCard.Use(board, target);
-        audioSource.clip = ability;
-        yield return new WaitUntil(() => selectedCard.isDissolved);
-        audioSource.Play();
-        StatBoxManager._instance.SetAndShowStats(selectedPiece);
-        Destroy(selectedCard.gameObject);
-        ClearCard();
-        ClearPiece();
-        applyingAbility = false;
-        yield return new WaitForSeconds(waitTime);
-        if (state == ScreenState.RewardScreen)
-            //InventoryManager._instance.CloseInventory();
-        yield break;
-    }
-    public void CardSelected(Card card)
-    {
-        SpriteRenderer sprite;
-        if (selectedCard != null && selectedCard == card)
-        {
-            sprite = selectedCard.GetComponent<SpriteRenderer>();
-            sprite.color = Color.white;
-            card.flames.Stop();
-            selectedCard = null;
-        }
-        else if (selectedCard != null && selectedCard != card)
-        {
-            sprite = selectedCard.GetComponent<SpriteRenderer>();
-            sprite.color = Color.white;
-            selectedCard.flames.Stop();
-            selectedCard = card;
-            sprite = selectedCard.GetComponent<SpriteRenderer>();
-            //sprite.color = Color.green;
-            selectedCard.flames.Play();
-
-        }
-        else
-        {
-            selectedCard = card;
-            sprite = selectedCard.GetComponent<SpriteRenderer>();
-            selectedCard.flames.Play();
-        }
-    }
-    public void ClearCard()
-    {
-        selectedCard = null;
-        foreach (var card in cards)
-        {
-            if (card != null)
-                Destroy(card);
-        }
-
-    }
-    public void PieceSelected(Chessman piece)
-    {
-        if (selectedPiece != null && selectedPiece == piece)
-        {
-            //sprite= selectedPiece.GetComponent<SpriteRenderer>();
-            //sprite.color = Color.white;
-            selectedPiece.flames.Stop();
-            selectedPiece = null;
-        }
-        else if (selectedPiece != null && selectedPiece != piece)
-        {
-            //sprite= selectedPiece.GetComponent<SpriteRenderer>();
-
-            selectedPiece.flames.Stop();
-            selectedPiece = piece;
-            //sprite = selectedPiece.GetComponent<SpriteRenderer>();
-            //sprite.color = Color.green;
-            selectedPiece.flames.Play();
-            StatBoxManager._instance.SetAndShowStats(piece);
-        }
-        else
-        {
-            selectedPiece = piece;
-            //sprite = selectedPiece.GetComponent<SpriteRenderer>();
-            //sprite.color = Color.green;
-            selectedPiece.flames.Play();
-            StatBoxManager._instance.SetAndShowStats(piece);
-        }
-    }
-    public void ClearPiece()
-    {
-        SpriteRenderer sprite;
-        if (selectedPiece != null)
-        {
-            sprite = selectedPiece.GetComponent<SpriteRenderer>();
-            sprite.color = Color.white;
-        }
-        selectedPiece = null;
-
-    }
-    #endregion
-
-
-    
-    
-
-    
-    
-
-    
-
-
     
 
 }

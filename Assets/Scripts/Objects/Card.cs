@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class Card : MonoBehaviour
+public class Card : MonoBehaviour, IInteractable
 {
     public GameObject controller;
     public Ability ability;
@@ -103,13 +104,7 @@ public class Card : MonoBehaviour
             //gameObject.GetComponent<MMSpringPosition>().MoveToAdditive(new Vector3(0,1,0));
         }
     }
-
-    void OnMouseExit(){
-        if(cardFlipped){
-            //gameObject.GetComponent<MMSpringPosition>().MoveToSubtractive(new Vector3(0,1,0));
-        }
-
-    }
+    
     public void ShowPrice(){
         if(ability!=null)
             cost.text=":"+ability.Cost.ToString();
@@ -141,5 +136,73 @@ public class Card : MonoBehaviour
                 yield return null; // Wait for next frame
             }
             isDissolved=true;
+    }
+
+    public void OnClick(Board board)
+    {
+        switch (board.BoardState)
+        {
+            case BoardState.RewardScreen:
+                HandleRewardScreenClick(board);
+                break;
+            case BoardState.ShopScreen:
+                HandleShopScreenClick(board);
+                break;
+        }
+        
+    }
+    public void HandleRewardScreenClick(Board board)
+    {
+        if (ability != null)
+        {
+            if (board.Hero.playerCoins >= ability.Cost || !price.activeSelf)
+            {
+                board.RewardManager.SelectedCard(this);
+            }
+            else
+            {
+                this.GetComponent<MMSpringPosition>().BumpRandom();
+            }
+        }
+    }
+    public void HandleShopScreenClick(Board board)
+    {
+        if (ability != null)
+        {
+            if (board.Hero.playerCoins >= ability.Cost || !price.activeSelf)
+            {
+                board.ShopManager.SelectedCard(this);
+            }
+            else
+            {
+                this.GetComponent<MMSpringPosition>().BumpRandom();
+            }
+        }
+        else if (order != null)
+        {
+            if (board.Hero.playerCoins >= order.Cost)
+            {
+                board.ShopManager.SelectedOrder(this);
+            }
+            else
+            {
+                this.GetComponent<MMSpringPosition>().BumpRandom();
+            }
+        }
+    }
+
+    public void OnRightClick()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnHover(Board board)
+    {
+        StartCoroutine(CardHovered());
+    }
+
+    public void OnHoverExit(Board board)
+    {
+        Debug.Log("Card hover exited");
     }
 }

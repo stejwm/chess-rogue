@@ -9,12 +9,12 @@ public class AttackOnlyMovement : MovementProfile
     MovementProfile oldProfile;
     GameManager game;
     public AttackOnlyMovement(Board board, MovementProfile old) : base(board) {oldProfile = old;}
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
-        List<BoardPosition> moves = new List<BoardPosition>();
+    public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
+        List<Tile> moves = new List<Tile>();
         var StandardMoves =oldProfile.GetValidMoves(piece);
         foreach (var position in StandardMoves)
         {
-            if (board.CurrentMatch.GetPieceAtPosition(position.x,position.y)!=null)
+            if (board.GetPieceAtPosition(position.X,position.Y)!=null)
                 moves.Add(position);
         }
         if (allowFriendlyCapture)
@@ -22,7 +22,7 @@ public class AttackOnlyMovement : MovementProfile
         else
             return Movement.RemoveFriendlyPieces(board, moves,piece);
     }
-    public override List<BoardPosition> GetValidSupportMoves( Chessman piece){
+    public override List<Tile> GetValidSupportMoves( Chessman piece){
         return oldProfile.GetValidSupportMoves(piece);
     }
 

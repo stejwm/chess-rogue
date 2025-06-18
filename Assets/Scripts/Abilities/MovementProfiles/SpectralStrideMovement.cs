@@ -7,16 +7,16 @@ public class SpectralStrideMovement : MovementProfile
     private MovementProfile oldMovementProfile;
 
     public SpectralStrideMovement(Board board, MovementProfile old) : base(board) {oldMovementProfile = old;}
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture)
+    public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture)
     {
         if (allowFriendlyCapture)
             return GetSpectralStrideMoves(board, piece, piece.xBoard, piece.yBoard);
         else
             return Movement.RemoveFriendlyPieces(board, GetSpectralStrideMoves(board, piece, piece.xBoard, piece.yBoard), piece);
     }
-    public List<BoardPosition> GetSpectralStrideMoves(Board board, Chessman piece, int xBoard, int yBoard)
+    public List<Tile> GetSpectralStrideMoves(Board board, Chessman piece, int xBoard, int yBoard)
     {
-        var spectralMoves = new List<BoardPosition>();
+        var spectralMoves = new List<Tile>();
         var directions = oldMovementProfile.GetDirections(piece);
         
         if (directions==null)
@@ -30,14 +30,14 @@ public class SpectralStrideMovement : MovementProfile
             while (BoardPosition.IsPositionOnBoard(currentX, currentY))
             {
                 // Check if the position is blocked by an ally
-                var occupyingPiece = board.CurrentMatch.GetPieceAtPosition(currentX, currentY);
+                var occupyingPiece = board.GetPieceAtPosition(currentX, currentY);
                 if (occupyingPiece != null)
                 {
                     var occupyingChessman = occupyingPiece.GetComponent<Chessman>();
                     if (occupyingChessman.color == piece.color)
                     {
                         // If it's an allied piece, skip to the next position
-                        spectralMoves.Add(new BoardPosition(currentX, currentY));
+                        spectralMoves.Add(board.GetTileAt(currentX, currentY));
                         currentX += direction.x;
                         currentY += direction.y;
                         continue;
@@ -45,13 +45,13 @@ public class SpectralStrideMovement : MovementProfile
                     else
                     {
                         // If it's an enemy piece, add it as a valid move and stop the line
-                        spectralMoves.Add(new BoardPosition(currentX, currentY));
+                        spectralMoves.Add(board.GetTileAt(currentX, currentY));
                         break;
                     }
                 }
 
                 // Add the current position as a valid move
-                spectralMoves.Add(new BoardPosition(currentX, currentY));
+                spectralMoves.Add(board.GetTileAt(currentX, currentY));
 
                 // Move to the next position in the direction
                 currentX += direction.x;
@@ -63,7 +63,7 @@ public class SpectralStrideMovement : MovementProfile
     }
 
 
-    public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
+    public override List<Tile> GetValidSupportMoves(Chessman piece){
         if (piece.type!=PieceType.Pawn){
             return GetSpectralStrideMoves(board, piece, piece.xBoard, piece.yBoard);
         }else{

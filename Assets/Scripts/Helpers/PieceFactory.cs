@@ -88,7 +88,7 @@ public class PieceFactory : MonoBehaviour
         }
         
         foreach (var piece in pieces){
-            StartCoroutine(WaitForPieceToApplyAbility(board, piece.GetComponent<Chessman>(), AbilityDatabase._instance.GetAbilityByName("SoulBond")));
+            StartCoroutine(WaitForPieceToApplyAbility(board, piece.GetComponent<Chessman>(), AbilityDatabase.Instance.GetAbilityByName("SoulBond")));
         }
         return pieces;
     }
@@ -96,7 +96,7 @@ public class PieceFactory : MonoBehaviour
     public List<GameObject> CreateAbilityPiecesBlack(Board board, Player owner, Ability ability){
         var pieces = CreateBlackPieces(board, owner);
         foreach (var piece in pieces){
-            piece.GetComponent<Chessman>().AddAbility(board, ability);
+            piece.GetComponent<Chessman>().AddAbility(board, ability.Clone());
         }
         return pieces;
     }
@@ -176,14 +176,14 @@ public class PieceFactory : MonoBehaviour
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase._instance.GetAbilityByName("Merchant")); //Merchant ability
+            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("Merchant")); //Merchant ability
         }
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
             var pawn = Create(board, PieceType.Pawn, i, pawnRow, color, owner);
-            pawn.GetComponent<Chessman>().AddAbility(board, AbilityDatabase._instance.GetAbilityByName("Pickpocket")); //Pickpocket ability
+            pawn.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("Pickpocket")); //Pickpocket ability
             pieces.Add(pawn);
         }
 
@@ -210,14 +210,14 @@ public class PieceFactory : MonoBehaviour
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase._instance.GetAbilityByName("BloodOffering")); //Blood offering ability
+            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("BloodOffering")); //Blood offering ability
         }
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
             var pawn = Create(board, PieceType.Pawn, i, pawnRow, color, owner);
-            pawn.GetComponent<Chessman>().AddAbility(board, AbilityDatabase._instance.GetAbilityByName("Vampire")); //Vampire ability
+            pawn.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("Vampire")); //Vampire ability
             pieces.Add(pawn);
         }
 
@@ -238,22 +238,22 @@ public class PieceFactory : MonoBehaviour
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase._instance.GetAbilityByName("BloodOffering")); //Blood offering ability
+            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("BloodOffering")); //Blood offering ability
         }
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             var pawn = Create(board, PieceType.Pawn, i, pawnRow, color, owner);
-            StartCoroutine(WaitForPieceToApplyAbility(board, pawn.GetComponent<Chessman>(), AbilityDatabase._instance.GetAbilityByName("BloodThirst")));
+            StartCoroutine(WaitForPieceToApplyAbility(board, pawn.GetComponent<Chessman>(), AbilityDatabase.Instance.GetAbilityByName("BloodThirst")));
             RandomMobAbility(board, pawn); 
             pieces.Add(pawn);
             pawn = Create(board, PieceType.Pawn, i, frontRow, color, owner);
-            StartCoroutine(WaitForPieceToApplyAbility(board, pawn.GetComponent<Chessman>(), AbilityDatabase._instance.GetAbilityByName("BloodThirst")));
+            StartCoroutine(WaitForPieceToApplyAbility(board, pawn.GetComponent<Chessman>(), AbilityDatabase.Instance.GetAbilityByName("BloodThirst")));
             RandomMobAbility(board, pawn); 
             pieces.Add(pawn);
             if(i!=4){
                 pawn = Create(board, PieceType.Pawn,  i, backRow, color, owner);
-                StartCoroutine(WaitForPieceToApplyAbility(board, pawn.GetComponent<Chessman>(), AbilityDatabase._instance.GetAbilityByName("BloodThirst")));
+                StartCoroutine(WaitForPieceToApplyAbility(board, pawn.GetComponent<Chessman>(), AbilityDatabase.Instance.GetAbilityByName("BloodThirst")));
                 RandomMobAbility(board, pawn); 
                 pieces.Add(pawn);
             }
@@ -279,7 +279,7 @@ public class PieceFactory : MonoBehaviour
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase._instance.GetAbilityByName("BloodOffering")); //Blood offering ability
+            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("BloodOffering")); //Blood offering ability
         }
         
 
@@ -298,16 +298,16 @@ public class PieceFactory : MonoBehaviour
             rand = UnityEngine.Random.Range(0,4);
             switch(rand){
                 case 0:
-                    StartCoroutine(WaitForPieceToApplyAbility(board, piece, AbilityDatabase._instance.GetAbilityByName("AvengingStrike"))); //Avenging Strike
+                    StartCoroutine(WaitForPieceToApplyAbility(board, piece, AbilityDatabase.Instance.GetAbilityByName("AvengingStrike"))); //Avenging Strike
                     break;
                 case 1:
-                    StartCoroutine(WaitForPieceToApplyAbility(board, piece, AbilityDatabase._instance.GetAbilityByName("ParalyzingBlow"))); //ParalyzingBlow
+                    StartCoroutine(WaitForPieceToApplyAbility(board, piece, AbilityDatabase.Instance.GetAbilityByName("ParalyzingBlow"))); //ParalyzingBlow
                     break;
                 case 2:
-                    StartCoroutine(WaitForPieceToApplyAbility(board,piece, AbilityDatabase._instance.GetAbilityByName("AdamantAssault"))); //Blood thirst
+                    StartCoroutine(WaitForPieceToApplyAbility(board,piece, AbilityDatabase.Instance.GetAbilityByName("AdamantAssault"))); //Blood thirst
                     break;
                 case 3:
-                    StartCoroutine(WaitForPieceToApplyAbility(board, piece, AbilityDatabase._instance.GetAbilityByName("CounterMarch"))); //Blood thirst
+                    StartCoroutine(WaitForPieceToApplyAbility(board, piece, AbilityDatabase.Instance.GetAbilityByName("CounterMarch"))); //Blood thirst
                     break;
                 case 4:
                     //StartCoroutine(WaitForPieceToApplyAbility(piece, GameManager._instance.AllAbilities[19].Clone())); //Blood thirst
@@ -317,7 +317,7 @@ public class PieceFactory : MonoBehaviour
     }
     public GameObject Create(Board board, PieceType type, int x, int y, PieceColor color,  Player owner, string name="")
     {
-        Debug.Log("Creating piece of type: " + type + " at position: " + x + ", " + y + " for owner: " + owner.name);
+        //Debug.Log("Creating piece of type: " + type + " at position: " + x + ", " + y + " for owner: " + owner.name);
         GameObject prefab = GetPrefab(type);
         if (prefab == null) return null;
 
@@ -351,7 +351,7 @@ public class PieceFactory : MonoBehaviour
             case EnemyType.Fortress:
                 return CreateRookArmy(board, opponent, opponent.color);
             case EnemyType.Assassins:
-                return CreateAbilityPiecesBlack(board, opponent, AbilityDatabase._instance.GetAbilityByName("Assassin")); //Assassin ability
+                return CreateAbilityPiecesBlack(board, opponent, AbilityDatabase.Instance.GetAbilityByName("Assassin")); //Assassin ability
             case EnemyType.Thieves:
                 return CreateThievesGuild(board, opponent, opponent.color);
             case EnemyType.Cult:
@@ -407,7 +407,7 @@ public class PieceFactory : MonoBehaviour
             piece.uniqueId = pieceData.uniqueId;
 
             foreach (AbilityData abilityData in pieceData.abilities){
-                Ability ability = AbilityDatabase._instance.GetAbilityByName(abilityData.abilityName);
+                Ability ability = AbilityDatabase.Instance.GetAbilityByName(abilityData.abilityName);
                 piece.AddAbility(board, ability);
             }
             piece.attack = pieceData.attack;

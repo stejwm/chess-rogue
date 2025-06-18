@@ -22,6 +22,7 @@ public class MapManager : MonoBehaviour
     public Sprite wandererImage;
     public Sprite bossImage;
     public Sprite shopImage;
+    private Board board;
 
     float startX = -4.2f * 1.5f; // Adjust this value to start from the left side of the screen
     float xOffset = 0.96f * 1.5f; // Horizontal distance between nodes
@@ -39,11 +40,12 @@ public class MapManager : MonoBehaviour
             GenerateMap();
     }
 
-    public void OpenMap()
+    public void OpenMap(Board board)
     {
+        this.board = board;
         Debug.Log("OpeningMap");
         gameObject.SetActive(true);
-        PauseMenuManager._instance.SaveGame();
+        //PauseMenuManager._instance.SaveGame();
     }
 
     public void CloseMap()
@@ -54,8 +56,8 @@ public class MapManager : MonoBehaviour
 
     public void NextMatch(EnemyType enemyType)
     {
-        CloseMap();
-        //GameManager._instance.NextMatch(enemyType);
+        board.CreateNewMatch(enemyType);
+        board.CloseMap();
     }
 
     public void OpenShop()
@@ -131,6 +133,7 @@ public class MapManager : MonoBehaviour
         startNode.isCompleted = false;
         mapNodes.Add(startNode);
         currentNode=startNode;
+        
 
         // Generate the first path of nodes
         List<MapNode> firstPathNodes = new List<MapNode>();
@@ -328,20 +331,29 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        
-        
 
+
+        InitializeNodes();
         DrawPaths();
         
     }
 
-    public void LoadMap(List<MapNodeData> mapNodeData){
+    public void InitializeNodes()
+    {
+        foreach (MapNode node in mapNodes)
+        {
+            node.Initialize(this);
+        }
+    }
+
+    public void LoadMap(List<MapNodeData> mapNodeData)
+    {
         List<MapNode> nodes = new List<MapNode>();
         List<MapNode> connectedNodes = new List<MapNode>();
         Dictionary<MapNodeData, MapNode> mappedNodes = new Dictionary<MapNodeData, MapNode>();
         foreach (var nodeData in mapNodeData)
         {
-            GameObject nodeObject = Instantiate(nodePrefab, new Vector3(0,0,0), Quaternion.identity, mapParent);
+            GameObject nodeObject = Instantiate(nodePrefab, new Vector3(0, 0, 0), Quaternion.identity, mapParent);
             MapNode mapNode = nodeObject.GetComponent<MapNode>();
             mapNode.encounterType = nodeData.encounterType;
             mapNode.enemyType = nodeData.enemyType;
@@ -357,30 +369,31 @@ public class MapManager : MonoBehaviour
 
             if (mapNode.isCompleted)
                 mapNode.nodeImage.color = Color.black;
-            
+
         }
         foreach (var nodeData in mapNodeData)
-        {   
+        {
             Debug.Log("MapNodeData Count: " + mapNodeData.Count);
             connectedNodes.Clear();
             foreach (string nodeName in nodeData.connectedNodes)
             {
-                var matchingNode = nodes.FirstOrDefault(n=> n.nodeName == nodeName);
-                if(matchingNode!=null)
+                var matchingNode = nodes.FirstOrDefault(n => n.nodeName == nodeName);
+                if (matchingNode != null)
                     connectedNodes.Add(matchingNode);
             }
 
             if (nodeData.isCurrentNode)
                 currentNode = mappedNodes[nodeData];
 
-            if(nodeData.nodeName.Contains("Second"))
-                mappedNodes[nodeData].nodeImage.color = new Color(69/255f, 69/255f, 69/255f);
-                
+            if (nodeData.nodeName.Contains("Second"))
+                mappedNodes[nodeData].nodeImage.color = new Color(69 / 255f, 69 / 255f, 69 / 255f);
 
-            mappedNodes[nodeData].connectedNodes=connectedNodes.ToArray();
+
+            mappedNodes[nodeData].connectedNodes = connectedNodes.ToArray();
         }
 
-        this.mapNodes=mappedNodes.Values.ToList();
+        this.mapNodes = mappedNodes.Values.ToList();
+        InitializeNodes();
         DrawPaths();
     }
 

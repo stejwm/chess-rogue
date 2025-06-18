@@ -31,11 +31,11 @@ public enum PieceType
     None,
     Jester,
 }
-public abstract class Chessman : MonoBehaviour
+public abstract class Chessman : MonoBehaviour, IInteractable
 {
     private static int nextId = 0; // Auto-incrementing counter
 
-    
+
     public int uniqueId;
     public int xBoard = -1;
     public int yBoard = -1;
@@ -71,21 +71,18 @@ public abstract class Chessman : MonoBehaviour
     public Team team;
     public PieceType type;
     public List<Ability> abilities;
-    public bool isValidForAttack =false;
-    public bool paralyzed=false;
-    public bool hexed=false;
-    public bool wasHexed=false;
-    public bool canStationarySlash =false;
+    public bool isValidForAttack = false;
+    public bool paralyzed = false;
+    public bool hexed = false;
+    public bool wasHexed = false;
+    public bool canStationarySlash = false;
 
     public MMF_Player supportFloatingText;
 
     //public AbilityManager abilityManager; 
 
 
-    public List<BoardPosition> validMoves = new List<BoardPosition>();
-
-    //Variable for keeping track of the player it belongs to "black" or "white"
-    private string player;
+    public List<Tile> validMoves = new List<Tile>();
 
     //References to all the possible Sprites that this Chesspiece could be
     public Sprite blackSprite;
@@ -96,8 +93,8 @@ public abstract class Chessman : MonoBehaviour
     public ParticleSystem highlightedParticles;
     public ParticleSystem hexedParticles;
 
-    public abstract List<BoardPosition> GetValidMoves();
-    public abstract List<BoardPosition> GetValidSupportMoves();
+    public abstract List<Tile> GetValidMoves();
+    public abstract List<Tile> GetValidSupportMoves();
     public abstract void Initialize(Board board);
     public event Action<bool> OnChessmanStateChanged;
 
@@ -105,18 +102,23 @@ public abstract class Chessman : MonoBehaviour
     {
         uniqueId = nextId++; // Assign unique ID and increment counter
     }
-    public int CalculateSupport(){
-        return support+supportBonus;
+    public int CalculateSupport()
+    {
+        return support + supportBonus;
     }
-    public int CalculateAttack(){
-        return attack+attackBonus;
+    public int CalculateAttack()
+    {
+        return attack + attackBonus;
     }
-    public int CalculateDefense(){
-        return defense+defenseBonus;
+    public int CalculateDefense()
+    {
+        return defense + defenseBonus;
     }
-    public void SetValidMoves(){
-        validMoves=GetValidMoves();
+    public void SetValidMoves()
+    {
+        validMoves = GetValidMoves();
     }
+
     public void SetUniqueId(int id) // Allow manual ID assignment in specific cases
     {
         uniqueId = id;
@@ -137,16 +139,17 @@ public abstract class Chessman : MonoBehaviour
         UpdateUIPosition();
         switch (this.color)
         {
-            case PieceColor.White: this.GetComponent<SpriteRenderer>().sprite = whiteSprite; player = "white"; break;
-            case PieceColor.Black: this.GetComponent<SpriteRenderer>().sprite = blackSprite; player = "black"; break;
+            case PieceColor.White: this.GetComponent<SpriteRenderer>().sprite = whiteSprite; break;
+            case PieceColor.Black: this.GetComponent<SpriteRenderer>().sprite = blackSprite; break;
         }
-        
-        
+
+
     }
-    public void ResetBonuses(){
-        this.attackBonus=0;
-        this.defenseBonus=0;
-        this.supportBonus=0;
+    public void ResetBonuses()
+    {
+        this.attackBonus = 0;
+        this.defenseBonus = 0;
+        this.supportBonus = 0;
     }
 
     public void UpdateUIPosition()
@@ -165,7 +168,7 @@ public abstract class Chessman : MonoBehaviour
 
         //Debug.Log("positions: "+x+","+y);
         //Set actual unity values
-         if(this.transform.position == new Vector3(x, y, -1.0f))
+        if (this.transform.position == new Vector3(x, y, -1.0f))
             this.GetComponent<MMSpringPosition>().BumpRandom();
         else
             this.GetComponent<MMSpringPosition>().MoveTo(new Vector3(x, y, -1.0f));
@@ -187,11 +190,6 @@ public abstract class Chessman : MonoBehaviour
         {
             betrayerAbility.Apply(board, this);
         }
-    }
-    
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        FindObjectOfType<GameInputRouter>().OnClick(gameObject);
     }
     /*
     private void OnMouseDown()
@@ -248,8 +246,8 @@ public abstract class Chessman : MonoBehaviour
         //.SelectPieceToPlace(this);
     }
 
-    public List<BoardPosition> DisplayValidMoves(){
-        List<BoardPosition> theseValidMoves=new List<BoardPosition>();
+    public List<Tile> DisplayValidMoves(){
+        List<Tile> theseValidMoves=new List<Tile>();
 
         foreach (var coordinate in validMoves)
         {
@@ -262,8 +260,8 @@ public abstract class Chessman : MonoBehaviour
         return theseValidMoves;
     }
 
-    public List<BoardPosition>GetAllValidMoves(){
-        List<BoardPosition> theseValidMoves=new List<BoardPosition>();
+    public List<Tile>GetAllValidMoves(){
+        List<Tile> theseValidMoves=new List<Tile>();
 
         foreach (var coordinate in validMoves)
         {
@@ -312,28 +310,60 @@ public abstract class Chessman : MonoBehaviour
         return uniqueId.GetHashCode();
     }
 
-    public void LevelUp(int level){
-        for (int i =0; i<level; i++)
-            switch (UnityEngine.Random.Range(0,3)){
+    public void LevelUp(int level)
+    {
+        for (int i = 0; i < level; i++)
+            switch (UnityEngine.Random.Range(0, 3))
+            {
                 case 0:
-                    defense+=1;
+                    defense += 1;
                     break;
                 case 1:
-                    attack+=1;
+                    attack += 1;
                     break;
                 case 2:
-                    support+=1;
+                    support += 1;
                     break;
             }
-            
+
     }
 
     public void DestroyPiece()
     {
         owner.openPositions.Add(this.startingPosition);
         owner.pieces.Remove(this.gameObject);
-        foreach(var ability in abilities)
+        foreach (var ability in abilities)
             ability.Remove(this);
         Destroy(this.gameObject);
+    }
+
+    public void OnClick(Board board)
+    {
+        switch (board.BoardState)
+        {
+            case BoardState.PrisonersMarket:
+                break;
+            case BoardState.ShopScreen:
+                break;
+            case BoardState.ManagementScreen:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void OnRightClick()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnHover(Board board)
+    {
+        Debug.Log($"Nothing good here yet, or maybe at all?");
+    }
+
+    public void OnHoverExit(Board board)
+    {
+        Debug.Log("Chessman hover exited");
     }
 }

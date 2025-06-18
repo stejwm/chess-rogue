@@ -58,6 +58,11 @@ public class BoardPosition
         if (x < 0 || y < 0 || x >= 8 || y >= 8) return false;
         return true;
     }
+    public static bool IsPositionOnBoard(Tile tile)
+    {
+        if (tile.X < 0 || tile.Y < 0 || tile.X >= 8 || tile.Y >= 8) return false;
+        return true;
+    }
 
     public override bool Equals(object obj)
     {

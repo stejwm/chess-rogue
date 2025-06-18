@@ -19,14 +19,12 @@ public class SoulBond : Ability
         }
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnPieceCaptured.AddListener(Capture);
-        eventHub.OnSoulBonded.AddListener(Increase);
-        eventHub.OnMove.AddListener(Decimate);
-        eventHub.OnAttackEnd.AddListener(RemoveDecimate);
+        board.EventHub.OnPieceCaptured.AddListener(Capture);
+        board.EventHub.OnSoulBonded.AddListener(Increase);
+        board.EventHub.OnMove.AddListener(Decimate);
+        board.EventHub.OnAttackEnd.AddListener(RemoveDecimate);
         piece.owner.soulBondedPieces++;
-        eventHub.OnSoulBonded.Invoke();
-        
-        
+        board.EventHub.RaiseSoulBonded();
         base.Apply(board, piece);
     }
 

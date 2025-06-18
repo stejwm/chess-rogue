@@ -19,25 +19,27 @@ public class MapNode : MonoBehaviour
     public EnemyType enemyType; // Add this field for enemy nodes
     public EncounterType encounterType;
     public Image nodeImage; // Reference to the Image component for changing the sprite
-    [SerializeField] private MapManager mapManager;
+    private MapManager mapManager;
 
 
-    void Start(){
-        switch(nodeType){
-            case NodeType.Enemy:
-                nodeImage.sprite= mapManager.images[Random.Range(0,mapManager.images.Count)];                
-                break;
-            case NodeType.Shop:
-                nodeImage.sprite= mapManager.shopImage;
-                break;
-            case NodeType.Encounter:
-                nodeImage.sprite= mapManager.wandererImage;
-                break;
-            case NodeType.Boss:
-                nodeImage.sprite= mapManager.bossImage;
-                break;
-        }
-        
+    public void Initialize(MapManager mapManager)
+    {
+        this.mapManager = mapManager;
+        switch (nodeType)
+            {
+                case NodeType.Enemy:
+                    nodeImage.sprite = mapManager.images[Random.Range(0, mapManager.images.Count)];
+                    break;
+                case NodeType.Shop:
+                    nodeImage.sprite = mapManager.shopImage;
+                    break;
+                case NodeType.Encounter:
+                    nodeImage.sprite = mapManager.wandererImage;
+                    break;
+                case NodeType.Boss:
+                    nodeImage.sprite = mapManager.bossImage;
+                    break;
+            }  
     }
 
 

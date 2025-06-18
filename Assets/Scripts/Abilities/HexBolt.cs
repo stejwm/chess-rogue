@@ -14,7 +14,7 @@ public class HexBolt : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnPieceBounced.AddListener(Hex);
+        board.EventHub.OnPieceBounced.AddListener(Hex);
         base.Apply(board, piece);
 
         

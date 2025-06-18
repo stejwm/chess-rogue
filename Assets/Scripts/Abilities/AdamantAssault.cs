@@ -18,8 +18,8 @@ public class AdamantAssault : Ability
         //startingProfile=piece.moveProfile;
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnPieceBounced.AddListener(Assault);
-        eventHub.OnPieceCaptured.AddListener(EndAssault);
+        board.EventHub.OnPieceBounced.AddListener(Assault);
+        board.EventHub.OnPieceCaptured.AddListener(EndAssault);
         base.Apply(board, piece);
 
     }

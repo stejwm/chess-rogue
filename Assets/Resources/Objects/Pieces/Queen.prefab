@@ -487,7 +487,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4455156182322048620}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -537,10 +537,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bba4bb313267fae41a9841bc684c8d96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movePlate: {fileID: 7734472472800598565, guid: 7322ecef2e332e04aa5d5fa94c39ff49, type: 3}
+  uniqueId: 0
   xBoard: -1
   yBoard: -1
   owner: {fileID: 0}
+  startingPosition: {fileID: 0}
   droppingSprite: {fileID: 6410267694255250384, guid: fc03c5a49fd2d12409481fa3d69a2fa7, type: 3}
   attackingSprite: {fileID: 0}
   attack: 1
@@ -569,6 +570,7 @@ MonoBehaviour:
   wasHexed: 0
   canStationarySlash: 0
   supportFloatingText: {fileID: 0}
+  validMoves: []
   blackSprite: {fileID: 21300000, guid: 8a261e5b4469e144e92e1a37de996771, type: 3}
   whiteSprite: {fileID: 21300000, guid: a149743de083b7341a378e1b75108661, type: 3}
   effectsFeedback: {fileID: 2741481152162341719}

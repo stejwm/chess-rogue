@@ -13,7 +13,7 @@ public class BrokenDeath : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnPieceCaptured.AddListener(BreakDeath);
+        board.EventHub.OnPieceCaptured.AddListener(BreakDeath);
         base.Apply(board, piece);
     }
 

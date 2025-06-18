@@ -52,8 +52,9 @@ public class PlayerAgent : Agent
                 int actualX = isPlayerWhite ? relativeX : 7 - relativeX; // Adjust for left-to-right perspective
 
                 Tile tile = board.GetTileAt(actualX, actualY); // Get the tile at this position
-                Chessman piece = tile.CurrentPiece; // Get the piece on the tile (can be null)
-
+                
+                Chessman piece = board.GetChessmanAtPosition(tile); // Get the piece on the tile (can be null)
+                //Debug.Log($"Generating commands for piece at {actualX}, {actualY}: {(piece==null ? "None" : piece.name)}");
                 // Loop through all 64 positions on the board for possible destinations
                 for (int destRelativeX = 0; destRelativeX < 8; destRelativeX++)
                 {
@@ -141,53 +142,45 @@ public class PlayerAgent : Agent
 
     public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
-        //Debug.Log("Starting Masking");
+        Debug.Log("Move commands count: " + moveCommands.Count);
         List<int> validIndexes = new List<int>();
-        //Debug.Log("movecommands count="+moveCommands.Count);
-        //Debug.Log("pieces count="+pieces.Count);
         foreach(KeyValuePair<int, MoveCommand> entry in moveCommands)
         {
-            //Debug.Log(entry.Value);
             foreach(GameObject pieceObject in pieces){
                 Chessman selectedPiece = pieceObject.GetComponent<Chessman>();
-                if(!selectedPiece.isValidForAttack)
+                if (!selectedPiece.isValidForAttack)
                     continue;
-                selectedPiece.SetValidMoves();
-                /*
-                var moves = selectedPiece.GetAllValidMoves();
-                //Debug.Log(moves.Count);
-                
+                var moves = selectedPiece.GetValidMoves();
                 foreach (var move in moves)
                 {
-                    //Debug.Log(entry);
-                    MoveCommand testCommand = new MoveCommand(selectedPiece,move.x,move.y);
-                    //Debug.Log("Valid move: "+entry.Value.piece.name+" to "+entry.Value.x+","+entry.Value.y);
-                    //Debug.Log("Test move: "+selectedPiece.name+" to "+testCommand.x+","+testCommand.y);
-                    if(testCommand.Equals(entry.Value)){
+                    MoveCommand testCommand = new MoveCommand(selectedPiece, move.X, move.Y);
+                    if (testCommand.Equals(entry.Value))
+                    {
                         validIndexes.Add(entry.Key);
                     }
                 }
-                */
+                
             }
             
         }
+        Debug.Log("Valid moves found: " + validIndexes.Count);
         //Debug.Log("Found all valid move commands. Count = "+validIndexes.Count);
-        foreach(int index in moveCommands.Keys)
+        foreach (int index in moveCommands.Keys)
         {
-            if(!validIndexes.Contains(index))
-                actionMask.SetActionEnabled(0,index,false);
+            if (!validIndexes.Contains(index))
+                actionMask.SetActionEnabled(0, index, false);
             //else
-                //Debug.Log("Not masking: "+index);
+            //Debug.Log("Not masking: "+index);
         }
         //Debug.Log("Actions masked");
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        for (int k = 0; k < board.CurrentMatch.GetPositions().GetLength(0); k++){
-            for (int l = 0; l < board.CurrentMatch.GetPositions().GetLength(1); l++){
-                if(board.CurrentMatch.GetPositions()[k, l] !=null){
-                    GameObject item = board.CurrentMatch.GetPositions()[k, l];
+        for (int k = 0; k < board.Positions.GetLength(0); k++){
+            for (int l = 0; l < board.Positions.GetLength(1); l++){
+                if(board.Positions[k, l] !=null){
+                    GameObject item = board.Positions[k, l];
                     Chessman piece = item.GetComponent<Chessman>();
                     sensor.AddObservation(piece.xBoard);
                     sensor.AddObservation(piece.yBoard);
@@ -226,11 +219,11 @@ public class PlayerAgent : Agent
     {
         float[] abilitiesObservation = new float[64];
 
-        /* foreach (Ability ability in piece.abilities)
+         foreach (Ability ability in piece.abilities)
         {
-            int index = GameManager._instance.AllAbilities.IndexOf(ability);
-            abilitiesObservation[index] = 1; // Mark the ability as present
-        } */
+            int index = AbilityDatabase.Instance.GetIndexFromAbility(ability);
+            abilitiesObservation[index] = 1; 
+        }
 
         return abilitiesObservation;
     }

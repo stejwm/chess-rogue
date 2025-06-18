@@ -12,8 +12,8 @@ public class EchoesOfTheFallen : KingsOrder
 
     public override IEnumerator Use(Board board)
     {
-        /* List<GameObject> pieces = GameManager._instance.hero.pieces;
-        for (int i=0; i< GameManager._instance.abandonedPieces; i++){
+        List<GameObject> pieces = board.Hero.pieces;
+        for (int i=0; i< board.Hero.AbandonedPieces; i++){
         foreach (var obj in pieces)
             {
                 Chessman piece = obj.GetComponent<Chessman>();
@@ -32,8 +32,7 @@ public class EchoesOfTheFallen : KingsOrder
                 
             }
         }
-        yield break; */
-        yield return null;
+        yield break;
     }
 
 }

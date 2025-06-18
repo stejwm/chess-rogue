@@ -20,10 +20,10 @@ public class AvengingStrike : Ability
         this.piece = piece;
         piece.info += " " + abilityName;
 
-        eventHub.OnSupportAdded.AddListener(Target);
-        eventHub.OnPieceCaptured.AddListener(Avenge);
-        eventHub.OnPieceBounced.AddListener(EndAvenge);
-        eventHub.OnRawMoveEnd.AddListener(RawMoveCheck);
+        board.EventHub.OnSupportAdded.AddListener(Target);
+        board.EventHub.OnPieceCaptured.AddListener(Avenge);
+        board.EventHub.OnPieceBounced.AddListener(EndAvenge);
+        board.EventHub.OnRawMoveEnd.AddListener(RawMoveCheck);
         
         base.Apply(board, piece);
     }

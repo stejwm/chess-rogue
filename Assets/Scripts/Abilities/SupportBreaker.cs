@@ -16,9 +16,9 @@ public class SupportBreaker : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnAttack.AddListener(CheckForSupport);
-        eventHub.OnPieceBounced.AddListener(ReduceSupport);
-        eventHub.OnPieceCaptured.AddListener(ClearSupporters);
+        board.EventHub.OnAttack.AddListener(CheckForSupport);
+        board.EventHub.OnPieceBounced.AddListener(ReduceSupport);
+        board.EventHub.OnPieceCaptured.AddListener(ClearSupporters);
         base.Apply(board, piece);
     }
 

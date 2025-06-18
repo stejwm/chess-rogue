@@ -5,9 +5,9 @@ using UnityEngine;
 public class ScoutPawnMovement : MovementProfile
 {
     public ScoutPawnMovement(Board board) : base(board) { }
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture)
+    public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture)
     {
-        List<BoardPosition> validMoves = new List<BoardPosition>();
+        List<Tile> validMoves = new List<Tile>();
         validMoves.AddRange(Movement.ValidScoutMoves(board, piece, piece.xBoard, piece.yBoard));
 
         if (piece.color == PieceColor.White)
@@ -19,7 +19,7 @@ public class ScoutPawnMovement : MovementProfile
         else
             return Movement.RemoveFriendlyPieces(board, validMoves, piece);
     }
-    public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
+    public override List<Tile> GetValidSupportMoves(Chessman piece){
         if(piece.color==PieceColor.White)
             return Movement.ValidPawnSupportMoves(board, piece,piece.xBoard,piece.yBoard+1);
         else

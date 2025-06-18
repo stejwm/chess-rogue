@@ -19,9 +19,9 @@ public class Teacher : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnPieceAdded.AddListener(PieceAdded);
-        eventHub.OnChessMatchStart.AddListener(ApplyBonus);
-        eventHub.OnAbilityAdded.AddListener(RemoveBonusFromPiece);
+        board.EventHub.OnPieceAdded.AddListener(PieceAdded);
+        board.EventHub.OnChessMatchStart.AddListener(ApplyBonus);
+        board.EventHub.OnAbilityAdded.AddListener(RemoveBonusFromPiece);
         piece.OnChessmanStateChanged += HandleChessmanStateChanged;
         CreateGeneral();
         base.Apply(board, piece);

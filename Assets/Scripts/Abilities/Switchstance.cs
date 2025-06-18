@@ -14,7 +14,7 @@ public class Switchstance : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnAttackEnd.AddListener(Swap);
+        board.EventHub.OnAttackEnd.AddListener(Swap);
         base.Apply(board, piece);
     }
 

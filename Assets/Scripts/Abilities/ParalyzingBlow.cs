@@ -14,7 +14,7 @@ public class ParalyzingBlow : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnPieceBounced.AddListener(Paralyze);
+        board.EventHub.OnPieceBounced.AddListener(Paralyze);
         base.Apply(board, piece);
 
         

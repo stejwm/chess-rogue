@@ -13,10 +13,10 @@ public class Momentum : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnRawMoveEnd.AddListener(RawMoveEnd);
-        eventHub.OnPieceBounced.AddListener(RemoveBounce);
-        eventHub.OnPieceCaptured.AddListener(AddCapture);
-        eventHub.OnGameEnd.AddListener(GameEndRemove);
+        board.EventHub.OnRawMoveEnd.AddListener(RawMoveEnd);
+        board.EventHub.OnPieceBounced.AddListener(RemoveBounce);
+        board.EventHub.OnPieceCaptured.AddListener(AddCapture);
+        board.EventHub.OnGameEnd.AddListener(GameEndRemove);
         base.Apply(board, piece);
     }
 

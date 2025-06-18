@@ -8,9 +8,9 @@ public class MoveCommand
     public int x;
     public int y;
     public Chessman piece;
-    public MoveCommand(Chessman piece, int xPositiion, int yPosition){
+    public MoveCommand(Chessman piece, int xPosition, int yPosition){
         this.piece=piece;
-        this.x=xPositiion;
+        this.x=xPosition;
         this.y=yPosition;
     }
     public void SetPosition(int x, int y){

@@ -22,9 +22,9 @@ public class RaiseTheFallen : Ability
             originalAbility.stacks++;
            return;
         }
-        eventHub.OnAttackStart.AddListener(SetDecimating);
-        eventHub.OnPieceCaptured.AddListener(ListenForEnd);
-        eventHub.OnPieceBounced.AddListener(ReplaceOnBoard);
+        board.EventHub.OnAttackStart.AddListener(SetDecimating);
+        board.EventHub.OnPieceCaptured.AddListener(ListenForEnd);
+        board.EventHub.OnPieceBounced.AddListener(ReplaceOnBoard);
         piece.canStationarySlash=true;
         base.Apply(board, piece);
     }
@@ -53,12 +53,12 @@ public class RaiseTheFallen : Ability
             }
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Raise the Fallen</gradient></color>",  $"raised the dead at {BoardPosition.ConvertToChessNotation(defender.xBoard, defender.yBoard)}");
 
-            var undead = PieceFactory._instance.CreateAbilityPiece(board, PieceType.Pawn, $"undead {defender.name}", defender.xBoard, defender.yBoard, PieceColor.White, piece.owner, AbilityDatabase._instance.GetAbilityByName("RadiatingDeath")); //Create with radiating death
+            var undead = PieceFactory._instance.CreateAbilityPiece(board, PieceType.Pawn, $"undead {defender.name}", defender.xBoard, defender.yBoard, PieceColor.White, piece.owner, AbilityDatabase.Instance.GetAbilityByName("RadiatingDeath")); //Create with radiating death
             undead.GetComponent<Collider2D>().enabled = false;
             piece.owner.pieces.Add(undead);
             Chessman undeadChessman = undead.GetComponent<Chessman>();
             if (Regex.Matches(undeadChessman.name, "undead").Count >= 10){
-                undeadChessman.AddAbility(board, AbilityDatabase._instance.GetAbilityByName("BrokenDeath"));
+                undeadChessman.AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("BrokenDeath"));
             }
             undeadChessman.startingPosition = piece.owner.openPositions[0];
             piece.owner.openPositions.RemoveAt(0);

@@ -13,7 +13,7 @@ public class IronResolve : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        eventHub.OnPieceBounced.AddListener(AddBonus);
+        board.EventHub.OnPieceBounced.AddListener(AddBonus);
         base.Apply(board, piece);
     }
 

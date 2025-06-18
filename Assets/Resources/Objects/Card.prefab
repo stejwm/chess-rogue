@@ -5221,8 +5221,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.008, y: 2.458}
-  m_SizeDelta: {x: 9.65, y: 14.39}
+  m_AnchoredPosition: {x: -0.0079956055, y: 2.4580078}
+  m_SizeDelta: {x: 9.650024, y: 14.390015}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &337480295203262678
 SpriteRenderer:
@@ -5370,7 +5370,7 @@ MonoBehaviour:
   OnEquilibriumReached:
     m_PersistentCalls:
       m_Calls: []
-  Target: {fileID: 0}
+  Target: {fileID: 1250178966289840817}
   TimeScaleMode: 1
   ChannelMode: 0
   Channel: 0
@@ -5462,7 +5462,7 @@ MonoBehaviour:
   TestBumpAmount: {x: 75, y: 100, z: 50}
   BumpToToolbar: 0
   OtherControlsToToolbar: 0
-  Space: 1
+  Space: 0
 --- !u!1 &4116916951497013892
 GameObject:
   m_ObjectHideFlags: 0
@@ -5769,7 +5769,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.958}
+  m_AnchoredPosition: {x: 0, y: 0.9580078}
   m_SizeDelta: {x: 0, y: 1.915}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4930913638384925968
