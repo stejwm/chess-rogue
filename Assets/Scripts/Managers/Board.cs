@@ -246,12 +246,17 @@ public class Board : MonoBehaviour
     }
     public void OpenPieceInfo(Chessman piece)
     {
-        previousBoardState = boardState;
+        if (boardState != BoardState.InfoScreen)
+        {
+            previousBoardState = boardState;
+            Debug.Log(previousBoardState);
+        }
         boardState = BoardState.InfoScreen;
         pieceInfoManager.OpenPieceInfo(piece);
     }
     public void ClosePieceInfo()
     {
+        Debug.Log(previousBoardState);
         boardState = previousBoardState;
         previousBoardState = BoardState.None;
         pieceInfoManager.ClosePieceInfo();

@@ -38,6 +38,10 @@ public class PieceInfoManager : MonoBehaviour
         defenseVal.text = piece.defense.ToString();
         supportVal.text = piece.support.ToString();
         sprite.sprite = piece.isometricSprite;
+        if (piece.color == PieceColor.Black)
+            sprite.color = new Color32(69, 69, 69, 255);
+        else
+            sprite.color = Color.white;
         gameObject.SetActive(true);
     }
 

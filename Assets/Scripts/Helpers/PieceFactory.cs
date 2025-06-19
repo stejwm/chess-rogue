@@ -315,7 +315,7 @@ public class PieceFactory : MonoBehaviour
             }
         }
     }
-    public GameObject Create(Board board, PieceType type, int x, int y, PieceColor color,  Player owner, string name="")
+    public GameObject Create(Board board, PieceType type, int x, int y, PieceColor color,  Player owner, string name="", Gender gender = Gender.Male)
     {
         //Debug.Log("Creating piece of type: " + type + " at position: " + x + ", " + y + " for owner: " + owner.name);
         GameObject prefab = GetPrefab(type);
@@ -325,10 +325,22 @@ public class PieceFactory : MonoBehaviour
         Chessman cm = obj.GetComponent<Chessman>();
         cm.owner = owner;
         cm.color = color;
-        if(string.IsNullOrEmpty(name))
-            cm.name = NameDatabase.GetRandomName();
+        if (type == PieceType.Queen)
+        {
+            cm.name = NameDatabase.GetRandomNameByGender(Gender.Female);
+            cm.gender = Gender.Female;
+        }
+        else if (string.IsNullOrEmpty(name))
+        {
+            NameEntry nameEntry = NameDatabase.GetRandomNameEntry();
+            cm.name = nameEntry.name;
+            cm.gender = nameEntry.gender;
+        }
         else
-            cm.name=name;
+        {
+            cm.name = name;
+            cm.gender = gender;
+        }
         cm.xBoard=x;
         cm.yBoard=y;
         cm.startingPosition = board.GetTileAt(x, y);
