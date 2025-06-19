@@ -27,8 +27,10 @@ public class Board : MonoBehaviour
     [SerializeField] ShopManager shopManager;
     [SerializeField] MapManager mapManager;
     [SerializeField] ArmyManager armyManager;
+    [SerializeField] PieceInfoManager pieceInfoManager;
     private bool tileSelect = false;
     private int reRollCost = 0;
+    private BoardState previousBoardState = BoardState.None;
     private GameObject[,] positions = new GameObject[8, 8];
     private BoardState boardState;
     public Ability LastingLegacyAbility { get; set; }
@@ -47,6 +49,7 @@ public class Board : MonoBehaviour
     public bool IsInMove { get; set; }
     public int Level { get; set; }
     public ArmyManager ArmyManager { get => armyManager; set => armyManager = value; }
+    public PieceInfoManager PieceInfoManager { get => pieceInfoManager; set => pieceInfoManager = value; }
 
     public void Start()
     {
@@ -241,7 +244,18 @@ public class Board : MonoBehaviour
         mapManager.CloseMap();
         this.boardState = BoardState.ActiveMatch;
     }
-
+    public void OpenPieceInfo(Chessman piece)
+    {
+        previousBoardState = boardState;
+        boardState = BoardState.InfoScreen;
+        pieceInfoManager.OpenPieceInfo(piece);
+    }
+    public void ClosePieceInfo()
+    {
+        boardState = previousBoardState;
+        previousBoardState = BoardState.None;
+        pieceInfoManager.ClosePieceInfo();
+    }
     public GameObject GetPieceAtPosition(int x, int y)
     {
         if (positions[x, y])

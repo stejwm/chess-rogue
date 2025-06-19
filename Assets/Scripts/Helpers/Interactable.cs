@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public interface IInteractable
 {
     void OnClick(Board board);
-    void OnRightClick();
+    void OnRightClick(Board board);
     void OnHover(Board board);
     void OnHoverExit(Board board);
 }

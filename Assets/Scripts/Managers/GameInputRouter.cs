@@ -53,6 +53,14 @@ public class InputRouter : MonoBehaviour
 
     private void OnClick(InputAction.CallbackContext context)
     {
+        Vector2 screenPosition = input.ChessMatchInput.Point.ReadValue<Vector2>();
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+        if (hit.collider != null)
+        {
+            Debug.Log("Clicked on: "+hit.collider.name);
+        }
         var tile = selector.CurrentTile;
         if (tile != null)
             tile.OnClick(board);
@@ -60,7 +68,9 @@ public class InputRouter : MonoBehaviour
 
     private void OnRightClick(InputAction.CallbackContext context)
     {
-        Debug.Log("Right click");
+        var tile = selector.CurrentTile;
+        if (tile != null)
+            tile.OnRightClick(board);
     }
 
     private void OnMoveCursor(Vector2 direction)

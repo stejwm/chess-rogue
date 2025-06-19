@@ -270,9 +270,13 @@ public class Tile : MonoBehaviour, IInteractable
         }
     }
 
-    public void OnRightClick()
+    public void OnRightClick(Board board)
     {
-        throw new NotImplementedException();
+        Chessman cm = board.GetChessmanAtPosition(this);
+        if (cm != null)
+        {
+            board.OpenPieceInfo(cm);
+        }
     }
 
     public void OnHover(Board board)

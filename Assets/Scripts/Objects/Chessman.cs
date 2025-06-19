@@ -7,11 +7,17 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using System.Linq;
+using UnityEngine.UI;
 
 public enum Team
 {
     Enemy,
     Hero,
+}
+public enum Gender
+{
+    Male,
+    Female,
 }
 public enum PieceColor
 {
@@ -52,6 +58,10 @@ public abstract class Chessman : MonoBehaviour, IInteractable
     public int defense = 1;
     public int support = 1;
     public int diplomacy = 1;
+    public Gender gender = Gender.Male;
+    public int age = 25;
+    public int weight = 145;
+    public int height = 184;
 
     public int captures = 0;
     public int captured = 0;
@@ -87,6 +97,7 @@ public abstract class Chessman : MonoBehaviour, IInteractable
     //References to all the possible Sprites that this Chesspiece could be
     public Sprite blackSprite;
     public Sprite whiteSprite;
+    public Sprite isometricSprite;
 
     public MMF_Player effectsFeedback;
     public ParticleSystem flames;
@@ -352,7 +363,7 @@ public abstract class Chessman : MonoBehaviour, IInteractable
         }
     }
 
-    public void OnRightClick()
+    public void OnRightClick(Board board)
     {
         throw new NotImplementedException();
     }

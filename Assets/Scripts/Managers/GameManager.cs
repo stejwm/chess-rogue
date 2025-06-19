@@ -24,6 +24,7 @@ public enum BoardState
     Map,
     ShopScreen,
     ManagementScreen,
+    InfoScreen,
     None
 }
 

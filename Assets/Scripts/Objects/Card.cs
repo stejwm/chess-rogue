@@ -191,7 +191,7 @@ public class Card : MonoBehaviour, IInteractable
         }
     }
 
-    public void OnRightClick()
+    public void OnRightClick(Board board)
     {
         throw new System.NotImplementedException();
     }

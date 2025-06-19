@@ -549,6 +549,10 @@ MonoBehaviour:
   defense: 1
   support: 1
   diplomacy: 1
+  gender: 0
+  age: 25
+  weight: 145
+  height: 184
   captures: 0
   captured: 0
   bounced: 0
@@ -574,6 +578,7 @@ MonoBehaviour:
   validMoves: []
   blackSprite: {fileID: 21300000, guid: 29c9a6637c780b94d9a73a31c6b62944, type: 3}
   whiteSprite: {fileID: 21300000, guid: b20999c50b9d03f488d8824b11242727, type: 3}
+  isometricSprite: {fileID: 21300000, guid: c1c34bfac783c5546b18dbee1478daca, type: 3}
   effectsFeedback: {fileID: 452916992960119104}
   flames: {fileID: 6712348483069183006}
   highlightedParticles: {fileID: 6018831152314856774}
