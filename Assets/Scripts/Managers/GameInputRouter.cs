@@ -43,11 +43,15 @@ public class InputRouter : MonoBehaviour
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
             if (target != interactable)
             {
-                interactable?.OnHoverExit(board);
+                target?.OnHoverExit(board);
                 target = interactable;
                 interactable?.OnHover(board);
             }
-            
+
+        }
+        else
+        {
+            target?.OnHoverExit(board);
         }
     }
 

@@ -267,7 +267,10 @@ public class ChessMatch
                 board.BattlePanel.Feedback.PlayFeedbacks();
                 yield return new WaitForSeconds(board.BattlePanel.Feedback.TotalDuration);
                 destination.SetBloodTile();
-                MovePiece(attacker, defender.xBoard, defender.yBoard);
+                if(attacker.canStationarySlash)
+                    MovePiece(attacker, attacker.xBoard, attacker.yBoard);
+                else
+                    MovePiece(attacker, defender.xBoard, defender.yBoard);
                 eventHub.RaisePieceCaptured(attacker, defender);
                 yield return new WaitForSeconds(Settings._instance.WaitTime);
                 defender.DestroyPiece();
@@ -279,7 +282,10 @@ public class ChessMatch
                 board.BattlePanel.Feedback.PlayFeedbacks();
                 yield return new WaitForSeconds(board.BattlePanel.Feedback.TotalDuration);
                 destination.SetBloodTile();
-                MovePiece(attacker, defender.xBoard, defender.yBoard);
+                if(attacker.canStationarySlash)
+                    MovePiece(attacker, attacker.xBoard, attacker.yBoard);
+                else
+                    MovePiece(attacker, defender.xBoard, defender.yBoard);
                 defender.gameObject.SetActive(false);
                 eventHub.RaisePieceCaptured(attacker, defender);
             }

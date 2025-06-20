@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +22,16 @@ public class PieceInfoManager : MonoBehaviour
     [SerializeField] private Image sprite;
     [SerializeField] private GameObject abilitiesContainer;
     [SerializeField] private GameObject historyContainer;
+    [SerializeField] private GameObject increaseContainer;
+    private Chessman piece;
     public void Start()
     {
         gameObject.SetActive(false);
     }
 
-    public void OpenPieceInfo(Chessman piece)
+    public void OpenPieceInfo(Board board, Chessman piece)
     {
+        this.piece = piece;
         pieceName.text = piece.name;
         gender.text = piece.gender.ToString();
         age.text = piece.age.ToString();
@@ -42,7 +46,40 @@ public class PieceInfoManager : MonoBehaviour
             sprite.color = new Color32(69, 69, 69, 255);
         else
             sprite.color = Color.white;
+        if (board.previousBoardState != BoardState.ActiveMatch)
+            increaseContainer.SetActive(true);
+        else
+            increaseContainer.SetActive(false);
         gameObject.SetActive(true);
+    }
+
+    public void IncreaseAttack()
+    {
+        if (piece.owner.playerBlood >= 1)
+        {
+            piece.attack += 1;
+            piece.owner.playerBlood -= 1;
+            attackVal.text = Int32.Parse(attackVal.text) + 1.ToString();
+        }
+
+    }
+    public void IncreaseDefense()
+    {
+        if (piece.owner.playerBlood >= 1)
+        {
+            piece.defense += 1;
+            piece.owner.playerBlood -= 1;
+            defenseVal.text = Int32.Parse(defenseVal.text) + 1.ToString();
+        }
+    }
+    public void IncreaseSupport()
+    {
+        if (piece.owner.playerBlood >= 1)
+        {
+            piece.support += 1;
+            piece.owner.playerBlood -= 1;
+            supportVal.text = Int32.Parse(supportVal.text) + 1.ToString();
+        }
     }
 
     public void ClosePieceInfo()

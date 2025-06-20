@@ -19,6 +19,12 @@ public enum Gender
     Male,
     Female,
 }
+public enum StatType
+{
+    Attack,
+    Defense,
+    Support
+}
 public enum PieceColor
 {
     White,
@@ -89,12 +95,11 @@ public abstract class Chessman : MonoBehaviour, IInteractable
 
     public MMF_Player supportFloatingText;
 
-    //public AbilityManager abilityManager; 
-
+    private Dictionary<string, int> attackBonuses = new Dictionary<string, int>();
+    private Dictionary<string, int> defenseBonuses = new Dictionary<string, int>();
+    private Dictionary<string, int> supportBonuses = new Dictionary<string, int>();
 
     public List<Tile> validMoves = new List<Tile>();
-
-    //References to all the possible Sprites that this Chesspiece could be
     public Sprite blackSprite;
     public Sprite whiteSprite;
     public Sprite isometricSprite;
@@ -130,6 +135,42 @@ public abstract class Chessman : MonoBehaviour, IInteractable
         validMoves = GetValidMoves();
     }
 
+    public void AddBonus(StatType stat, int value, string source)
+    {
+        switch (stat)
+        {
+            case StatType.Attack:
+                attackBonuses[source] = attackBonuses.GetValueOrDefault(source) + value;
+                attackBonus += value;
+                break;
+            case StatType.Defense:
+                defenseBonuses[source] = defenseBonuses.GetValueOrDefault(source) + value;
+                defenseBonus += value;
+                break;
+            case StatType.Support:
+                supportBonuses[source] = supportBonuses.GetValueOrDefault(source) + value;
+                supportBonus += value;
+                break;
+        }
+    }
+    public void RemoveBonus(StatType stat, int value, string source)
+    {
+        switch (stat)
+        {
+            case StatType.Attack:
+                attackBonuses[source] = attackBonuses.GetValueOrDefault(source) - value;
+                attackBonus -= value;
+                break;
+            case StatType.Defense:
+                defenseBonuses[source] = defenseBonuses.GetValueOrDefault(source) - value;
+                defenseBonus -= value;
+                break;
+            case StatType.Support:
+                supportBonuses[source] = supportBonuses.GetValueOrDefault(source) - value;
+                supportBonus -= value;
+                break;
+        }
+    }
     public void SetUniqueId(int id) // Allow manual ID assignment in specific cases
     {
         uniqueId = id;

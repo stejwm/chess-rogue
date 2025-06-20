@@ -30,7 +30,7 @@ public class Board : MonoBehaviour
     [SerializeField] PieceInfoManager pieceInfoManager;
     private bool tileSelect = false;
     private int reRollCost = 0;
-    private BoardState previousBoardState = BoardState.None;
+    public BoardState previousBoardState = BoardState.None;
     private GameObject[,] positions = new GameObject[8, 8];
     private BoardState boardState;
     public Ability LastingLegacyAbility { get; set; }
@@ -252,7 +252,7 @@ public class Board : MonoBehaviour
             Debug.Log(previousBoardState);
         }
         boardState = BoardState.InfoScreen;
-        pieceInfoManager.OpenPieceInfo(piece);
+        pieceInfoManager.OpenPieceInfo(this, piece);
     }
     public void ClosePieceInfo()
     {

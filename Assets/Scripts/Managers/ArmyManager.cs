@@ -53,8 +53,8 @@ public class ArmyManager : MonoBehaviour
             selectedPiece.yBoard=position2.Y;
             piece.xBoard=position1.X;
             piece.yBoard=position1.Y;
-            selectedPiece.UpdateUIPosition();
-            piece.UpdateUIPosition();
+            board.PlacePiece(selectedPiece, board.GetTileAt(selectedPiece.xBoard, selectedPiece.yBoard));
+            board.PlacePiece(piece, board.GetTileAt(piece.xBoard, piece.yBoard));
             board.Hero.playerCoins-=pricePerPiece*2;
             DeselectPiece(selectedPiece);
         }
