@@ -12,7 +12,7 @@ public class HexManiac : KingsOrder
 
     public override IEnumerator Use(Board board)
     {
-        /* List<GameObject> enemies = GameManager._instance.opponent.pieces;
+        List<GameObject> enemies = board.Opponent.pieces;
         foreach (var obj in enemies)
         {
             Chessman piece = obj.GetComponent<Chessman>();
@@ -22,8 +22,7 @@ public class HexManiac : KingsOrder
                 ability.Remove(piece);
             }
         }
-        yield break; */
-        yield return null;
+        yield break;
     }
 
 }

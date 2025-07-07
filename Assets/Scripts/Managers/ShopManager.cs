@@ -78,6 +78,7 @@ public class ShopManager : MonoBehaviour
 
     private IEnumerator ApplyAbility(Chessman target)
     {
+        board.BoardState = BoardState.None;
         if (selectedCard.price.activeSelf)
         {
             if (selectedCard.ability.Cost > board.Hero.playerCoins)
@@ -97,6 +98,7 @@ public class ShopManager : MonoBehaviour
         Destroy(selectedCard.gameObject);
         ClearSelections();
         applyingAbility = false;
+        board.BoardState = BoardState.ShopScreen;
         yield return new WaitForSeconds(Settings._instance.WaitTime);
         yield break;
     }
@@ -161,6 +163,23 @@ public class ShopManager : MonoBehaviour
             StatBoxManager._instance.SetAndShowStats(piece);
         }
     }
+    public void PurchasePiece(Chessman piece)
+    {
+        if (board.Hero.playerCoins >= piece.releaseCost)
+        {
+            board.Hero.playerCoins -= piece.releaseCost;
+            board.Hero.inventoryPieces.Add(piece.gameObject);
+            piece.owner = board.Hero;
+            piece.UpdateUIPosition();
+            pieces.Remove(piece.gameObject);
+            piece.gameObject.SetActive(false);
+        }
+        else
+        {
+            piece.GetComponent<MMSpringPosition>().BumpRandom();
+        }
+    }
+
 
     public void SelectedOrder(Card card)
     {

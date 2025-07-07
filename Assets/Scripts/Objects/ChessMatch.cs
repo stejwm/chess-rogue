@@ -43,39 +43,19 @@ public class ChessMatch
         this.black = black;
         this.eventHub = eventHub;
         this.logManager = logManager;
-        UpdateBoard();
+        SetBoard();
     }
 
-    public void StartMatch(){
-        reward= 4;
+    public void StartMatch()
+    {
+        reward = 4;
         Debug.Log("Match Starting");
         //KingsOrderManager._instance.Setup();
         white.CreateMoveCommandDictionary();
         black.CreateMoveCommandDictionary();
-        isSetUpPhase=false;
+        isSetUpPhase = false;
         SetWhiteTurn();
-    }
-
-    public void CheckInventory(){
-        UpdateBoard();
-        if (white.inventoryPieces.Count>0){
-            //KingsOrderManager._instance.Hide();
-            int i = 0;
-            foreach (var obj in white.inventoryPieces)
-            {
-                Chessman piece = obj.GetComponent<Chessman>();
-                obj.SetActive(true);
-                piece.xBoard=-4;
-                piece.yBoard=3-i; 
-                i++;
-                piece.UpdateUIPosition();
-            }
-            //GameManager._instance.toggleAllPieceColliders(false);
-            //GameManager._instance.togglePieceColliders(GameManager._instance.hero.inventoryPieces, true);
-        }
-        else{
-            StartMatch();
-        }
+        eventHub.RaiseChessMatchStart();
     }
 
     public void ExecuteTurn(Chessman piece, int x, int y){
@@ -327,8 +307,9 @@ public class ChessMatch
         
     }
 
-    public void UpdateBoard()
+    public void SetBoard()
     {
+        Array.Clear(board.Positions, 0, board.Positions.Length);
         foreach (GameObject piece in white.pieces)
         {
             Chessman cm = piece.GetComponent<Chessman>();

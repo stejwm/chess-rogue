@@ -1,122 +1,106 @@
 using System.Collections;
 using System.Collections.Generic;
-using MoreMountains.Feedbacks;
-using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
+using MoreMountains.Feedbacks;
+using System.Linq;
 
 public class KingsOrderManager : MonoBehaviour
 {
+    public List<GameObject> myPieces;
+    public List<GameObject> pieces = new List<GameObject>();
+    public List<GameObject> cards = new List<GameObject>();
+    public Board board;
+    [SerializeField] private GameObject noOrdersText;
+    public void Start()
+    {
+        gameObject.SetActive(false);
+    }
 
-    public TMP_Text title;
-    public TMP_Text effect;
-    public ParticleSystem flames;
-    [SerializeField] Board board;
-    [SerializeField] private Material dissolveMaterial;
-    public GameObject parent;
-
-
-    public void Setup(){
-        if (board.Hero.orders.Count>0)
+    public void OpenManagement(Board board)
+    {
+        this.board = board;
+        if (board.previousBoardState == BoardState.ManagementScreen)
         {
-            parent.SetActive(true);
-            KingsOrder order = board.Hero.orders[0];
-            this.GetComponent<Renderer>().material = dissolveMaterial;
-            dissolveMaterial.SetFloat("_Weight", 0);
-            title.color = Color.white;
-            effect.color = Color.white;
-            UpdateCardUI(order);
+            cards = CardFactory.Instance.CreateCards(board.Hero.orders.Where(x => x.canBeUsedFromManagement).ToList());
         }
         else{
-            parent.SetActive(false);
+            cards = CardFactory.Instance.CreateCards(board.Hero.orders);
         }
-        
-    }
+        float defaultX = -6.75f;
+        float y = -2f;
+        float z = -2f;
+        float distanceBetweenCards = 1.92f;
+        int cardCount = cards.Count;
+        float fanAngle = 12f; // total angle to fan out (degrees)
+        float angleStep = cardCount > 1 ? fanAngle / (cardCount - 1) : 0;
+        float startAngle = -fanAngle / 2f;
+        this.gameObject.SetActive(true);
 
-    public void HandleClick(GameObject clicked)
-    {
-        KingsOrder order = clicked.GetComponent<KingsOrder>();
-        if (order != null)
+        for (int i = 0; i < cardCount; i++)
         {
-            StartCoroutine(HandleOrderClick(order));
+            // Center cards around defaultX
+            float offset = (i - (cardCount - 1) / 2f) * distanceBetweenCards / cardCount;
+            float x = defaultX + offset;
+            float angle = startAngle + i * -angleStep;
+            cards[i].transform.position = new Vector3(x, y, z + (-0.1f * i));
+            cards[i].transform.rotation = Quaternion.Euler(0, 0, angle);
+            StartCoroutine(cards[i].GetComponent<Card>().CardHovered());
         }
-    }
-
-    private IEnumerator HandleOrderClick(KingsOrder order)
-    {
-        if (!order.canBeUsedFromManagement) {
-            this.GetComponent<MMSpringPosition>().BumpRandom();
-            yield break;
-        }
-        
-        
-        board.Hero.orders.Remove(order);
-        flames.Play();
-        yield return StartCoroutine(order.Use(board));
-        flames.Stop();
-        yield return StartCoroutine(Dissolve());
-        
-        if (board.Hero.orders.Count <= 0)
+        if (cardCount > 0)
         {
-            parent.SetActive(false);
+            noOrdersText.SetActive(false);
         }
         else
         {
-            dissolveMaterial.SetFloat("_Weight", 0);
-            UpdateCardUI(order);
+            noOrdersText.SetActive(true);
         }
-    }
-
-    public void UpdateCardUI(KingsOrder order){
-        title.color = Color.white;
-        effect.color = Color.white;
-
-        title.text= order.Name;
-        effect.text= order.Description;
-    }
-
-    public void CardLeft(){
-       // int index = board.Hero.orders.IndexOf(order);
-        /* if (index>0){
-            index--;
-            KingsOrder order=board.Hero.orders[index];
-            UpdateCardUI(order);
-        }else{
-            this.GetComponent<MMSpringPosition>().BumpRandom();
-        } */
-    }
-    public void CardRight(){
-        //int index = board.Hero.orders.IndexOf(order);
-        /* if (index<board.Hero.orders.Count-1){
-            index++;
-            KingsOrder order = board.Hero.orders[index];
-            UpdateCardUI(order);
-        }
-        else{
-            this.GetComponent<MMSpringPosition>().BumpRandom();
-        } */
-    }
-
-    public IEnumerator Dissolve(){
         
-        float dissolveAmount = 0f;
-        float fadeAmount = 0.0f;
-        float duration = .5f;
-        flames.Stop();
-        Color originalColor = title.color;
-            while (dissolveAmount < duration)  // Stop when fully dissolved
-            {
-                dissolveAmount += Time.deltaTime * 0.3f;
-                dissolveMaterial.SetFloat("_Weight", dissolveAmount);
-                fadeAmount += Time.deltaTime;
-                title.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1 - (fadeAmount / duration));
-                effect.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1 - (fadeAmount / duration));
-
-                yield return null; // Wait for next frame
-            }
     }
 
-    public void Hide(){
-        parent.SetActive(false);
+    public void ResetCards()
+    {
+        cards.RemoveAll(item => item == null);
+        //cards = CardFactory.Instance.CreateCards(board.Hero.orders);
+        float defaultX = -6.75f;
+        float y = -2f;
+        float z = -2f;
+        float distanceBetweenCards = 1.92f;
+        int cardCount = cards.Count;
+        float fanAngle = 12f; // total angle to fan out (degrees)
+        float angleStep = cardCount > 1 ? fanAngle / (cardCount - 1) : 0;
+        float startAngle = -fanAngle / 2f;
+
+        for (int i = 0; i < cardCount; i++)
+        {
+            // Center cards around defaultX
+            float offset = (i - (cardCount - 1) / 2f) * distanceBetweenCards / cardCount;
+            float x = defaultX + offset;
+            float angle = startAngle + i * -angleStep;
+            cards[i].transform.position = new Vector3(x, y, z + (-0.1f * i));
+            cards[i].transform.rotation = Quaternion.Euler(0, 0, angle);
+            StartCoroutine(cards[i].GetComponent<Card>().CardHovered());
+        }
     }
+    public void HoverCard(Card card)
+    {
+        card.transform.position = new Vector3(card.transform.position.x, card.transform.position.y, -2f + (-0.1f*cards.Count));
+    }
+
+    public void CloseManagement()
+    {
+        foreach (var card in cards)
+            Destroy(card);
+
+
+        gameObject.SetActive(false);
+
+    }
+
+    
+
+
 }

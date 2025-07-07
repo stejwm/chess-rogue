@@ -25,6 +25,8 @@ public enum BoardState
     ShopScreen,
     ManagementScreen,
     InfoScreen,
+    KingsOrder,
+    KingsOrderActive,
     None
 }
 

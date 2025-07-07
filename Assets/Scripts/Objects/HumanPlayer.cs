@@ -11,9 +11,9 @@ public class HumanPlayer : Player
     {
        RarityWeights = new Dictionary<Rarity, int>()
         {
-            { Rarity.Common, 55 },
-            { Rarity.Uncommon, 35 },
-            { Rarity.Rare, 10 }
+            { Rarity.Common, 80 },
+            { Rarity.Uncommon, 15 },
+            { Rarity.Rare, 5 }
         };
     }
 

@@ -15,9 +15,7 @@ public class CivilianDefense : KingsOrder
     {
         this.board = board;
         Player hero = board.Hero;
-        board.TileSelect=true;
         yield return new WaitUntil(() => board.selectedPosition !=null);
-        board.TileSelect=false;
         Tile targetPosition = board.selectedPosition;
         board.selectedPosition= null;
         for (int i=0; i<8; i++){
@@ -30,7 +28,6 @@ public class CivilianDefense : KingsOrder
             }
         }
         board.EventHub.OnGameEnd.AddListener(RemoveCivilians);
-        //GameManager._instance.togglePieceColliders(civilians, false);
         board.CurrentMatch.SetPiecesValidForAttack(hero); 
         yield return null;
     }

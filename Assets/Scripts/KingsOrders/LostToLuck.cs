@@ -8,42 +8,33 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LostToLuck", menuName = "KingsOrders/LostToLuck")]
 public class LostToLuck : KingsOrder
 {
-    private List<GameObject> civilians = new List<GameObject>();
     public LostToLuck() : base("Lost To Luck", "Abandon a piece in order to increase odds uncommon and rare abilities") {}
 
     public override IEnumerator Use(Board board)
     {
-        /*  Player hero = GameManager._instance.hero;
-         GameManager._instance.tileSelect=true;
-         yield return new WaitUntil(() => Board._instance.selectedPosition !=null);
-         GameManager._instance.tileSelect=false;
-         BoardPosition targetPosition = Board._instance.selectedPosition;
-         Board._instance.selectedPosition= null;
-         var Chessobj = board.CurrentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
-         if(Chessobj==null){
-             Debug.Log("No piece at possition");
-             yield break;
-         }
-         Chessman cm = Chessobj.GetComponent<Chessman>();
-         GameManager._instance.hero.pieces.Remove(Chessobj);
-         GameManager._instance.hero.openPositions.Add(cm.startingPosition);
-         Chessobj.GetComponent<Chessman>().DestroyPiece();
-         GameManager._instance.abandonedPieces++;
-         ShopManager._instance.ModifyRarityWeight(Rarity.Uncommon, 1.5f);
-         ShopManager._instance.ModifyRarityWeight(Rarity.Rare, 1.5f);
+        Player hero = board.Hero;
+        yield return new WaitUntil(() => board.selectedPosition !=null);
+        Tile targetPosition = board.selectedPosition;
+        board.selectedPosition= null;
+        var Chessobj = board.GetPieceAtPosition(targetPosition.X, targetPosition.Y);
+        if(Chessobj==null){
+            Debug.Log("No piece at possition");
+            yield break;
+        }
+        Chessman cm = Chessobj.GetComponent<Chessman>();
+        board.Hero.pieces.Remove(Chessobj);
+        board.Hero.openPositions.Add(cm.startingPosition);
+        Chessobj.GetComponent<Chessman>().DestroyPiece();
+        board.Hero.AbandonedPieces++;
+        
+        //TODO: Check weights do not drop below zero
+        board.Hero.RarityWeights[Rarity.Uncommon] += 5;
+        board.Hero.RarityWeights[Rarity.Rare] += 5;
+        board.Hero.RarityWeights[Rarity.Common] -= 10;
 
-  */
+        
+
         yield return null;
-    }
-
-    public void RemoveCivilians(PieceColor color)
-    {
-        /* foreach (var piece in civilians)
-        {
-            board.CurrentMatch.black.capturedPieces.Remove(piece);
-            GameManager._instance.hero.pieces.Remove(piece);
-            Destroy(piece);
-        } */
     }
 
 }

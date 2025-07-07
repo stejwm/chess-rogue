@@ -116,6 +116,10 @@ public class MarketManager : MonoBehaviour
             {
                 item.DestroyPiece();
             }
+            else
+            {
+                Destroy(item.gameObject);
+            }
         }
         selectedPieces.Clear();
         ClearPanel();
@@ -156,6 +160,10 @@ public class MarketManager : MonoBehaviour
             if (item.owner == hero)
             {
                 item.DestroyPiece();
+            }
+            else
+            {
+                Destroy(item.gameObject);
             }
         }
         selectedPieces.Clear();

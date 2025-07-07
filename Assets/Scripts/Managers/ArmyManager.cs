@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using MoreMountains.Feedbacks;
+using System.Linq;
 
 public class ArmyManager : MonoBehaviour
 {
     public List<GameObject> myPieces;
     public List<GameObject> pieces = new List<GameObject>();
-    public List<GameObject> cards = new List<GameObject>();
     public Chessman selectedPiece;
     public int pricePerPiece = 2;
     public Board board;
@@ -44,7 +44,7 @@ public class ArmyManager : MonoBehaviour
         else if (selectedPiece==piece){
             DeselectPiece(piece);
         }
-        else if (selectedPiece && board.Hero.playerCoins>=pricePerPiece*2){
+        else if (selectedPiece && board.Hero.playerCoins>=pricePerPiece*2 && !board.Hero.inventoryPieces.Contains(piece.gameObject) && !board.Hero.inventoryPieces.Contains(selectedPiece.gameObject)){
             Tile position1 = selectedPiece.startingPosition;
             Tile position2 = piece.startingPosition;
             selectedPiece.startingPosition=position2;
@@ -71,19 +71,19 @@ public class ArmyManager : MonoBehaviour
             board.Hero.pieces.Add(selectedPiece.gameObject);
             selectedPiece.owner.openPositions.Add(selectedPiece.startingPosition);
             selectedPiece.owner.openPositions.Remove(position);
+            board.PlacePiece(selectedPiece, position);
             selectedPiece.startingPosition=position;
-            selectedPiece.xBoard=position.X;
-            selectedPiece.yBoard=position.Y;
-            selectedPiece.UpdateUIPosition();
+            SpriteRenderer rend = selectedPiece.GetComponent<SpriteRenderer>();
+            selectedPiece.flames.GetComponent<Renderer>().sortingOrder = 2;
+            rend.sortingOrder = 1;
             board.EventHub.RaisePieceAdded(selectedPiece);
             DeselectPiece(selectedPiece);
         }else if (selectedPiece && board.Hero.playerCoins>=pricePerPiece){
             selectedPiece.owner.openPositions.Add(selectedPiece.startingPosition);
             selectedPiece.owner.openPositions.Remove(position);
             selectedPiece.startingPosition=position;
-            selectedPiece.xBoard=position.X;
-            selectedPiece.yBoard=position.Y;
-            selectedPiece.UpdateUIPosition();
+            board.ClearPosition(selectedPiece.xBoard, selectedPiece.yBoard);
+            board.PlacePiece(selectedPiece, position);
             board.Hero.playerCoins-=pricePerPiece;
             DeselectPiece(selectedPiece);
         }
@@ -96,31 +96,40 @@ public class ArmyManager : MonoBehaviour
     {
         this.board = board;
         int index = 0;
+        this.gameObject.SetActive(true);
         foreach (var piece in board.Hero.inventoryPieces)
         {
             piece.SetActive(true);
-            board.PlacePiece(piece.GetComponent<Chessman>(), board.GetTileAt(index, 4));
+            board.PlacePiece(piece.GetComponent<Chessman>(), board.GetTileAt(index+2, 6));
             index++;
         }
-        cards = CardFactory.Instance.CreateCards(board.Hero.orders);
+        /* cards = CardFactory.Instance.CreateCards(board.Hero.orders.Where(x => x.canBeUsedFromManagement).ToList());
+        index = 0;
         foreach (var card in cards)
         {
             Vector3 localPosition = new(index * 2 - ((1.96f * 2) / cards.Count), 2, -2);
             card.transform.position = localPosition;
             index++;
-            card.GetComponent<Card>().CardHovered();
-        }
-        this.gameObject.SetActive(true);
+            StartCoroutine(card.GetComponent<Card>().CardHovered());
+        } */
+        
     }
 
-    public void CloseManagement()
+    public bool CloseManagement()
     {
-        foreach (var card in cards)
-            Destroy(card);
-        foreach (var piece in board.Hero.inventoryPieces)
-            piece.SetActive(false);
-
-        gameObject.SetActive(false);   
+        if (board.Hero.inventoryPieces.Count > 0)
+        {
+            foreach (var piece in board.Hero.inventoryPieces)
+            {
+                piece.GetComponent<MMSpringPosition>().BumpRandom();
+            }
+            return false;
+        }
+        else
+        {
+            gameObject.SetActive(false);
+            return true;
+        }    
     }
 
     

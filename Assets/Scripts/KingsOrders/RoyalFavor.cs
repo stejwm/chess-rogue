@@ -13,13 +13,11 @@ public class RoyalFavor : KingsOrder
 
     public override IEnumerator Use(Board board)
     {
-        /* Player hero = GameManager._instance.hero;
-        GameManager._instance.tileSelect=true;
-        yield return new WaitUntil(() => Board._instance.selectedPosition !=null);
-        GameManager._instance.tileSelect=false;
-        BoardPosition targetPosition = Board._instance.selectedPosition;
-        Board._instance.selectedPosition=null;
-        var Chessobj = board.CurrentMatch.GetPieceAtPosition(targetPosition.x, targetPosition.y);
+        Player hero = board.Hero;
+        yield return new WaitUntil(() => board.selectedPosition !=null);
+        Tile targetPosition = board.selectedPosition;
+        board.selectedPosition=null;
+        var Chessobj = board.GetPieceAtPosition(targetPosition.X, targetPosition.Y);
         if(Chessobj==null){
             Debug.Log("No piece at possition");
             yield break;
@@ -28,9 +26,8 @@ public class RoyalFavor : KingsOrder
         
         piece.attack++;
         piece.defense++;
-        piece.support++;   */  
+        piece.support++;  
         yield return null; 
-
     }
 
 

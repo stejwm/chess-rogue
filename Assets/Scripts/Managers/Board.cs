@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using System;
+using System.Linq;
 
 public class Board : MonoBehaviour
 {
@@ -28,17 +29,17 @@ public class Board : MonoBehaviour
     [SerializeField] MapManager mapManager;
     [SerializeField] ArmyManager armyManager;
     [SerializeField] PieceInfoManager pieceInfoManager;
-    private bool tileSelect = false;
+    [SerializeField] KingsOrderManager kingsOrderManager;
+    [SerializeField] CurrencyManager currencyManager;
     private int reRollCost = 0;
     public BoardState previousBoardState = BoardState.None;
     private GameObject[,] positions = new GameObject[8, 8];
-    private BoardState boardState;
+    [SerializeField] private BoardState boardState;
     public Ability LastingLegacyAbility { get; set; }
     public ChessMatch CurrentMatch { get => currentMatch; set => currentMatch = value; }
     public BattlePanel BattlePanel { get => battlePanel; set => battlePanel = value; }
     public EventHub EventHub { get => eventHub; set => eventHub = value; }
     public Player Hero { get => hero; set => hero = value; }
-    public bool TileSelect { get => tileSelect; set => tileSelect = value; }
     public int RerollCost { get => reRollCost; set => reRollCost = value; }
     public GameObject[,] Positions { get => positions; set => positions = value; }
     public BoardState BoardState { get => boardState; set => boardState = value; }
@@ -50,11 +51,13 @@ public class Board : MonoBehaviour
     public int Level { get; set; }
     public ArmyManager ArmyManager { get => armyManager; set => armyManager = value; }
     public PieceInfoManager PieceInfoManager { get => pieceInfoManager; set => pieceInfoManager = value; }
+    public KingsOrderManager KingsOrderManager { get => kingsOrderManager; set => kingsOrderManager = value; }
 
     public void Start()
     {
         EventHub = new EventHub();
         CreateTiles();
+        currencyManager.Initialize(this);
     }
     public void CreateNewMatch(Player white, Player black)
     {
@@ -131,6 +134,10 @@ public class Board : MonoBehaviour
         positions[tile.X, tile.Y] = piece.gameObject;
 
     }
+    public void ClearPosition(int x, int y)
+    {
+        positions[x, y] = null;
+    }
     public void AddPiece(Chessman piece, Tile tile)
     {
         PlacePiece(piece, tile);
@@ -154,23 +161,23 @@ public class Board : MonoBehaviour
             piece.SetActive(true);
             piece.GetComponent<Chessman>().ResetBonuses();
             Chessman cm = piece.GetComponent<Chessman>();
-            PlacePiece(cm, cm.startingPosition);       
+            PlacePiece(cm, cm.startingPosition);
         }
         foreach (GameObject piece in hero.capturedPieces)
         {
             piece.SetActive(true);
             piece.GetComponent<Chessman>().ResetBonuses();
             Chessman cm = piece.GetComponent<Chessman>();
-            PlacePiece(cm, cm.startingPosition);      
+            PlacePiece(cm, cm.startingPosition);
         }
         foreach (GameObject piece in opponent.capturedPieces)
         {
             piece.SetActive(true);
             piece.GetComponent<Chessman>().ResetBonuses();
             Chessman cm = piece.GetComponent<Chessman>();
-            PlacePiece(cm, cm.startingPosition);        
+            PlacePiece(cm, cm.startingPosition);
         }
-        
+
     }
     public void ResetBoard()
     {
@@ -190,7 +197,7 @@ public class Board : MonoBehaviour
     }
     public void OpenMarket()
     {
-        boardState= BoardState.PrisonersMarket;
+        boardState = BoardState.PrisonersMarket;
         marketManager.OpenMarket(this);
     }
     public void CloseMarket()
@@ -222,6 +229,7 @@ public class Board : MonoBehaviour
     {
         ShopManager.CloseShop();
         boardState = BoardState.None;
+        //if(hero.orders.Where(x => x.canBeUsedFromManagement).Count>0)
         OpenManagement();
     }
     public void OpenManagement()
@@ -231,9 +239,11 @@ public class Board : MonoBehaviour
     }
     public void CloseManagement()
     {
-        ArmyManager.CloseManagement();
-        boardState = BoardState.None;
-        OpenMap();
+        if (ArmyManager.CloseManagement())
+        {
+            boardState = BoardState.None;
+            OpenMap();
+        }
     }
     public void OpenMap()
     {
@@ -244,19 +254,38 @@ public class Board : MonoBehaviour
         mapManager.CloseMap();
         this.boardState = BoardState.ActiveMatch;
     }
+
+    public void OpenKingsOrders()
+    {
+        if (boardState != BoardState.KingsOrder)
+        {
+            previousBoardState = boardState;
+        }
+        if (boardState == BoardState.ActiveMatch || boardState == BoardState.ManagementScreen)
+        {
+            KingsOrderManager.OpenManagement(this);
+            boardState = BoardState.KingsOrder;
+        }
+        
+    }
+    public void CloseKingsOrders()
+    {
+        boardState = previousBoardState;
+        previousBoardState = BoardState.None;
+        KingsOrderManager.CloseManagement();
+    }
+
     public void OpenPieceInfo(Chessman piece)
     {
         if (boardState != BoardState.InfoScreen)
         {
             previousBoardState = boardState;
-            Debug.Log(previousBoardState);
         }
         boardState = BoardState.InfoScreen;
         pieceInfoManager.OpenPieceInfo(this, piece);
     }
     public void ClosePieceInfo()
     {
-        Debug.Log(previousBoardState);
         boardState = previousBoardState;
         previousBoardState = BoardState.None;
         pieceInfoManager.ClosePieceInfo();
@@ -283,5 +312,18 @@ public class Board : MonoBehaviour
             return null;
     }
 
+    public void SetSelectedPosition(Tile tile)
+    {
+        if (selectedPosition == null)
+        {
+            selectedPosition = tile;
+            Debug.Log("position set");
+        }
+    }
+
+    public void ClearSelectedPosition()
+    {
+        selectedPosition = null;
+    }
 
 }

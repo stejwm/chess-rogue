@@ -228,6 +228,9 @@ public class Tile : MonoBehaviour, IInteractable
             case BoardState.ManagementScreen:
                 HandleManagementClick(board);
                 break;
+            case BoardState.KingsOrderActive:
+                board.SetSelectedPosition(this);
+                break;
         }
     }
 
@@ -246,10 +249,12 @@ public class Tile : MonoBehaviour, IInteractable
     public void HandleShopClick(Board board)
     {
         Chessman cm = board.GetChessmanAtPosition(this);
-        if (cm != null && cm.gameObject.activeSelf && cm.owner != null)
+        if (cm == null)
+            return;
+        else if (cm.gameObject.activeSelf && cm.owner != null)
             board.ShopManager.SelectedPiece(cm);
-        //else if (cm.owner == null)
-        //board.ShopManager.
+        else if (cm.owner == null)
+            board.ShopManager.PurchasePiece(cm);
     }
     public void HandleManagementClick(Board board)
     {
@@ -283,16 +288,13 @@ public class Tile : MonoBehaviour, IInteractable
     {
         switch (board.BoardState)
         {
+            case BoardState.ManagementScreen:
+            case BoardState.KingsOrder:
             case BoardState.ActiveMatch:
-                SetStatBox(board.GetChessmanAtPosition(this));
-                break;
-            case BoardState.PrisonersMarket:
-                SetStatBox(board.GetChessmanAtPosition(this));
-                ShowPieceValues(board.GetChessmanAtPosition(this));
-                break;
             case BoardState.RewardScreen:
                 SetStatBox(board.GetChessmanAtPosition(this));
                 break;
+            case BoardState.PrisonersMarket:
             case BoardState.ShopScreen:
                 SetStatBox(board.GetChessmanAtPosition(this));
                 ShowPieceValues(board.GetChessmanAtPosition(this));

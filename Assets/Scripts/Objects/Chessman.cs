@@ -416,6 +416,5 @@ public abstract class Chessman : MonoBehaviour, IInteractable
 
     public void OnHoverExit(Board board)
     {
-        Debug.Log("Chessman hover exited");
     }
 }
