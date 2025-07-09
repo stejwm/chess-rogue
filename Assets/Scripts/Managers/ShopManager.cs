@@ -16,6 +16,7 @@ public class ShopManager : MonoBehaviour
     private List<GameObject> orders = new List<GameObject>();
     private Card selectedCard;
     private Chessman selectedPiece;
+    [SerializeField] private TMP_Text rerollCostText;
     private bool applyingAbility;
 
     [SerializeField] private Board board;
@@ -60,7 +61,9 @@ public class ShopManager : MonoBehaviour
         foreach (var card in cards)
         {
             Vector3 localPosition = new(index * 2 - (1.96f * 2), 2, -2);
-            card.transform.position = localPosition;
+            //card.transform.position = localPosition;
+            var spring = card.GetComponent<MMSpringPosition>();
+            spring.MoveTo(localPosition);
             card.GetComponent<Card>().ShowPrice();
             index++;
         }
@@ -69,10 +72,12 @@ public class ShopManager : MonoBehaviour
         foreach (var order in orders)
         {
             Vector3 localPosition = new(index * 2 + (1.96f * 2), 2, -2);
-            order.transform.position = localPosition;
+            var spring = order.GetComponent<MMSpringPosition>();
+            spring.MoveTo(localPosition);
             order.GetComponent<Card>().ShowPrice();
             index++;
         }
+        rerollCostText.text = board.RerollCost.ToString();
 
     }
 
@@ -101,6 +106,35 @@ public class ShopManager : MonoBehaviour
         board.BoardState = BoardState.ShopScreen;
         yield return new WaitForSeconds(Settings._instance.WaitTime);
         yield break;
+    }
+
+    public void RerollAbilities()
+    {
+        if (applyingAbility)
+            return;
+        if (board.Hero.playerCoins < board.RerollCost)
+            return;
+
+        board.Hero.playerCoins -= board.RerollCost;
+        foreach (var card in cards)
+        {
+            Destroy(card);
+        }
+        cards = CardFactory.Instance.CreateCards(3, board.Hero.RarityWeights);
+        int index = 0;
+        foreach (var card in cards)
+        {
+            Vector3 localPosition = new(index * 2 - (1.96f * 2), 2, -2);
+            //card.transform.position = localPosition;
+            var spring = card.GetComponent<MMSpringPosition>();
+            spring.MoveTo(localPosition);
+            card.GetComponent<Card>().ShowPrice();
+            index++;
+            //card.GetComponent<MMSpringPosition>().BumpRandom();
+        }
+        board.RerollCost += board.RerollCostIncrease;
+        rerollCostText.text = board.RerollCost.ToString();
+        
     }
 
     public void CreatePieces()
@@ -183,8 +217,17 @@ public class ShopManager : MonoBehaviour
 
     public void SelectedOrder(Card card)
     {
-        board.Hero.orders.Add(card.order);
-        Destroy(card.gameObject);
+        if (board.Hero.playerCoins >= card.order.Cost)
+        {
+            board.Hero.playerCoins -= card.order.Cost;
+            board.Hero.orders.Add(card.order);
+            Destroy(card.gameObject);
+        }
+        else
+        {
+            card.GetComponent<MMSpringPosition>().BumpRandom();
+        }
+        
     }
     public void ClearSelections()
     {

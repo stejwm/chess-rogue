@@ -45,7 +45,7 @@ public class MapManager : MonoBehaviour
         this.board = board;
         Debug.Log("OpeningMap");
         gameObject.SetActive(true);
-        //PauseMenuManager._instance.SaveGame();
+        board.PauseMenuManager.SaveGame();
     }
 
     public void CloseMap()

@@ -9,7 +9,7 @@ public class FreeTrade : KingsOrder
 
     public override IEnumerator Use(Board board){
         board.RerollCost=0;
-        //ShopManager._instance.rerollCostIncrease++;
+        board.RerollCostIncrease++;
         yield return null;
     }
 

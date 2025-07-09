@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using CI.QuickSave;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -7,16 +9,17 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    public static PauseMenuManager _instance;
     public AudioSource audioSource;
-    [SerializeField] private Board board;
-    [SerializeField] private MapManager mapManager;
-    
+    private Board board;
 
-    // Update is called once per frame
     void Start()
     {
-        gameObject.SetActive(false);
+       gameObject.SetActive(false); 
+    }
+    // Update is called once per frame
+    public void Initialize(Board board)
+    {
+        this.board = board;
     }
 
     public void OpenMenu(){
@@ -69,7 +72,7 @@ public class PauseMenuManager : MonoBehaviour
             playerData.pieces.Add(pieceData);
         }
 
-        foreach (var nodeObj in mapManager.mapNodes)
+        foreach (var nodeObj in board.MapManager.mapNodes)
         {
             var connectedNodes = new List<string>();
             MapNode node = nodeObj.GetComponent<MapNode>();
@@ -82,7 +85,7 @@ public class PauseMenuManager : MonoBehaviour
                 encounterType = node.encounterType,
                 localX = node.transform.localPosition.x,
                 localY = node.transform.localPosition.y,
-                isCurrentNode = mapManager.currentNode == node,
+                isCurrentNode = board.MapManager.currentNode == node,
                 color = node.nodeImage.color
             };
 
@@ -94,13 +97,14 @@ public class PauseMenuManager : MonoBehaviour
             Map.Add(nodeData);
         }
 
+        string savePath = "C:\\Users\\steve\\chess-rogue\\chess-rogue\\Saves";
+        QuickSaveGlobalSettings.StorageLocation = savePath;
+        int total = Directory.GetFiles(savePath+"\\QuickSave").Length;
         
-        
-        var writer = QuickSaveWriter.Create("Game");
+        var writer = QuickSaveWriter.Create("Game"+total);
             writer.Write("Player", playerData);
-            writer.Write("State", "s");
-            writer.Write("Level", "s");
-            writer.Write("Shop", "s");
+            writer.Write("State", board.BoardState);
+            writer.Write("Level", board.Level);
             writer.Write("MapNodes", Map);
             writer.Commit();
     }

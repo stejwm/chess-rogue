@@ -68,10 +68,10 @@ public class GameManager : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        /* if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseMenuManager._instance.OpenMenu();
-        }
+        } */
     }
     public void LetsBegin()
     {
@@ -92,7 +92,6 @@ public class GameManager : MonoBehaviour
         quickSaveReader.TryRead<PlayerData>("Player", out player);
         quickSaveReader.TryRead<BoardState>("State", out state);
         quickSaveReader.TryRead<int>("Level", out level);
-        quickSaveReader.TryRead<bool>("Shop", out shopUsed);
         quickSaveReader.TryRead<List<MapNodeData>>("MapNodes", out mapNodes);
         board.BoardState= state;
 

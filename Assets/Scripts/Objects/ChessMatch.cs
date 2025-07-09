@@ -139,7 +139,7 @@ public class ChessMatch
             {
                 if (coordinate.X == x && coordinate.Y == y)
                 {
-                    eventHub.OnSupportAdded.Invoke(piece, attackingPiece, defendingPiece);
+                    eventHub.RaiseSupportAdded(attackingPiece, defendingPiece, piece);
                     supporters.Add(pieceObject, piece.CalculateSupport());
                     break;
                 }
@@ -167,8 +167,6 @@ public class ChessMatch
     private IEnumerator ShowBattlePanel(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport, bool isCapture)
     {
         float pitch = 1f;
-        Sprite sprite = attacker.gameObject.GetComponent<SpriteRenderer>().sprite;
-        Sprite defendSprite = defender.gameObject.GetComponent<SpriteRenderer>().sprite;
 
         int attackVal = attacker.CalculateAttack();
         int defendVal = defender.CalculateDefense();
@@ -178,7 +176,7 @@ public class ChessMatch
             float scale = 0.05f;
             if (!isCapture)
                 scale = -0.05f;
-            board.BattlePanel.DropIn(attacker.name, attacker.droppingSprite, defender.name, defender.droppingSprite);
+            board.BattlePanel.DropIn(attacker.name, attacker.droppingSprite, defender.name, defender.droppingSprite, true, attacker, defender);
             board.BattlePanel.SetAndShowHeroAttack(attackVal, pitch);
             pitch += attackVal * .05f;
             yield return new WaitForSeconds(Settings._instance.WaitTime);
@@ -202,7 +200,7 @@ public class ChessMatch
             float scale=0.05f;
             if (isCapture)
                 scale=-0.05f;
-            board.BattlePanel.DropIn(defender.name, defender.droppingSprite, attacker.name, attacker.droppingSprite);
+            board.BattlePanel.DropIn(defender.name, defender.droppingSprite, attacker.name, attacker.droppingSprite, false, defender, attacker);
             board.BattlePanel.SetAndShowEnemyAttack(attackVal,pitch);
             pitch+=.05f;
             yield return new WaitForSeconds(Settings._instance.WaitTime);

@@ -1,0 +1,835 @@
+fileFormatVersion: 2
+guid: b84cefc569ee50644be6335d03ce811e
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: jester juggling_Frame_0
+    originalName: 
+    pivot: {x: 0.5, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 166
+      y: 38
+      width: 16
+      height: 26
+    spriteID: b779974ef74340e448956610d72970dd
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 166, y: 38}
+  - name: jester juggling_Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 190
+      y: 38
+      width: 16
+      height: 26
+    spriteID: 986a41288455944418ff4baf68b997d8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 190, y: 38}
+  - name: jester juggling_Frame_2
+    originalName: 
+    pivot: {x: 0.5555556, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 234
+      y: 4
+      width: 18
+      height: 26
+    spriteID: 431eac9abd911b54a86dd117a56f94b0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 234, y: 4}
+  - name: jester juggling_Frame_3
+    originalName: 
+    pivot: {x: 0.5, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 140
+      y: 38
+      width: 18
+      height: 26
+    spriteID: 65a78329b892fdb41a0eb699ac35b37a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 140, y: 38}
+  - name: jester juggling_Frame_4
+    originalName: 
+    pivot: {x: 0.4, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 84
+      y: 38
+      width: 20
+      height: 26
+    spriteID: 94bc5cca6a2749d4298281e627a12f3b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 84, y: 38}
+  - name: jester juggling_Frame_5
+    originalName: 
+    pivot: {x: 0.45000002, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 112
+      y: 38
+      width: 20
+      height: 26
+    spriteID: e0d6986a521fcae438097b2b60a8c987
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 112, y: 38}
+  - name: jester juggling_Frame_6
+    originalName: 
+    pivot: {x: 0.5555556, y: -0.6451613}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 34
+      y: 113
+      width: 18
+      height: 31
+    spriteID: 87d8b315c5cfd4747baf0ee493f5beac
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 34, y: 113}
+  - name: jester juggling_Frame_7
+    originalName: 
+    pivot: {x: 0.40909094, y: -0.625}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 113
+      width: 22
+      height: 32
+    spriteID: effcab34a9e55af4f80cba9a2cdafacb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 113}
+  - name: jester juggling_Frame_8
+    originalName: 
+    pivot: {x: 0.42105263, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 195
+      y: 74
+      width: 19
+      height: 30
+    spriteID: a6efad007e84f9944841444313f7f4ac
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 195, y: 74}
+  - name: jester juggling_Frame_9
+    originalName: 
+    pivot: {x: 0.5714286, y: -0.6451613}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 106
+      y: 74
+      width: 21
+      height: 31
+    spriteID: 936ae4b2ba9ffe14a950519cb631af41
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 106, y: 74}
+  - name: jester juggling_Frame_10
+    originalName: 
+    pivot: {x: 0.52, y: -0.6451613}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 40
+      y: 74
+      width: 25
+      height: 31
+    spriteID: d9dfebffa3e472b4c8e3f5ce61add772
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 40, y: 74}
+  - name: jester juggling_Frame_11
+    originalName: 
+    pivot: {x: 0.52, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 73
+      y: 74
+      width: 25
+      height: 30
+    spriteID: 1afc40316409a894993d31b4dd17b065
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 73, y: 74}
+  - name: jester juggling_Frame_12
+    originalName: 
+    pivot: {x: 0.6315789, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 222
+      y: 74
+      width: 19
+      height: 30
+    spriteID: 55c386e89b757314ab7ead3d6227a3c0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 222, y: 74}
+  - name: jester juggling_Frame_13
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 167
+      y: 74
+      width: 20
+      height: 30
+    spriteID: afa7565734f0b314e99ad63e348f257e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 167, y: 74}
+  - name: jester juggling_Frame_14
+    originalName: 
+    pivot: {x: 0.42857146, y: -0.6451613}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 74
+      width: 28
+      height: 31
+    spriteID: 3a3b7c9200a55c1478933f88c626c6a7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 74}
+  - name: jester juggling_Frame_15
+    originalName: 
+    pivot: {x: 0.3529412, y: -0.71428573}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 38
+      width: 34
+      height: 28
+    spriteID: a5962e2ca9a48164c94f07fc6ef7a8cc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 38}
+  - name: jester juggling_Frame_16
+    originalName: 
+    pivot: {x: 0.30434784, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 46
+      height: 26
+    spriteID: 0dadfd02687583a49bd2a7ee4d11f923
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: jester juggling_Frame_17
+    originalName: 
+    pivot: {x: 0.4666667, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 46
+      y: 38
+      width: 30
+      height: 26
+    spriteID: 9a3a9443e0b5996428f3977abda548ee
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 46, y: 38}
+  - name: jester juggling_Frame_18
+    originalName: 
+    pivot: {x: 0.3529412, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 153
+      y: 4
+      width: 34
+      height: 26
+    spriteID: 0104c9b388c278641a6de405110eaf80
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 153, y: 4}
+  - name: jester juggling_Frame_19
+    originalName: 
+    pivot: {x: 0.22500001, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 58
+      y: 4
+      width: 40
+      height: 26
+    spriteID: 8d254662dcdc4e6429c867d0d5774364
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 58, y: 4}
+  - name: jester juggling_Frame_20
+    originalName: 
+    pivot: {x: 0.33333334, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 135
+      y: 74
+      width: 24
+      height: 26
+    spriteID: 3e89e7440435a7440a52de7c5f46c141
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 135, y: 74}
+  - name: jester juggling_Frame_21
+    originalName: 
+    pivot: {x: 0.32258064, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 195
+      y: 4
+      width: 31
+      height: 26
+    spriteID: bc7851b253311fb4c921ca0430769162
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 195, y: 4}
+  - name: jester juggling_Frame_22
+    originalName: 
+    pivot: {x: 0.20512821, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 106
+      y: 4
+      width: 39
+      height: 26
+    spriteID: e7560dca7519b5d4698f679a948615f5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 106, y: 4}
+  - name: jester juggling_Frame_23
+    originalName: 
+    pivot: {x: 0.5, y: -0.7692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 214
+      y: 38
+      width: 16
+      height: 26
+    spriteID: 089f1edccd4e0fb4f859ac1446611861
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 214, y: 38}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -1778934262
+    name: jester juggling
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: jester juggling_Frame_0
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 24
+        y: 20
+        width: 16
+        height: 26
+      spriteId: b779974ef74340e448956610d72970dd
+    - name: jester juggling_Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 24
+        y: 20
+        width: 16
+        height: 26
+      spriteId: 986a41288455944418ff4baf68b997d8
+    - name: jester juggling_Frame_2
+      frameIndex: 2
+      additiveSortOrder: 0
+      cellRect:
+        x: 22
+        y: 20
+        width: 18
+        height: 26
+      spriteId: 431eac9abd911b54a86dd117a56f94b0
+    - name: jester juggling_Frame_3
+      frameIndex: 3
+      additiveSortOrder: 0
+      cellRect:
+        x: 23
+        y: 20
+        width: 18
+        height: 26
+      spriteId: 65a78329b892fdb41a0eb699ac35b37a
+    - name: jester juggling_Frame_4
+      frameIndex: 4
+      additiveSortOrder: 0
+      cellRect:
+        x: 24
+        y: 20
+        width: 20
+        height: 26
+      spriteId: 94bc5cca6a2749d4298281e627a12f3b
+    - name: jester juggling_Frame_5
+      frameIndex: 5
+      additiveSortOrder: 0
+      cellRect:
+        x: 23
+        y: 20
+        width: 20
+        height: 26
+      spriteId: e0d6986a521fcae438097b2b60a8c987
+    - name: jester juggling_Frame_6
+      frameIndex: 6
+      additiveSortOrder: 0
+      cellRect:
+        x: 22
+        y: 20
+        width: 18
+        height: 31
+      spriteId: 87d8b315c5cfd4747baf0ee493f5beac
+    - name: jester juggling_Frame_7
+      frameIndex: 7
+      additiveSortOrder: 0
+      cellRect:
+        x: 23
+        y: 20
+        width: 22
+        height: 32
+      spriteId: effcab34a9e55af4f80cba9a2cdafacb
+    - name: jester juggling_Frame_8
+      frameIndex: 8
+      additiveSortOrder: 0
+      cellRect:
+        x: 24
+        y: 20
+        width: 19
+        height: 30
+      spriteId: a6efad007e84f9944841444313f7f4ac
+    - name: jester juggling_Frame_9
+      frameIndex: 9
+      additiveSortOrder: 0
+      cellRect:
+        x: 20
+        y: 20
+        width: 21
+        height: 31
+      spriteId: 936ae4b2ba9ffe14a950519cb631af41
+    - name: jester juggling_Frame_10
+      frameIndex: 10
+      additiveSortOrder: 0
+      cellRect:
+        x: 19
+        y: 20
+        width: 25
+        height: 31
+      spriteId: d9dfebffa3e472b4c8e3f5ce61add772
+    - name: jester juggling_Frame_11
+      frameIndex: 11
+      additiveSortOrder: 0
+      cellRect:
+        x: 19
+        y: 20
+        width: 25
+        height: 30
+      spriteId: 1afc40316409a894993d31b4dd17b065
+    - name: jester juggling_Frame_12
+      frameIndex: 12
+      additiveSortOrder: 0
+      cellRect:
+        x: 20
+        y: 20
+        width: 19
+        height: 30
+      spriteId: 55c386e89b757314ab7ead3d6227a3c0
+    - name: jester juggling_Frame_13
+      frameIndex: 13
+      additiveSortOrder: 0
+      cellRect:
+        x: 22
+        y: 20
+        width: 20
+        height: 30
+      spriteId: afa7565734f0b314e99ad63e348f257e
+    - name: jester juggling_Frame_14
+      frameIndex: 14
+      additiveSortOrder: 0
+      cellRect:
+        x: 20
+        y: 20
+        width: 28
+        height: 31
+      spriteId: 3a3b7c9200a55c1478933f88c626c6a7
+    - name: jester juggling_Frame_15
+      frameIndex: 15
+      additiveSortOrder: 0
+      cellRect:
+        x: 20
+        y: 20
+        width: 34
+        height: 28
+      spriteId: a5962e2ca9a48164c94f07fc6ef7a8cc
+    - name: jester juggling_Frame_16
+      frameIndex: 16
+      additiveSortOrder: 0
+      cellRect:
+        x: 18
+        y: 20
+        width: 46
+        height: 26
+      spriteId: 0dadfd02687583a49bd2a7ee4d11f923
+    - name: jester juggling_Frame_17
+      frameIndex: 17
+      additiveSortOrder: 0
+      cellRect:
+        x: 18
+        y: 20
+        width: 30
+        height: 26
+      spriteId: 9a3a9443e0b5996428f3977abda548ee
+    - name: jester juggling_Frame_18
+      frameIndex: 18
+      additiveSortOrder: 0
+      cellRect:
+        x: 20
+        y: 20
+        width: 34
+        height: 26
+      spriteId: 0104c9b388c278641a6de405110eaf80
+    - name: jester juggling_Frame_19
+      frameIndex: 19
+      additiveSortOrder: 0
+      cellRect:
+        x: 23
+        y: 20
+        width: 40
+        height: 26
+      spriteId: 8d254662dcdc4e6429c867d0d5774364
+    - name: jester juggling_Frame_20
+      frameIndex: 20
+      additiveSortOrder: 0
+      cellRect:
+        x: 24
+        y: 20
+        width: 24
+        height: 26
+      spriteId: 3e89e7440435a7440a52de7c5f46c141
+    - name: jester juggling_Frame_21
+      frameIndex: 21
+      additiveSortOrder: 0
+      cellRect:
+        x: 22
+        y: 20
+        width: 31
+        height: 26
+      spriteId: bc7851b253311fb4c921ca0430769162
+    - name: jester juggling_Frame_22
+      frameIndex: 22
+      additiveSortOrder: 0
+      cellRect:
+        x: 24
+        y: 20
+        width: 39
+        height: 26
+      spriteId: e7560dca7519b5d4698f679a948615f5
+    - name: jester juggling_Frame_23
+      frameIndex: 23
+      additiveSortOrder: 0
+      cellRect:
+        x: 24
+        y: 20
+        width: 16
+        height: 26
+      spriteId: 089f1edccd4e0fb4f859ac1446611861
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  generatePhysicsShape: 0
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 64, y: 64}

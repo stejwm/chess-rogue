@@ -74,7 +74,7 @@ public class AvengingStrike : Ability
             board.CurrentMatch.ExecuteTurn(piece, targetPosition.x, targetPosition.y);
         }
     }
-    public void Target(Chessman supporter, Chessman attacker, Chessman defender){
+    public void Target(Chessman attacker, Chessman defender, Chessman supporter){
         if(supporter==piece && defender.color==piece.color && !board.CurrentMatch.AvengerActive){
             board.CurrentMatch.AvengerActive=true;
             Debug.Log("Avenger activated");

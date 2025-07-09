@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
@@ -32,22 +33,48 @@ public class BattlePanel : MonoBehaviour
         Cursor.visible=true;
         gameObject.SetActive(false);
     }
-    public void DropIn(string name, GameObject sprite, string enemyPieceName, GameObject enemySprite){
+    public void DropIn(string name, GameObject sprite, string enemyPieceName, GameObject enemySprite, bool heroIsAttacking, Chessman white, Chessman black)
+    {
         gameObject.SetActive(true);
-        this.heroAttack.text="attack: ";
-        this.heroSupport.text="support: ";
-        this.heroTotal.text="total: ";
-        this.heroPieceName.text=name;
-        this.heroImage.transform.localPosition=new Vector3(-687,0,0);
-        this.heroImage.GetComponent<SpriteRenderer>().sprite=sprite.GetComponent<SpriteRenderer>().sprite;
-        this.heroImage.GetComponent<Animator>().runtimeAnimatorController=sprite.GetComponent<Animator>().runtimeAnimatorController;
-        this.enemyAttack.text=" :defense";
-        this.enemySupport.text=" :support";
-        this.enemyTotal.text=" :total";
-        this.enemyPieceName.text=enemyPieceName;
-        this.enemyImage.transform.localPosition=new Vector3(687,0,0);
-        this.enemyImage.GetComponent<SpriteRenderer>().sprite=enemySprite.GetComponent<SpriteRenderer>().sprite;
-        this.enemyImage.GetComponent<Animator>().runtimeAnimatorController=enemySprite.GetComponent<Animator>().runtimeAnimatorController;
+        
+        if (heroIsAttacking)
+            this.heroAttack.text = "attack: ";
+        else
+            this.heroAttack.text = "defense: ";
+
+        this.heroSupport.text = "support: ";
+        this.heroTotal.text = "total: ";
+        this.heroPieceName.text = name;
+        this.heroImage.transform.localPosition = new Vector3(-687, 0, 0);
+        this.heroImage.GetComponent<SpriteRenderer>().sprite = sprite.GetComponent<SpriteRenderer>().sprite;
+        this.heroImage.GetComponent<Animator>().runtimeAnimatorController = sprite.GetComponent<Animator>().runtimeAnimatorController;
+        if (white.type == PieceType.Knight)
+            heroImage.GetComponent<SpriteRenderer>().flipX=true;
+        else
+            heroImage.GetComponent<SpriteRenderer>().flipX=false;
+        if (heroIsAttacking)
+        {
+            this.heroImage.GetComponent<Animator>().SetTrigger("AttackTrigger");
+        }
+
+        if (heroIsAttacking)
+            this.enemyAttack.text = " :defense";
+        else
+            this.enemyAttack.text = " :attack";
+        this.enemySupport.text = " :support";
+        this.enemyTotal.text = " :total";
+        this.enemyPieceName.text = enemyPieceName;
+        this.enemyImage.transform.localPosition = new Vector3(687, 0, 0);
+        this.enemyImage.GetComponent<SpriteRenderer>().sprite = enemySprite.GetComponent<SpriteRenderer>().sprite;
+        this.enemyImage.GetComponent<Animator>().runtimeAnimatorController = enemySprite.GetComponent<Animator>().runtimeAnimatorController;
+        if (black.type != PieceType.Knight)
+            enemyImage.GetComponent<SpriteRenderer>().flipX=true;
+        else
+            enemyImage.GetComponent<SpriteRenderer>().flipX=false;
+        if (!heroIsAttacking)
+        {
+            this.enemyImage.GetComponent<Animator>().SetTrigger("AttackTrigger");
+        }
 
     }
 

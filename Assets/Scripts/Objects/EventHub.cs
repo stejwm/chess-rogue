@@ -57,9 +57,9 @@ public class EventHub
         OnPieceBounced?.Invoke(piece, target);
     }
 
-    public void RaiseSupportAdded(Chessman piece, Chessman supporter, Chessman target)
+    public void RaiseSupportAdded(Chessman attacker, Chessman defender, Chessman supporter)
     {
-        OnSupportAdded?.Invoke(piece, supporter, target);
+        OnSupportAdded?.Invoke(attacker, defender, supporter);
     }
 
     public void RaiseChessMatchStart()

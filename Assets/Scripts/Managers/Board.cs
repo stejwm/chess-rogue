@@ -31,7 +31,9 @@ public class Board : MonoBehaviour
     [SerializeField] PieceInfoManager pieceInfoManager;
     [SerializeField] KingsOrderManager kingsOrderManager;
     [SerializeField] CurrencyManager currencyManager;
+    [SerializeField] PauseMenuManager pauseMenuManager;
     private int reRollCost = 0;
+    private int rerollCostIncrease = 1;
     public BoardState previousBoardState = BoardState.None;
     private GameObject[,] positions = new GameObject[8, 8];
     [SerializeField] private BoardState boardState;
@@ -52,12 +54,16 @@ public class Board : MonoBehaviour
     public ArmyManager ArmyManager { get => armyManager; set => armyManager = value; }
     public PieceInfoManager PieceInfoManager { get => pieceInfoManager; set => pieceInfoManager = value; }
     public KingsOrderManager KingsOrderManager { get => kingsOrderManager; set => kingsOrderManager = value; }
+    public PauseMenuManager PauseMenuManager { get => pauseMenuManager; set => pauseMenuManager = value; }
+    public MapManager MapManager { get => mapManager; set => mapManager = value; }
+    public int RerollCostIncrease { get => rerollCostIncrease; set => rerollCostIncrease = value; }
 
     public void Start()
     {
         EventHub = new EventHub();
         CreateTiles();
         currencyManager.Initialize(this);
+        pauseMenuManager.Initialize(this);
     }
     public void CreateNewMatch(Player white, Player black)
     {
@@ -120,10 +126,15 @@ public class Board : MonoBehaviour
     {
         foreach (GameObject piece in hero.pieces)
         {
-            piece.SetActive(true);
-            Chessman cm = piece.GetComponent<Chessman>();
-            piece.GetComponent<Chessman>().ResetBonuses();
-            PlacePiece(cm, cm.startingPosition);
+            if (piece)
+            {
+                piece.SetActive(true);
+                Chessman cm = piece.GetComponent<Chessman>();
+                cm.ResetBonuses();
+                cm.flames.Stop();
+                cm.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                PlacePiece(cm, cm.startingPosition);
+            }
         }
     }
     public void PlacePiece(Chessman piece, Tile tile)
@@ -151,31 +162,59 @@ public class Board : MonoBehaviour
         Array.Clear(positions, 0, positions.Length);
         foreach (GameObject piece in hero.pieces)
         {
-            piece.SetActive(true);
-            piece.GetComponent<Chessman>().ResetBonuses();
-            Chessman cm = piece.GetComponent<Chessman>();
-            PlacePiece(cm, cm.startingPosition);
+            if (piece)
+            {
+                piece.SetActive(true);
+                piece.GetComponent<Chessman>().ResetBonuses();
+                Chessman cm = piece.GetComponent<Chessman>();
+                PlacePiece(cm, cm.startingPosition);
+            }
+            else
+            {
+                Debug.Log($"Lost piece in hero pieces..");
+            }
         }
         foreach (GameObject piece in opponent.pieces)
         {
-            piece.SetActive(true);
-            piece.GetComponent<Chessman>().ResetBonuses();
-            Chessman cm = piece.GetComponent<Chessman>();
-            PlacePiece(cm, cm.startingPosition);
+            if (piece)
+            {
+                piece.SetActive(true);
+                piece.GetComponent<Chessman>().ResetBonuses();
+                Chessman cm = piece.GetComponent<Chessman>();
+                PlacePiece(cm, cm.startingPosition);
+            }
+            else
+            {
+                Debug.Log($"Lost piece in opponent pieces..");
+            }
         }
         foreach (GameObject piece in hero.capturedPieces)
         {
-            piece.SetActive(true);
-            piece.GetComponent<Chessman>().ResetBonuses();
-            Chessman cm = piece.GetComponent<Chessman>();
-            PlacePiece(cm, cm.startingPosition);
+            if (piece)
+            {
+                piece.SetActive(true);
+                piece.GetComponent<Chessman>().ResetBonuses();
+                Chessman cm = piece.GetComponent<Chessman>();
+                PlacePiece(cm, cm.startingPosition);
+            }
+            else
+            {
+                Debug.Log($"Lost piece in hero captured pieces.. ");
+            }
         }
         foreach (GameObject piece in opponent.capturedPieces)
         {
-            piece.SetActive(true);
-            piece.GetComponent<Chessman>().ResetBonuses();
-            Chessman cm = piece.GetComponent<Chessman>();
-            PlacePiece(cm, cm.startingPosition);
+            if (piece)
+            {
+                piece.SetActive(true);
+                piece.GetComponent<Chessman>().ResetBonuses();
+                Chessman cm = piece.GetComponent<Chessman>();
+                PlacePiece(cm, cm.startingPosition);
+            }
+            else
+            {
+                Debug.Log($"Lost piece in opponent captured pieces.. removing from list");
+            }
         }
 
     }
@@ -223,6 +262,7 @@ public class Board : MonoBehaviour
     public void OpenShop()
     {
         boardState = BoardState.ShopScreen;
+        ResetPlayerPieces();
         ShopManager.OpenShop(this);
     }
     public void CloseShop()
@@ -235,6 +275,7 @@ public class Board : MonoBehaviour
     public void OpenManagement()
     {
         boardState = BoardState.ManagementScreen;
+        ResetPlayerPieces();
         ArmyManager.OpenManagement(this);
     }
     public void CloseManagement()
@@ -247,11 +288,13 @@ public class Board : MonoBehaviour
     }
     public void OpenMap()
     {
-        mapManager.OpenMap(this);
+        ResetPlayerPieces();
+        boardState = BoardState.Map;
+        MapManager.OpenMap(this);
     }
     public void CloseMap()
     {
-        mapManager.CloseMap();
+        MapManager.CloseMap();
         this.boardState = BoardState.ActiveMatch;
     }
 

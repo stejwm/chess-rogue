@@ -237,14 +237,7 @@ public class Card : MonoBehaviour, IInteractable
         }
         else if (order != null)
         {
-            if (board.Hero.playerCoins >= order.Cost)
-            {
-                board.ShopManager.SelectedOrder(this);
-            }
-            else
-            {
-                this.GetComponent<MMSpringPosition>().BumpRandom();
-            }
+            board.ShopManager.SelectedOrder(this); 
         }
     }
 

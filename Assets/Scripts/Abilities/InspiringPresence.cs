@@ -22,7 +22,7 @@ public class InspiringPresence : Ability
         eventHub.OnSupportAdded.RemoveListener(CheckForResult); 
 
     }
-    public void CheckForResult(Chessman supporter, Chessman attacker, Chessman defender){
+    public void CheckForResult(Chessman attacker, Chessman defender, Chessman supporter){
         if(supporter==piece){
             eventHub.OnPieceBounced.AddListener(IsBounce);
             eventHub.OnPieceCaptured.AddListener(RemoveListener);

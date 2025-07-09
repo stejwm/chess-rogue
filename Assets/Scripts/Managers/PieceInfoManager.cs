@@ -59,7 +59,7 @@ public class PieceInfoManager : MonoBehaviour
         {
             piece.attack += 1;
             piece.owner.playerBlood -= 1;
-            attackVal.text = Int32.Parse(attackVal.text) + 1.ToString();
+            attackVal.text = (Int32.Parse(attackVal.text) + 1).ToString();
         }
 
     }
@@ -69,7 +69,7 @@ public class PieceInfoManager : MonoBehaviour
         {
             piece.defense += 1;
             piece.owner.playerBlood -= 1;
-            defenseVal.text = Int32.Parse(defenseVal.text) + 1.ToString();
+            defenseVal.text = (Int32.Parse(defenseVal.text) + 1).ToString();
         }
     }
     public void IncreaseSupport()
@@ -78,7 +78,7 @@ public class PieceInfoManager : MonoBehaviour
         {
             piece.support += 1;
             piece.owner.playerBlood -= 1;
-            supportVal.text = Int32.Parse(supportVal.text) + 1.ToString();
+            supportVal.text = (Int32.Parse(supportVal.text) + 1).ToString();
         }
     }
 
