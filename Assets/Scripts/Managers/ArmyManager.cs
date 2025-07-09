@@ -28,6 +28,8 @@ public class ArmyManager : MonoBehaviour
     public void DeselectPiece(Chessman piece)
     {
         selectedPiece=null;
+        if(piece==null)
+            return;
         piece.highlightedParticles.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear); 
     }
 
@@ -117,6 +119,7 @@ public class ArmyManager : MonoBehaviour
 
     public bool CloseManagement()
     {
+        DeselectPiece(selectedPiece);
         if (board.Hero.inventoryPieces.Count > 0)
         {
             foreach (var piece in board.Hero.inventoryPieces)

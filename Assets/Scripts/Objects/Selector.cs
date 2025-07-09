@@ -6,7 +6,7 @@ public class Selector : MonoBehaviour
 
     public void SetWorldPosition(Vector3 worldPos)
     {
-        transform.position = worldPos;
+        transform.position = new(worldPos.x, worldPos.y, 0);
         UpdateTile();
     }
 

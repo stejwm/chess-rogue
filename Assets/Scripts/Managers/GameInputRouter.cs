@@ -35,11 +35,11 @@ public class InputRouter : MonoBehaviour
     {
         Vector2 screenPosition = input.ChessMatchInput.Point.ReadValue<Vector2>();
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+        selector.SetWorldPosition(Camera.main.ScreenToWorldPoint(screenPosition));
 
         RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
         if (hit.collider != null)
         {
-            selector.SetWorldPosition(hit.point);
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
             if (target != interactable)
             {
