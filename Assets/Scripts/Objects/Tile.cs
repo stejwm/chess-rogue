@@ -196,10 +196,6 @@ public class Tile : MonoBehaviour, IInteractable
         {
             return;
         }
-        else if (board.CurrentMatch.isSetUpPhase && reference != null)
-        {
-            board.AddPiece(reference, this);
-        }
         else if (reference != null && reference.isValidForAttack)
         {
 

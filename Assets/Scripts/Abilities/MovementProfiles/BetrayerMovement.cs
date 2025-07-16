@@ -7,7 +7,6 @@ using UnityEngine;
 public class BetrayerMovement : MovementProfile
 {
     MovementProfile oldProfile;
-    GameManager game;
     
     public BetrayerMovement(Board board, MovementProfile old) : base(board) {oldProfile = old;}
     public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {

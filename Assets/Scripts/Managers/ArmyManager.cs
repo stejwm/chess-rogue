@@ -15,11 +15,12 @@ public class ArmyManager : MonoBehaviour
     public Chessman selectedPiece;
     public int pricePerPiece = 2;
     public Board board;
+    [SerializeField] private GameObject continueButton;
+    [SerializeField] private GameObject backButton;
     public void Start()
     {
         gameObject.SetActive(false);
     }
-
     public void SelectPiece(Chessman piece)
     {
         selectedPiece=piece;
@@ -32,8 +33,6 @@ public class ArmyManager : MonoBehaviour
             return;
         piece.highlightedParticles.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear); 
     }
-
-
     public void PieceSelect(Chessman piece){
         
         if(selectedPiece==null){
@@ -55,8 +54,8 @@ public class ArmyManager : MonoBehaviour
             selectedPiece.yBoard=position2.Y;
             piece.xBoard=position1.X;
             piece.yBoard=position1.Y;
-            board.PlacePiece(selectedPiece, board.GetTileAt(selectedPiece.xBoard, selectedPiece.yBoard));
-            board.PlacePiece(piece, board.GetTileAt(piece.xBoard, piece.yBoard));
+            board.PlacePiece(selectedPiece, position2);
+            board.PlacePiece(piece, position1);
             board.Hero.playerCoins-=pricePerPiece*2;
             DeselectPiece(selectedPiece);
         }
@@ -68,34 +67,35 @@ public class ArmyManager : MonoBehaviour
         if(selectedPiece==null){
             return;
         }
-        if(board.Hero.inventoryPieces.Contains(selectedPiece.gameObject)){
-            board.Hero.inventoryPieces.Remove(selectedPiece.gameObject);
-            board.Hero.pieces.Add(selectedPiece.gameObject);
-            selectedPiece.owner.openPositions.Add(selectedPiece.startingPosition);
-            selectedPiece.owner.openPositions.Remove(position);
-            board.PlacePiece(selectedPiece, position);
-            selectedPiece.startingPosition=position;
-            SpriteRenderer rend = selectedPiece.GetComponent<SpriteRenderer>();
-            selectedPiece.flames.GetComponent<Renderer>().sortingOrder = 2;
-            rend.sortingOrder = 1;
-            board.EventHub.RaisePieceAdded(selectedPiece);
-            DeselectPiece(selectedPiece);
-        }else if (selectedPiece && board.Hero.playerCoins>=pricePerPiece){
-            selectedPiece.owner.openPositions.Add(selectedPiece.startingPosition);
-            selectedPiece.owner.openPositions.Remove(position);
-            selectedPiece.startingPosition=position;
-            board.ClearPosition(selectedPiece.xBoard, selectedPiece.yBoard);
-            board.PlacePiece(selectedPiece, position);
-            board.Hero.playerCoins-=pricePerPiece;
+        if (!board.Hero.openPositions.Contains(position))
+        {
+            selectedPiece.GetComponent<MMSpringPosition>().BumpRandom();
+            return;
+        }
+        if (board.Hero.inventoryPieces.Contains(selectedPiece.gameObject))
+        {
+            board.AddPiece(selectedPiece, position);
             DeselectPiece(selectedPiece);
         }
-        else{
+        else if (selectedPiece && board.Hero.playerCoins >= pricePerPiece)
+        {
+            selectedPiece.owner.openPositions.Add(selectedPiece.startingPosition);
+            selectedPiece.owner.openPositions.Remove(position);
+            selectedPiece.startingPosition = position;
+            board.ClearPosition(selectedPiece.xBoard, selectedPiece.yBoard);
+            board.PlacePiece(selectedPiece, position);
+            board.Hero.playerCoins -= pricePerPiece;
+            DeselectPiece(selectedPiece);
+        }
+        else
+        {
             selectedPiece.GetComponent<MMSpringPosition>().BumpRandom();
         }
     }
-
     public void OpenManagement(Board board)
     {
+        continueButton.SetActive(true);
+        backButton.SetActive(false);
         this.board = board;
         int index = 0;
         this.gameObject.SetActive(true);
@@ -105,18 +105,21 @@ public class ArmyManager : MonoBehaviour
             board.PlacePiece(piece.GetComponent<Chessman>(), board.GetTileAt(index+2, 6));
             index++;
         }
-        /* cards = CardFactory.Instance.CreateCards(board.Hero.orders.Where(x => x.canBeUsedFromManagement).ToList());
-        index = 0;
-        foreach (var card in cards)
-        {
-            Vector3 localPosition = new(index * 2 - ((1.96f * 2) / cards.Count), 2, -2);
-            card.transform.position = localPosition;
-            index++;
-            StartCoroutine(card.GetComponent<Card>().CardHovered());
-        } */
-        
     }
-
+    public void OpenFromShop(Board board)
+    {
+        continueButton.SetActive(false);
+        backButton.SetActive(true);
+        this.board = board;
+        int index = 0;
+        this.gameObject.SetActive(true);
+        foreach (var piece in board.Hero.inventoryPieces)
+        {
+            piece.SetActive(true);
+            board.PlacePiece(piece.GetComponent<Chessman>(), board.GetTileAt(index+2, 6));
+            index++;
+        }
+    }
     public bool CloseManagement()
     {
         DeselectPiece(selectedPiece);
@@ -132,10 +135,13 @@ public class ArmyManager : MonoBehaviour
         {
             gameObject.SetActive(false);
             return true;
-        }    
+        }
     }
-
-    
+    public void ExitToShop()
+    {
+        board.ShopManager.OpenShopFromManagement();
+        gameObject.SetActive(false);
+    }
 
 
 }

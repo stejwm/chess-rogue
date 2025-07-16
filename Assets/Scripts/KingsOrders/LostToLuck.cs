@@ -23,7 +23,6 @@ public class LostToLuck : KingsOrder
         }
         Chessman cm = Chessobj.GetComponent<Chessman>();
         board.Hero.pieces.Remove(Chessobj);
-        board.Hero.openPositions.Add(cm.startingPosition);
         Chessobj.GetComponent<Chessman>().DestroyPiece();
         board.Hero.AbandonedPieces++;
         

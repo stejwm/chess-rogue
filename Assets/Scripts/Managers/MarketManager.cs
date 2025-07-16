@@ -80,11 +80,8 @@ public class MarketManager : MonoBehaviour
                 if (piece != null)
                 {
                     Chessman cm = piece.GetComponent<Chessman>();
-                    hero.pieces.Remove(piece);
-                    hero.openPositions.Add(cm.startingPosition);
-                    piece.GetComponent<Chessman>().DestroyPiece();
+                    cm.DestroyPiece();
                     hero.AbandonedPieces++;
-                    Debug.Log("AbandonedPieces :" + hero.AbandonedPieces);
                 }
 
             }
@@ -94,15 +91,10 @@ public class MarketManager : MonoBehaviour
                 if (piece != null)
                     piece.GetComponent<Chessman>().DestroyPiece();
             }
-        //GameManager._instance.state=ScreenState.RewardScreen;
         myCapturedPieces.Clear();
         opponentCapturedPieces.Clear();
         selectedPieces.Clear();
-
-        //GameManager._instance.OpenReward();
         gameObject.SetActive(false);
-
-
     }
 
     public void ReleasePieces()
@@ -112,14 +104,7 @@ public class MarketManager : MonoBehaviour
             hero.playerCoins += item.releaseCost;
             item.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             item.gameObject.SetActive(false);
-            if (item.owner == hero)
-            {
-                item.DestroyPiece();
-            }
-            else
-            {
-                Destroy(item.gameObject);
-            }
+            item.DestroyPiece();
         }
         selectedPieces.Clear();
         ClearPanel();
@@ -131,18 +116,13 @@ public class MarketManager : MonoBehaviour
         {
             if (piece.owner != hero)
                 break;
-            if (selectedPieces.Contains(piece))
-            {
-                hero.playerCoins -= piece.releaseCost;
-                SpriteRenderer sprite = piece.GetComponent<SpriteRenderer>();
-                piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-                piece.gameObject.SetActive(false);
-                hero.pieces.Add(piece.gameObject);
-                opponentCapturedPieces.Remove(piece.gameObject);
-                myCapturedPieces.Remove(piece.gameObject);
-                //board.CurrentMatch.black.pieces.Remove(piece.gameObject);
-
-            }
+            
+            hero.playerCoins -= piece.releaseCost;
+            piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            piece.gameObject.SetActive(false);
+            hero.pieces.Add(piece.gameObject);
+            opponentCapturedPieces.Remove(piece.gameObject);
+            myCapturedPieces.Remove(piece.gameObject);
         }
         totalCost = 0;
         selectedPieces.Clear();
@@ -156,15 +136,9 @@ public class MarketManager : MonoBehaviour
         {
             hero.playerBlood += item.blood;
             myCapturedPieces.Remove(item.gameObject);
+            opponentCapturedPieces.Remove(item.gameObject);
             item.gameObject.SetActive(false);
-            if (item.owner == hero)
-            {
-                item.DestroyPiece();
-            }
-            else
-            {
-                Destroy(item.gameObject);
-            }
+            item.DestroyPiece();
         }
         selectedPieces.Clear();
         ClearPanel();

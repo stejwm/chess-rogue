@@ -15,6 +15,9 @@ public class AdamantAssault : Ability
 
     public override void Apply(Board board, Chessman piece)
     {
+        if(piece.abilities.Contains(this)){
+            return;
+        }
         //startingProfile=piece.moveProfile;
         this.piece = piece;
         piece.info += " " + abilityName;

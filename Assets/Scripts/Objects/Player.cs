@@ -38,7 +38,7 @@ public abstract class Player: MonoBehaviour
         this.pieces = pieces;
     }
 
-    public abstract void Initialize();
+    public abstract void Initialize(Board board);
     public abstract void MakeMove(ChessMatch match);
 
     public virtual void CreateMoveCommandDictionary(){}

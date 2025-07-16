@@ -15,6 +15,9 @@ public class Swift : Ability
 
     public override void Apply(Board board, Chessman piece)
     {
+        if(piece.abilities.Contains(this))
+            return;
+            
         this.piece = piece;
         piece.info += " " + abilityName;
 

@@ -83,8 +83,10 @@ public class Promotion : KingsOrder
         newPiece.isValidForAttack=piece.isValidForAttack;
         newPiece.name=piece.name;
 
-        foreach (var ability in piece.abilities){
+        foreach (var ability in piece.abilities)
+        {
             newPiece.AddAbility(board, ability.Clone());
+            ability.Remove(piece);
         }
         board.Hero.pieces.Remove(piece.gameObject);
         board.Hero.pieces.Add(newPiece.gameObject);

@@ -16,7 +16,9 @@ public class AvengingStrike : Ability
 
     public override void Apply(Board board, Chessman piece)
     {
-        //startingProfile=piece.moveProfile;
+        if(piece.abilities.Contains(this)){
+            return;
+        }
         this.piece = piece;
         piece.info += " " + abilityName;
 

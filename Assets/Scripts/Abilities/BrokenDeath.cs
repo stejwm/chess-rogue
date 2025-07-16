@@ -11,6 +11,9 @@ public class BrokenDeath : Ability
 
     public override void Apply(Board board, Chessman piece)
     {
+        if(piece.abilities.Contains(this)){
+            return;
+        }
         this.piece = piece;
         piece.info += " " + abilityName;
         board.EventHub.OnPieceCaptured.AddListener(BreakDeath);

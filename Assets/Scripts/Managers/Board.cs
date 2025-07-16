@@ -8,7 +8,21 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using System;
 using System.Linq;
+using CI.QuickSave;
 
+public enum BoardState
+{
+    RewardScreen,
+    PrisonersMarket,
+    ActiveMatch,
+    Map,
+    ShopScreen,
+    ManagementScreen,
+    InfoScreen,
+    KingsOrder,
+    KingsOrderActive,
+    None
+}
 public class Board : MonoBehaviour
 {
     public Tile[,] tiles = new Tile[8, 8];
@@ -21,7 +35,6 @@ public class Board : MonoBehaviour
     [SerializeField] private BattlePanel battlePanel;
     [SerializeField] private GameObject tilePrefab;
     private Chessman selectedPiece;
-    [SerializeField] GameManager manager;
     [SerializeField] LogManager logManager;
     [SerializeField] MarketManager marketManager;
     [SerializeField] RewardManager rewardManager;
@@ -32,8 +45,11 @@ public class Board : MonoBehaviour
     [SerializeField] KingsOrderManager kingsOrderManager;
     [SerializeField] CurrencyManager currencyManager;
     [SerializeField] PauseMenuManager pauseMenuManager;
-    private int reRollCost = 0;
+    public int Width = 8;
+    public int Height = 8;
+    private int reRollCost = 2;
     private int rerollCostIncrease = 1;
+    private int level = 0;
     public BoardState previousBoardState = BoardState.None;
     private GameObject[,] positions = new GameObject[8, 8];
     [SerializeField] private BoardState boardState;
@@ -50,7 +66,7 @@ public class Board : MonoBehaviour
     public Player Opponent { get => opponent; set => opponent = value; }
     public ShopManager ShopManager { get => shopManager; set => shopManager = value; }
     public bool IsInMove { get; set; }
-    public int Level { get; set; }
+    public int Level { get => level; set => level = value; }
     public ArmyManager ArmyManager { get => armyManager; set => armyManager = value; }
     public PieceInfoManager PieceInfoManager { get => pieceInfoManager; set => pieceInfoManager = value; }
     public KingsOrderManager KingsOrderManager { get => kingsOrderManager; set => kingsOrderManager = value; }
@@ -64,6 +80,46 @@ public class Board : MonoBehaviour
         CreateTiles();
         currencyManager.Initialize(this);
         pauseMenuManager.Initialize(this);
+        NameDatabase.LoadNames();
+        if (SceneLoadManager.LoadPreviousSave)
+        {
+            LoadGame();
+        }
+        else
+        {
+            LetsBegin();
+        }
+    }
+    public void LetsBegin()
+    {
+        opponent.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(this, opponent, opponent.color);
+        hero.pieces = PieceFactory._instance.CreatePiecesForColor(this, hero, hero.color);
+        hero.Initialize(this);
+        opponent.Initialize(this);
+        CreateNewMatch(hero, opponent);
+        BoardState = BoardState.ActiveMatch;
+    }
+    public void LoadGame()
+    {
+        var quickSaveReader = QuickSaveReader.Create("Game");
+        PlayerData player;
+        List<MapNodeData> mapNodes;
+        BoardState state;
+        quickSaveReader.TryRead<PlayerData>("Player", out player);
+        quickSaveReader.TryRead<BoardState>("State", out state);
+        quickSaveReader.TryRead<int>("Level", out level);
+        quickSaveReader.TryRead<List<MapNodeData>>("MapNodes", out mapNodes);
+        BoardState = state;
+
+        Debug.Log($"Resuming board.BoardState{state}");
+        mapManager.LoadMap(mapNodes);
+        hero.playerBlood = player.blood;
+        hero.playerCoins = player.coins;
+
+        hero.pieces = PieceFactory._instance.LoadPieces(this, player.pieces, hero);
+
+        OpenMap();
+
     }
     public void CreateNewMatch(Player white, Player black)
     {
@@ -74,7 +130,7 @@ public class Board : MonoBehaviour
     public void CreateNewMatch(EnemyType enemyType)
     {
         opponent.pieces = PieceFactory._instance.CreateOpponentPieces(this, opponent, enemyType);
-        opponent.Initialize();
+        opponent.Initialize(this);
         opponent.LevelUp(Level, enemyType);
         currentMatch = new ChessMatch(this, hero, opponent, EventHub, logManager);
         currentMatch.StartMatch();
@@ -151,10 +207,14 @@ public class Board : MonoBehaviour
     }
     public void AddPiece(Chessman piece, Tile tile)
     {
+        piece.startingPosition = tile;
         PlacePiece(piece, tile);
         Hero.inventoryPieces.Remove(piece.gameObject);
         Hero.openPositions.Remove(tile);
         Hero.pieces.Add(piece.gameObject);
+        SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
+        piece.flames.GetComponent<Renderer>().sortingOrder = 2;
+        rend.sortingOrder = 1;
         eventHub.RaisePieceAdded(piece);
     }
     public void PiecesToStartingPositions()
@@ -297,7 +357,6 @@ public class Board : MonoBehaviour
         MapManager.CloseMap();
         this.boardState = BoardState.ActiveMatch;
     }
-
     public void OpenKingsOrders()
     {
         if (boardState != BoardState.KingsOrder)
@@ -309,7 +368,14 @@ public class Board : MonoBehaviour
             KingsOrderManager.OpenManagement(this);
             boardState = BoardState.KingsOrder;
         }
-        
+        else if (boardState == BoardState.ShopScreen)
+        {
+            ShopToManagement();
+            previousBoardState = BoardState.ManagementScreen;
+            KingsOrderManager.OpenManagement(this);
+            boardState = BoardState.KingsOrder;
+        }
+
     }
     public void CloseKingsOrders()
     {
@@ -317,7 +383,18 @@ public class Board : MonoBehaviour
         previousBoardState = BoardState.None;
         KingsOrderManager.CloseManagement();
     }
-
+    public void ShopToManagement()
+    {
+        ShopManager.HideShop();
+        ArmyManager.OpenFromShop(this);
+        boardState = BoardState.ManagementScreen;
+    }
+    public void ManagementToShop()
+    {
+        ArmyManager.ExitToShop();
+        ShopManager.OpenShopFromManagement();
+        boardState = BoardState.ShopScreen;
+    }
     public void OpenPieceInfo(Chessman piece)
     {
         if (boardState != BoardState.InfoScreen)
@@ -354,7 +431,6 @@ public class Board : MonoBehaviour
         else
             return null;
     }
-
     public void SetSelectedPosition(Tile tile)
     {
         if (selectedPosition == null)
@@ -363,7 +439,6 @@ public class Board : MonoBehaviour
             Debug.Log("position set");
         }
     }
-
     public void ClearSelectedPosition()
     {
         selectedPosition = null;

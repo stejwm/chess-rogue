@@ -11,7 +11,10 @@ public class Betrayer : Ability
 
     public override void Apply(Board board, Chessman piece)
     {
-        startingProfile=piece.moveProfile;
+        if(piece.abilities.Contains(this)){
+            return;
+        }
+        startingProfile =piece.moveProfile;
         piece.moveProfile = new BetrayerMovement(board, startingProfile);
         piece.info += " "+abilityName;
         base.Apply(board, piece);

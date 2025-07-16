@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Selector : MonoBehaviour
 {
-    public IInteractable CurrentTile { get; private set; }
+    public IInteractable CurrentInteractable { get; private set; }
+    [SerializeField] private Board board;
 
     public void SetWorldPosition(Vector3 worldPos)
     {
@@ -17,12 +18,19 @@ public class Selector : MonoBehaviour
         RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
 
         if (hit.collider != null)
-        { 
-            CurrentTile = hit.collider.GetComponent<IInteractable>();
+        {
+            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+            if (CurrentInteractable != interactable)
+            {
+                CurrentInteractable?.OnHoverExit(board);
+                CurrentInteractable = interactable;
+                CurrentInteractable?.OnHover(board);
+            }
         }
         else
         {
-            CurrentTile = null;
+            CurrentInteractable?.OnHoverExit(board);
+            CurrentInteractable = null;
         }
     }
 

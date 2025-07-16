@@ -17,16 +17,15 @@ public class ShopManager : MonoBehaviour
     private Card selectedCard;
     private Chessman selectedPiece;
     [SerializeField] private TMP_Text rerollCostText;
+    [SerializeField] private GameObject managementButton;
     private bool applyingAbility;
+
 
     [SerializeField] private Board board;
 
-
-    //Unity calls this right when the game starts, there are a few built in functions
-    //that Unity can call for you
-
     public void Start()
     {
+        managementButton.SetActive(false);
         gameObject.SetActive(false);
     }
 
@@ -37,9 +36,15 @@ public class ShopManager : MonoBehaviour
             applyingAbility = true;
             StartCoroutine(ApplyAbility(selectedPiece));
         }
+        if (board && board.Hero.inventoryPieces.Count > 0)
+        {
+            managementButton.SetActive(true);
+        }
+        else
+        {
+            managementButton.SetActive(false);
+        }
     }
-
-
     public void OpenShop(Board board)
     {
         this.board = board;
@@ -80,7 +85,6 @@ public class ShopManager : MonoBehaviour
         rerollCostText.text = board.RerollCost.ToString();
 
     }
-
     private IEnumerator ApplyAbility(Chessman target)
     {
         board.BoardState = BoardState.None;
@@ -107,7 +111,6 @@ public class ShopManager : MonoBehaviour
         yield return new WaitForSeconds(Settings._instance.WaitTime);
         yield break;
     }
-
     public void RerollAbilities()
     {
         if (applyingAbility)
@@ -134,9 +137,8 @@ public class ShopManager : MonoBehaviour
         }
         board.RerollCost += board.RerollCostIncrease;
         rerollCostText.text = board.RerollCost.ToString();
-        
-    }
 
+    }
     public void CreatePieces()
     {
         GameObject obj;
@@ -155,7 +157,6 @@ public class ShopManager : MonoBehaviour
             pieces.Add(obj);
         }
     }
-
     public void SelectedCard(Card card)
     {
         if (selectedCard != null && selectedCard == card)
@@ -199,7 +200,7 @@ public class ShopManager : MonoBehaviour
     }
     public void PurchasePiece(Chessman piece)
     {
-        if (board.Hero.playerCoins >= piece.releaseCost)
+        if (board.Hero.playerCoins >= piece.releaseCost && board.Hero.openPositions.Count > board.Hero.inventoryPieces.Count)
         {
             board.Hero.playerCoins -= piece.releaseCost;
             board.Hero.inventoryPieces.Add(piece.gameObject);
@@ -213,8 +214,6 @@ public class ShopManager : MonoBehaviour
             piece.GetComponent<MMSpringPosition>().BumpRandom();
         }
     }
-
-
     public void SelectedOrder(Card card)
     {
         if (board.Hero.playerCoins >= card.order.Cost)
@@ -227,14 +226,13 @@ public class ShopManager : MonoBehaviour
         {
             card.GetComponent<MMSpringPosition>().BumpRandom();
         }
-        
+
     }
     public void ClearSelections()
     {
         selectedCard = null;
         selectedPiece = null;
     }
-
     public void CloseShop()
     {
         foreach (var card in cards)
@@ -251,228 +249,45 @@ public class ShopManager : MonoBehaviour
         }
         gameObject.SetActive(false);
     }
-    
-/*
-                                            public void ModifyRarityWeight(Rarity rarity, float multiplier)
-                                            {
-                                                if (rarityWeights.ContainsKey(rarity))
-                                                {
-                                                    rarityWeights[rarity] *= multiplier;
-                                                    // Normalize weights to ensure they sum to 100
-                                                    float total = rarityWeights.Values.Sum();
-                                                    foreach (var key in rarityWeights.Keys.ToList())
-                                                    {
-                                                        rarityWeights[key] = (rarityWeights[key] / total) * 100f;
-                                                    }
-                                                }
-                                            }
 
-                                            private List<Ability> SelectRandomAbilities(int count, Rarity? targetRarity = null)
-                                            {
-                                                List<Ability> selectedAbilities = new List<Ability>();
-                                                var groupedAbilities = GameManager._instance.AllAbilities
-                                                    .GroupBy(a => a.rarity)
-                                                    .ToDictionary(g => g.Key, g => g.ToList());
+    public void HideShop()
+    {
+        foreach (var card in cards)
+        {
+            if(card)
+                card.SetActive(false);
+        }
+        foreach (var order in orders)
+        {
+            if(order)
+                order.SetActive(false);
+        }
+        foreach (var piece in pieces)
+        {
+            if(piece)
+                piece.SetActive(false);
+        }
+        gameObject.SetActive(false);
 
-                                                for (int i = 0; i < count; i++)
-                                                {
-                                                    Ability selectedAbility;
+    }
 
-                                                    if (targetRarity.HasValue)
-                                                    {
-                                                        // Select from specific rarity
-                                                        if (groupedAbilities.ContainsKey(targetRarity.Value) && groupedAbilities[targetRarity.Value].Any())
-                                                        {
-                                                            var availableAbilities = groupedAbilities[targetRarity.Value];
-                                                            int randomIndex = rng.Next(availableAbilities.Count);
-                                                            selectedAbility = availableAbilities[randomIndex].Clone();
-                                                        }
-                                                        else
-                                                        {
-                                                            // Fallback if no abilities of target rarity exist
-                                                            List<Ability> shuffledCards = GameManager._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
-                                                            selectedAbility = shuffledCards[0].Clone();
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        // Select based on rarity weights
-                                                        float random = Random.Range(0f, 100f);
-                                                        float cumulative = 0f;
-                                                        Rarity selectedRarity = Rarity.Common;
-
-                                                        foreach (var rarity in rarityWeights.Keys)
-                                                        {
-                                                            cumulative += rarityWeights[rarity];
-                                                            if (random <= cumulative)
-                                                            {
-                                                                selectedRarity = rarity;
-                                                                break;
-                                                            }
-                                                        }
-
-                                                        if (groupedAbilities.ContainsKey(selectedRarity) && groupedAbilities[selectedRarity].Any())
-                                                        {
-                                                            var availableAbilities = groupedAbilities[selectedRarity];
-                                                            int randomIndex = rng.Next(availableAbilities.Count);
-                                                            selectedAbility = availableAbilities[randomIndex].Clone();
-                                                        }
-                                                        else
-                                                        {
-                                                            List<Ability> shuffledCards = GameManager._instance.AllAbilities.OrderBy(_ => rng.Next()).ToList();
-                                                            selectedAbility = shuffledCards[0].Clone();
-                                                        }
-                                                    }
-
-                                                    selectedAbilities.Add(selectedAbility);
-                                                }
-
-                                                return selectedAbilities;
-                                            }
-
-                                            public void CreateCardsWithAbilities(List<Ability> abilities)
-                                            {
-                                                for (int i = 0; i < abilities.Count; i++)
-                                                {
-                                                    Vector2 localPosition;
-                                                    if (GameManager._instance.state == ScreenState.ShopScreen)
-                                                        localPosition = new Vector2(i + i - 4, 2);
-                                                    else
-                                                        localPosition = new Vector2(i + i, 2);
-
-                                                    GameObject obj = Instantiate(GameManager._instance.card, localPosition, Quaternion.identity);
-                                                    obj.GetComponent<Card>().ability = abilities[i];
-
-
-                                                    if(obj.GetComponent<Card>().ability.rarity >0){
-                                                        obj.GetComponent<SpriteRenderer>().material = holoMaterial;
-                                                    }
-
-                                                    cards.Add(obj);
-
-
-                                                    if (GameManager._instance.state == ScreenState.ShopScreen)
-                                                        obj.GetComponent<Card>().ShowPrice();
-                                                }
-                                            }
-
-                                            public void CreateCards(int count = 3, Rarity? targetRarity = null)
-                                            {
-                                                List<Ability> abilities = SelectRandomAbilities(count, targetRarity);
-                                                CreateCardsWithAbilities(abilities);
-                                            }
-
-
-
-
-                                            public void ClearCards(){
-                                                foreach (var card in cards)
-                                                {
-                                                    if(card!=null)
-                                                    Destroy(card);
-                                                }
-
-                                            }
-                                            public void ClearOrders(){
-                                                foreach (var order in orders)
-                                                {
-                                                    if(order!=null)
-                                                        Destroy(order);
-                                                }
-
-                                            }
-
-
-                                            public void RerollAbilities(){
-                                                if(GameManager._instance.applyingAbility)
-                                                    return;
-                                                if(board.Hero.playerCoins>=rerollCost){
-                                                    board.Hero.playerCoins-=rerollCost;
-                                                    rerollCost+=rerollCostIncrease;
-                                                    rerollCostText.text = rerollCost.ToString();
-                                                    UpdateCurrency();
-                                                    ClearCards();
-                                                    CreateCards();
-                                                }
-
-                                            }
-
-                                            public void UpdateCurrency(){
-                                                bloodText.text = ": "+board.Hero.playerBlood;
-                                                coinText.text = ": "+board.Hero.playerCoins;
-                                                rerollCostText.text = rerollCost.ToString();
-                                            }
-
-                                            public void CloseShop(){
-                                                ManagementStatManager._instance.HideStats();
-                                                ClearCards();
-                                                ClearOrders();
-                                                foreach (GameObject piece in myPieces)
-                                                {
-                                                    if (piece != null && piece.GetComponent<SpriteRenderer>())
-                                                    {
-                                                        SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                                                        rend.sortingOrder = 1;
-                                                        piece.GetComponent<Chessman>().flames.GetComponent<Renderer>().sortingOrder=2;
-                                                        piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=0;
-                                                    }
-                                                }
-                                                foreach (GameObject piece in board.Hero.inventoryPieces)
-                                                {
-                                                    if (piece != null &&  piece.GetComponent<SpriteRenderer>())
-                                                    {
-                                                        SpriteRenderer rend = piece.GetComponent<SpriteRenderer>();
-                                                        rend.sortingOrder = 1;
-                                                        piece.GetComponent<Chessman>().flames.GetComponent<Renderer>().sortingOrder=2;
-                                                        piece.GetComponent<Chessman>().highlightedParticles.GetComponent<Renderer>().sortingOrder=0;
-                                                    }
-                                                }
-                                                foreach (GameObject piece in pieces)
-                                                {
-                                                    if(piece != null)
-                                                        Destroy(piece);
-                                                }
-                                                GameManager._instance.CloseShop();
-                                                gameObject.SetActive(false);
-                                            }
-
-                                            public void HideShop(){
-                                                this.gameObject.SetActive(false);
-                                                foreach (GameObject card in cards){
-                                                    if(card!=null)
-                                                        card.SetActive(false);
-                                                }
-                                                foreach (GameObject order in orders){
-                                                    if(order!=null)
-                                                        order.SetActive(false);
-                                                }
-                                                foreach (GameObject piece in pieces){
-                                                    if(piece != null)
-                                                        piece.SetActive(false);
-                                                }
-                                            }
-                                            public void UnHideShop(){
-                                                this.gameObject.SetActive(true);
-                                                UpdateCurrency();
-                                                foreach (GameObject card in cards){
-                                                    if(card!=null){
-                                                        card.SetActive(true);
-                                                        card.GetComponent<Collider2D>().enabled = true;
-                                                    }
-                                                }
-                                                foreach (GameObject order in orders){
-                                                    if(order!=null){
-                                                        order.SetActive(true);
-                                                        order.GetComponent<Collider2D>().enabled = true;
-                                                    }
-                                                }
-                                                foreach (GameObject piece in pieces){
-                                                    if(piece != null)
-                                                        piece.SetActive(true);
-                                                }
-                                            }
-
-                                             */
-
-
+    public void OpenShopFromManagement()
+    {
+        gameObject.SetActive(true);
+        foreach (var card in cards)
+        {
+            if(card)
+                card.SetActive(true);
+        }
+        foreach (var order in orders)
+        {
+            if(order)
+                order.SetActive(true);
+        }
+        foreach (var piece in pieces)
+        {
+            if(piece)
+                piece.SetActive(true);
+        }
+    }
 }

@@ -35,44 +35,27 @@ public class InputRouter : MonoBehaviour
     {
         Vector2 screenPosition = input.ChessMatchInput.Point.ReadValue<Vector2>();
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-        selector.SetWorldPosition(Camera.main.ScreenToWorldPoint(screenPosition));
-
-        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
-        if (hit.collider != null)
-        {
-            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-            if (target != interactable)
-            {
-                target?.OnHoverExit(board);
-                target = interactable;
-                interactable?.OnHover(board);
-            }
-
-        }
-        else
-        {
-            target?.OnHoverExit(board);
-        }
+        selector.SetWorldPosition(Camera.main.ScreenToWorldPoint(screenPosition));   
     }
 
     private void OnClick(InputAction.CallbackContext context)
     {
-        Vector2 screenPosition = input.ChessMatchInput.Point.ReadValue<Vector2>();
+        /* Vector2 screenPosition = input.ChessMatchInput.Point.ReadValue<Vector2>();
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
 
         RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
         if (hit.collider != null)
         {
             Debug.Log("Clicked on: "+hit.collider.name);
-        }
-        var tile = selector.CurrentTile;
+        } */
+        var tile = selector.CurrentInteractable;
         if (tile != null)
             tile.OnClick(board);
     }
 
     private void OnRightClick(InputAction.CallbackContext context)
     {
-        var tile = selector.CurrentTile;
+        var tile = selector.CurrentInteractable;
         if (tile != null)
             tile.OnRightClick(board);
     }

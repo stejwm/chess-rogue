@@ -24,23 +24,11 @@ public class LastingLegacy : KingsOrder
         }
         Chessman cm = Chessobj.GetComponent<Chessman>();
         board.LastingLegacyAbility = cm.abilities[Random.Range(0, cm.abilities.Count)].Clone();
-        board.Hero.pieces.Remove(Chessobj);
-        board.Hero.openPositions.Add(cm.startingPosition);
         Chessobj.GetComponent<Chessman>().DestroyPiece();
         board.Hero.AbandonedPieces++;
 
         yield return null;
 
-    }
-
-    public void RemoveCivilians()
-    {
-        foreach (var piece in civilians)
-         {
-             board.CurrentMatch.black.capturedPieces.Remove(piece);
-             board.Hero.pieces.Remove(piece);
-             Destroy(piece);
-         }
     }
 
 }

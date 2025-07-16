@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/* using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
@@ -16,19 +16,7 @@ using System.Text.RegularExpressions;
 using CI.QuickSave;
 
 
-public enum BoardState
-{
-    RewardScreen,
-    PrisonersMarket,
-    ActiveMatch,
-    Map,
-    ShopScreen,
-    ManagementScreen,
-    InfoScreen,
-    KingsOrder,
-    KingsOrderActive,
-    None
-}
+
 
 public class GameManager : MonoBehaviour
 {
@@ -55,23 +43,15 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        NameDatabase.LoadNames();
-        if (SceneLoadManager.LoadPreviousSave)
-        {
-            LoadGame();
-        }
-        else
-        {
-            LetsBegin();
-        }
+        
 
     }
     public void Update()
     {
-        /* if (Input.GetKeyDown(KeyCode.Escape))
+         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseMenuManager._instance.OpenMenu();
-        } */
+        } 
     }
     public void LetsBegin()
     {
@@ -83,31 +63,10 @@ public class GameManager : MonoBehaviour
         board.CreateNewMatch(hero, opponent);
         board.BoardState= BoardState.ActiveMatch; 
     }
-    public void LoadGame()
-    {
-        var quickSaveReader = QuickSaveReader.Create("Game");
-        PlayerData player;
-        List<MapNodeData> mapNodes;
-        BoardState state;
-        quickSaveReader.TryRead<PlayerData>("Player", out player);
-        quickSaveReader.TryRead<BoardState>("State", out state);
-        quickSaveReader.TryRead<int>("Level", out level);
-        quickSaveReader.TryRead<List<MapNodeData>>("MapNodes", out mapNodes);
-        board.BoardState= state;
-
-        Debug.Log($"Resuming board.BoardState{state}");
-        mapManager.LoadMap(mapNodes);
-        hero.playerBlood = player.blood;
-        hero.playerCoins = player.coins;
-
-        hero.pieces = PieceFactory._instance.LoadPieces(board, player.pieces, hero);
-
-        OpenMap();
-
-    }
+    
     
 
-/*     public void OpenReward()
+    public void OpenReward()
     {
         board.ResetPlayerPieces();
         board.BoardState= BoardState.RewardScreen;
@@ -117,7 +76,7 @@ public class GameManager : MonoBehaviour
     {
         board.BoardState= BoardState.MainGameboard;
         OpenShop();
-    } */
+    } 
     public void OpenShop()
     {
         board.BoardState= BoardState.ShopScreen;
@@ -166,3 +125,4 @@ public class GameManager : MonoBehaviour
     
 
 }
+ */

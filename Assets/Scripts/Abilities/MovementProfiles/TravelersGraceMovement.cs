@@ -7,7 +7,6 @@ using UnityEngine;
 public class TravelersGraceMovement : MovementProfile
 {
     MovementProfile oldProfile;
-    GameManager game;
     public TravelersGraceMovement(Board board, MovementProfile old) : base(board) {oldProfile = old;}
     public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture = false)
     {

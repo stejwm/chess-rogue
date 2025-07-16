@@ -13,7 +13,7 @@ public class AIPlayer : Player
     {
         this.pieces=pieces;
     }
-    public override void Initialize()
+    public override void Initialize(Board board)
     {
         agent.pieces=pieces;
         agent.StartUp();
