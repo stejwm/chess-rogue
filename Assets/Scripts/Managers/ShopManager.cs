@@ -247,6 +247,7 @@ public class ShopManager : MonoBehaviour
         {
             Destroy(piece);
         }
+        PopUpManager._instance.HideValues();
         gameObject.SetActive(false);
     }
 

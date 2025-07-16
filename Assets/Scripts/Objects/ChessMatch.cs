@@ -22,7 +22,7 @@ public class ChessMatch
     public int turns = 0;
     private EventHub eventHub;
     private LogManager logManager;
-  
+
     #region Overrides
     public bool AdamantAssaultOverride = false;
     public bool BloodThirstOverride = false;
@@ -58,11 +58,13 @@ public class ChessMatch
         eventHub.RaiseChessMatchStart();
     }
 
-    public void ExecuteTurn(Chessman piece, int x, int y){
-        HandleMove(piece,x,y);
+    public void ExecuteTurn(Chessman piece, int x, int y)
+    {
+        HandleMove(piece, x, y);
     }
-    
-    public void HandleMove(Chessman piece, int x, int y){
+
+    public void HandleMove(Chessman piece, int x, int y)
+    {
 
         eventHub.RaisePieceMoved(piece, board.GetTileAt(x, y));
         //Set the Chesspiece's original location to be empty
@@ -108,7 +110,7 @@ public class ChessMatch
         var attackingSupportDictionary = FindSupporters(attackingUnits, defender.xBoard, defender.yBoard, attacker, defender);
         var defendingSupportDictionary = FindSupporters(defendingUnits, defender.xBoard, defender.yBoard, attacker, defender);
 
-        
+
         yield return CoroutineRunner.instance.StartCoroutine(ShowSupport(attackingSupportDictionary));
         yield return new WaitForSeconds(Settings._instance.WaitTime);
         yield return CoroutineRunner.instance.StartCoroutine(ShowSupport(defendingSupportDictionary));
@@ -125,7 +127,7 @@ public class ChessMatch
         CompleteAttack(attacker, defender, attackingSupport, defendingSupport, isCapture);
 
     }
-    
+
 
     private Dictionary<GameObject, int> FindSupporters(List<GameObject> pieces, int x, int y, Chessman attackingPiece, Chessman defendingPiece)
     {
@@ -195,33 +197,33 @@ public class ChessMatch
             pitch += scale;
             board.BattlePanel.SetAndShowEnemyTotal(defendVal + defenseSupport, pitch);
         }
-        else if(defender.color == PieceColor.White)
+        else if (defender.color == PieceColor.White)
         {
-            float scale=0.05f;
+            float scale = 0.05f;
             if (isCapture)
-                scale=-0.05f;
+                scale = -0.05f;
             board.BattlePanel.DropIn(defender.name, defender.droppingSprite, attacker.name, attacker.droppingSprite, false, defender, attacker);
-            board.BattlePanel.SetAndShowEnemyAttack(attackVal,pitch);
-            pitch+=.05f;
+            board.BattlePanel.SetAndShowEnemyAttack(attackVal, pitch);
+            pitch += .05f;
             yield return new WaitForSeconds(Settings._instance.WaitTime);
-            board.BattlePanel.SetAndShowEnemySupport(attackVal,pitch);
-            pitch+=.05f;
+            board.BattlePanel.SetAndShowEnemySupport(attackVal, pitch);
+            pitch += .05f;
             yield return new WaitForSeconds(Settings._instance.WaitTime);
-            board.BattlePanel.SetAndShowEnemyTotal(attackSupport+attackVal,pitch);
+            board.BattlePanel.SetAndShowEnemyTotal(attackSupport + attackVal, pitch);
             yield return new WaitForSeconds(Settings._instance.WaitTime);
 
-            
-            board.BattlePanel.SetAndShowHeroAttack(defendVal,pitch);
+
+            board.BattlePanel.SetAndShowHeroAttack(defendVal, pitch);
             yield return new WaitForSeconds(Settings._instance.WaitTime);
-            pitch+=scale;
-            board.BattlePanel.SetAndShowHeroSupport(defenseSupport,pitch);
+            pitch += scale;
+            board.BattlePanel.SetAndShowHeroSupport(defenseSupport, pitch);
             yield return new WaitForSeconds(Settings._instance.WaitTime);
-            pitch+=scale;
-            board.BattlePanel.SetAndShowHeroTotal(defendVal+defenseSupport,pitch);
+            pitch += scale;
+            board.BattlePanel.SetAndShowHeroTotal(defendVal + defenseSupport, pitch);
         }
     }
 
-    public IEnumerator ResolveBattlePanel(Chessman attacker, Chessman defender, Dictionary<GameObject,int> attackingSupporters, Dictionary<GameObject,int> defendingSupporters, bool isCapture)
+    public IEnumerator ResolveBattlePanel(Chessman attacker, Chessman defender, Dictionary<GameObject, int> attackingSupporters, Dictionary<GameObject, int> defendingSupporters, bool isCapture)
     {
         Tile destination = board.GetTileAt(defender.xBoard, defender.yBoard);
         if (isCapture)
@@ -232,7 +234,7 @@ public class ChessMatch
                 supporter.GetComponent<Chessman>().supportsAttacking++;
 
             logManager.WriteLog($"<sprite=\"{attacker.color}{attacker.type}\" name=\"{attacker.color}{attacker.type}\"> captures <sprite=\"{defender.color}{defender.type}\" name=\"{defender.color}{defender.type}\"> on {BoardPosition.ConvertToChessNotation(destination)}");
-            
+
             if (black.pieces.Contains(defender.gameObject))
                 black.pieces.Remove(defender.gameObject);
             if (white.pieces.Contains(defender.gameObject))
@@ -245,7 +247,7 @@ public class ChessMatch
                 board.BattlePanel.Feedback.PlayFeedbacks();
                 yield return new WaitForSeconds(board.BattlePanel.Feedback.TotalDuration);
                 destination.SetBloodTile();
-                if(attacker.canStationarySlash)
+                if (attacker.canStationarySlash)
                     MovePiece(attacker, attacker.xBoard, attacker.yBoard);
                 else
                     MovePiece(attacker, defender.xBoard, defender.yBoard);
@@ -260,7 +262,7 @@ public class ChessMatch
                 board.BattlePanel.Feedback.PlayFeedbacks();
                 yield return new WaitForSeconds(board.BattlePanel.Feedback.TotalDuration);
                 destination.SetBloodTile();
-                if(attacker.canStationarySlash)
+                if (attacker.canStationarySlash)
                     MovePiece(attacker, attacker.xBoard, attacker.yBoard);
                 else
                     MovePiece(attacker, defender.xBoard, defender.yBoard);
@@ -276,7 +278,8 @@ public class ChessMatch
             foreach (var supporter in defendingSupporters.Keys)
                 supporter.GetComponent<Chessman>().supportsDefending++;
             logManager.WriteLog($"<sprite=\"{attacker.color}{attacker.type}\" name=\"{attacker.color}{attacker.type}\"> failed to capture <sprite=\"{defender.color}{defender.type}\" name=\"{defender.color}{defender.type}\"> on {BoardPosition.ConvertToChessNotation(destination)}");
-            defender.defenseBonus = Mathf.Max(-defender.defense, defender.defenseBonus - attacker.CalculateAttack());
+            //defender.defenseBonus = Mathf.Max(-defender.defense, defender.defenseBonus - attacker.CalculateAttack());
+            defender.SetBonus(StatType.Defense, Mathf.Max(-defender.defense, defender.defenseBonus - attacker.CalculateAttack()), "Attack Damage");
             board.BattlePanel.SetAndShowResults("Bounce!");
             board.BattlePanel.Feedback.PlayFeedbacks();
             yield return new WaitForSeconds(board.BattlePanel.Feedback.TotalDuration);
@@ -285,8 +288,9 @@ public class ChessMatch
             eventHub.RaisePieceBounced(attacker, defender);
         }
     }
-    private void CompleteAttack(Chessman attacker, Chessman defender, int attackingSupport, int defendingSupport, bool isCapture){
-        board.BattlePanel.HideResults();   
+    private void CompleteAttack(Chessman attacker, Chessman defender, int attackingSupport, int defendingSupport, bool isCapture)
+    {
+        board.BattlePanel.HideResults();
         board.BattlePanel.HideStats();
         eventHub.RaiseAttackEnd(attacker, defender, attackingSupport, defendingSupport);
         board.ClearTiles();
@@ -294,7 +298,10 @@ public class ChessMatch
 
         if (isCapture && defender.type == PieceType.King)
         {
-            EndGame();
+            if (defender.color == PieceColor.Black)
+                EndMatch();
+            else if (defender.color == PieceColor.White)
+                EndGame();
             board.IsInMove = false;
         }
         else
@@ -302,7 +309,7 @@ public class ChessMatch
             NextTurn();
             board.IsInMove = false;
         }
-        
+
     }
 
     public void SetBoard()
@@ -322,50 +329,57 @@ public class ChessMatch
 
     }
 
-    public void SetWhiteTurn(){
-        currentPlayer=white;
+    public void SetWhiteTurn()
+    {
+        currentPlayer = white;
         foreach (GameObject item in white.pieces)
+        {
+            CheckHex(item.GetComponent<Chessman>());
+            if (item.GetComponent<Chessman>().paralyzed)
             {
-                CheckHex(item.GetComponent<Chessman>());
-                if(item.GetComponent<Chessman>().paralyzed){
-                    item.GetComponent<Chessman>().isValidForAttack=false;
-                    item.GetComponent<Chessman>().paralyzed=false;
-                }
-                else{
-                    item.GetComponent<Chessman>().isValidForAttack=true;
-                }
+                item.GetComponent<Chessman>().isValidForAttack = false;
+                item.GetComponent<Chessman>().paralyzed = false;
             }
+            else
+            {
+                item.GetComponent<Chessman>().isValidForAttack = true;
+            }
+        }
         foreach (GameObject item in black.pieces)
-            {
-                item.GetComponent<Chessman>().isValidForAttack=false;
-            }
-            
+        {
+            item.GetComponent<Chessman>().isValidForAttack = false;
+        }
+
         white.MakeMove(this);
     }
 
-    public void SetPiecesValidForAttack(Player player){
+    public void SetPiecesValidForAttack(Player player)
+    {
         foreach (GameObject item in player.pieces)
         {
-            item.GetComponent<Chessman>().isValidForAttack=true;
+            item.GetComponent<Chessman>().isValidForAttack = true;
         }
 
     }
-    public void SetBlackTurn(){
-        currentPlayer=black;
+    public void SetBlackTurn()
+    {
+        currentPlayer = black;
         foreach (GameObject item in black.pieces)
         {
             CheckHex(item.GetComponent<Chessman>());
-            if(item.GetComponent<Chessman>().paralyzed){
-                item.GetComponent<Chessman>().isValidForAttack=false;
-                item.GetComponent<Chessman>().paralyzed=false;
+            if (item.GetComponent<Chessman>().paralyzed)
+            {
+                item.GetComponent<Chessman>().isValidForAttack = false;
+                item.GetComponent<Chessman>().paralyzed = false;
             }
-            else{
-                item.GetComponent<Chessman>().isValidForAttack=true;
+            else
+            {
+                item.GetComponent<Chessman>().isValidForAttack = true;
             }
         }
         foreach (GameObject item in white.pieces)
         {
-            item.GetComponent<Chessman>().isValidForAttack=false;
+            item.GetComponent<Chessman>().isValidForAttack = false;
         }
         black.MakeMove(this);
     }
@@ -373,7 +387,7 @@ public class ChessMatch
     public void NextTurn()
     {
         //Debug.Log("IsTurnOverride? "+turnOverride);
-        if(BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride ||  SwiftOverride)
+        if (BloodThirstOverride || AdamantAssaultOverride || AvengingStrikeOverride || SwiftOverride)
             return;
         if (currentPlayerColor == PieceColor.White)
         {
@@ -390,43 +404,50 @@ public class ChessMatch
         }
     }
 
-    public void CheckHex(Chessman piece){
-        if(piece.hexed){
-            foreach(var ability in piece.abilities){
+    public void CheckHex(Chessman piece)
+    {
+        if (piece.hexed)
+        {
+            foreach (var ability in piece.abilities)
+            {
                 ability.Remove(piece);
             }
-            piece.hexed=false;
-            piece.wasHexed=true;
+            piece.hexed = false;
+            piece.wasHexed = true;
         }
-        else if(piece.wasHexed){
-            piece.wasHexed=false;
+        else if (piece.wasHexed)
+        {
+            piece.wasHexed = false;
             List<Ability> abilitiesCopy = new List<Ability>(piece.abilities);
             piece.abilities.Clear();
-            foreach(var ability in abilitiesCopy){
+            foreach (var ability in abilitiesCopy)
+            {
                 ability.Apply(board, piece);
             }
         }
     }
-    
-    
+
+
 
     public void SetPositionEmpty(int x, int y)
     {
         board.Positions[x, y] = null;
     }
 
-    public void MovePiece(Chessman piece, int x, int y){
+    public void MovePiece(Chessman piece, int x, int y)
+    {
         piece.xBoard = x;
         piece.yBoard = y;
-        board.Positions[x,y] = piece.gameObject;
+        board.Positions[x, y] = piece.gameObject;
         piece.UpdateUIPosition();
         StatBoxManager._instance.SetAndShowStats(piece);
-    } 
-
-    public void MyTurn(PieceColor player){
-        currentPlayerColor=player;
     }
-    public void EndGame()
+
+    public void MyTurn(PieceColor player)
+    {
+        currentPlayerColor = player;
+    }
+    public void EndMatch()
     {
         board.BattlePanel.HideResults();
         board.BattlePanel.HideStats();
@@ -434,6 +455,13 @@ public class ChessMatch
         white.playerCoins += reward;
         white.playerCoins += (turnReward / turns);
         board.EndMatch();
+    }
+    public void EndGame()
+    {
+        board.BattlePanel.HideResults();
+        board.BattlePanel.HideStats();
+        logManager.ClearLogs();
+        board.GameOver();
     }
     
     

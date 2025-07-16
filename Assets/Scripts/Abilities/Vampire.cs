@@ -83,9 +83,9 @@ public class Vampire : Ability
         if (piece == null) return;
         
         Debug.Log($"Bonus change of {bonusChange} being applied to {piece.name}. Current bonuses are a:{piece.attackBonus}, d:{piece.defenseBonus}, s:{piece.supportBonus}");
-        piece.attackBonus = Mathf.Max(-piece.attack, piece.attackBonus + bonusChange);
-        piece.defenseBonus = Mathf.Max(-piece.defense, piece.defenseBonus + bonusChange);
-        piece.supportBonus = Mathf.Max(-piece.support, piece.supportBonus + bonusChange);
+        piece.SetBonus(StatType.Attack, Mathf.Max(-piece.attack, piece.attackBonus + bonusChange), abilityName);
+        piece.SetBonus(StatType.Defense, Mathf.Max(-piece.defense, piece.defenseBonus + bonusChange), abilityName);
+        piece.SetBonus(StatType.Support, Mathf.Max(-piece.support, piece.supportBonus + bonusChange), abilityName);
         Debug.Log($"Bonus change of {bonusChange} should be applied to {piece.name}. Bonuses are now:{piece.attackBonus}, d:{piece.defenseBonus}, s:{piece.supportBonus}");
 
         
@@ -111,9 +111,9 @@ public class Vampire : Ability
     public void RemoveBonus()
     {
         Debug.Log($"removing bonus of {bonus} on {piece.name}. Current bonuses are a:{piece.attackBonus}, d:{piece.defenseBonus}, s:{piece.supportBonus}");
-        piece.attackBonus = Mathf.Max(-piece.attack, piece.attackBonus - bonus);
-        piece.defenseBonus = Mathf.Max(-piece.defense, piece.defenseBonus - bonus);
-        piece.supportBonus = Mathf.Max(-piece.support, piece.supportBonus - bonus);
+        piece.SetBonus(StatType.Attack, Mathf.Max(-piece.attack, piece.attackBonus - bonus), abilityName);
+        piece.SetBonus(StatType.Defense, Mathf.Max(-piece.defense, piece.defenseBonus - bonus), abilityName);
+        piece.SetBonus(StatType.Support, Mathf.Max(-piece.support, piece.supportBonus - bonus), abilityName);
         Debug.Log($"bonuses of {bonus} should be removed on {piece.name}. Bonuses are now a:{piece.attackBonus}, d:{piece.defenseBonus}, s:{piece.supportBonus}");
         bonus = 0;
     }

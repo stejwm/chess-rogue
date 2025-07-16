@@ -61,9 +61,9 @@ public class Teacher : Ability
                 if (appliedBonus.ContainsKey(cm))
                 {
                     var currentlyAppliedBonus = appliedBonus[cm];
-                    cm.attackBonus += bonus;
-                    cm.defenseBonus += bonus;
-                    cm.supportBonus += bonus;
+                    cm.AddBonus(StatType.Attack,bonus, abilityName);
+                    cm.AddBonus(StatType.Defense,bonus, abilityName);
+                    cm.AddBonus(StatType.Support,bonus, abilityName);
                     appliedBonus[cm] = bonus;
                 }else{
                     Debug.Log($"Untracked knight {cm.name} not in dictionary or destroyed while adding");
@@ -76,14 +76,17 @@ public class Teacher : Ability
         if(addedPiece.owner==piece.owner && addedPiece.abilities.Count>0){ 
             if(appliedBonus.ContainsKey(addedPiece)){
                 var currentlyAppliedBonus = appliedBonus[addedPiece];
-                if(board.CurrentMatch!=null){
-                    addedPiece.attackBonus = Mathf.Max(-addedPiece.attack, addedPiece.attackBonus - currentlyAppliedBonus);
-                    addedPiece.defenseBonus = Mathf.Max(-addedPiece.defense, addedPiece.defenseBonus - currentlyAppliedBonus);
-                    addedPiece.supportBonus = Mathf.Max(-addedPiece.support, addedPiece.supportBonus - currentlyAppliedBonus);
-                }else{
-                    addedPiece.attackBonus = Mathf.Max(0, addedPiece.attackBonus - currentlyAppliedBonus);
-                    addedPiece.defenseBonus = Mathf.Max(0, addedPiece.defenseBonus - currentlyAppliedBonus);
-                    addedPiece.supportBonus = Mathf.Max(0, addedPiece.supportBonus - currentlyAppliedBonus);
+                if (board.CurrentMatch != null)
+                {
+                    addedPiece.SetBonus(StatType.Attack, Mathf.Max(-addedPiece.attack, addedPiece.attackBonus - currentlyAppliedBonus), abilityName);
+                    addedPiece.SetBonus(StatType.Defense, Mathf.Max(-addedPiece.defense, addedPiece.defenseBonus - currentlyAppliedBonus), abilityName);
+                    addedPiece.SetBonus(StatType.Support, Mathf.Max(-addedPiece.support, addedPiece.supportBonus - currentlyAppliedBonus), abilityName);
+                }
+                else
+                {
+                    addedPiece.SetBonus(StatType.Attack, Mathf.Max(0, addedPiece.attackBonus - currentlyAppliedBonus), abilityName);
+                    addedPiece.SetBonus(StatType.Defense, Mathf.Max(0, addedPiece.defenseBonus - currentlyAppliedBonus), abilityName);
+                    addedPiece.SetBonus(StatType.Support, Mathf.Max(0, addedPiece.supportBonus - currentlyAppliedBonus), abilityName);
                 }
                 appliedBonus.Remove(addedPiece);
             }
@@ -98,12 +101,12 @@ public class Teacher : Ability
                 if (appliedBonus.ContainsKey(cm))
                 {
                     var currentlyAppliedBonus = appliedBonus[cm];
-                    cm.attackBonus = Mathf.Max(-cm.attack, cm.attackBonus - currentlyAppliedBonus);
-                    cm.defenseBonus = Mathf.Max(-cm.defense, cm.defenseBonus - currentlyAppliedBonus);
-                    cm.supportBonus = Mathf.Max(-cm.support, cm.supportBonus - currentlyAppliedBonus);
+                    cm.SetBonus(StatType.Attack, Mathf.Max(-cm.attack, cm.attackBonus - currentlyAppliedBonus), abilityName);
+                    cm.SetBonus(StatType.Defense, Mathf.Max(-cm.defense, cm.defenseBonus - currentlyAppliedBonus), abilityName);
+                    cm.SetBonus(StatType.Support, Mathf.Max(-cm.support, cm.supportBonus - currentlyAppliedBonus), abilityName);
                     appliedBonus[cm] = 0;
                 }else{
-                    Debug.Log($"Untracked knight {cm.name} not in dictionary or destroyed while removing");
+                    Debug.Log($"Untracked lamo {cm.name} not in dictionary or destroyed while removing");
                 }
             }
         }

@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class AbilityUI : MonoBehaviour, IInteractable
+public class StatInfo : MonoBehaviour, IInteractable
 {
-    public Image image;
-    public Ability ability;
+    public StatType statType;
+    public int baseStat;
+    public int total;
+    public Dictionary<string, int> dictionary;
 
     public void OnClick(Board board)
     {
@@ -16,25 +17,18 @@ public class AbilityUI : MonoBehaviour, IInteractable
 
     public void OnHover(Board board)
     {
-        Debug.Log("Hovered over ability icon");
-        PopUpManager._instance.SetAndShowAbilityInfo(this);
+        Debug.Log("Hovered over stat info");
+        PopUpManager._instance.SetAndShowStatInfo(this);
     }
 
     public void OnHoverExit(Board board)
     {
-        Debug.Log("exited over ability icon");
         PopUpManager._instance.HideInfo();
     }
 
     public void OnRightClick(Board board)
     {
         //throw new NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    public void SetIcon(Sprite sprite){
-        //Debug.Log("Sprite: "+sprite);
-        image.sprite=sprite;
     }
 
 }

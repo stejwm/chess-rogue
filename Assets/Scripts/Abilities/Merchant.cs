@@ -38,12 +38,12 @@ public class Merchant : Ability
             if (attackBonus>0){
                 AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Merchant</gradient></color>", $"<color=green>+{attackBonus} attack from wares</color>");
             }
-            piece.attackBonus+=attackBonus;
+            piece.AddBonus(StatType.Attack, attackBonus, abilityName);
         }
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int support, int defenseSupport){
         if (attacker==piece){
-            piece.attackBonus-=attackBonus;
+            piece.RemoveBonus(StatType.Attack, attackBonus, abilityName);
             attackBonus=0;
         }
     }

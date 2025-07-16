@@ -23,11 +23,12 @@ public class RadiatingDeath : Ability
 
     }
     public void RadiateDeath(Chessman attacker, Chessman defender){
-        if (defender==piece){
+        if (defender == piece)
+        {
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Radiating Death</gradient></color>", $"<color=red>-1</color> to all stats on {BoardPosition.ConvertToChessNotation(defender.xBoard, defender.yBoard)}");
-            attacker.supportBonus=Mathf.Max(-attacker.support, attacker.supportBonus-1);
-            attacker.attackBonus=Mathf.Max(-attacker.attack, attacker.attackBonus-1);
-            attacker.defenseBonus=Mathf.Max(-attacker.defense, attacker.defenseBonus-1);
+            attacker.SetBonus(StatType.Attack, Mathf.Max(-attacker.attack, attacker.attackBonus - 1), $"{abilityName} ({piece.name})");
+            attacker.SetBonus(StatType.Defense, Mathf.Max(-attacker.defense, attacker.defenseBonus - 1), $"{abilityName} ({piece.name})");
+            attacker.SetBonus(StatType.Support, Mathf.Max(-attacker.support, attacker.supportBonus - 1), $"{abilityName} ({piece.name})");
         }
     }
 

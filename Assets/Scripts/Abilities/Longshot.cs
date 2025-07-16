@@ -33,13 +33,13 @@ public class Longshot : Ability
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Longshot</gradient></color>", "<color=green>+5</color> attack");
             piece.effectsFeedback.PlayFeedbacks();
 
-            piece.attackBonus+=5;
-            bonusAdded=true;
+            piece.AddBonus(StatType.Attack, 5, abilityName);
+            bonusAdded =true;
         }
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if (bonusAdded){
-            piece.attackBonus-=5;
+            piece.RemoveBonus(StatType.Attack, 5, abilityName);
             bonusAdded=false;
         }
     }

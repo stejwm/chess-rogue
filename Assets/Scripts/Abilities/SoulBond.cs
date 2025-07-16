@@ -71,7 +71,7 @@ public class SoulBond : Ability
     public void Capture(Chessman attacker, Chessman defender){
         if(defender.color == piece.color && defender!=piece && defender.abilities.OfType<SoulBond>().FirstOrDefault()!=null && !defender.hexed && !piece.hexed){
             if(piece.type==PieceType.King){
-                board.CurrentMatch.EndGame();
+                board.CurrentMatch.EndMatch();
             }
             eventHub.OnPieceCaptured.RemoveListener(Capture); 
             board.CurrentMatch.SetPositionEmpty(piece.xBoard, piece.yBoard);

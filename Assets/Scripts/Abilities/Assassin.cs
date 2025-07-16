@@ -31,12 +31,12 @@ public class Assassin : Ability
         if (attacker==piece && support==0){
             piece.effectsFeedback.PlayFeedbacks();
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Assassin</gradient></color>", "<color=green>+5</color> attack");
-            piece.attackBonus+=5;
+            piece.AddBonus(StatType.Attack, 5, abilityName);
         }
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int support, int defenseSupport){
         if (attacker==piece && support==0)
-            piece.attackBonus-=5;
+            piece.RemoveBonus(StatType.Attack, 5, abilityName);
     }
 
 }

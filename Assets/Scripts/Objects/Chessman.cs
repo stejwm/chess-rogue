@@ -95,9 +95,9 @@ public abstract class Chessman : MonoBehaviour, IInteractable
 
     public MMF_Player supportFloatingText;
 
-    private Dictionary<string, int> attackBonuses = new Dictionary<string, int>();
-    private Dictionary<string, int> defenseBonuses = new Dictionary<string, int>();
-    private Dictionary<string, int> supportBonuses = new Dictionary<string, int>();
+    public Dictionary<string, int> AttackBonuses { get => attackBonuses; set => attackBonuses = value; }
+    public Dictionary<string, int> DefenseBonuses { get => defenseBonuses; set => defenseBonuses = value; }
+    public Dictionary<string, int> SupportBonuses { get => supportBonuses; set => supportBonuses = value; }
 
     public List<Tile> validMoves = new List<Tile>();
     public Sprite blackSprite;
@@ -108,6 +108,9 @@ public abstract class Chessman : MonoBehaviour, IInteractable
     public ParticleSystem flames;
     public ParticleSystem highlightedParticles;
     public ParticleSystem hexedParticles;
+    private Dictionary<string, int> attackBonuses = new Dictionary<string, int>();
+    private Dictionary<string, int> defenseBonuses = new Dictionary<string, int>();
+    private Dictionary<string, int> supportBonuses = new Dictionary<string, int>();
 
     public abstract List<Tile> GetValidMoves();
     public abstract List<Tile> GetValidSupportMoves();
@@ -140,15 +143,15 @@ public abstract class Chessman : MonoBehaviour, IInteractable
         switch (stat)
         {
             case StatType.Attack:
-                attackBonuses[source] = attackBonuses.GetValueOrDefault(source) + value;
+                AttackBonuses[source] = AttackBonuses.GetValueOrDefault(source) + value;
                 attackBonus += value;
                 break;
             case StatType.Defense:
-                defenseBonuses[source] = defenseBonuses.GetValueOrDefault(source) + value;
+                DefenseBonuses[source] = DefenseBonuses.GetValueOrDefault(source) + value;
                 defenseBonus += value;
                 break;
             case StatType.Support:
-                supportBonuses[source] = supportBonuses.GetValueOrDefault(source) + value;
+                SupportBonuses[source] = SupportBonuses.GetValueOrDefault(source) + value;
                 supportBonus += value;
                 break;
         }
@@ -158,16 +161,42 @@ public abstract class Chessman : MonoBehaviour, IInteractable
         switch (stat)
         {
             case StatType.Attack:
-                attackBonuses[source] = attackBonuses.GetValueOrDefault(source) - value;
+                AttackBonuses[source] = AttackBonuses.GetValueOrDefault(source) - value;
                 attackBonus -= value;
                 break;
             case StatType.Defense:
-                defenseBonuses[source] = defenseBonuses.GetValueOrDefault(source) - value;
+                DefenseBonuses[source] = DefenseBonuses.GetValueOrDefault(source) - value;
                 defenseBonus -= value;
                 break;
             case StatType.Support:
-                supportBonuses[source] = supportBonuses.GetValueOrDefault(source) - value;
+                SupportBonuses[source] = SupportBonuses.GetValueOrDefault(source) - value;
                 supportBonus -= value;
+                break;
+        }
+    }
+    public void SetBonus(StatType stat, int value, string source)
+    {
+        int originalValue; 
+        int difference;
+        switch (stat)
+        {
+            case StatType.Attack:
+                originalValue = attackBonus;
+                difference = value - originalValue;
+                AttackBonuses[source] = AttackBonuses.GetValueOrDefault(source) + difference;
+                attackBonus = value;
+                break;
+            case StatType.Defense:
+                originalValue = defenseBonus;
+                difference = value - originalValue;
+                DefenseBonuses[source] = DefenseBonuses.GetValueOrDefault(source) + difference;
+                defenseBonus = value;
+                break;
+            case StatType.Support:
+                originalValue = supportBonus;
+                difference = value - originalValue;
+                SupportBonuses[source] = SupportBonuses.GetValueOrDefault(source) + difference;
+                supportBonus = value;
                 break;
         }
     }
@@ -202,6 +231,9 @@ public abstract class Chessman : MonoBehaviour, IInteractable
         this.attackBonus = 0;
         this.defenseBonus = 0;
         this.supportBonus = 0;
+        AttackBonuses.Clear();
+        DefenseBonuses.Clear();
+        SupportBonuses.Clear();
     }
 
     public void UpdateUIPosition()

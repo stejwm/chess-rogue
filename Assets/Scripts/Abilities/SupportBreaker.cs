@@ -45,7 +45,7 @@ public class SupportBreaker : Ability
             foreach (Chessman enemy in supporters){
                 if (enemy.support > 0)
                 {
-                    enemy.support -= 1;
+                    enemy.RemoveBonus(StatType.Support, 1, $"{abilityName} ({piece.name})");
                     Debug.Log($"Supporter {enemy.name} support reduced to {enemy.support}");
                 }
             }

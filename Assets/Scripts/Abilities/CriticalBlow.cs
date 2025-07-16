@@ -30,18 +30,20 @@ public class CriticalBlow : Ability
 
     }
     public void AddBonus(Chessman attacker, int support, Tile targetedPosition){
-        if (attacker==piece){
-            if (rng.Next(1,11)<=1){
-                attackBonus+= piece.CalculateAttack();
+        if (attacker == piece)
+        {
+            if (rng.Next(1, 11) <= 1)
+            {
+                attackBonus += piece.CalculateAttack();
                 piece.effectsFeedback.PlayFeedbacks();
-                AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Critical Blow</gradient></color>",  " x2");
+                AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Critical Blow</gradient></color>", " x2");
             }
-            piece.attackBonus+=attackBonus;
+            piece.AddBonus(StatType.Attack, attackBonus, abilityName);
         }
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int support, int defenseSupport){
         if (attacker==piece){
-            piece.attackBonus-=attackBonus;
+            piece.RemoveBonus(StatType.Attack, attackBonus, abilityName);
             attackBonus=0;
         }
     }

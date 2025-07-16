@@ -52,10 +52,10 @@ public class Monk : Ability
     public void RemoveBonus(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if(attacker==piece){
             Debug.Log("Removing monk bonus");
-            piece.attackBonus=Mathf.Max(-piece.attack, piece.attackBonus - attackIncrease);
-            piece.defenseBonus=Mathf.Max(-piece.defense, piece.defenseBonus - defenseIncrease);
-            piece.supportBonus=Mathf.Max(-piece.support, piece.supportBonus - supportIncrease);
-            attackIncrease=0;
+            piece.SetBonus(StatType.Attack, Mathf.Max(-piece.attack, piece.attackBonus - attackIncrease), abilityName);
+            piece.SetBonus(StatType.Defense, Mathf.Max(-piece.defense, piece.defenseBonus - defenseIncrease), abilityName);
+            piece.SetBonus(StatType.Support, Mathf.Max(-piece.support, piece.supportBonus - supportIncrease), abilityName);
+            attackIncrease =0;
             defenseIncrease=0;
             supportIncrease=0;
             eventHub.OnPieceBounced.RemoveListener(AddBonusBounce);
@@ -67,13 +67,13 @@ public class Monk : Ability
         if(attacker==piece){
             int s = Random.Range (0, 3);
             switch(s){
-                case 0: attackIncrease++; piece.attackBonus++; 
+                case 0: attackIncrease++; piece.AddBonus(StatType.Attack, 1, abilityName); 
                         //AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Monk</gradient></color>", $"<color=green>+1</color> attack");
                         break;
-                case 1: defenseIncrease++; piece.defenseBonus++; 
+                case 1: defenseIncrease++; piece.AddBonus(StatType.Defense, 1, abilityName); 
                         //AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Monk</gradient></color>", $"<color=green>+1</color> defense");
                         break;
-                case 2: supportIncrease++; piece.supportBonus++; 
+                case 2: supportIncrease++; piece.AddBonus(StatType.Support, 1, abilityName); 
                         //AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Monk</gradient></color>", $"<color=green>+1</color> support");
                         break;
 
@@ -87,9 +87,9 @@ public class Monk : Ability
             piece.effectsFeedback.PlayFeedbacks();
             int s = Random.Range (0, 3);
             switch(s){
-                case 0: attackIncrease++; piece.attackBonus++; break;
-                case 1: defenseIncrease++; piece.defenseBonus++; break;
-                case 2: supportIncrease++; piece.supportBonus++; break;
+                case 0: attackIncrease++; piece.AddBonus(StatType.Attack, 1, abilityName); break;
+                case 1: defenseIncrease++; piece.AddBonus(StatType.Defense, 1, abilityName); break;
+                case 2: supportIncrease++; piece.AddBonus(StatType.Support, 1, abilityName); break;
 
             }
             eventHub.OnPieceBounced.RemoveListener(AddBonusBounce);

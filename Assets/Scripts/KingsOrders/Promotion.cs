@@ -71,6 +71,9 @@ public class Promotion : KingsOrder
         newPiece.attackBonus=piece.attackBonus;
         newPiece.defenseBonus=piece.defenseBonus;
         newPiece.supportBonus=piece.supportBonus;
+        newPiece.AttackBonuses=piece.AttackBonuses;
+        newPiece.DefenseBonuses=piece.DefenseBonuses; 
+        newPiece.SupportBonuses=piece.SupportBonuses;  
         newPiece.releaseCost=piece.releaseCost;
         newPiece.blood=piece.blood;
         newPiece.info=piece.info;

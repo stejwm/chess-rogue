@@ -34,6 +34,7 @@ public class Board : MonoBehaviour
     private EventHub eventHub;
     [SerializeField] private BattlePanel battlePanel;
     [SerializeField] private GameObject tilePrefab;
+    [SerializeField] private GameObject gameOverPanel;
     private Chessman selectedPiece;
     [SerializeField] LogManager logManager;
     [SerializeField] MarketManager marketManager;
@@ -442,6 +443,10 @@ public class Board : MonoBehaviour
     public void ClearSelectedPosition()
     {
         selectedPosition = null;
+    }
+    public void GameOver()
+    {
+        gameOverPanel.SetActive(true);
     }
 
 }
