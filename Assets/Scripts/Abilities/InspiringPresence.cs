@@ -9,39 +9,39 @@ public class InspiringPresence : Ability
     
     public InspiringPresence() : base("Inspiring Presence", "Permanently gain +1 to support for every successful support on a defending piece") {}
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnSupportAdded.AddListener(CheckForResult);
-        base.Apply(piece);
+        board.EventHub.OnSupportAdded.AddListener(CheckForResult);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnSupportAdded.RemoveListener(CheckForResult); 
+        eventHub.OnSupportAdded.RemoveListener(CheckForResult); 
 
     }
-    public void CheckForResult(Chessman supporter, Chessman attacker, Chessman defender){
+    public void CheckForResult(Chessman attacker, Chessman defender, Chessman supporter){
         if(supporter==piece){
-            Game._instance.OnPieceBounced.AddListener(IsBounce);
-            Game._instance.OnPieceCaptured.AddListener(RemoveListener);
+            eventHub.OnPieceBounced.AddListener(IsBounce);
+            eventHub.OnPieceCaptured.AddListener(RemoveListener);
             Debug.Log("Inspiring Presence Listening for Bounce");
         }
     }
 
     public void RemoveListener(Chessman attacker, Chessman defender){
-        Game._instance.OnPieceBounced.RemoveListener(IsBounce);
+        eventHub.OnPieceBounced.RemoveListener(IsBounce);
     }
-    public void IsBounce(Chessman attacker, Chessman defender, bool isBounceReduced){
+    public void IsBounce(Chessman attacker, Chessman defender){
         if(defender.team==piece.team){
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Inspiring Presence</gradient></color>", "happy to help!");
             piece.support+=1;
             Debug.Log("Bounced, bonus added");
         }
         Debug.Log("Removing Bounce Listener");
-        Game._instance.OnPieceBounced.RemoveListener(IsBounce);
-        Game._instance.OnPieceCaptured.RemoveListener(RemoveListener);
+        eventHub.OnPieceBounced.RemoveListener(IsBounce);
+        eventHub.OnPieceCaptured.RemoveListener(RemoveListener);
     }
 
 }

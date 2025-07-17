@@ -19,25 +19,27 @@ public class MapNode : MonoBehaviour
     public EnemyType enemyType; // Add this field for enemy nodes
     public EncounterType encounterType;
     public Image nodeImage; // Reference to the Image component for changing the sprite
-    
+    private MapManager mapManager;
 
 
-    void Start(){
-        switch(nodeType){
-            case NodeType.Enemy:
-                nodeImage.sprite= MapManager._instance.images[Random.Range(0,MapManager._instance.images.Count)];                
-                break;
-            case NodeType.Shop:
-                nodeImage.sprite= MapManager._instance.shopImage;
-                break;
-            case NodeType.Encounter:
-                nodeImage.sprite= MapManager._instance.wandererImage;
-                break;
-            case NodeType.Boss:
-                nodeImage.sprite= MapManager._instance.bossImage;
-                break;
-        }
-        
+    public void Initialize(MapManager mapManager)
+    {
+        this.mapManager = mapManager;
+        switch (nodeType)
+            {
+                case NodeType.Enemy:
+                    nodeImage.sprite = mapManager.images[Random.Range(0, mapManager.images.Count)];
+                    break;
+                case NodeType.Shop:
+                    nodeImage.sprite = mapManager.shopImage;
+                    break;
+                case NodeType.Encounter:
+                    nodeImage.sprite = mapManager.wandererImage;
+                    break;
+                case NodeType.Boss:
+                    nodeImage.sprite = mapManager.bossImage;
+                    break;
+            }  
     }
 
 
@@ -49,13 +51,13 @@ public class MapNode : MonoBehaviour
         {
             case NodeType.Enemy:
             case NodeType.Boss:
-                MapManager._instance.SelectEnemyNode(this, enemyType);
+                mapManager.SelectEnemyNode(this, enemyType);
                 break;
             case NodeType.Shop:
-                MapManager._instance.SelectShopNode(this);
+                mapManager.SelectShopNode(this);
                 break;
             case NodeType.Encounter:
-                MapManager._instance.SelectEncounterNode(this, encounterType);
+                mapManager.SelectEncounterNode(this, encounterType);
                 break;
         }
 

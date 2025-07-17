@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class StatBoxManager : MonoBehaviour
 {
-    
+
     public static StatBoxManager _instance;
     public List<StatBox> statBoxes;
 
@@ -19,38 +19,46 @@ public class StatBoxManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if(_instance !=null && _instance !=this){
+        if (_instance != null && _instance != this)
+        {
             Destroy(this.gameObject);
         }
-        else{
-            _instance=this;
+        else
+        {
+            _instance = this;
         }
     }
 
-    void Start(){
-        Cursor.visible=true;
+    void Start()
+    {
+        Cursor.visible = true;
         foreach (var statBox in statBoxes)
         {
             statBox.gameObject.SetActive(false);
         }
     }
 
-    public void LockView(Chessman piece){
-        lockView=true;
+    public void LockView(Chessman piece)
+    {
+        lockView = true;
         piece.flames.Play();
-        lockedPiece=piece;
+        lockedPiece = piece;
     }
-    public void UnlockView(bool isOnAttack=false){
-        lockView=false;
-        if (lockedPiece && !isOnAttack){
+    public void UnlockView(bool isOnAttack = false)
+    {
+        lockView = false;
+        if (lockedPiece && !isOnAttack)
+        {
             lockedPiece.flames.Stop();
         }
-        if(lockedPiece){
-            lockedPiece=null;
+        if (lockedPiece)
+        {
+            lockedPiece = null;
         }
     }
-    public void SetAndShowStats(Chessman piece){
-        if(!lockView)
+    public void SetAndShowStats(Chessman piece)
+    {
+        if (!lockView)
         {
             foreach (StatBox statBox in statBoxes)
             {
@@ -60,31 +68,40 @@ public class StatBoxManager : MonoBehaviour
 
     }
 
-    public void SetAndShowEnemyStats(Chessman piece){
-        if(!enemyLockView)
+    public void SetAndShowEnemyStats(Chessman piece)
+    {
+        if (!enemyLockView)
         {
             EnemyStatBox.SetStats(piece);
         }
-        
+
     }
 
-    public void LockEnemyView(Chessman piece){
-        enemyLockView=true;
+    public void LockEnemyView(Chessman piece)
+    {
+        enemyLockView = true;
         piece.highlightedParticles.Play();
-        enemyLockedPiece=piece;
+        enemyLockedPiece = piece;
     }
-    public void UnlockEnemyView(){
-        enemyLockView=false;
-        if (enemyLockedPiece){
+    public void UnlockEnemyView()
+    {
+        enemyLockView = false;
+        if (enemyLockedPiece)
+        {
             enemyLockedPiece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            enemyLockedPiece=null;
+            enemyLockedPiece = null;
         }
     }
 
-    public void HideStats(){
+    public void HideStats()
+    {
         foreach (var statBox in statBoxes)
         {
             statBox.HideStats();
         }
+    }
+    
+    public void HideEnemyStatBox(){
+        EnemyStatBox.gameObject.SetActive(false);
     }
 }

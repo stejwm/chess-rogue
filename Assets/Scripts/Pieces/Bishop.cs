@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Bishop : Chessman
 {
-    public void Start(){
+    public override void Initialize(Board board){
         Activate();
-        moveProfile = new BishopMovement();
+        moveProfile = new BishopMovement(board);
         type = PieceType.Bishop;
     }
-    public override List<BoardPosition> GetValidMoves() => moveProfile.GetValidMoves(this);
-    public override List<BoardPosition> GetValidSupportMoves() => moveProfile.GetValidSupportMoves(this);
+    public override List<Tile> GetValidMoves() => moveProfile.GetValidMoves(this);
+    public override List<Tile> GetValidSupportMoves() => moveProfile.GetValidSupportMoves(this);
     
 }

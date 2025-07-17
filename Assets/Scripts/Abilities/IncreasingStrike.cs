@@ -9,17 +9,17 @@ public class IncreasingStrike : Ability
     
     public IncreasingStrike() : base("Increasing Strike", "Permanently gain +1 to attack for every capture") {}
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceCaptured.AddListener(AddBonus);
-        base.Apply(piece);
+        board.EventHub.OnPieceCaptured.AddListener(AddBonus);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceCaptured.RemoveListener(AddBonus); 
+        eventHub.OnPieceCaptured.RemoveListener(AddBonus); 
 
     }
     public void AddBonus(Chessman attacker, Chessman defender){

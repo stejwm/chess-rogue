@@ -13,23 +13,23 @@ public class Merchant : Ability
     public Merchant() : base("Merchant", "10% chance of +1 attack per coin owned") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnAttack.AddListener(AddBonus);
-        Game._instance.OnAttackEnd.AddListener(RemoveBonus);
-        base.Apply(piece);
+        board.EventHub.OnAttack.AddListener(AddBonus);
+        board.EventHub.OnAttackEnd.AddListener(RemoveBonus);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnAttack.RemoveListener(AddBonus);
-        Game._instance.OnAttackEnd.RemoveListener(RemoveBonus);
+        eventHub.OnAttack.RemoveListener(AddBonus);
+        eventHub.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
-    public void AddBonus(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
-        if (attacker==piece && isAttacking){
+    public void AddBonus(Chessman attacker, int support, Tile targetedPosition){
+        if (attacker==piece){
             for (int i =0; i<piece.owner.playerCoins; i++){
                 if (rng.Next(1,11)<=1){
                     attackBonus+=1;
@@ -38,12 +38,12 @@ public class Merchant : Ability
             if (attackBonus>0){
                 AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Merchant</gradient></color>", $"<color=green>+{attackBonus} attack from wares</color>");
             }
-            piece.attackBonus+=attackBonus;
+            piece.AddBonus(StatType.Attack, attackBonus, abilityName);
         }
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int support, int defenseSupport){
         if (attacker==piece){
-            piece.attackBonus-=attackBonus;
+            piece.RemoveBonus(StatType.Attack, attackBonus, abilityName);
             attackBonus=0;
         }
     }

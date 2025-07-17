@@ -43,13 +43,13 @@ public class PieceFactory : MonoBehaviour
         }
     }
 
-    public List<GameObject> CreateBlackPieces(Player owner)
+    public List<GameObject> CreateBlackPieces(Board board, Player owner)
     {
-        return CreatePiecesForColor(owner, PieceColor.Black, Team.Enemy);
+        return CreatePiecesForColor(board, owner, PieceColor.Black);
     }
 
 
-    public List<GameObject> CreateKnightsOfTheRoundTable(Player owner, PieceColor color, Team team){
+    public List<GameObject> CreateKnightsOfTheRoundTable(Board board, Player owner, PieceColor color){
         int backRow = color == PieceColor.White ? 0 : 7;
         int pawnRow = color == PieceColor.White ? 1 : 6;
         List<GameObject> pieces = new List<GameObject>();
@@ -58,17 +58,17 @@ public class PieceFactory : MonoBehaviour
         for (int i=0; i<11; i++){
             if(i<6)
                 if(names[i].Equals("Arthur"))
-                    pieces.Add(Create(PieceType.King,  i+1, backRow, color, team, owner, $"{names[i]}"));
+                    pieces.Add(Create(board, PieceType.King,  i+1, backRow, color, owner, $"{names[i]}"));
                 else
-                    pieces.Add(Create(PieceType.Knight,  i+1, backRow, color, team, owner, $"{names[i]}"));
+                    pieces.Add(Create(board, PieceType.Knight,  i+1, backRow, color, owner, $"{names[i]}"));
             else{
-                pieces.Add(Create(PieceType.Knight,  i-5, pawnRow, color, team, owner, $"{names[i]}"));
+                pieces.Add(Create(board, PieceType.Knight,  i-5, pawnRow, color, owner, $"{names[i]}"));
             }
         }
         return pieces;
     }
 
-    public List<GameObject> CreateSoulKing(Player owner, PieceColor color, Team team){
+    public List<GameObject> CreateSoulKing(Board board, Player owner, PieceColor color){
         int backRow = color == PieceColor.White ? 0 : 7;
         int pawnRow = color == PieceColor.White ? 1 : 6;
         int frontRow = color == PieceColor.White ? 2 : 5;
@@ -76,32 +76,32 @@ public class PieceFactory : MonoBehaviour
 
         for (int i=0; i<8; i++){
             if(i==3)
-                pieces.Add(Create(PieceType.Queen, i, backRow, color, team, owner));
+                pieces.Add(Create(board, PieceType.Queen, i, backRow, color, owner));
             else if(i==4)
-                pieces.Add(Create(PieceType.King, i, backRow, color, team, owner));
+                pieces.Add(Create(board, PieceType.King, i, backRow, color, owner));
 
             else
-                pieces.Add(Create(PieceType.Pawn, i, backRow, color, team, owner));
+                pieces.Add(Create(board, PieceType.Pawn, i, backRow, color, owner));
         }
         for (int i=2; i<6; i++){
-            pieces.Add(Create(PieceType.Pawn, i, pawnRow, color, team, owner));
+            pieces.Add(Create(board, PieceType.Pawn, i, pawnRow, color, owner));
         }
         
         foreach (var piece in pieces){
-            StartCoroutine(WaitForPieceToApplyAbility(piece.GetComponent<Chessman>(), Game._instance.AllAbilities[27].Clone()));
+            StartCoroutine(WaitForPieceToApplyAbility(board, piece.GetComponent<Chessman>(), AbilityDatabase.Instance.GetAbilityByName("SoulBond")));
         }
         return pieces;
     }
 
-    public List<GameObject> CreateAbilityPiecesBlack(Player owner, Ability ability){
-        var pieces = CreateBlackPieces(owner);
+    public List<GameObject> CreateAbilityPiecesBlack(Board board, Player owner, Ability ability){
+        var pieces = CreateBlackPieces(board, owner);
         foreach (var piece in pieces){
-            piece.GetComponent<Chessman>().AddAbility(ability.Clone());
+            piece.GetComponent<Chessman>().AddAbility(board, ability.Clone());
         }
         return pieces;
     }
 
-    public List<GameObject> CreatePiecesForColor(Player owner, PieceColor color, Team team)
+    public List<GameObject> CreatePiecesForColor(Board board, Player owner, PieceColor color )
     {
         string prefix = color == PieceColor.White ? "white" : "black";
         int backRow = color == PieceColor.White ? 0 : 7;
@@ -109,27 +109,27 @@ public class PieceFactory : MonoBehaviour
 
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
-            Create(PieceType.Rook,  0, backRow, color, team, owner),
-            Create(PieceType.Knight,  1, backRow, color, team, owner),
-            Create(PieceType.Bishop,  2, backRow, color, team, owner),
-            Create(PieceType.Queen,  3, backRow, color, team, owner),
-            Create(PieceType.King, 4, backRow, color, team, owner),
-            Create(PieceType.Bishop,  5, backRow, color, team, owner),
-            Create(PieceType.Knight,  6, backRow, color, team, owner),
-            Create(PieceType.Rook,  7, backRow, color, team, owner)
+            Create(board, PieceType.Rook,  0, backRow, color, owner),
+            Create(board, PieceType.Knight,  1, backRow, color, owner),
+            Create(board, PieceType.Bishop,  2, backRow, color, owner),
+            Create(board, PieceType.Queen,  3, backRow, color, owner),
+            Create(board, PieceType.King, 4, backRow, color, owner),
+            Create(board, PieceType.Bishop,  5, backRow, color, owner),
+            Create(board, PieceType.Knight,  6, backRow, color, owner),
+            Create(board, PieceType.Rook,  7, backRow, color, owner)
         };
 
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
-            pieces.Add(Create(PieceType.Pawn, i, pawnRow, color, team, owner));
+            pieces.Add(Create(board, PieceType.Pawn, i, pawnRow, color, owner));
         }
 
         return pieces;
     }
 
-    public List<GameObject> CreateRookArmy(Player owner, PieceColor color, Team team)
+    public List<GameObject> CreateRookArmy(Board board, Player owner, PieceColor color)
     {
         string prefix = color == PieceColor.White ? "white" : "black";
         int backRow = color == PieceColor.White ? 0 : 7;
@@ -137,26 +137,26 @@ public class PieceFactory : MonoBehaviour
 
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
-            Create(PieceType.Rook,  0, backRow, color, team, owner),
-            Create(PieceType.Knight,  1, backRow, color, team, owner),
-            Create(PieceType.Bishop,  2, backRow, color, team, owner),
-            Create(PieceType.Queen,  3, backRow, color, team, owner),
-            Create(PieceType.King, 4, backRow, color, team, owner),
-            Create(PieceType.Bishop,  5, backRow, color, team, owner),
-            Create(PieceType.Knight,  6, backRow, color, team, owner),
-            Create(PieceType.Rook,  7, backRow, color, team, owner)
+            Create(board, PieceType.Rook,  0, backRow, color,  owner),
+            Create(board, PieceType.Knight,  1, backRow, color, owner),
+            Create(board, PieceType.Bishop,  2, backRow, color, owner),
+            Create(board, PieceType.Queen,  3, backRow, color, owner),
+            Create(board, PieceType.King, 4, backRow, color, owner),
+            Create(board, PieceType.Bishop,  5, backRow, color, owner),
+            Create(board, PieceType.Knight,  6, backRow, color, owner),
+            Create(board, PieceType.Rook,  7, backRow, color, owner)
         };
 
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
-            pieces.Add(Create(PieceType.Rook,  i, pawnRow, color, team, owner));
+            pieces.Add(Create(board, PieceType.Rook,  i, pawnRow, color, owner));
         }
 
         return pieces;
     }
-    public List<GameObject> CreateThievesGuild(Player owner, PieceColor color, Team team)
+    public List<GameObject> CreateThievesGuild(Board board, Player owner, PieceColor color)
     {
         string prefix = color == PieceColor.White ? "white" : "black";
         int backRow = color == PieceColor.White ? 0 : 7;
@@ -164,33 +164,33 @@ public class PieceFactory : MonoBehaviour
         
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
-            Create(PieceType.Rook,  0, backRow, color, team, owner),
-            Create(PieceType.Knight,  1, backRow, color, team, owner),
-            Create(PieceType.Bishop,  2, backRow, color, team, owner),
-            Create(PieceType.Queen,  3, backRow, color, team, owner),
-            Create(PieceType.King, 4, backRow, color, team, owner),
-            Create(PieceType.Bishop,  5, backRow, color, team, owner),
-            Create(PieceType.Knight,  6, backRow, color, team, owner),
-            Create(PieceType.Rook,  7, backRow, color, team, owner)
+            Create(board, PieceType.Rook,  0, backRow, color, owner),
+            Create(board, PieceType.Knight,  1, backRow, color, owner),
+            Create(board, PieceType.Bishop,  2, backRow, color, owner),
+            Create(board, PieceType.Queen,  3, backRow, color, owner),
+            Create(board, PieceType.King, 4, backRow, color, owner),
+            Create(board, PieceType.Bishop,  5, backRow, color, owner),
+            Create(board, PieceType.Knight,  6, backRow, color, owner),
+            Create(board, PieceType.Rook,  7, backRow, color, owner)
         };
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[15].Clone()); //Merchant ability
+            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("Merchant")); //Merchant ability
         }
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
-            var pawn = Create(PieceType.Pawn, i, pawnRow, color, team, owner);
-            pawn.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[16].Clone()); //Pickpocket ability
+            var pawn = Create(board, PieceType.Pawn, i, pawnRow, color, owner);
+            pawn.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("Pickpocket")); //Pickpocket ability
             pieces.Add(pawn);
         }
 
         return pieces;
     }
 
-    public List<GameObject> CreateDarkCult(Player owner, PieceColor color, Team team)
+    public List<GameObject> CreateDarkCult(Board board, Player owner, PieceColor color)
     {
         string prefix = color == PieceColor.White ? "white" : "black";
         int backRow = color == PieceColor.White ? 0 : 7;
@@ -198,33 +198,33 @@ public class PieceFactory : MonoBehaviour
         owner.playerCoins= UnityEngine.Random.Range(10,30);
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
-            Create(PieceType.Rook,  0, backRow, color, team, owner),
-            Create(PieceType.Knight,  1, backRow, color, team, owner),
-            Create(PieceType.Bishop,  2, backRow, color, team, owner),
-            Create(PieceType.Queen,  3, backRow, color, team, owner),
-            Create(PieceType.King, 4, backRow, color, team, owner),
-            Create(PieceType.Bishop,  5, backRow, color, team, owner),
-            Create(PieceType.Knight,  6, backRow, color, team, owner),
-            Create(PieceType.Rook,  7, backRow, color, team, owner)
+            Create(board, PieceType.Rook,  0, backRow, color, owner),
+            Create(board, PieceType.Knight,  1, backRow, color, owner),
+            Create(board, PieceType.Bishop,  2, backRow, color, owner),
+            Create(board, PieceType.Queen,  3, backRow, color, owner),
+            Create(board, PieceType.King, 4, backRow, color, owner),
+            Create(board, PieceType.Bishop,  5, backRow, color, owner),
+            Create(board, PieceType.Knight,  6, backRow, color, owner),
+            Create(board, PieceType.Rook,  7, backRow, color, owner)
         };
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[17].Clone()); //Blood offering ability
+            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("BloodOffering")); //Blood offering ability
         }
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
             char file = (char)('a' + i);
-            var pawn = Create(PieceType.Pawn, i, pawnRow, color, team, owner);
-            pawn.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[20].Clone()); //Vampire ability
+            var pawn = Create(board, PieceType.Pawn, i, pawnRow, color, owner);
+            pawn.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("Vampire")); //Vampire ability
             pieces.Add(pawn);
         }
 
         return pieces;
     }
 
-    public List<GameObject> CreateAngryMob(Player owner, PieceColor color, Team team)
+    public List<GameObject> CreateAngryMob(Board board, Player owner, PieceColor color)
     {
         string prefix = color == PieceColor.White ? "white" : "black";
         int backRow = color == PieceColor.White ? 0 : 7;
@@ -233,28 +233,28 @@ public class PieceFactory : MonoBehaviour
         owner.playerCoins= UnityEngine.Random.Range(10,30);
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
-            Create(PieceType.King, 4, backRow, color, team, owner)
+            Create(board, PieceType.King, 4, backRow, color, owner)
         };
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[17].Clone()); //Blood offering ability
+            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("BloodOffering")); //Blood offering ability
         }
         // Create pawns
         for (int i = 0; i < 8; i++)
         {
-            var pawn = Create(PieceType.Pawn, i, pawnRow, color, team, owner);
-            StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), Game._instance.AllAbilities[0].Clone()));
-            RandomMobAbility(pawn); 
+            var pawn = Create(board, PieceType.Pawn, i, pawnRow, color, owner);
+            StartCoroutine(WaitForPieceToApplyAbility(board, pawn.GetComponent<Chessman>(), AbilityDatabase.Instance.GetAbilityByName("BloodThirst")));
+            RandomMobAbility(board, pawn); 
             pieces.Add(pawn);
-            pawn = Create(PieceType.Pawn, i, frontRow, color, team, owner);
-            StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), Game._instance.AllAbilities[0].Clone()));
-            RandomMobAbility(pawn); 
+            pawn = Create(board, PieceType.Pawn, i, frontRow, color, owner);
+            StartCoroutine(WaitForPieceToApplyAbility(board, pawn.GetComponent<Chessman>(), AbilityDatabase.Instance.GetAbilityByName("BloodThirst")));
+            RandomMobAbility(board, pawn); 
             pieces.Add(pawn);
             if(i!=4){
-                pawn = Create(PieceType.Pawn,  i, backRow, color, team, owner);
-                StartCoroutine(WaitForPieceToApplyAbility(pawn.GetComponent<Chessman>(), Game._instance.AllAbilities[0].Clone()));
-                RandomMobAbility(pawn); 
+                pawn = Create(board, PieceType.Pawn,  i, backRow, color, owner);
+                StartCoroutine(WaitForPieceToApplyAbility(board, pawn.GetComponent<Chessman>(), AbilityDatabase.Instance.GetAbilityByName("BloodThirst")));
+                RandomMobAbility(board, pawn); 
                 pieces.Add(pawn);
             }
             
@@ -263,7 +263,7 @@ public class PieceFactory : MonoBehaviour
         return pieces;
     }
 
-    public List<GameObject> CreateRoyalFamily(Player owner, PieceColor color, Team team)
+    public List<GameObject> CreateRoyalFamily(Board board, Player owner, PieceColor color)
     {
         string prefix = color == PieceColor.White ? "white" : "black";
         int backRow = color == PieceColor.White ? 0 : 7;
@@ -271,52 +271,53 @@ public class PieceFactory : MonoBehaviour
         owner.playerCoins= UnityEngine.Random.Range(10,30);
         // Create back row
         List<GameObject> pieces = new List<GameObject> {
-            Create(PieceType.Queen,  3, backRow, color, team, owner),
-            Create(PieceType.King,  4, backRow, color, team, owner),
-            Create(PieceType.Pawn,  3, pawnRow, color, team, owner),
-            Create(PieceType.Pawn,  4, pawnRow, color, team, owner),
+            Create(board, PieceType.Queen,  3, backRow, color, owner),
+            Create(board, PieceType.King,  4, backRow, color, owner),
+            Create(board, PieceType.Pawn,  3, pawnRow, color, owner),
+            Create(board, PieceType.Pawn,  4, pawnRow, color, owner),
         };
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(Game._instance.AllAbilities[17].Clone()); //Blood offering ability
+            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("BloodOffering")); //Blood offering ability
         }
         
 
         return pieces;
     }
 
-    public IEnumerator WaitForPieceToApplyAbility(Chessman piece, Ability ability){
+    public IEnumerator WaitForPieceToApplyAbility(Board board, Chessman piece, Ability ability){
         yield return new WaitUntil(() => piece.moveProfile!=null);
         yield return null;
-        piece.AddAbility(ability);
+        piece.AddAbility(board, ability);
     }
-    public void RandomMobAbility(GameObject pieceObj){
+    public void RandomMobAbility(Board board, GameObject pieceObj){
         Chessman piece = pieceObj.GetComponent<Chessman>();
         var rand = UnityEngine.Random.Range(0,10);
         if(rand>3){
             rand = UnityEngine.Random.Range(0,4);
             switch(rand){
                 case 0:
-                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[14].Clone())); //Blood thirst
+                    StartCoroutine(WaitForPieceToApplyAbility(board, piece, AbilityDatabase.Instance.GetAbilityByName("AvengingStrike"))); //Avenging Strike
                     break;
                 case 1:
-                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[8].Clone())); //Blood thirst
+                    StartCoroutine(WaitForPieceToApplyAbility(board, piece, AbilityDatabase.Instance.GetAbilityByName("ParalyzingBlow"))); //ParalyzingBlow
                     break;
                 case 2:
-                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[10].Clone())); //Blood thirst
+                    StartCoroutine(WaitForPieceToApplyAbility(board,piece, AbilityDatabase.Instance.GetAbilityByName("AdamantAssault"))); //Blood thirst
                     break;
                 case 3:
-                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[23].Clone())); //Blood thirst
+                    StartCoroutine(WaitForPieceToApplyAbility(board, piece, AbilityDatabase.Instance.GetAbilityByName("CounterMarch"))); //Blood thirst
                     break;
                 case 4:
-                    StartCoroutine(WaitForPieceToApplyAbility(piece, Game._instance.AllAbilities[19].Clone())); //Blood thirst
+                    //StartCoroutine(WaitForPieceToApplyAbility(piece, GameManager._instance.AllAbilities[19].Clone())); //Blood thirst
                     break;
             }
         }
     }
-    public GameObject Create(PieceType type, int x, int y, PieceColor color, Team team, Player owner, string name="")
+    public GameObject Create(Board board, PieceType type, int x, int y, PieceColor color,  Player owner, string name="", Gender gender = Gender.Male)
     {
+        //Debug.Log("Creating piece of type: " + type + " at position: " + x + ", " + y + " for owner: " + owner.name);
         GameObject prefab = GetPrefab(type);
         if (prefab == null) return null;
 
@@ -324,44 +325,55 @@ public class PieceFactory : MonoBehaviour
         Chessman cm = obj.GetComponent<Chessman>();
         cm.owner = owner;
         cm.color = color;
-        cm.team = team;
-        if(string.IsNullOrEmpty(name))
-            cm.name = NameDatabase.GetRandomName();
+        if (type == PieceType.Queen)
+        {
+            cm.name = NameDatabase.GetRandomNameByGender(Gender.Female);
+            cm.gender = Gender.Female;
+        }
+        else if (string.IsNullOrEmpty(name))
+        {
+            NameEntry nameEntry = NameDatabase.GetRandomNameEntry();
+            cm.name = nameEntry.name;
+            cm.gender = nameEntry.gender;
+        }
         else
-            cm.name=name;
-        cm.SetXBoard(x);
-        cm.SetYBoard(y);
-        cm.startingPosition = new BoardPosition(x,y);
-        
+        {
+            cm.name = name;
+            cm.gender = gender;
+        }
+        cm.xBoard=x;
+        cm.yBoard=y;
+        cm.startingPosition = board.GetTileAt(x, y);
+        cm.Initialize(board);
         return obj;
     }
 
-    public GameObject CreateAbilityPiece(PieceType type, string name, int x, int y, PieceColor color, Team team, Player owner, Ability ability){
-        var piece = Create(type, x, y, color, team, owner, name);
-        StartCoroutine(WaitForPieceToApplyAbility(piece.GetComponent<Chessman>(), ability));
+    public GameObject CreateAbilityPiece(Board board, PieceType type, string name, int x, int y, PieceColor color, Player owner, Ability ability){
+        var piece = Create(board, type, x, y, color, owner, name);
+        StartCoroutine(WaitForPieceToApplyAbility(board, piece.GetComponent<Chessman>(), ability));
         return piece;
     }
 
-    public List<GameObject> CreateOpponentPieces(Player opponent, EnemyType enemyType)
+    public List<GameObject> CreateOpponentPieces(Board board, Player opponent, EnemyType enemyType)
     {
         switch(enemyType)
         {
             case EnemyType.Knights:
-                return CreateKnightsOfTheRoundTable(opponent, opponent.color, Team.Enemy);
+                return CreateKnightsOfTheRoundTable(board, opponent, opponent.color);
             case EnemyType.Fortress:
-                return CreateRookArmy(opponent, opponent.color, Team.Enemy);
+                return CreateRookArmy(board, opponent, opponent.color);
             case EnemyType.Assassins:
-                return CreateAbilityPiecesBlack(opponent, Game._instance.AllAbilities[2].Clone()); //Assassin ability
+                return CreateAbilityPiecesBlack(board, opponent, AbilityDatabase.Instance.GetAbilityByName("Assassin")); //Assassin ability
             case EnemyType.Thieves:
-                return CreateThievesGuild(opponent, opponent.color, Team.Enemy);
+                return CreateThievesGuild(board, opponent, opponent.color);
             case EnemyType.Cult:
-                return CreateDarkCult(opponent, opponent.color, Team.Enemy);
+                return CreateDarkCult(board, opponent, opponent.color);
             case EnemyType.Mob:
-                return CreateAngryMob(opponent, opponent.color, Team.Enemy);
+                return CreateAngryMob(board, opponent, opponent.color);
             case EnemyType.RoyalFamily:
-                return CreateRoyalFamily(opponent, opponent.color, Team.Enemy);
+                return CreateRoyalFamily(board, opponent, opponent.color);
             case EnemyType.SoulKing:
-                return CreateSoulKing(opponent, opponent.color, Team.Enemy);
+                return CreateSoulKing(board, opponent, opponent.color);
         }
         return null;
     }
@@ -381,14 +393,14 @@ public class PieceFactory : MonoBehaviour
         }
     }
 
-    public GameObject CreateRandomPiece(){
+    public GameObject CreateRandomPiece(Board board){
         Array values = Enum.GetValues(typeof(PieceType));
         System.Random random = new System.Random();
         if(random.Next(100)<16){
-            return Create(PieceType.Jester,-1,-1,Game._instance.heroColor,Team.Hero,null);
+            return Create(board, PieceType.Jester,-1,-1,PieceColor.White,null);
         }
         PieceType randPieceType = (PieceType)values.GetValue(random.Next(values.Length-3));
-        return Create(randPieceType,-1,-1,Game._instance.heroColor,Team.Hero,null);
+        return Create(board, randPieceType,-1,-1,PieceColor.White,null);
     }
 
     public IEnumerator DelayedDestroy(Chessman piece){
@@ -397,24 +409,22 @@ public class PieceFactory : MonoBehaviour
             piece.DestroyPiece();
     }
 
-    public List<GameObject> LoadPieces(List<PieceData> pieces){
+    public List<GameObject> LoadPieces(Board board, List<PieceData> pieces, Player player){
 
         var chessmen = new List<GameObject>();
         foreach (var pieceData in pieces)
         {
-            var pieceObj = Create(pieceData.pieceType, pieceData.posX, pieceData.posY, pieceData.color, Team.Hero, Game._instance.hero, pieceData.name);
+            var pieceObj = Create(board, pieceData.pieceType, pieceData.posX, pieceData.posY, pieceData.color, player, pieceData.name);
             var piece = pieceObj.GetComponent<Chessman>();
             piece.uniqueId = pieceData.uniqueId;
 
             foreach (AbilityData abilityData in pieceData.abilities){
-                Ability ability = Game._instance.AllAbilities.FirstOrDefault(a => a.abilityName==abilityData.abilityName);
-                piece.AddAbility(ability);
+                Ability ability = AbilityDatabase.Instance.GetAbilityByName(abilityData.abilityName);
+                piece.AddAbility(board, ability);
             }
             piece.attack = pieceData.attack;
             piece.defense = pieceData.defense;
             piece.support = pieceData.support;
-
-            //piece.uniqueId = pieceData.uniqueId;
 
             chessmen.Add(pieceObj);
         }

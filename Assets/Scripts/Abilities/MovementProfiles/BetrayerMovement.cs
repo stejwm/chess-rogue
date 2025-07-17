@@ -7,15 +7,13 @@ using UnityEngine;
 public class BetrayerMovement : MovementProfile
 {
     MovementProfile oldProfile;
-    Game game;
-    public BetrayerMovement(MovementProfile old){
-        oldProfile=old;
-    }
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
-        return oldProfile.GetValidMoves(piece, true);
+    
+    public BetrayerMovement(Board board, MovementProfile old) : base(board) {oldProfile = old;}
+    public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
+        return oldProfile.GetValidMoves( piece, true);
      }
-    public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
-        return new List<BoardPosition>();
+    public override List<Tile> GetValidSupportMoves(Chessman piece){
+        return new List<Tile>();
     }
 
     public override List<Vector2Int> GetDirections(Chessman piece){

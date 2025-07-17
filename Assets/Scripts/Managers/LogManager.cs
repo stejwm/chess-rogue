@@ -12,7 +12,6 @@ using System;
 
 public class LogManager : MonoBehaviour
 {
-    public static LogManager _instance;
     public TMP_Text LogText;
     [SerializeField] private ScrollRect scrollRect;
     public GameObject abilityTarget;
@@ -25,19 +24,6 @@ public class LogManager : MonoBehaviour
         Canvas.ForceUpdateCanvases(); // Ensure the UI updates immediately
     }
 
-    void Awake()
-    {
-        
-        if(_instance !=null && _instance !=this){
-            Destroy(this.gameObject);
-        }
-        else{
-            _instance=this;
-        }
-    }
-    void Start(){
-        //filePath = Path.Combine("C:\\Users\\steve\\chess-rogue\\chess-rogue\\GameLogs", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")+".txt");
-    }
     public void WriteLog(string message)
     {
         ScrollToBottom();

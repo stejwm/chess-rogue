@@ -15,6 +15,7 @@ public class PopUpManager : MonoBehaviour
     [SerializeField] GameObject piecesPanel; 
     public PieceType selectedPieceType = PieceType.None;
     public GameObject abilityInfo;
+    public GameObject abilityInfoContainer;
     public TMP_Text abilityInfoText;
     public TMP_Text abilityInfoTitle;
     public GameObject values;
@@ -54,19 +55,6 @@ public class PopUpManager : MonoBehaviour
         selectedPieceType=PieceType.None;
     }
 
-    public void KnightSelected(){
-        selectedPieceType=PieceType.Knight;
-    }
-    public void BishopSelected(){
-        selectedPieceType=PieceType.Bishop;
-    }
-    public void QueenSelected(){
-        selectedPieceType=PieceType.Queen;
-    }
-    public void RookSelected(){
-        selectedPieceType=PieceType.Rook;
-    }
-
     public void SetAndShowAbilityInfo(AbilityUI abilityUI){
         alreadyActive = gameObject.activeSelf;
         gameObject.SetActive(true);
@@ -84,27 +72,61 @@ public class PopUpManager : MonoBehaviour
         else if(xVal>0)
             abilityInfo.GetComponent<RectTransform>().localPosition-=new Vector3(200,0);
 
+        LayoutRebuilder.ForceRebuildLayoutImmediate(abilityInfoContainer.GetComponent<RectTransform>());
         LayoutRebuilder.ForceRebuildLayoutImmediate(abilityInfo.GetComponent<RectTransform>());
     }
-    public void SetAndShowText(string text, GameObject parent){
+
+    public void SetAndShowStatInfo(StatInfo statInfo)
+    {
         alreadyActive = gameObject.activeSelf;
         gameObject.SetActive(true);
-        
-        abilityInfoText.text=text;
-        abilityInfo.SetActive(true);
-    
-        abilityInfo.transform.position=parent.transform.position;
-        float xVal = abilityInfo.GetComponent<RectTransform>().localPosition.x;
-        if(xVal<0){
-            abilityInfo.GetComponent<RectTransform>().localPosition+=new Vector3(200,0);
+
+        abilityInfoText.text = "";
+        abilityInfoTitle.text = $"{statInfo.statType} total: {statInfo.total}";
+        abilityInfoText.text += $"base: {statInfo.baseStat}\n";
+        foreach (var entry in statInfo.dictionary)
+        {
+            if (entry.Value == 0)
+                continue;
+            abilityInfoText.text += $"{entry.Key}: {entry.Value:+#;-#;0}\n";
         }
-        else if(xVal>0)
-            abilityInfo.GetComponent<RectTransform>().localPosition-=new Vector3(200,0);
+
+        abilityInfo.SetActive(true);
+
+        abilityInfo.transform.position = statInfo.gameObject.transform.position;
+        float xVal = abilityInfo.GetComponent<RectTransform>().localPosition.x;
+        if (xVal < 0)
+        {
+            abilityInfo.GetComponent<RectTransform>().localPosition += new Vector3(200, 0);
+        }
+        else if (xVal > 0)
+            abilityInfo.GetComponent<RectTransform>().localPosition -= new Vector3(200, 0);
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(abilityInfoContainer.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(abilityInfo.GetComponent<RectTransform>());
+        
+    }
+    public void SetAndShowText(string text, GameObject parent)
+    {
+        alreadyActive = gameObject.activeSelf;
+        gameObject.SetActive(true);
+
+        abilityInfoText.text = text;
+        abilityInfo.SetActive(true);
+
+        abilityInfo.transform.position = parent.transform.position;
+        float xVal = abilityInfo.GetComponent<RectTransform>().localPosition.x;
+        if (xVal < 0)
+        {
+            abilityInfo.GetComponent<RectTransform>().localPosition += new Vector3(200, 0);
+        }
+        else if (xVal > 0)
+            abilityInfo.GetComponent<RectTransform>().localPosition -= new Vector3(200, 0);
 
 
     }
 
-    public void HideAbilityInfo(){
+    public void HideInfo(){
         abilityInfoText.text=null;
         abilityInfo.gameObject.SetActive(false);
         gameObject.SetActive(alreadyActive);

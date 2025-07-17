@@ -10,8 +10,10 @@ public class Countermarch : Ability
     public Countermarch() : base("Countermarch", "Can move and support backwards") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
+        if(piece.abilities.Contains(this))
+            return;
         
         if (piece.type != PieceType.Pawn)
             return;
@@ -19,14 +21,14 @@ public class Countermarch : Ability
         startingProfile=piece.moveProfile;
 
         if (piece.abilities.OfType<ScoutPawn>().FirstOrDefault()!=null){
-            piece.moveProfile = new ScoutCounterMovement();
+            piece.moveProfile = new ScoutCounterMovement(board);
         }
         else{
-            piece.moveProfile = new CountermarchMovement();
+            piece.moveProfile = new CountermarchMovement(board);
         }
         
         piece.info += " "+abilityName;
-        base.Apply(piece);
+        base.Apply(board, piece);
         
     }
 

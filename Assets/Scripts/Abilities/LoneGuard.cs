@@ -10,31 +10,30 @@ public class LoneGuard : Ability
     public LoneGuard() : base("Lone Guard", "+5 defense if defending with no support") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnAttack.AddListener(AddBonus);
-        Game._instance.OnAttackEnd.AddListener(RemoveBonus);
-        base.Apply(piece);
+        board.EventHub.OnAttack.AddListener(AddBonus);
+        board.EventHub.OnAttackEnd.AddListener(RemoveBonus);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnAttack.RemoveListener(AddBonus); 
-        Game._instance.OnAttackEnd.RemoveListener(RemoveBonus);
+        eventHub.OnAttack.RemoveListener(AddBonus); 
+        eventHub.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
-    public void AddBonus(Chessman cm, int support, bool isAttacking, BoardPosition targetedPosition){
-        if (cm==piece && support==0 && !isAttacking){
+    public void AddBonus(Chessman cm, int support, Tile targetedPosition){
+        if (cm==piece && support==0){
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Lone Guard</gradient></color>", "<color=green>+5 defense</color>");
-
-            piece.defenseBonus+=5;
+            piece.AddBonus(StatType.Defense, 5, abilityName);
         }
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if (defender==piece && defenseSupport==0)
-            piece.defenseBonus-=5;
+            piece.RemoveBonus(StatType.Defense, 5, abilityName);
     }
 
 }

@@ -9,12 +9,14 @@ public class TravelersGrace : Ability
     public TravelersGrace() : base("Traveler's Grace", "Can move to any open square, supports as normal, cannot attack") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
-        startingProfile=piece.moveProfile;
-        piece.moveProfile = new TravelersGraceMovement(startingProfile);
+        if(piece.abilities.Contains(this))
+            return;
+        startingProfile =piece.moveProfile;
+        piece.moveProfile = new TravelersGraceMovement(board, startingProfile);
         piece.info += " "+abilityName;
-        base.Apply(piece);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)

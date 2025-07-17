@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum Rarity
 {
@@ -15,14 +16,20 @@ public abstract class Ability : ScriptableObject
 {   
     public string abilityName;
     public string description;
+    protected Board board;
+    protected EventHub eventHub;
     public Sprite sprite;
     public int Cost = 10;
     public Rarity rarity;
+    
 
-    public virtual void Apply(Chessman piece){
+    public virtual void Apply(Board board, Chessman piece)
+    {
         //piece.releaseCost+= (int)(rarity + 1);
+        this.board = board;
+        this.eventHub = board.EventHub;
         piece.abilities.Add(this);
-        Game._instance.OnAbilityAdded.Invoke(piece, this);
+        eventHub.OnAbilityAdded.Invoke(piece, this);
     }
     public abstract void Remove(Chessman piece);
 

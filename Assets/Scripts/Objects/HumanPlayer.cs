@@ -7,18 +7,18 @@ public class HumanPlayer : Player
 {
     public HumanPlayer(List<GameObject> pieces) : base(pieces) { }
 
-    public override void Initialize()
+    public override void Initialize(Board board)
     {
-        //pieces = PieceFactory._instance.CreateWhitePieces(this);
-        openPositions = new List<BoardPosition>();
-        int startingRow;
-        if (pieces[0].GetComponent<Chessman>().startingPosition.y <= 2)
-            startingRow=2;
-        else
-            startingRow=7;
-            
-        for (int i =0; i<8; i++){
-            openPositions.Add(new BoardPosition(i,startingRow));
+        RarityWeights = new Dictionary<Rarity, int>()
+        {
+            { Rarity.Common, 80 },
+            { Rarity.Uncommon, 15 },
+            { Rarity.Rare, 5 }
+        };
+
+        for (int i = 0; i < board.Width; i++)
+        {
+            openPositions.Add(board.GetTileAt(i, 2));
         }
     }
 

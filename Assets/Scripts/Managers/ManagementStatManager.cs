@@ -1,4 +1,4 @@
-using System.Collections;
+/* using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -32,8 +32,9 @@ public class ManagementStatManager : MonoBehaviour
     public GameObject purchase;
     public GameObject GameStats;
     [SerializeField] GameObject PopUpCanvas;
+    [SerializeField] private Board Board;
 
-    public int diplomacyCost=10;
+    public int diplomacyCost = 10;
 
 
     // Start is called before the first frame update
@@ -56,10 +57,10 @@ public class ManagementStatManager : MonoBehaviour
     }
 
     public void Purchase(){
-        if(Game._instance.hero.playerCoins>=piece.releaseCost && Game._instance.hero.openPositions.Count>0){
-            Game._instance.hero.playerCoins-=piece.releaseCost;
-            Game._instance.hero.inventoryPieces.Add(piece.gameObject);
-            piece.owner=Game._instance.hero;
+        if(Board.Hero.playerCoins>=piece.releaseCost && Board.Hero.openPositions.Count>0){
+            Board.Hero.playerCoins-=piece.releaseCost;
+            Board.Hero.inventoryPieces.Add(piece.gameObject);
+            piece.owner=Board.Hero;
             ShopManager._instance.pieces.Remove(piece.gameObject);
             piece.gameObject.SetActive(false);
             ShopManager._instance.UpdateCurrency();
@@ -69,7 +70,6 @@ public class ManagementStatManager : MonoBehaviour
     public void SetAndShowStats(Chessman piece){
         ShopManager._instance.toggleCardColliders();
         PopUpCanvas.SetActive(true);
-        Game._instance.isInMenu=true;
         foreach(Transform child in infoBox.transform)
         {
             Destroy(child.gameObject);
@@ -131,48 +131,47 @@ public class ManagementStatManager : MonoBehaviour
     }
 
     public void AttackUp(){
-        if (Game._instance.hero.playerBlood >=1){
+        if (Board.Hero.playerBlood >=1){
             piece.attack+=1;
-            Game._instance.hero.playerBlood -=1;
+            Board.Hero.playerBlood -=1;
         }
         updateStats();
-        ArmyManager._instance.UpdateCurrency();
+        //ArmyManager._instance.UpdateCurrency();
         ShopManager._instance.UpdateCurrency();
     }
 
     public void DiplomacyUp(){
-        if (Game._instance.hero.playerCoins >=10){
+        if (Board.Hero.playerCoins >=10){
             piece.diplomacy+=1;
-            Game._instance.hero.playerCoins -=10;
+            Board.Hero.playerCoins -=10;
         }
         updateStats();
-        ArmyManager._instance.UpdateCurrency();
+        //ArmyManager._instance.UpdateCurrency();
         ShopManager._instance.UpdateCurrency();
     }
 
     public void DefenseUp(){
-        if (Game._instance.hero.playerBlood >=1){
+        if (Board.Hero.playerBlood >=1){
             piece.defense+=1;
-            Game._instance.hero.playerBlood -=1;
+            Board.Hero.playerBlood -=1;
         }
         updateStats();
-        ArmyManager._instance.UpdateCurrency();
+        //ArmyManager._instance.UpdateCurrency();
         ShopManager._instance.UpdateCurrency();
     }
 
     public void SupportUp(){
-        if (Game._instance.hero.playerBlood >=1){
+        if (Board.Hero.playerBlood >=1){
             piece.support+=1;
-            Game._instance.hero.playerBlood -=1;
+            Board.Hero.playerBlood -=1;
         }
         updateStats();
-        ArmyManager._instance.UpdateCurrency();
+        //ArmyManager._instance.UpdateCurrency();
         ShopManager._instance.UpdateCurrency();
     }
 
     public void HideStats(){
         gameObject.SetActive(false);
-        Game._instance.isInMenu=false;
         this.attack.text=string.Empty;
         this.defense.text=string.Empty;
         this.support.text=string.Empty;
@@ -183,3 +182,4 @@ public class ManagementStatManager : MonoBehaviour
     }
 
 }
+ */

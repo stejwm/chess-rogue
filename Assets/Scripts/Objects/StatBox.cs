@@ -33,6 +33,15 @@ public class StatBox : MonoBehaviour
         this.support.text = "<sprite name=\"cross\">: " + target.CalculateSupport();
         this.diplomacy.text = target.diplomacy.ToString();
         this.image.sprite = target.GetComponent<SpriteRenderer>().sprite;
+        attack.gameObject.GetComponent<StatInfo>().dictionary=target.AttackBonuses;
+        defense.gameObject.GetComponent<StatInfo>().dictionary=target.DefenseBonuses;
+        support.gameObject.GetComponent<StatInfo>().dictionary=target.SupportBonuses;
+        attack.gameObject.GetComponent<StatInfo>().baseStat=target.attack;
+        defense.gameObject.GetComponent<StatInfo>().baseStat=target.defense;
+        support.gameObject.GetComponent<StatInfo>().baseStat=target.support;
+        attack.gameObject.GetComponent<StatInfo>().total=target.CalculateAttack();
+        defense.gameObject.GetComponent<StatInfo>().total=target.CalculateDefense();
+        support.gameObject.GetComponent<StatInfo>().total=target.CalculateSupport();
         
 
         List<Ability> multiples = new List<Ability>();

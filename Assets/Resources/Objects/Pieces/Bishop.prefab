@@ -488,7 +488,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7515838367634678274}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -538,16 +538,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ecdf3fd8f7b2864f85e511ca24fa924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movePlate: {fileID: 7734472472800598565, guid: 7322ecef2e332e04aa5d5fa94c39ff49, type: 3}
+  uniqueId: 0
   xBoard: -1
   yBoard: -1
   owner: {fileID: 0}
+  startingPosition: {fileID: 0}
   droppingSprite: {fileID: 1531827606128784515, guid: eb45bdf5c2fcf674e84d21d577a8b000, type: 3}
   attackingSprite: {fileID: 3626916397498700004, guid: ad0f1024bf96fa24f84f3b0a695c69cd, type: 3}
   attack: 1
   defense: 1
   support: 1
   diplomacy: 1
+  gender: 0
+  age: 25
+  weight: 145
+  height: 184
   captures: 0
   captured: 0
   bounced: 0
@@ -570,8 +575,10 @@ MonoBehaviour:
   wasHexed: 0
   canStationarySlash: 0
   supportFloatingText: {fileID: 0}
+  validMoves: []
   blackSprite: {fileID: 21300000, guid: 29c9a6637c780b94d9a73a31c6b62944, type: 3}
   whiteSprite: {fileID: 21300000, guid: b20999c50b9d03f488d8824b11242727, type: 3}
+  isometricSprite: {fileID: 21300000, guid: c1c34bfac783c5546b18dbee1478daca, type: 3}
   effectsFeedback: {fileID: 452916992960119104}
   flames: {fileID: 6712348483069183006}
   highlightedParticles: {fileID: 6018831152314856774}

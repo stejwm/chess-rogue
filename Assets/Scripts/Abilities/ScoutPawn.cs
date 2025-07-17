@@ -10,20 +10,22 @@ public class ScoutPawn : Ability
     public ScoutPawn() : base("Scout (Pawn only)", "Moves like queen, attacks & supports like pawn") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
+        if(piece.abilities.Contains(this))
+            return;
         if (piece.type != PieceType.Pawn)
             return;
         startingProfile=piece.moveProfile;
         if (piece.abilities.OfType<Countermarch>().FirstOrDefault()!=null){
-            piece.moveProfile = new ScoutCounterMovement();
+            piece.moveProfile = new ScoutCounterMovement(board);
         }
         else{
-            piece.moveProfile = new ScoutPawnMovement();
+            piece.moveProfile = new ScoutPawnMovement(board);
         }
         
         piece.info += " "+abilityName;
-        base.Apply(piece);
+        base.Apply(board, piece);
         
     }
 

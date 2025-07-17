@@ -13,35 +13,37 @@ public class CriticalBlow : Ability
     public CriticalBlow() : base("Critical Blow", "10% chance of x2 attack") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnAttack.AddListener(AddBonus);
-        Game._instance.OnAttackEnd.AddListener(RemoveBonus);
-        base.Apply(piece);
+        board.EventHub.OnAttack.AddListener(AddBonus);
+        board.EventHub.OnAttackEnd.AddListener(RemoveBonus);
+        base.Apply(board, piece);
 
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnAttack.RemoveListener(AddBonus);
-        Game._instance.OnAttackEnd.RemoveListener(RemoveBonus);
+        eventHub.OnAttack.RemoveListener(AddBonus);
+        eventHub.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
-    public void AddBonus(Chessman attacker, int support, bool isAttacking, BoardPosition targetedPosition){
-        if (attacker==piece && isAttacking){
-            if (rng.Next(1,11)<=1){
-                attackBonus+= piece.CalculateAttack();
+    public void AddBonus(Chessman attacker, int support, Tile targetedPosition){
+        if (attacker == piece)
+        {
+            if (rng.Next(1, 11) <= 1)
+            {
+                attackBonus += piece.CalculateAttack();
                 piece.effectsFeedback.PlayFeedbacks();
-                AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Critical Blow</gradient></color>",  " x2");
+                AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Critical Blow</gradient></color>", " x2");
             }
-            piece.attackBonus+=attackBonus;
+            piece.AddBonus(StatType.Attack, attackBonus, abilityName);
         }
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int support, int defenseSupport){
         if (attacker==piece){
-            piece.attackBonus-=attackBonus;
+            piece.RemoveBonus(StatType.Attack, attackBonus, abilityName);
             attackBonus=0;
         }
     }

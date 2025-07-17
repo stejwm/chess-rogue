@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 public class QueenMovement : MovementProfile
 {
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture=false) {
+    public QueenMovement(Board board) : base(board) { }
+    public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture = false)
+    {
         if (allowFriendlyCapture)
-            return Movement.ValidQueenMoves(piece,piece.xBoard,piece.yBoard);
+            return Movement.ValidQueenMoves(board, piece, piece.xBoard, piece.yBoard);
         else
-            return Movement.RemoveFriendlyPieces(Movement.ValidQueenMoves(piece,piece.xBoard,piece.yBoard),piece);
-     }
-    public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
-        return Movement.ValidQueenMoves(piece,piece.xBoard,piece.yBoard);
+            return Movement.RemoveFriendlyPieces(board, Movement.ValidQueenMoves(board, piece, piece.xBoard, piece.yBoard), piece);
+    }
+    public override List<Tile> GetValidSupportMoves(Chessman piece){
+        return Movement.ValidQueenMoves(board,piece,piece.xBoard,piece.yBoard);
     }
     public override List<Vector2Int> GetDirections(Chessman piece)
     {

@@ -7,24 +7,21 @@ using UnityEngine;
 public class AttackOnlyMovement : MovementProfile
 {
     MovementProfile oldProfile;
-    Game game;
-    public AttackOnlyMovement(MovementProfile old){
-        oldProfile=old;
-    }
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
-        List<BoardPosition> moves = new List<BoardPosition>();
+    public AttackOnlyMovement(Board board, MovementProfile old) : base(board) {oldProfile = old;}
+    public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture) {
+        List<Tile> moves = new List<Tile>();
         var StandardMoves =oldProfile.GetValidMoves(piece);
         foreach (var position in StandardMoves)
         {
-            if (Game._instance.currentMatch.GetPieceAtPosition(position.x,position.y)!=null)
+            if (board.GetPieceAtPosition(position.X,position.Y)!=null)
                 moves.Add(position);
         }
         if (allowFriendlyCapture)
             return moves;
         else
-            return Movement.RemoveFriendlyPieces(moves,piece);
+            return Movement.RemoveFriendlyPieces(board, moves,piece);
     }
-    public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
+    public override List<Tile> GetValidSupportMoves( Chessman piece){
         return oldProfile.GetValidSupportMoves(piece);
     }
 

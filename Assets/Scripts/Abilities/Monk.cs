@@ -12,22 +12,22 @@ public class Monk : Ability
     private int defenseIncrease=0;
     private int supportIncrease=0;
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnRawMoveEnd.AddListener(RawMoveEnd);
-        Game._instance.OnAttack.AddListener(Check);
-        base.Apply(piece);
+        board.EventHub.OnRawMoveEnd.AddListener(RawMoveEnd);
+        board.EventHub.OnAttack.AddListener(Check);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnAttack.RemoveListener(Check); 
-        Game._instance.OnRawMoveEnd.RemoveListener(RawMoveEnd);
+        eventHub.OnAttack.RemoveListener(Check); 
+        eventHub.OnRawMoveEnd.RemoveListener(RawMoveEnd);
 
     }
-    public void RawMoveEnd(Chessman movedPiece, BoardPosition targetPosition){
+    public void RawMoveEnd(Chessman movedPiece, Tile targetPosition){
         if(movedPiece.color==piece.color && movedPiece!=piece){
             AddBonus(piece, null);
         }
@@ -35,33 +35,31 @@ public class Monk : Ability
             RemoveBonus(piece, null, 0, 0);
         }
     }
-    public void Check(Chessman movedPiece, int support, bool isAttacking, BoardPosition targetedPosition){
-        if(!isAttacking)
-            return;
+    public void Check(Chessman movedPiece, int support, Tile targetedPosition){
         if (movedPiece.color == piece.color && movedPiece!=piece){
             AddBonus(piece, null);
         }
         else if(movedPiece==piece && piece.canStationarySlash){
-            Game._instance.OnPieceBounced.AddListener(AddBonusBounce);
-            Game._instance.OnPieceCaptured.AddListener(AddBonus);
+            eventHub.OnPieceBounced.AddListener(AddBonusBounce);
+            eventHub.OnPieceCaptured.AddListener(AddBonus);
             
         }
         else if(movedPiece==piece){
-            Game._instance.OnAttackEnd.AddListener(RemoveBonus);
+            eventHub.OnAttackEnd.AddListener(RemoveBonus);
         }
     }
 
     public void RemoveBonus(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if(attacker==piece){
             Debug.Log("Removing monk bonus");
-            piece.attackBonus=Mathf.Max(-piece.attack, piece.attackBonus - attackIncrease);
-            piece.defenseBonus=Mathf.Max(-piece.defense, piece.defenseBonus - defenseIncrease);
-            piece.supportBonus=Mathf.Max(-piece.support, piece.supportBonus - supportIncrease);
-            attackIncrease=0;
+            piece.SetBonus(StatType.Attack, Mathf.Max(-piece.attack, piece.attackBonus - attackIncrease), abilityName);
+            piece.SetBonus(StatType.Defense, Mathf.Max(-piece.defense, piece.defenseBonus - defenseIncrease), abilityName);
+            piece.SetBonus(StatType.Support, Mathf.Max(-piece.support, piece.supportBonus - supportIncrease), abilityName);
+            attackIncrease =0;
             defenseIncrease=0;
             supportIncrease=0;
-            Game._instance.OnPieceBounced.RemoveListener(AddBonusBounce);
-            Game._instance.OnPieceCaptured.RemoveListener(AddBonus);
+            eventHub.OnPieceBounced.RemoveListener(AddBonusBounce);
+            eventHub.OnPieceCaptured.RemoveListener(AddBonus);
         }
     }
 
@@ -69,33 +67,33 @@ public class Monk : Ability
         if(attacker==piece){
             int s = Random.Range (0, 3);
             switch(s){
-                case 0: attackIncrease++; piece.attackBonus++; 
+                case 0: attackIncrease++; piece.AddBonus(StatType.Attack, 1, abilityName); 
                         //AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Monk</gradient></color>", $"<color=green>+1</color> attack");
                         break;
-                case 1: defenseIncrease++; piece.defenseBonus++; 
+                case 1: defenseIncrease++; piece.AddBonus(StatType.Defense, 1, abilityName); 
                         //AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Monk</gradient></color>", $"<color=green>+1</color> defense");
                         break;
-                case 2: supportIncrease++; piece.supportBonus++; 
+                case 2: supportIncrease++; piece.AddBonus(StatType.Support, 1, abilityName); 
                         //AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Monk</gradient></color>", $"<color=green>+1</color> support");
                         break;
 
             }
-            Game._instance.OnPieceBounced.RemoveListener(AddBonusBounce);
-            Game._instance.OnPieceCaptured.RemoveListener(AddBonus);
+            eventHub.OnPieceBounced.RemoveListener(AddBonusBounce);
+            eventHub.OnPieceCaptured.RemoveListener(AddBonus);
         }
     }
-    public void AddBonusBounce(Chessman attacker, Chessman defender, bool isReduced){
+    public void AddBonusBounce(Chessman attacker, Chessman defender){
         if(attacker==piece){
             piece.effectsFeedback.PlayFeedbacks();
             int s = Random.Range (0, 3);
             switch(s){
-                case 0: attackIncrease++; piece.attackBonus++; break;
-                case 1: defenseIncrease++; piece.defenseBonus++; break;
-                case 2: supportIncrease++; piece.supportBonus++; break;
+                case 0: attackIncrease++; piece.AddBonus(StatType.Attack, 1, abilityName); break;
+                case 1: defenseIncrease++; piece.AddBonus(StatType.Defense, 1, abilityName); break;
+                case 2: supportIncrease++; piece.AddBonus(StatType.Support, 1, abilityName); break;
 
             }
-            Game._instance.OnPieceBounced.RemoveListener(AddBonusBounce);
-            Game._instance.OnPieceCaptured.RemoveListener(AddBonus);
+            eventHub.OnPieceBounced.RemoveListener(AddBonusBounce);
+            eventHub.OnPieceCaptured.RemoveListener(AddBonus);
         }
     }
 

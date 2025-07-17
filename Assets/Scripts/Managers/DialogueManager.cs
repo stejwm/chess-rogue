@@ -24,7 +24,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject optionsContainer;
     [SerializeField] private GameObject optionButtonPrefab;
     [SerializeField] private SpriteRenderer speakerSprite;
-    private int dialogueIndex=0;
+    [SerializeField] private Board board;
+    private int dialogueIndex = 0;
     private Dialogue dialogue;
     private Dialogue.DialogueMessage currentMessage;
 
@@ -58,7 +59,7 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueBox.maxVisibleCharacters = 0;
         currentMessage = message;
-        dialogueBox.text = message.message.Replace("{name}", Game._instance.hero.name);
+        dialogueBox.text = message.message.Replace("{name}", board.Hero.name);
         
     }
 
@@ -116,13 +117,11 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         gameObject.SetActive(false);
-        Game._instance.isInMenu = false;
     }
 
     public void StartDialogue(Dialogue dialogue){
         this.gameObject.SetActive(true);
         ClearOptions();
-        Game._instance.isInMenu=true;
         speakerSprite.sprite = dialogue.sprite;
         dialogueIndex=0;
         this.dialogue=dialogue;
@@ -131,9 +130,9 @@ public class DialogueManager : MonoBehaviour
 
 
     public void EscapeeTeachings(){
-        if(Game._instance.hero.orders.Count>0){
-            Game._instance.hero.orders.RemoveAt(UnityEngine.Random.Range(0,Game._instance.hero.orders.Count));
-            foreach (var pieceObj in Game._instance.hero.pieces){
+        if(board.Hero.orders.Count>0){
+            board.Hero.orders.RemoveAt(UnityEngine.Random.Range(0,board.Hero.orders.Count));
+            foreach (var pieceObj in board.Hero.pieces){
                 var piece = pieceObj.GetComponent<Chessman>();
                 if (piece.type != PieceType.King && piece.type != PieceType.Queen)
                 {
@@ -145,9 +144,9 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void UpgradeAttack(){
-        if(Game._instance.hero.playerCoins>=75){
-            Game._instance.hero.playerCoins-=75;
-            foreach (var pieceObj in Game._instance.hero.pieces){
+        if(board.Hero.playerCoins>=75){
+            board.Hero.playerCoins-=75;
+            foreach (var pieceObj in board.Hero.pieces){
                 var piece = pieceObj.GetComponent<Chessman>();
                 piece.attack++;
             }
@@ -159,8 +158,8 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void UpgradeAttackCost(){
-        Game._instance.hero.playerCoins=0;
-        foreach (var pieceObj in Game._instance.hero.pieces){
+        board.Hero.playerCoins=0;
+        foreach (var pieceObj in board.Hero.pieces){
             var piece = pieceObj.GetComponent<Chessman>();
             piece.attack++;
         }
@@ -169,7 +168,7 @@ public class DialogueManager : MonoBehaviour
 
     public void DowngradeAttack(){
         
-        foreach (var pieceObj in Game._instance.hero.pieces){
+        foreach (var pieceObj in board.Hero.pieces){
             var piece = pieceObj.GetComponent<Chessman>();
             piece.attack--;
         }
@@ -178,8 +177,8 @@ public class DialogueManager : MonoBehaviour
 
     public void DowngradeAttackCost(){
         
-        Game._instance.hero.playerCoins=0;
-        foreach (var pieceObj in Game._instance.hero.pieces){
+        board.Hero.playerCoins=0;
+        foreach (var pieceObj in board.Hero.pieces){
             var piece = pieceObj.GetComponent<Chessman>();
             piece.attack--;
         }
@@ -187,12 +186,12 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void AddEscapee(){
-        var hero = Game._instance.hero;
-        var pieceObj = PieceFactory._instance.CreateAbilityPiece(
-                PieceType.Pawn, "s", -1, -1, PieceColor.White, Team.Hero, hero, Game._instance.AllAbilities[18].Clone());
+        var hero = board.Hero;
+        var pieceObj = PieceFactory._instance.CreateAbilityPiece(board,
+                PieceType.Pawn, "s", -1, -1, PieceColor.White,  hero, AbilityDatabase.Instance.GetAbilityByName("Betrayer"));
         hero.inventoryPieces.Add(pieceObj);
         Chessman piece = pieceObj.GetComponent<Chessman>();
-        piece.LevelUp(Game._instance.level+2);
+        piece.LevelUp(5);
     }
 
     public void LaunchEncounterDialogue(EncounterType encounterType){

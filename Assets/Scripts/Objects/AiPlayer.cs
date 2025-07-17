@@ -13,11 +13,11 @@ public class AIPlayer : Player
     {
         this.pieces=pieces;
     }
-    public override void Initialize()
+    public override void Initialize(Board board)
     {
         agent.pieces=pieces;
         agent.StartUp();
-        openPositions = new List<BoardPosition>();
+        openPositions = new List<Tile>();
     }
 
     public override void CreateMoveCommandDictionary(){
@@ -45,7 +45,7 @@ public class AIPlayer : Player
     }
 
     public IEnumerator Move(){
-        yield return new WaitForSeconds(Game._instance.waitTime);
+        yield return new WaitForSeconds(Settings._instance.WaitTime);
         Debug.Log("Requested move from "+color);
         agent.RequestDecision();
     }

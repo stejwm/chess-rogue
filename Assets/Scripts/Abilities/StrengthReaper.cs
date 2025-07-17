@@ -11,27 +11,27 @@ public class StrengthReaper : Ability
     public StrengthReaper() : base("Strength Reaper", "Reduces attacks by half when defending") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnAttackStart.AddListener(AddBonus);
-        Game._instance.OnAttackEnd.AddListener(RemoveBonus);
-        base.Apply(piece);
+        board.EventHub.OnAttackStart.AddListener(AddBonus);
+        board.EventHub.OnAttackEnd.AddListener(RemoveBonus);
+        base.Apply(board, piece);
 
         
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnAttackStart.RemoveListener(AddBonus); 
-        Game._instance.OnAttackEnd.RemoveListener(RemoveBonus); 
+        eventHub.OnAttackStart.RemoveListener(AddBonus); 
+        eventHub.OnAttackEnd.RemoveListener(RemoveBonus); 
 
     }
     public void AddBonus(Chessman attacker, Chessman defender){
         if(piece==defender){
             bonus = attacker.CalculateAttack()/2;
-            attacker.attackBonus-= bonus;
+            attacker.RemoveBonus(StatType.Attack, bonus, abilityName);
              piece.effectsFeedback.PlayFeedbacks();
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Strength Reaper</gradient></color>", $" attack reduced by <color=red>-{bonus}</color>");
         
@@ -39,7 +39,7 @@ public class StrengthReaper : Ability
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int support, int defenseSupport){
         if (defender==piece)
-            attacker.attackBonus+=bonus;
+            attacker.AddBonus(StatType.Attack, bonus, abilityName);
     }
 
 }

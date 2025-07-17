@@ -11,32 +11,29 @@ public class RescueMission : KingsOrder
 {
     public RescueMission() : base("Rescue Mission", "Place a captured piece on the board") {}
 
-    public override IEnumerator Use(){
-        Player hero = Game._instance.hero;
-        Game._instance.tileSelect=true;
+    public override IEnumerator Use(Board board)
+    {
+        Player hero = board.Hero;
         bool gotSomething=false;
-        foreach (var piece in Game._instance.currentMatch.black.capturedPieces)
+        foreach (var piece in board.CurrentMatch.black.capturedPieces)
         {
-            if(BoardManager._instance.GetTileAt(piece.GetComponent<Chessman>().xBoard, piece.GetComponent<Chessman>().yBoard).getPiece()==null){
+            if(board.GetPieceAtPosition(piece.GetComponent<Chessman>().xBoard, piece.GetComponent<Chessman>().yBoard)==null){
                 piece.SetActive(true);
                 piece.GetComponent<SpriteRenderer>().color=Color.red;
                 gotSomething=true;
             }
-            Game._instance.togglePieceColliders(Game._instance.currentMatch.black.capturedPieces, false);
         }
         if(!gotSomething){
-            Game._instance.currentMatch.SetPiecesValidForAttack(hero);
-            Game._instance.tileSelect=false;
+            board.CurrentMatch.SetPiecesValidForAttack(hero);
             yield break;
         }
-        yield return new WaitUntil(() => BoardManager._instance.selectedPosition !=null);
-        Game._instance.tileSelect=false;
-        BoardPosition targetPosition = BoardManager._instance.selectedPosition;
-        BoardManager._instance.selectedPosition= null;
+        yield return new WaitUntil(() => board.selectedPosition !=null);
+        Tile targetPosition = board.selectedPosition;
+        board.selectedPosition= null;
         GameObject rescuedPiece = null;
-        foreach (var piece in Game._instance.currentMatch.black.capturedPieces)
+        foreach (var piece in board.CurrentMatch.black.capturedPieces)
         {
-            if(targetPosition.x == piece.GetComponent<Chessman>().xBoard && targetPosition.y == piece.GetComponent<Chessman>().yBoard){
+            if(targetPosition.X == piece.GetComponent<Chessman>().xBoard && targetPosition.Y == piece.GetComponent<Chessman>().yBoard){
                 rescuedPiece = piece;
                 piece.GetComponent<Chessman>().GetComponent<SpriteRenderer>().color=Color.white;
 
@@ -45,15 +42,12 @@ public class RescueMission : KingsOrder
                 piece.SetActive(false);
             }
         }
-        Game._instance.currentMatch.MovePiece(rescuedPiece.GetComponent<Chessman>(), targetPosition.x, targetPosition.y);
-        
-        Game._instance.currentMatch.black.capturedPieces.Remove(rescuedPiece);
-        Game._instance.hero.pieces.Add(rescuedPiece);
-        Game._instance.togglePieceColliders(Game._instance.currentMatch.black.capturedPieces, true);
+        board.CurrentMatch.MovePiece(rescuedPiece.GetComponent<Chessman>(), targetPosition.X, targetPosition.Y);
 
-        
-        //Game._instance.togglePieceColliders(civilians, false);
-        Game._instance.currentMatch.SetPiecesValidForAttack(hero);
+        board.CurrentMatch.black.capturedPieces.Remove(rescuedPiece);
+        board.Hero.pieces.Add(rescuedPiece);
+        board.CurrentMatch.SetPiecesValidForAttack(hero);
+        yield return null;
     }
 
 }

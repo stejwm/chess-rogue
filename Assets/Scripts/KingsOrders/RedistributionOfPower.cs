@@ -7,10 +7,10 @@ public class RedistributionOfPower : KingsOrder
 {
 
     public RedistributionOfPower() : base("Redistribution Of Power", "Sets each stat of all your pieces to average of each stat across all your pieces") {}
-    public override IEnumerator Use()
+    public override IEnumerator Use(Board board)
     {
     
-        List<GameObject> allPieces = Game._instance.hero.pieces; // Assuming this gets all active pieces
+        List<GameObject> allPieces = board.Hero.pieces; // Assuming this gets all active pieces
 
         if (allPieces.Count == 0) yield break;
 

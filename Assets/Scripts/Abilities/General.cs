@@ -15,23 +15,23 @@ public class General : Ability
     
     public General() : base("General", "+1 to all knights, bonus increases for each knight added") {}
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
         if(piece.type!=PieceType.Knight)
             return;
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceAdded.AddListener(PieceAdded);
-        Game._instance.OnChessMatchStart.AddListener(ApplyBonus);
+        board.EventHub.OnPieceAdded.AddListener(PieceAdded);
+        board.EventHub.OnChessMatchStart.AddListener(ApplyBonus);
         CreateGeneral();
-        base.Apply(piece);
+        base.Apply(board, piece);
         piece.OnChessmanStateChanged += HandleChessmanStateChanged;
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceAdded.RemoveListener(PieceAdded);
-        Game._instance.OnChessMatchStart.RemoveListener(ApplyBonus);
+        eventHub.OnPieceAdded.RemoveListener(PieceAdded);
+        eventHub.OnChessMatchStart.RemoveListener(ApplyBonus);
         piece.OnChessmanStateChanged -= HandleChessmanStateChanged;
         ResetBonus();
     }
@@ -63,9 +63,9 @@ public class General : Ability
                 if (appliedBonus.ContainsKey(cm))
                 {
                     var currentlyAppliedBonus = appliedBonus[cm];
-                    cm.attackBonus += bonus;
-                    cm.defenseBonus += bonus;
-                    cm.supportBonus += bonus;
+                    cm.AddBonus(StatType.Attack,bonus, abilityName);
+                    cm.AddBonus(StatType.Defense,bonus, abilityName);
+                    cm.AddBonus(StatType.Support,bonus, abilityName);
                     appliedBonus[cm] = bonus;
                 }else{
                     Debug.Log($"Untracked knight {cm.name} not in dictionary or destroyed while adding");
@@ -82,9 +82,9 @@ public class General : Ability
                 if (appliedBonus.ContainsKey(cm))
                 {
                     var currentlyAppliedBonus = appliedBonus[cm];
-                    cm.attackBonus = Mathf.Max(-cm.attack, cm.attackBonus - currentlyAppliedBonus);
-                    cm.defenseBonus = Mathf.Max(-cm.defense, cm.defenseBonus - currentlyAppliedBonus);
-                    cm.supportBonus = Mathf.Max(-cm.support, cm.supportBonus - currentlyAppliedBonus);
+                    cm.SetBonus(StatType.Attack, Mathf.Max(-cm.attack, cm.attackBonus - currentlyAppliedBonus), abilityName);
+                    cm.SetBonus(StatType.Defense, Mathf.Max(-cm.defense, cm.defenseBonus - currentlyAppliedBonus), abilityName);
+                    cm.SetBonus(StatType.Support, Mathf.Max(-cm.support, cm.supportBonus - currentlyAppliedBonus), abilityName);
                     appliedBonus[cm] = 0;
                 }else{
                     Debug.Log($"Untracked knight {cm.name} not in dictionary or destroyed while removing");

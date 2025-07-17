@@ -36,7 +36,7 @@ public class AbilityLogger : MonoBehaviour
         }
         currentlyLogging=true;
         StartCoroutine(ShowAbilityAndLog(queue.Peek().Item1, queue.Peek().Item2));
-        yield return new WaitForSeconds(Game._instance.waitTime);
+        yield return new WaitForSeconds(Settings._instance.WaitTime);
         queue.Dequeue();
         currentlyLogging=false;
         if(queue.Count>0){
@@ -45,9 +45,7 @@ public class AbilityLogger : MonoBehaviour
     }
     public void AddLogToQueue(string abilityName, string message)
     {
-        if(Game._instance.state!=ScreenState.ActiveMatch){
-            return;
-        }
+    
         queue.Enqueue(new Tuple<string, string>(abilityName, message));
         StartCoroutine(HandleQueue());
     }
@@ -72,6 +70,6 @@ public class AbilityLogger : MonoBehaviour
 
     private void AddLogMessage(string message)
     {
-        LogManager._instance.WriteLog(message);
+        //LogManager._instance.WriteLog(message);
     }
 }

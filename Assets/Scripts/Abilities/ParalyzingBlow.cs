@@ -10,22 +10,24 @@ public class ParalyzingBlow : Ability
     public ParalyzingBlow() : base("Paralyzing Blow", "When bounced, prevents the defender from moving next turn") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
+        if(piece.abilities.Contains(this))
+            return;
         this.piece = piece;
         piece.info += " " + abilityName;
-        Game._instance.OnPieceBounced.AddListener(Paralyze);
-        base.Apply(piece);
+        board.EventHub.OnPieceBounced.AddListener(Paralyze);
+        base.Apply(board, piece);
 
         
     }
 
     public override void Remove(Chessman piece)
     {
-        Game._instance.OnPieceBounced.RemoveListener(Paralyze); 
+        eventHub.OnPieceBounced.RemoveListener(Paralyze); 
 
     }
-    public void Paralyze(Chessman attacker, Chessman defender, bool isBounceReduced){
+    public void Paralyze(Chessman attacker, Chessman defender){
         if (attacker==piece){
             defender.paralyzed=true;
             piece.effectsFeedback.PlayFeedbacks();

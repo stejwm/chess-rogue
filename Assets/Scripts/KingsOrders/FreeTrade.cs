@@ -7,9 +7,9 @@ public class FreeTrade : KingsOrder
 
     public FreeTrade() : base("Free Trade", "Sets reroll cost to 0, increases additional rerolls cost by +1") {}
 
-    public override IEnumerator Use(){
-        ShopManager._instance.rerollCost=0;
-        ShopManager._instance.rerollCostIncrease++;
+    public override IEnumerator Use(Board board){
+        board.RerollCost=0;
+        board.RerollCostIncrease++;
         yield return null;
     }
 

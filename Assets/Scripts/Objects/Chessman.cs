@@ -7,11 +7,23 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using System.Linq;
+using UnityEngine.UI;
 
 public enum Team
 {
     Enemy,
     Hero,
+}
+public enum Gender
+{
+    Male,
+    Female,
+}
+public enum StatType
+{
+    Attack,
+    Defense,
+    Support
 }
 public enum PieceColor
 {
@@ -31,17 +43,17 @@ public enum PieceType
     None,
     Jester,
 }
-public abstract class Chessman : MonoBehaviour
+public abstract class Chessman : MonoBehaviour, IInteractable
 {
     private static int nextId = 0; // Auto-incrementing counter
 
-    
+
     public int uniqueId;
     public int xBoard = -1;
     public int yBoard = -1;
     public Player owner;
 
-    public BoardPosition startingPosition;
+    public Tile startingPosition;
     public MovementProfile moveProfile;
     protected Sprite sprite;
 
@@ -52,6 +64,10 @@ public abstract class Chessman : MonoBehaviour
     public int defense = 1;
     public int support = 1;
     public int diplomacy = 1;
+    public Gender gender = Gender.Male;
+    public int age = 25;
+    public int weight = 145;
+    public int height = 184;
 
     public int captures = 0;
     public int captured = 0;
@@ -71,50 +87,118 @@ public abstract class Chessman : MonoBehaviour
     public Team team;
     public PieceType type;
     public List<Ability> abilities;
-    public bool isValidForAttack =false;
-    public bool paralyzed=false;
-    public bool hexed=false;
-    public bool wasHexed=false;
-    public bool canStationarySlash =false;
+    public bool isValidForAttack = false;
+    public bool paralyzed = false;
+    public bool hexed = false;
+    public bool wasHexed = false;
+    public bool canStationarySlash = false;
 
     public MMF_Player supportFloatingText;
 
-    //public AbilityManager abilityManager; 
+    public Dictionary<string, int> AttackBonuses { get => attackBonuses; set => attackBonuses = value; }
+    public Dictionary<string, int> DefenseBonuses { get => defenseBonuses; set => defenseBonuses = value; }
+    public Dictionary<string, int> SupportBonuses { get => supportBonuses; set => supportBonuses = value; }
 
-
-    public List<BoardPosition> validMoves = new List<BoardPosition>();
-
-    //Variable for keeping track of the player it belongs to "black" or "white"
-    private string player;
-
-    //References to all the possible Sprites that this Chesspiece could be
+    public List<Tile> validMoves = new List<Tile>();
     public Sprite blackSprite;
     public Sprite whiteSprite;
+    public Sprite isometricSprite;
 
     public MMF_Player effectsFeedback;
     public ParticleSystem flames;
     public ParticleSystem highlightedParticles;
     public ParticleSystem hexedParticles;
+    private Dictionary<string, int> attackBonuses = new Dictionary<string, int>();
+    private Dictionary<string, int> defenseBonuses = new Dictionary<string, int>();
+    private Dictionary<string, int> supportBonuses = new Dictionary<string, int>();
 
-    public abstract List<BoardPosition> GetValidMoves();
-    public abstract List<BoardPosition> GetValidSupportMoves();
+    public abstract List<Tile> GetValidMoves();
+    public abstract List<Tile> GetValidSupportMoves();
+    public abstract void Initialize(Board board);
     public event Action<bool> OnChessmanStateChanged;
 
     protected virtual void Awake()
     {
         uniqueId = nextId++; // Assign unique ID and increment counter
     }
-    public int CalculateSupport(){
-        return support+supportBonus;
+    public int CalculateSupport()
+    {
+        return support + supportBonus;
     }
-    public int CalculateAttack(){
-        return attack+attackBonus;
+    public int CalculateAttack()
+    {
+        return attack + attackBonus;
     }
-    public int CalculateDefense(){
-        return defense+defenseBonus;
+    public int CalculateDefense()
+    {
+        return defense + defenseBonus;
     }
-    public void SetValidMoves(){
-        validMoves=GetValidMoves();
+    public void SetValidMoves()
+    {
+        validMoves = GetValidMoves();
+    }
+
+    public void AddBonus(StatType stat, int value, string source)
+    {
+        switch (stat)
+        {
+            case StatType.Attack:
+                AttackBonuses[source] = AttackBonuses.GetValueOrDefault(source) + value;
+                attackBonus += value;
+                break;
+            case StatType.Defense:
+                DefenseBonuses[source] = DefenseBonuses.GetValueOrDefault(source) + value;
+                defenseBonus += value;
+                break;
+            case StatType.Support:
+                SupportBonuses[source] = SupportBonuses.GetValueOrDefault(source) + value;
+                supportBonus += value;
+                break;
+        }
+    }
+    public void RemoveBonus(StatType stat, int value, string source)
+    {
+        switch (stat)
+        {
+            case StatType.Attack:
+                AttackBonuses[source] = AttackBonuses.GetValueOrDefault(source) - value;
+                attackBonus -= value;
+                break;
+            case StatType.Defense:
+                DefenseBonuses[source] = DefenseBonuses.GetValueOrDefault(source) - value;
+                defenseBonus -= value;
+                break;
+            case StatType.Support:
+                SupportBonuses[source] = SupportBonuses.GetValueOrDefault(source) - value;
+                supportBonus -= value;
+                break;
+        }
+    }
+    public void SetBonus(StatType stat, int value, string source)
+    {
+        int originalValue; 
+        int difference;
+        switch (stat)
+        {
+            case StatType.Attack:
+                originalValue = attackBonus;
+                difference = value - originalValue;
+                AttackBonuses[source] = AttackBonuses.GetValueOrDefault(source) + difference;
+                attackBonus = value;
+                break;
+            case StatType.Defense:
+                originalValue = defenseBonus;
+                difference = value - originalValue;
+                DefenseBonuses[source] = DefenseBonuses.GetValueOrDefault(source) + difference;
+                defenseBonus = value;
+                break;
+            case StatType.Support:
+                originalValue = supportBonus;
+                difference = value - originalValue;
+                SupportBonuses[source] = SupportBonuses.GetValueOrDefault(source) + difference;
+                supportBonus = value;
+                break;
+        }
     }
     public void SetUniqueId(int id) // Allow manual ID assignment in specific cases
     {
@@ -132,20 +216,24 @@ public abstract class Chessman : MonoBehaviour
     }
     public void Activate()
     {
-        //Take the instantiated location and adjust transform
+        Debug.Log("Activating Chessman: " + this.name);
         UpdateUIPosition();
         switch (this.color)
         {
-            case PieceColor.White: this.GetComponent<SpriteRenderer>().sprite = whiteSprite; player = "white"; break;
-            case PieceColor.Black: this.GetComponent<SpriteRenderer>().sprite = blackSprite; player = "black"; break;
+            case PieceColor.White: this.GetComponent<SpriteRenderer>().sprite = whiteSprite; break;
+            case PieceColor.Black: this.GetComponent<SpriteRenderer>().sprite = blackSprite; break;
         }
-        
-        
+
+
     }
-    public void ResetBonuses(){
-        this.attackBonus=0;
-        this.defenseBonus=0;
-        this.supportBonus=0;
+    public void ResetBonuses()
+    {
+        this.attackBonus = 0;
+        this.defenseBonus = 0;
+        this.supportBonus = 0;
+        AttackBonuses.Clear();
+        DefenseBonuses.Clear();
+        SupportBonuses.Clear();
     }
 
     public void UpdateUIPosition()
@@ -162,36 +250,14 @@ public abstract class Chessman : MonoBehaviour
         x += -3.33f;
         y += -3.33f;
 
-        //Debug.Log("positions: "+x+","+y);
         //Set actual unity values
-         if(this.transform.position == new Vector3(x, y, -1.0f))
+        if (this.transform.position == new Vector3(x, y, -1.0f))
             this.GetComponent<MMSpringPosition>().BumpRandom();
         else
             this.GetComponent<MMSpringPosition>().MoveTo(new Vector3(x, y, -1.0f));
-        //this.transform.position = new Vector3(x, y, -1.0f);
     }
 
-    public int GetXBoard()
-    {
-        return xBoard;
-    }
-
-    public int GetYBoard()
-    {
-        return yBoard;
-    }
-
-    public void SetXBoard(int x)
-    {
-        xBoard = x;
-    }
-
-    public void SetYBoard(int y)
-    {
-        yBoard = y;
-    }
-
-    public void AddAbility(Ability ability)
+    public void AddAbility(Board board, Ability ability)
     {
         Betrayer betrayerAbility = abilities.OfType<Betrayer>().FirstOrDefault();
         bool hadBetrayer = betrayerAbility != null;
@@ -200,26 +266,26 @@ public abstract class Chessman : MonoBehaviour
             betrayerAbility.Remove(this);
             abilities.Remove(betrayerAbility);
         }
-        ability.Apply(this);
+        ability.Apply(board, this);
 
         if (hadBetrayer)
         {
-            betrayerAbility.Apply(this);
+            betrayerAbility.Apply(board, this);
         }
     }
-
+    /*
     private void OnMouseDown()
     {
-        if (Game._instance.isInMenu || Game._instance.applyingAbility)
+        if (GameManager._instance.isInMenu || GameManager._instance.applyingAbility)
         {
             return;
         }
-        if (Game._instance.currentMatch !=null  && Game._instance.currentMatch.isSetUpPhase && Game._instance.hero.inventoryPieces.Contains(this.gameObject))
+        if (board.CurrentMatch != null && board.CurrentMatch.isSetUpPhase && GameManager._instance.hero.inventoryPieces.Contains(this.gameObject))
         {
             HandlePiecePlacement();
             return;
         }
-        switch (Game._instance.state)
+        switch (GameManager._instance.state)
         {
             case ScreenState.RewardScreen:
                 HandleRewardScreenClick();
@@ -239,16 +305,16 @@ public abstract class Chessman : MonoBehaviour
     }
 
     public void HandleRewardScreenClick(){        
-        Game._instance.PieceSelected(this);
+        GameManager._instance.PieceSelected(this);
     }
     public void HandleShopClick(){   
         if(this.owner==null) 
             ManagementStatManager._instance.SetAndShowStats(this);     
         else 
-            if (Game._instance.selectedCard==null)
+            if (GameManager._instance.selectedCard==null)
                 ManagementStatManager._instance.SetAndShowStats(this); 
             else
-                Game._instance.PieceSelected(this);
+                GameManager._instance.PieceSelected(this);
     }
     public void HandleManagementClick(){        
         ArmyManager._instance.PieceSelect(this);
@@ -259,15 +325,15 @@ public abstract class Chessman : MonoBehaviour
     }
 
     public void HandlePiecePlacement(){        
-        BoardManager._instance.SelectPieceToPlace(this);
+        //.SelectPieceToPlace(this);
     }
 
-    public List<BoardPosition> DisplayValidMoves(){
-        List<BoardPosition> theseValidMoves=new List<BoardPosition>();
+    public List<Tile> DisplayValidMoves(){
+        List<Tile> theseValidMoves=new List<Tile>();
 
         foreach (var coordinate in validMoves)
         {
-            if (Game._instance.PositionOnBoard(coordinate.x, coordinate.y))
+            if (BoardPosition.IsPositionOnBoard(coordinate.x, coordinate.y))
             {
                 SetTileValidMove(coordinate.x, coordinate.y);
                 theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
@@ -276,14 +342,14 @@ public abstract class Chessman : MonoBehaviour
         return theseValidMoves;
     }
 
-    public List<BoardPosition>GetAllValidMoves(){
-        List<BoardPosition> theseValidMoves=new List<BoardPosition>();
+    public List<Tile>GetAllValidMoves(){
+        List<Tile> theseValidMoves=new List<Tile>();
 
         foreach (var coordinate in validMoves)
         {
-            if (Game._instance.PositionOnBoard(coordinate.x, coordinate.y))
+            if (BoardPosition.IsPositionOnBoard(coordinate.x, coordinate.y))
             {
-                GameObject cp = Game._instance.currentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
+                GameObject cp = board.CurrentMatch.GetPieceAtPosition(coordinate.x, coordinate.y);
                 if (cp == null)
                 {
                     theseValidMoves.Add(new BoardPosition(coordinate.x, coordinate.y));
@@ -296,46 +362,21 @@ public abstract class Chessman : MonoBehaviour
         }
         return theseValidMoves;
     }
-     public void PointMovePlate(int x, int y)
-    {
-        if (Game._instance.PositionOnBoard(x, y))
-        {
-            GameObject cp = Game._instance.currentMatch.GetPieceAtPosition(x, y);
-
-            if (cp == null)
-            {
-                SetTileValidMove(x, y);
-            }
-            else if (cp.GetComponent<Chessman>().player != player)
-            {
-                SetTileValidMove(x, y);
-            }
-        }
-    } 
-
-    public void showSupportFloatingText(){
-        supportFloatingText.PlayFeedbacks();
-    }
-
-     public void SetTileValidMove(int x, int y)
-    {
-        BoardManager._instance.SetActiveTile(this, new BoardPosition(x,y));
-    } 
 
     private void OnMouseEnter(){
-        if (Game._instance.isInMenu)
+        if (GameManager._instance.isInMenu)
         {
             return;
         }
-        if(Game._instance.state==ScreenState.PrisonersMarket)
+        if(GameManager._instance.state==ScreenState.PrisonersMarket)
             PopUpManager._instance.SetAndShowValues(this);
         StatBoxManager._instance.SetAndShowStats(this);
     } 
 
     private void OnMouseExit(){
-        if(Game._instance.state==ScreenState.PrisonersMarket)
+        if(GameManager._instance.state==ScreenState.PrisonersMarket)
             PopUpManager._instance.HideValues();
-    }
+    }*/
 
     public override bool Equals(object obj)
     {
@@ -351,28 +392,59 @@ public abstract class Chessman : MonoBehaviour
         return uniqueId.GetHashCode();
     }
 
-    public void LevelUp(int level){
-        for (int i =0; i<level; i++)
-            switch (UnityEngine.Random.Range(0,3)){
+    public void LevelUp(int level)
+    {
+        for (int i = 0; i < level; i++)
+            switch (UnityEngine.Random.Range(0, 3))
+            {
                 case 0:
-                    defense+=1;
+                    defense += 1;
                     break;
                 case 1:
-                    attack+=1;
+                    attack += 1;
                     break;
                 case 2:
-                    support+=1;
+                    support += 1;
                     break;
             }
-            
+
     }
 
     public void DestroyPiece()
     {
         owner.openPositions.Add(this.startingPosition);
         owner.pieces.Remove(this.gameObject);
-        foreach(var ability in abilities)
+        foreach (var ability in abilities)
             ability.Remove(this);
         Destroy(this.gameObject);
+    }
+
+    public void OnClick(Board board)
+    {
+        switch (board.BoardState)
+        {
+            case BoardState.PrisonersMarket:
+                break;
+            case BoardState.ShopScreen:
+                break;
+            case BoardState.ManagementScreen:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void OnRightClick(Board board)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnHover(Board board)
+    {
+        Debug.Log($"Nothing good here yet, or maybe at all?");
+    }
+
+    public void OnHoverExit(Board board)
+    {
     }
 }

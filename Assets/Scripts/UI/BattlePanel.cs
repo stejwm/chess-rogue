@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +9,6 @@ using UnityEngine.UI;
 
 public class BattlePanel : MonoBehaviour
 {
-    
-    public static BattlePanel _instance;
     public TMP_Text heroAttack;
     public TMP_Text heroDefense;
     public TMP_Text heroSupport;
@@ -22,37 +22,59 @@ public class BattlePanel : MonoBehaviour
     public TMP_Text enemyPieceName;
     public TMP_Text result;
     public GameObject enemyImage;
+
+    [SerializeField] private MMF_Player feedback;
+
+    public MMF_Player Feedback { get => feedback; set => feedback = value; }
+
     // Start is called before the first frame update
-    void Awake()
-    {
-        if(_instance !=null && _instance !=this){
-            Destroy(this.gameObject);
-        }
-        else{
-            _instance=this;
-        }
-    }
 
     void Start(){
         Cursor.visible=true;
         gameObject.SetActive(false);
     }
-    public void SetAndShowAttackingStats(string attack, string support, string total, string name, GameObject sprite, string enemyAttack, string enemySupport, string enemyTotal, string enemyPieceName, GameObject enemySprite){
+    public void DropIn(string name, GameObject sprite, string enemyPieceName, GameObject enemySprite, bool heroIsAttacking, Chessman white, Chessman black)
+    {
         gameObject.SetActive(true);
-        this.heroAttack.text="attack: ";
-        this.heroSupport.text="support: ";
-        this.heroTotal.text="total: ";
-        this.heroPieceName.text=name;
-        this.heroImage.transform.localPosition=new Vector3(-687,0,0);
-        this.heroImage.GetComponent<SpriteRenderer>().sprite=sprite.GetComponent<SpriteRenderer>().sprite;
-        this.heroImage.GetComponent<Animator>().runtimeAnimatorController=sprite.GetComponent<Animator>().runtimeAnimatorController;
-        this.enemyAttack.text=" :defense";
-        this.enemySupport.text=" :support";
-        this.enemyTotal.text=" :total";
-        this.enemyPieceName.text=enemyPieceName;
-        this.enemyImage.transform.localPosition=new Vector3(687,0,0);
-        this.enemyImage.GetComponent<SpriteRenderer>().sprite=enemySprite.GetComponent<SpriteRenderer>().sprite;
-        this.enemyImage.GetComponent<Animator>().runtimeAnimatorController=enemySprite.GetComponent<Animator>().runtimeAnimatorController;
+        
+        if (heroIsAttacking)
+            this.heroAttack.text = "attack: ";
+        else
+            this.heroAttack.text = "defense: ";
+
+        this.heroSupport.text = "support: ";
+        this.heroTotal.text = "total: ";
+        this.heroPieceName.text = name;
+        this.heroImage.transform.localPosition = new Vector3(-687, 0, 0);
+        this.heroImage.GetComponent<SpriteRenderer>().sprite = sprite.GetComponent<SpriteRenderer>().sprite;
+        this.heroImage.GetComponent<Animator>().runtimeAnimatorController = sprite.GetComponent<Animator>().runtimeAnimatorController;
+        if (white.type == PieceType.Knight)
+            heroImage.GetComponent<SpriteRenderer>().flipX=true;
+        else
+            heroImage.GetComponent<SpriteRenderer>().flipX=false;
+        if (heroIsAttacking)
+        {
+            this.heroImage.GetComponent<Animator>().SetTrigger("AttackTrigger");
+        }
+
+        if (heroIsAttacking)
+            this.enemyAttack.text = " :defense";
+        else
+            this.enemyAttack.text = " :attack";
+        this.enemySupport.text = " :support";
+        this.enemyTotal.text = " :total";
+        this.enemyPieceName.text = enemyPieceName;
+        this.enemyImage.transform.localPosition = new Vector3(687, 0, 0);
+        this.enemyImage.GetComponent<SpriteRenderer>().sprite = enemySprite.GetComponent<SpriteRenderer>().sprite;
+        this.enemyImage.GetComponent<Animator>().runtimeAnimatorController = enemySprite.GetComponent<Animator>().runtimeAnimatorController;
+        if (black.type != PieceType.Knight)
+            enemyImage.GetComponent<SpriteRenderer>().flipX=true;
+        else
+            enemyImage.GetComponent<SpriteRenderer>().flipX=false;
+        if (!heroIsAttacking)
+        {
+            this.enemyImage.GetComponent<Animator>().SetTrigger("AttackTrigger");
+        }
 
     }
 
@@ -86,25 +108,6 @@ public class BattlePanel : MonoBehaviour
         SpawnsBonusPopups.Instance.BonusAdded(total, this.enemyTotal.transform.position,pitch);
         this.enemyTotal.text=total+ this.enemyTotal.text;
         
-    }
-
-    public void SetAndShowDefendingStats(string attack, string support, string total, string name, GameObject sprite, string enemyAttack, string enemySupport, string enemyTotal, string enemyPieceName, GameObject enemySprite){
-        gameObject.SetActive(true);
-        this.heroAttack.text="defense: ";
-        this.heroSupport.text="support: ";
-        this.heroTotal.text="total: ";
-        this.heroPieceName.text=name;
-        this.heroImage.transform.localPosition=new Vector3(-687,0,0);
-        this.heroImage.GetComponent<SpriteRenderer>().sprite=sprite.GetComponent<SpriteRenderer>().sprite;
-        this.heroImage.GetComponent<Animator>().runtimeAnimatorController=sprite.GetComponent<Animator>().runtimeAnimatorController;
-        this.enemyAttack.text=" :attack";
-        this.enemySupport.text=" :support";
-        this.enemyTotal.text=" :total";
-        this.enemyPieceName.text=enemyPieceName;
-        this.enemyImage.transform.localPosition=new Vector3(687,0,0);
-        this.enemyImage.GetComponent<SpriteRenderer>().sprite=enemySprite.GetComponent<SpriteRenderer>().sprite;
-        this.enemyImage.GetComponent<Animator>().runtimeAnimatorController=enemySprite.GetComponent<Animator>().runtimeAnimatorController;
-
     }
 
     public void SetAndShowResults(string result){

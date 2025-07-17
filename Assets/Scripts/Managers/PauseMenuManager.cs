@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using CI.QuickSave;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -7,23 +9,17 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    public static PauseMenuManager _instance;
     public AudioSource audioSource;
-    void Awake()
-    {
-        
-        if(_instance !=null && _instance !=this){
-            Destroy(this.gameObject);
-        }
-        else{
-            _instance=this;
-        }
-    }
+    private Board board;
 
-    // Update is called once per frame
     void Start()
     {
-        gameObject.SetActive(false);
+       gameObject.SetActive(false); 
+    }
+    // Update is called once per frame
+    public void Initialize(Board board)
+    {
+        this.board = board;
     }
 
     public void OpenMenu(){
@@ -33,7 +29,6 @@ public class PauseMenuManager : MonoBehaviour
 
     public void CloseMenu(){
         Time.timeScale=1;
-        Game._instance.isInMenu=false;
         gameObject.SetActive(false);
     }
 
@@ -46,12 +41,12 @@ public class PauseMenuManager : MonoBehaviour
         List<MapNodeData> Map = new List<MapNodeData>();
         PlayerData playerData = new PlayerData
         {
-            coins = Game._instance.hero.playerCoins,
-            blood = Game._instance.hero.playerBlood,
+            coins = board.Hero.playerCoins,
+            blood = board.Hero.playerBlood,
             pieces = new List<PieceData>()
         };
 
-        foreach (var pieceObj in Game._instance.hero.pieces)
+        foreach (var pieceObj in board.Hero.pieces)
         {
             Chessman piece = pieceObj.GetComponent<Chessman>();
             PieceData pieceData = new PieceData
@@ -77,7 +72,7 @@ public class PauseMenuManager : MonoBehaviour
             playerData.pieces.Add(pieceData);
         }
 
-        foreach (var nodeObj in MapManager._instance.mapNodes)
+        foreach (var nodeObj in board.MapManager.mapNodes)
         {
             var connectedNodes = new List<string>();
             MapNode node = nodeObj.GetComponent<MapNode>();
@@ -90,7 +85,7 @@ public class PauseMenuManager : MonoBehaviour
                 encounterType = node.encounterType,
                 localX = node.transform.localPosition.x,
                 localY = node.transform.localPosition.y,
-                isCurrentNode = MapManager._instance.currentNode == node,
+                isCurrentNode = board.MapManager.currentNode == node,
                 color = node.nodeImage.color
             };
 
@@ -102,13 +97,14 @@ public class PauseMenuManager : MonoBehaviour
             Map.Add(nodeData);
         }
 
+        string savePath = "C:\\Users\\steve\\chess-rogue\\chess-rogue\\Saves";
+        QuickSaveGlobalSettings.StorageLocation = savePath;
+        int total = Directory.GetFiles(savePath+"\\QuickSave").Length;
         
-        
-        var writer = QuickSaveWriter.Create("Game");
+        var writer = QuickSaveWriter.Create("Game"+total);
             writer.Write("Player", playerData);
-            writer.Write("State", Game._instance.state);
-            writer.Write("Level", Game._instance.level);
-            writer.Write("Shop", Game._instance.shopUsed);
+            writer.Write("State", board.BoardState);
+            writer.Write("Level", board.Level);
             writer.Write("MapNodes", Map);
             writer.Commit();
     }

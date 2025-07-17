@@ -4,19 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 public class CountermarchMovement : MovementProfile
 {
-    public override List<BoardPosition> GetValidMoves(Chessman piece, bool allowFriendlyCapture=false) {
-        List<BoardPosition> validMoves = new List<BoardPosition>();
-        validMoves.AddRange(Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard-1));
-        validMoves.AddRange(Movement.ValidPawnMoves(piece,piece.xBoard,piece.yBoard+1));
+    public CountermarchMovement(Board board) : base(board) {}
+    public override List<Tile> GetValidMoves(Chessman piece, bool allowFriendlyCapture = false)
+    {
+        List<Tile> validMoves = new List<Tile>();
+        validMoves.AddRange(Movement.ValidPawnMoves(board, piece, piece.xBoard, piece.yBoard - 1));
+        validMoves.AddRange(Movement.ValidPawnMoves(board, piece, piece.xBoard, piece.yBoard + 1));
         if (allowFriendlyCapture)
             return validMoves;
         else
-            return Movement.RemoveFriendlyPieces(validMoves,piece);
-     }
-    public override List<BoardPosition> GetValidSupportMoves(Chessman piece){
-        List<BoardPosition> validMoves = new List<BoardPosition>();
-        validMoves.AddRange(Movement.ValidPawnSupportMoves(piece,piece.xBoard,piece.yBoard-1));
-        validMoves.AddRange(Movement.ValidPawnSupportMoves(piece,piece.xBoard,piece.yBoard+1));
+            return Movement.RemoveFriendlyPieces(board, validMoves, piece);
+    }
+    public override List<Tile> GetValidSupportMoves(Chessman piece){
+        List<Tile> validMoves = new List<Tile>();
+        validMoves.AddRange(Movement.ValidPawnSupportMoves(board, piece,piece.xBoard,piece.yBoard-1));
+        validMoves.AddRange(Movement.ValidPawnSupportMoves(board, piece,piece.xBoard,piece.yBoard+1));
         return validMoves;
     }
     

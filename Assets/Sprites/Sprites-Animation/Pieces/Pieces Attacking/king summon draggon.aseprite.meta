@@ -1,0 +1,1183 @@
+fileFormatVersion: 2
+guid: 409e5de35dc020d4abdae5269de19990
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: king summon draggon_Frame_0
+    originalName: 
+    pivot: {x: 0.5, y: -0.8333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 51
+      y: 468
+      width: 14
+      height: 24
+    spriteID: 4fb4ffab8b773724e88f14e47b6875fb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 51, y: 468}
+  - name: king summon draggon_Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: -0.8333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 51
+      y: 417
+      width: 14
+      height: 24
+    spriteID: ee1eafe7da07bd043be82522dcd7be20
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 51, y: 417}
+  - name: king summon draggon_Frame_2
+    originalName: 
+    pivot: {x: 0.5, y: -0.8333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 336
+      width: 18
+      height: 24
+    spriteID: 737fcbcc7d8a3544bbee258a14995ba4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 336}
+  - name: king summon draggon_Frame_3
+    originalName: 
+    pivot: {x: 0.5, y: -0.8333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 368
+      width: 18
+      height: 24
+    spriteID: 85c6337ef794b834e82dc3cc91cd4aef
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 368}
+  - name: king summon draggon_Frame_4
+    originalName: 
+    pivot: {x: 0.5, y: -0.8333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 400
+      width: 16
+      height: 24
+    spriteID: c8ced0b986bbb5244ba69f2432d30e42
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 400}
+  - name: king summon draggon_Frame_5
+    originalName: 
+    pivot: {x: 0.5, y: -0.8333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 432
+      width: 14
+      height: 24
+    spriteID: 28c5d066e75b68a46a0016e492064e50
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 432}
+  - name: king summon draggon_Frame_6
+    originalName: 
+    pivot: {x: 0.5, y: -0.86956525}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 464
+      width: 14
+      height: 23
+    spriteID: 49597054955ba3f47a3141845cec6f3b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 464}
+  - name: king summon draggon_Frame_7
+    originalName: 
+    pivot: {x: 0.5, y: -0.95238096}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 142
+      y: 432
+      width: 14
+      height: 21
+    spriteID: a626f90991f44fc4fa4dc1f84cc72542
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 142, y: 432}
+  - name: king summon draggon_Frame_8
+    originalName: 
+    pivot: {x: 0.34615386, y: -0.95238096}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 307
+      width: 26
+      height: 21
+    spriteID: ffd0e883703a490439e5b24c155b1248
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 307}
+  - name: king summon draggon_Frame_9
+    originalName: 
+    pivot: {x: 0.3448276, y: -0.95238096}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 278
+      width: 29
+      height: 21
+    spriteID: 8775a0ccfa5178244bb1a31d27cd3216
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 278}
+  - name: king summon draggon_Frame_10
+    originalName: 
+    pivot: {x: 0.25714287, y: -0.8636364}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 475
+      width: 35
+      height: 22
+    spriteID: e8abbd204a2492a4488185f61a24227f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 475}
+  - name: king summon draggon_Frame_11
+    originalName: 
+    pivot: {x: 0.20588236, y: -0.8636364}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 218
+      width: 34
+      height: 22
+    spriteID: 4a7e75d60670bb3438dfb05fdc30c649
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 218}
+  - name: king summon draggon_Frame_12
+    originalName: 
+    pivot: {x: 0.20588236, y: -0.8636364}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 248
+      width: 34
+      height: 22
+    spriteID: ee0733229b38f054193291a728864bdd
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 248}
+  - name: king summon draggon_Frame_13
+    originalName: 
+    pivot: {x: 0.17948718, y: -0.7037037}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 468
+      width: 39
+      height: 27
+    spriteID: c24b31bab3c6e524c97711240638ae92
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 468}
+  - name: king summon draggon_Frame_14
+    originalName: 
+    pivot: {x: 0.17948718, y: -0.44186047}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 417
+      width: 39
+      height: 43
+    spriteID: 4175a0d2212101840b59ca150aafdff4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 417}
+  - name: king summon draggon_Frame_15
+    originalName: 
+    pivot: {x: 0.19444445, y: -0.42222223}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 112
+      width: 36
+      height: 45
+    spriteID: 010e51aa7f63e1644bac61f5431df079
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 112}
+  - name: king summon draggon_Frame_16
+    originalName: 
+    pivot: {x: 0.20588236, y: -0.42222223}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 165
+      width: 34
+      height: 45
+    spriteID: 4645edf862dd02d4d88804c99ed654f9
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 165}
+  - name: king summon draggon_Frame_17
+    originalName: 
+    pivot: {x: 0.18421052, y: -0.4318182}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 4
+      width: 38
+      height: 44
+    spriteID: b2c8267f66c4d1141b7d5331304a523a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 4}
+  - name: king summon draggon_Frame_18
+    originalName: 
+    pivot: {x: 0.18421052, y: -0.4318182}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 56
+      width: 38
+      height: 44
+    spriteID: bbddb606f1a23354ea9af9f79d66e2f4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 56}
+  - name: king summon draggon_Frame_19
+    originalName: 
+    pivot: {x: 0.1891892, y: -0.42222223}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 316
+      width: 37
+      height: 45
+    spriteID: 70a0f9d6d659593408187bc0ba14497d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 316}
+  - name: king summon draggon_Frame_20
+    originalName: 
+    pivot: {x: 0.1891892, y: -0.42222223}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 369
+      width: 37
+      height: 45
+    spriteID: 15dfcc6cef09f924282138ddba376109
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 369}
+  - name: king summon draggon_Frame_21
+    originalName: 
+    pivot: {x: 0.18421052, y: -0.4318182}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 108
+      width: 38
+      height: 44
+    spriteID: 22e6496b1128905479ac1616b5b7b7a5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 108}
+  - name: king summon draggon_Frame_22
+    originalName: 
+    pivot: {x: 0.18421052, y: -0.4318182}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 160
+      width: 38
+      height: 44
+    spriteID: b0924718e5e5f7e44a2096512c43850f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 160}
+  - name: king summon draggon_Frame_23
+    originalName: 
+    pivot: {x: 0.1891892, y: -0.42222223}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 422
+      width: 37
+      height: 45
+    spriteID: 920191acbe4071442ab2dab84f654fc7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 422}
+  - name: king summon draggon_Frame_24
+    originalName: 
+    pivot: {x: 0.1891892, y: -0.42222223}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 4
+      width: 37
+      height: 45
+    spriteID: 3cf6d1cfae9b23846a51c6d536d52782
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 4}
+  - name: king summon draggon_Frame_25
+    originalName: 
+    pivot: {x: 0.18421052, y: -0.4318182}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 212
+      width: 38
+      height: 44
+    spriteID: cd2e2f270aecd54469c0db881839c313
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 212}
+  - name: king summon draggon_Frame_26
+    originalName: 
+    pivot: {x: 0.18421052, y: -0.4318182}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 264
+      width: 38
+      height: 44
+    spriteID: 53c708bdb4697974ca2c5e5ed5e8180c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 264}
+  - name: king summon draggon_Frame_27
+    originalName: 
+    pivot: {x: 0.2, y: -0.08510638}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 57
+      width: 35
+      height: 47
+    spriteID: 0b4bb0c5b0d0320438fcca05959e43ed
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 57}
+  - name: king summon draggon_Frame_28
+    originalName: 
+    pivot: {x: 0.5090909, y: -0.10810811}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 372
+      width: 55
+      height: 37
+    spriteID: 33d8f9a3df26cae40a4be9003d467e02
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 372}
+  - name: king summon draggon_Frame_29
+    originalName: 
+    pivot: {x: 0.5344828, y: -0.4318182}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 268
+      width: 58
+      height: 44
+    spriteID: b2933c49bbdef834f9ced12518f40655
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 268}
+  - name: king summon draggon_Frame_30
+    originalName: 
+    pivot: {x: 0.5423729, y: -0.4318182}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 216
+      width: 59
+      height: 44
+    spriteID: 725347f96fe71f24ebc07657e5cf787f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 216}
+  - name: king summon draggon_Frame_31
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.4318182}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 320
+      width: 58
+      height: 44
+    spriteID: 20abe0fe94bcce048bdd192e2c68de0f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 320}
+  - name: king summon draggon_Frame_32
+    originalName: 
+    pivot: {x: 0.48387095, y: -0.4318182}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 112
+      width: 62
+      height: 44
+    spriteID: e2e12a5e64247914db4243813b61161d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 112}
+  - name: king summon draggon_Frame_33
+    originalName: 
+    pivot: {x: 0.48387095, y: -0.36956522}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 62
+      height: 46
+    spriteID: 152f7848f2cd2d446850d1a9b67f64ac
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: king summon draggon_Frame_34
+    originalName: 
+    pivot: {x: 0.48387095, y: -0.4318182}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 164
+      width: 62
+      height: 44
+    spriteID: 10c9e4231366ddc4a9ab1a007923bc78
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 164}
+  - name: king summon draggon_Frame_35
+    originalName: 
+    pivot: {x: 0.48387095, y: -0.36956522}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 58
+      width: 62
+      height: 46
+    spriteID: 9b30e349638da8a49b8ee36ecfe33cbf
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 58}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -115683566
+    name: king summon draggon
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: king summon draggon_Frame_0
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 20
+        width: 14
+        height: 24
+      spriteId: 4fb4ffab8b773724e88f14e47b6875fb
+    - name: king summon draggon_Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 20
+        width: 14
+        height: 24
+      spriteId: ee1eafe7da07bd043be82522dcd7be20
+    - name: king summon draggon_Frame_2
+      frameIndex: 2
+      additiveSortOrder: 0
+      cellRect:
+        x: 23
+        y: 20
+        width: 18
+        height: 24
+      spriteId: 737fcbcc7d8a3544bbee258a14995ba4
+    - name: king summon draggon_Frame_3
+      frameIndex: 3
+      additiveSortOrder: 0
+      cellRect:
+        x: 23
+        y: 20
+        width: 18
+        height: 24
+      spriteId: 85c6337ef794b834e82dc3cc91cd4aef
+    - name: king summon draggon_Frame_4
+      frameIndex: 4
+      additiveSortOrder: 0
+      cellRect:
+        x: 24
+        y: 20
+        width: 16
+        height: 24
+      spriteId: c8ced0b986bbb5244ba69f2432d30e42
+    - name: king summon draggon_Frame_5
+      frameIndex: 5
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 20
+        width: 14
+        height: 24
+      spriteId: 28c5d066e75b68a46a0016e492064e50
+    - name: king summon draggon_Frame_6
+      frameIndex: 6
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 20
+        width: 14
+        height: 23
+      spriteId: 49597054955ba3f47a3141845cec6f3b
+    - name: king summon draggon_Frame_7
+      frameIndex: 7
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 20
+        width: 14
+        height: 21
+      spriteId: a626f90991f44fc4fa4dc1f84cc72542
+    - name: king summon draggon_Frame_8
+      frameIndex: 8
+      additiveSortOrder: 0
+      cellRect:
+        x: 23
+        y: 20
+        width: 26
+        height: 21
+      spriteId: ffd0e883703a490439e5b24c155b1248
+    - name: king summon draggon_Frame_9
+      frameIndex: 9
+      additiveSortOrder: 0
+      cellRect:
+        x: 22
+        y: 20
+        width: 29
+        height: 21
+      spriteId: 8775a0ccfa5178244bb1a31d27cd3216
+    - name: king summon draggon_Frame_10
+      frameIndex: 10
+      additiveSortOrder: 0
+      cellRect:
+        x: 23
+        y: 19
+        width: 35
+        height: 22
+      spriteId: e8abbd204a2492a4488185f61a24227f
+    - name: king summon draggon_Frame_11
+      frameIndex: 11
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 34
+        height: 22
+      spriteId: 4a7e75d60670bb3438dfb05fdc30c649
+    - name: king summon draggon_Frame_12
+      frameIndex: 12
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 34
+        height: 22
+      spriteId: ee0733229b38f054193291a728864bdd
+    - name: king summon draggon_Frame_13
+      frameIndex: 13
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 39
+        height: 27
+      spriteId: c24b31bab3c6e524c97711240638ae92
+    - name: king summon draggon_Frame_14
+      frameIndex: 14
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 39
+        height: 43
+      spriteId: 4175a0d2212101840b59ca150aafdff4
+    - name: king summon draggon_Frame_15
+      frameIndex: 15
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 36
+        height: 45
+      spriteId: 010e51aa7f63e1644bac61f5431df079
+    - name: king summon draggon_Frame_16
+      frameIndex: 16
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 34
+        height: 45
+      spriteId: 4645edf862dd02d4d88804c99ed654f9
+    - name: king summon draggon_Frame_17
+      frameIndex: 17
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 38
+        height: 44
+      spriteId: b2c8267f66c4d1141b7d5331304a523a
+    - name: king summon draggon_Frame_18
+      frameIndex: 18
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 38
+        height: 44
+      spriteId: bbddb606f1a23354ea9af9f79d66e2f4
+    - name: king summon draggon_Frame_19
+      frameIndex: 19
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 37
+        height: 45
+      spriteId: 70a0f9d6d659593408187bc0ba14497d
+    - name: king summon draggon_Frame_20
+      frameIndex: 20
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 37
+        height: 45
+      spriteId: 15dfcc6cef09f924282138ddba376109
+    - name: king summon draggon_Frame_21
+      frameIndex: 21
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 38
+        height: 44
+      spriteId: 22e6496b1128905479ac1616b5b7b7a5
+    - name: king summon draggon_Frame_22
+      frameIndex: 22
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 38
+        height: 44
+      spriteId: b0924718e5e5f7e44a2096512c43850f
+    - name: king summon draggon_Frame_23
+      frameIndex: 23
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 37
+        height: 45
+      spriteId: 920191acbe4071442ab2dab84f654fc7
+    - name: king summon draggon_Frame_24
+      frameIndex: 24
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 37
+        height: 45
+      spriteId: 3cf6d1cfae9b23846a51c6d536d52782
+    - name: king summon draggon_Frame_25
+      frameIndex: 25
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 38
+        height: 44
+      spriteId: cd2e2f270aecd54469c0db881839c313
+    - name: king summon draggon_Frame_26
+      frameIndex: 26
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 19
+        width: 38
+        height: 44
+      spriteId: 53c708bdb4697974ca2c5e5ed5e8180c
+    - name: king summon draggon_Frame_27
+      frameIndex: 27
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 4
+        width: 35
+        height: 47
+      spriteId: 0b4bb0c5b0d0320438fcca05959e43ed
+    - name: king summon draggon_Frame_28
+      frameIndex: 28
+      additiveSortOrder: 0
+      cellRect:
+        x: 4
+        y: 4
+        width: 55
+        height: 37
+      spriteId: 33d8f9a3df26cae40a4be9003d467e02
+    - name: king summon draggon_Frame_29
+      frameIndex: 29
+      additiveSortOrder: 0
+      cellRect:
+        x: 1
+        y: 19
+        width: 58
+        height: 44
+      spriteId: b2933c49bbdef834f9ced12518f40655
+    - name: king summon draggon_Frame_30
+      frameIndex: 30
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 19
+        width: 59
+        height: 44
+      spriteId: 725347f96fe71f24ebc07657e5cf787f
+    - name: king summon draggon_Frame_31
+      frameIndex: 31
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 19
+        width: 58
+        height: 44
+      spriteId: 20abe0fe94bcce048bdd192e2c68de0f
+    - name: king summon draggon_Frame_32
+      frameIndex: 32
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 19
+        width: 62
+        height: 44
+      spriteId: e2e12a5e64247914db4243813b61161d
+    - name: king summon draggon_Frame_33
+      frameIndex: 33
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 17
+        width: 62
+        height: 46
+      spriteId: 152f7848f2cd2d446850d1a9b67f64ac
+    - name: king summon draggon_Frame_34
+      frameIndex: 34
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 19
+        width: 62
+        height: 44
+      spriteId: 10c9e4231366ddc4a9ab1a007923bc78
+    - name: king summon draggon_Frame_35
+      frameIndex: 35
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 17
+        width: 62
+        height: 46
+      spriteId: 9b30e349638da8a49b8ee36ecfe33cbf
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  generatePhysicsShape: 0
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 64, y: 64}

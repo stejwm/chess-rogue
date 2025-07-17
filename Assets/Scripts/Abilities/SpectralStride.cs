@@ -9,12 +9,14 @@ public class SpectralStride : Ability
     public SpectralStride() : base("Spectral Stride", "Can move through it's own pieces according to it's typical movement") {}
 
 
-    public override void Apply(Chessman piece)
+    public override void Apply(Board board, Chessman piece)
     {
-        startingProfile=piece.moveProfile;
-        piece.moveProfile = new SpectralStrideMovement(startingProfile);
+        if(piece.abilities.Contains(this))
+            return;
+        startingProfile =piece.moveProfile;
+        piece.moveProfile = new SpectralStrideMovement(board, startingProfile);
         piece.info += " "+abilityName;
-        base.Apply(piece);
+        base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
