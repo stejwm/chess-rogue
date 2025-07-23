@@ -31,15 +31,18 @@ public class PieceFactory : MonoBehaviour
     public GameObject jester;
 
     public static PieceFactory _instance;
+    private int backUpIDCounter = -1;
     //private BoardManager boardManager;
 
     private void Awake()
     {
-        if(_instance !=null && _instance !=this){
+        if (_instance != null && _instance != this)
+        {
             Destroy(this.gameObject);
         }
-        else{
-            _instance=this;
+        else
+        {
+            _instance = this;
         }
     }
 
@@ -416,9 +419,16 @@ public class PieceFactory : MonoBehaviour
         {
             var pieceObj = Create(board, pieceData.pieceType, pieceData.posX, pieceData.posY, pieceData.color, player, pieceData.name);
             var piece = pieceObj.GetComponent<Chessman>();
-            piece.uniqueId = pieceData.uniqueId;
+            
 
-            foreach (AbilityData abilityData in pieceData.abilities){
+            piece.uniqueId = pieceData.uniqueId;
+            if (piece.uniqueId == 0)
+            {
+                piece.uniqueId = backUpIDCounter--;
+            }
+
+            foreach (AbilityData abilityData in pieceData.abilities)
+            {
                 Ability ability = AbilityDatabase.Instance.GetAbilityByName(abilityData.abilityName);
                 piece.AddAbility(board, ability);
             }

@@ -31,51 +31,57 @@ public class AbilityDatabase : MonoBehaviour
     }
     public void Start()
     {
-        foreach (var ability in abilities)
-        {
-            if (!abilityDict.ContainsKey(ability.abilityName))
+        
+    }
+    public void LoadAbilities()
+    {
+        if(abilityDict.Count<=0)
+            foreach (var ability in abilities)
             {
-                string name = ability.abilityName;
-                name = Regex.Replace(name, "<.*?>", string.Empty);
-                name = name.ToLower().Replace(" ", String.Empty);
-                abilityDict.Add(name, ability);
-                Debug.Log($"Ability: {name} added to dictionary as key");
-                
-            }
-            else
-            {
-                Debug.LogWarning($"Duplicate ability found: {ability.abilityName}. Only the first instance will be used.");
-            }
-            switch (ability.rarity)
-            {
-                case Rarity.Common:
-                    commonAbilities.Add(ability);
-                    break;
-                case Rarity.Uncommon:
-                    uncommonAbilities.Add(ability);
-                    break;
-                case Rarity.Rare:
-                    rareAbilities.Add(ability);
-                    break;
-                default:
-                    break;
+                if (!abilityDict.ContainsKey(ability.abilityName))
+                {
+                    string name = ability.abilityName;
+                    name = Regex.Replace(name, "<.*?>", string.Empty);
+                    name = name.ToLower().Replace(" ", String.Empty);
+                    abilityDict.Add(name, ability);
+                    Debug.Log($"Ability: {name} added to dictionary as key");
 
+                }
+                else
+                {
+                    Debug.LogWarning($"Duplicate ability found: {ability.abilityName}. Only the first instance will be used.");
+                }
+                switch (ability.rarity)
+                {
+                    case Rarity.Common:
+                        commonAbilities.Add(ability);
+                        break;
+                    case Rarity.Uncommon:
+                        uncommonAbilities.Add(ability);
+                        break;
+                    case Rarity.Rare:
+                        rareAbilities.Add(ability);
+                        break;
+                    default:
+                        break;
+
+                }
             }
-        }
-        foreach (var order in orders)
-        {
-            if (!orderDict.ContainsKey(order.Name))
+        if(orders.Count<=0)
+            foreach (var order in orders)
             {
-                string name = order.Name;
-                name = Regex.Replace(name, "<.*?>", string.Empty);
-                name = name.ToLower().Replace(" ", String.Empty);
-                orderDict.Add(name, order);
+                if (!orderDict.ContainsKey(order.Name))
+                {
+                    string name = order.Name;
+                    name = Regex.Replace(name, "<.*?>", string.Empty);
+                    name = name.ToLower().Replace(" ", String.Empty);
+                    orderDict.Add(name, order);
+                }
+                else
+                {
+                    Debug.LogWarning($"Duplicate order found: {order.Name}. Only the first instance will be used.");
+                }
             }
-            else
-            {
-                Debug.LogWarning($"Duplicate order found: {order.Name}. Only the first instance will be used.");
-            }
-        }
     }
     public Ability GetRandomAbility()
     {
@@ -103,12 +109,14 @@ public class AbilityDatabase : MonoBehaviour
     }
     public Ability GetAbilityByName(string name)
     {
-        return abilityDict[name.ToLower().Replace(" ","")].Clone();
+        name = Regex.Replace(name, "<.*?>", string.Empty);
+        return abilityDict[name.ToLower().Replace(" ", "")].Clone();
     }
 
     public KingsOrder GetOrderByName(string name)
     {
-        return orderDict[name.ToLower().Replace(" ","")].Clone();
+        name = Regex.Replace(name, "<.*?>", string.Empty);
+        return orderDict[name.ToLower().Replace(" ", "")].Clone();
     }
 
     public int GetIndexFromAbility(Ability ability)

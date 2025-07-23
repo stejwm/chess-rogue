@@ -8,52 +8,69 @@ public class AIPlayer : Player
 {
     [SerializeField] protected PlayerAgent agent;
 
-    
-    public AIPlayer(List<GameObject> pieces):base(pieces)
+
+    public AIPlayer(List<GameObject> pieces) : base(pieces)
     {
-        this.pieces=pieces;
+        this.pieces = pieces;
     }
     public override void Initialize(Board board)
     {
-        agent.pieces=pieces;
+        agent.pieces = pieces;
         agent.StartUp();
         openPositions = new List<Tile>();
     }
 
-    public override void CreateMoveCommandDictionary(){
+    public override void CreateMoveCommandDictionary()
+    {
         agent.CreateMoveCommandDictionary();
     }
 
-    public void SetSelectedPiece(Chessman piece){
-        agent.selectedPiece=piece;
+    public void SetSelectedPiece(Chessman piece)
+    {
+        agent.selectedPiece = piece;
     }
-    public void SetSelectedDestination(BoardPosition position){
-        agent.destinationPosition=position;
+    public void SetSelectedDestination(BoardPosition position)
+    {
+        agent.destinationPosition = position;
     }
 
 
 
 
-    public void RequestDecision(){
+    public void RequestDecision()
+    {
         agent.RequestDecision();
     }
 
     public override void MakeMove(ChessMatch match)
     {
         StartCoroutine(Move());
-        
+
     }
 
-    public IEnumerator Move(){
+    public IEnumerator Move()
+    {
         yield return new WaitForSeconds(Settings._instance.WaitTime);
-        Debug.Log("Requested move from "+color);
+        Debug.Log("Requested move from " + color);
         agent.RequestDecision();
     }
 
-    public override void DestroyPieces(){
-       
+    public override void DestroyPieces()
+    {
+
         base.DestroyPieces(); // Call the base class logic to destroy pieces.
         agent.ShutDown();         // Additional AI-specific logic.
-    
+
+    }
+    public void SetReward(float val)
+    {
+        agent.SetReward(val);
+    }
+    public void EndEpisode(float val)
+    {
+        agent.SetReward(val);
+        Debug.Log($"{color} ending episode with reward: {val}");
+        agent.EndEpisode();
+        Debug.Log($"{color} episode ended");
     }
 }

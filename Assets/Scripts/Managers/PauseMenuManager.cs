@@ -58,6 +58,7 @@ public class PauseMenuManager : MonoBehaviour
                 support = piece.support,
                 posX = piece.xBoard,
                 posY = piece.yBoard,
+                uniqueId = piece.uniqueId,
                 abilities = new List<AbilityData>()
             };
 

@@ -1,0 +1,51 @@
+{
+    "WhiteKingOnly": {
+        "checkpoints": [
+            {
+                "steps": 156,
+                "file_path": "results\\KingOnly\\WhiteKingOnly\\WhiteKingOnly-156.onnx",
+                "reward": -1.0,
+                "creation_time": 1753127452.8495085,
+                "auxillary_file_paths": [
+                    "results\\KingOnly\\WhiteKingOnly\\WhiteKingOnly-156.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 156,
+            "file_path": "results\\KingOnly\\WhiteKingOnly.onnx",
+            "reward": -1.0,
+            "creation_time": 1753127452.8495085,
+            "auxillary_file_paths": [
+                "results\\KingOnly\\WhiteKingOnly\\WhiteKingOnly-156.pt"
+            ]
+        }
+    },
+    "BlackKingOnly": {
+        "checkpoints": [
+            {
+                "steps": 155,
+                "file_path": "results\\KingOnly\\BlackKingOnly\\BlackKingOnly-155.onnx",
+                "reward": -1.0,
+                "creation_time": 1753127452.913612,
+                "auxillary_file_paths": [
+                    "results\\KingOnly\\BlackKingOnly\\BlackKingOnly-155.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 155,
+            "file_path": "results\\KingOnly\\BlackKingOnly.onnx",
+            "reward": -1.0,
+            "creation_time": 1753127452.913612,
+            "auxillary_file_paths": [
+                "results\\KingOnly\\BlackKingOnly\\BlackKingOnly-155.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

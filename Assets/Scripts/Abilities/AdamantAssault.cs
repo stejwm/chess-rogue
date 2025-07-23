@@ -46,8 +46,9 @@ public class AdamantAssault : Ability
             AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Adamant Assault</gradient></color>", "attacking again");
             board.CurrentMatch.AdamantAssaultOverride =true;
             //Game._instance.currentMatch.PlayerTurn();
-            board.CurrentMatch.ExecuteTurn(attacker, defender.xBoard, defender.yBoard);
             alreadyBounced=true;
+            board.CurrentMatch.ExecuteTurn(attacker, defender.xBoard, defender.yBoard);
+            
         }else if(attacker==piece){
             alreadyBounced=false;
             board.CurrentMatch.AdamantAssaultOverride =false;

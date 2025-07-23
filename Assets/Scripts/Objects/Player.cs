@@ -51,8 +51,13 @@ public abstract class Player: MonoBehaviour
         Destroy(this);
     }
 
-    public virtual void DestroyPieces(){
+    public virtual void DestroyPieces()
+    {
         foreach (GameObject item in pieces)
+        {
+            Destroy(item);
+        }
+        foreach (GameObject item in capturedPieces)
         {
             Destroy(item);
         }

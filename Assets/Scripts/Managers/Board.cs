@@ -9,6 +9,7 @@ using UnityEngine.Events;
 using System;
 using System.Linq;
 using CI.QuickSave;
+using System.IO;
 
 public enum BoardState
 {
@@ -74,21 +75,27 @@ public class Board : MonoBehaviour
     public PauseMenuManager PauseMenuManager { get => pauseMenuManager; set => pauseMenuManager = value; }
     public MapManager MapManager { get => mapManager; set => mapManager = value; }
     public int RerollCostIncrease { get => rerollCostIncrease; set => rerollCostIncrease = value; }
+    public bool headless = false; // Set to true for headless mode, false for normal gameplay
 
     public void Start()
     {
         EventHub = new EventHub();
         CreateTiles();
-        currencyManager.Initialize(this);
-        pauseMenuManager.Initialize(this);
+        if (!headless)
+        {
+            currencyManager.Initialize(this);
+            pauseMenuManager.Initialize(this);
+        }
         NameDatabase.LoadNames();
+        AbilityDatabase.Instance.LoadAbilities();
         if (SceneLoadManager.LoadPreviousSave)
         {
             LoadGame();
         }
         else
         {
-            LetsBegin();
+            //LetsBegin();
+            LoadRandomGame();
         }
     }
     public void LetsBegin()
@@ -121,6 +128,61 @@ public class Board : MonoBehaviour
 
         OpenMap();
 
+    }
+    public void LoadRandomGame()
+    {
+        opponent.DestroyPieces();
+        hero.DestroyPieces();
+        Array.Clear(positions, 0, positions.Length);
+        foreach (Tile tile in tiles)
+        {
+            tile.ClearBloodTile();
+        }
+        EnemyType enemyType = (EnemyType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(EnemyType)).Length);
+        opponent.pieces = PieceFactory._instance.CreateOpponentPieces(this, opponent, enemyType);
+
+        
+        hero.pieces = CreateRandomHeroPiecesFromSave();
+        hero.Initialize(this);
+        opponent.Initialize(this);
+        opponent.LevelUp(level, enemyType);
+        
+        CreateNewMatch(hero, opponent);    
+        
+    }
+    public List<GameObject> CreateRandomHeroPiecesFromSave(){
+        // Get all save files matching pattern
+        string savePath = "C:\\Users\\steve\\chess-rogue\\chess-rogue\\Saves";
+        QuickSaveGlobalSettings.StorageLocation = savePath;
+        var saveFiles = Directory.GetFiles(savePath + "\\QuickSave")
+            .ToList();
+
+        Debug.Log($"Found {saveFiles.Count} save files.");
+        if (saveFiles.Count == 0)
+            return PieceFactory._instance.CreatePiecesForColor(this, hero, hero.color);
+
+        // Select random save file
+        string selectedSave = saveFiles[UnityEngine.Random.Range(0, saveFiles.Count)];
+        Debug.Log($"Selected save file: {Path.GetFileName(selectedSave)}");
+        
+        try
+        {
+            var quickSaveReader = QuickSaveReader.Create(Path.GetFileName(selectedSave).Replace(".json", ""));
+            PlayerData player;
+            quickSaveReader.TryRead<PlayerData>("Player", out player);
+            quickSaveReader.TryRead<int>("Level", out level);
+            
+            hero.playerBlood=player.blood;
+            hero.playerCoins=player.coins;
+            return PieceFactory._instance.LoadPieces(this, player.pieces, hero);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to load save file: {e.Message}");
+            return PieceFactory._instance.CreatePiecesForColor(this, hero, hero.color);
+        }
+        
+        
     }
     public void CreateNewMatch(Player white, Player black)
     {
@@ -429,6 +491,13 @@ public class Board : MonoBehaviour
     {
         if (positions[tile.X, tile.Y])
             return positions[tile.X, tile.Y].GetComponent<Chessman>();
+        else
+            return null;
+    }
+    public Chessman GetChessmanAtPosition(int x, int y)
+    {
+        if (positions[x, y])
+            return positions[x, y].GetComponent<Chessman>();
         else
             return null;
     }

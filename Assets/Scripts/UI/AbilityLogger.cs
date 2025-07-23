@@ -35,7 +35,7 @@ public class AbilityLogger : MonoBehaviour
             yield break;
         }
         currentlyLogging=true;
-        StartCoroutine(ShowAbilityAndLog(queue.Peek().Item1, queue.Peek().Item2));
+        //StartCoroutine(ShowAbilityAndLog(queue.Peek().Item1, queue.Peek().Item2));
         yield return new WaitForSeconds(Settings._instance.WaitTime);
         queue.Dequeue();
         currentlyLogging=false;

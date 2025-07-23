@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 
 public class PlayerAgent : Agent
@@ -34,7 +35,7 @@ public class PlayerAgent : Agent
     public void CreateMoveCommandDictionary(){
         GenerateMoveCommandDictionary(color==PieceColor.White);
     }
-    
+
     public void GenerateMoveCommandDictionary(bool isPlayerWhite)
     {
         Debug.Log("Generating Move Commands");
@@ -52,7 +53,7 @@ public class PlayerAgent : Agent
                 int actualX = isPlayerWhite ? relativeX : 7 - relativeX; // Adjust for left-to-right perspective
 
                 Tile tile = board.GetTileAt(actualX, actualY); // Get the tile at this position
-                
+
                 Chessman piece = board.GetChessmanAtPosition(tile); // Get the piece on the tile (can be null)
                 //Debug.Log($"Generating commands for piece at {actualX}, {actualY}: {(piece==null ? "None" : piece.name)}");
                 // Loop through all 64 positions on the board for possible destinations
@@ -60,22 +61,24 @@ public class PlayerAgent : Agent
                 {
                     for (int destRelativeY = 0; destRelativeY < 8; destRelativeY++)
                     {
-                         // Adjust destination coordinates for perspective
+                        // Adjust destination coordinates for perspective
                         int adjustedDestX = isPlayerWhite ? destRelativeX : 7 - destRelativeX;
                         int adjustedDestY = isPlayerWhite ? destRelativeY : 7 - destRelativeY;
 
                         // Create a MoveCommand for this piece and destination
                         MoveCommand moveCommand = new MoveCommand(piece, adjustedDestX, adjustedDestY);
                         moveCommands.Add(index, moveCommand);
-                        if(piece!=null)
+                        if (piece != null)
                             reverseMoveCommands.Add(moveCommand, index);
-                        
 
-                        index++; // Increment the index
+
+                        index++;
                     }
                 }
             }
         }
+        Debug.Log($"Generated {moveCommands.Count} move commands for {(isPlayerWhite ? "White" : "Black")} player.");
+        Debug.Log($"Generated {reverseMoveCommands.Count} reverse move commands for {(isPlayerWhite ? "White" : "Black")} player.");
 
     }
     public MoveCommand GetMoveCommandFromIndex(int index)
@@ -102,7 +105,26 @@ public class PlayerAgent : Agent
         // Check if the last few moves form a back-and-forth pattern
         if (IsRepeatingPattern())
         {
-            //GameEnd(PieceColor.None);
+
+            SetReward(-1f);
+            Debug.Log($"{color} loses. Ending episode with reward of -1f due to repeating pattern");
+            EndEpisode();
+            Debug.Log($"{color} episode ended");
+            if (board.Hero.color == color)
+            {
+                if (board.Opponent is AIPlayer aiPlayer)
+                {
+                    aiPlayer.EndEpisode(-1f);
+                }
+            }
+            else if (board.Opponent.color == color)
+            {
+                if (board.Hero is AIPlayer aiPlayer)
+                {
+                    aiPlayer.EndEpisode(-1f);
+                }
+            }
+            board.LoadRandomGame();
         }
 
         Debug.Log("Action Recieved attempting to execute move from "+ BoardPosition.ConvertToChessNotation(selectedMoveCommand.piece.xBoard, selectedMoveCommand.piece.yBoard)+" to "+BoardPosition.ConvertToChessNotation(selectedMoveCommand.x, selectedMoveCommand.y));
@@ -129,7 +151,7 @@ public class PlayerAgent : Agent
         else
         {
             discreteActions[0] = -1; 
-        }
+        } 
     }
 
     bool IsRepeatingPattern()
@@ -142,37 +164,63 @@ public class PlayerAgent : Agent
 
     public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
-        Debug.Log("Move commands count: " + moveCommands.Count);
+        //Debug.Log("Move commands count: " + moveCommands.Count);
         List<int> validIndexes = new List<int>();
-        foreach(KeyValuePair<int, MoveCommand> entry in moveCommands)
+        /* foreach(KeyValuePair<int, MoveCommand> entry in moveCommands)
         {
-            foreach(GameObject pieceObject in pieces){
-                Chessman selectedPiece = pieceObject.GetComponent<Chessman>();
-                if (!selectedPiece.isValidForAttack)
-                    continue;
-                var moves = selectedPiece.GetValidMoves();
-                foreach (var move in moves)
+            
+            
+        } */
+
+        foreach(GameObject pieceObject in pieces){
+            if(pieceObject == null || !pieceObject.activeSelf)
+                continue;
+            Chessman selectedPiece = pieceObject.GetComponent<Chessman>();
+            if (!selectedPiece.isValidForAttack)
+                continue;
+            var moves = selectedPiece.GetValidMoves();
+            foreach (var move in moves)
+            {
+                MoveCommand testCommand = new MoveCommand(selectedPiece, move.X, move.Y);
+                if (reverseMoveCommands.TryGetValue(testCommand, out int index))
                 {
-                    MoveCommand testCommand = new MoveCommand(selectedPiece, move.X, move.Y);
-                    if (testCommand.Equals(entry.Value))
-                    {
-                        validIndexes.Add(entry.Key);
-                    }
+                    validIndexes.Add(index);
                 }
-                
+                else
+                {
+                    Debug.Log($"Valid move of {selectedPiece.name} from {BoardPosition.ConvertToChessNotation(selectedPiece.xBoard, selectedPiece.yBoard)} to {BoardPosition.ConvertToChessNotation(move.X, move.Y)} not found in reverseMoveCommands.");
+                }
             }
             
         }
-        Debug.Log("Valid moves found: " + validIndexes.Count);
-        //Debug.Log("Found all valid move commands. Count = "+validIndexes.Count);
+        if (validIndexes.Count == 0)
+        {
+            SetReward(-1f);
+            Debug.Log($"{color} loses. Ending episode with reward of -1f due to no valid moves with {pieces.Where(x=>x!=null && x.activeSelf).Count()} remaining");
+            EndEpisode();
+            Debug.Log($"{color} episode ended");
+            if (board.Hero.color == color)
+            {
+                if (board.Opponent is AIPlayer aiPlayer)
+                {
+                    aiPlayer.EndEpisode(-1f);
+                }
+            }
+            else if (board.Opponent.color == color)
+            {
+                if (board.Hero is AIPlayer aiPlayer)
+                {
+                    aiPlayer.EndEpisode(-1f);
+                }
+            }
+            board.LoadRandomGame();
+        }
+
         foreach (int index in moveCommands.Keys)
         {
             if (!validIndexes.Contains(index))
                 actionMask.SetActionEnabled(0, index, false);
-            //else
-            //Debug.Log("Not masking: "+index);
         }
-        //Debug.Log("Actions masked");
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -185,7 +233,7 @@ public class PlayerAgent : Agent
                     sensor.AddObservation(piece.xBoard);
                     sensor.AddObservation(piece.yBoard);
 
-                    sensor.AddOneHotObservation((int)piece.type, 7);
+                    sensor.AddOneHotObservation((int)piece.type, 8);
                     sensor.AddOneHotObservation((int)piece.color, 3);
 
                     // Add other stats
@@ -200,7 +248,7 @@ public class PlayerAgent : Agent
                 else{
                     sensor.AddObservation(-1);
                     sensor.AddObservation(-1);
-                    sensor.AddOneHotObservation((int)PieceType.None, 7); // 7 categories
+                    sensor.AddOneHotObservation((int)PieceType.None, 8); // 8 categories
                     sensor.AddOneHotObservation((int)PieceColor.None, 3);
                     sensor.AddObservation(-1);
                     sensor.AddObservation(-1);
@@ -228,65 +276,4 @@ public class PlayerAgent : Agent
         return abilitiesObservation;
     }
 
-    private IEnumerator ReloadScene()
-    {
-        yield return null; // Allow EndEpisode to complete
-        SceneManager.LoadScene(1);
-    }
-
-    public void CaptureReward(Chessman attacker, Chessman defender){
-        if(attacker.color==color){
-            SetReward(GetPieceReward(defender));
-        }
-        else{
-            SetReward(-GetPieceReward(defender));
-        }
-    }
-
-    public float GetPieceReward(Chessman piece){
-        float reward = 0f;
-        switch (piece.type)
-            {
-                case PieceType.Queen:
-                    reward+= 0.9f;
-                    break;
-                case PieceType.Knight:
-                    reward+= 0.3f;
-                    break;               
-                case PieceType.Bishop:
-                    reward+= 0.3f;              
-                    break;
-                case PieceType.King:
-                    reward+= 1f;            
-                    break;
-                case PieceType.Rook:
-                    reward+= 0.5f;               
-                    break;
-                case PieceType.Pawn:
-                    reward+= 0.1f;                
-                    break;
-                default:
-                    break;
-            
-            }
-        reward += piece.attack * 0.1f;
-        reward+= piece.defense * 0.1f;
-        reward+= piece.support * 0.1f;
-        reward+= piece.releaseCost * 0.1f;
-
-        return reward;
-    }
-
-    public void SupportReward(Chessman supporter, Chessman attacker, Chessman defender){
-        if(supporter.color==color)
-            SetReward(0.05f);
-    }
-
-    public void BounceReward(Chessman attacker, Chessman defender, bool didBounceReduce){
-        if(attacker.color==color && didBounceReduce)
-            SetReward(0.05f);
-        else{
-            SetReward(-0.05f);
-        }
-    }
 }

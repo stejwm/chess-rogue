@@ -54,7 +54,7 @@ public class Tile : MonoBehaviour, IInteractable
     public void SetBloodTile()
     {
         var rand = UnityEngine.Random.Range(0, 1000);
-        Debug.Log(rand);
+        //Debug.Log(rand);
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.material = bloodMat;
         spriteRenderer.material.SetFloat("_RandomSeed", rand);
