@@ -57,7 +57,7 @@ public class RewardManager : MonoBehaviour
             }
             board.Hero.playerCoins -= selectedCard.ability.Cost;
         }
-        yield return new WaitForSeconds(Settings._instance.WaitTime);
+        yield return new WaitForSeconds(Settings.Instance.WaitTime);
         StartCoroutine(selectedCard.Dissolve());
         selectedCard.Use(board, target);
         yield return new WaitUntil(() => selectedCard.isDissolved);
@@ -65,7 +65,7 @@ public class RewardManager : MonoBehaviour
         Destroy(selectedCard.gameObject);
         ClearSelections();
         applyingAbility = false;
-        yield return new WaitForSeconds(Settings._instance.WaitTime);
+        yield return new WaitForSeconds(Settings.Instance.WaitTime);
         board.CloseReward();
         yield break;
     }

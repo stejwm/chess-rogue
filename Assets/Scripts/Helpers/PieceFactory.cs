@@ -29,6 +29,7 @@ public class PieceFactory : MonoBehaviour
     public GameObject queen;
     public GameObject king;
     public GameObject jester;
+    private int backUpIDCounter = -1;
 
     public static PieceFactory _instance;
     //private BoardManager boardManager;
@@ -417,8 +418,13 @@ public class PieceFactory : MonoBehaviour
             var pieceObj = Create(board, pieceData.pieceType, pieceData.posX, pieceData.posY, pieceData.color, player, pieceData.name);
             var piece = pieceObj.GetComponent<Chessman>();
             piece.uniqueId = pieceData.uniqueId;
+            if (piece.uniqueId == 0)
+            {
+                piece.uniqueId = backUpIDCounter--;
+            }
 
-            foreach (AbilityData abilityData in pieceData.abilities){
+            foreach (AbilityData abilityData in pieceData.abilities)
+            {
                 Ability ability = AbilityDatabase.Instance.GetAbilityByName(abilityData.abilityName);
                 piece.AddAbility(board, ability);
             }

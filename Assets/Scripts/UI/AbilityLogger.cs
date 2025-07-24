@@ -36,7 +36,7 @@ public class AbilityLogger : MonoBehaviour
         }
         currentlyLogging=true;
         StartCoroutine(ShowAbilityAndLog(queue.Peek().Item1, queue.Peek().Item2));
-        yield return new WaitForSeconds(Settings._instance.WaitTime);
+        yield return new WaitForSeconds(Settings.Instance.WaitTime);
         queue.Dequeue();
         currentlyLogging=false;
         if(queue.Count>0){

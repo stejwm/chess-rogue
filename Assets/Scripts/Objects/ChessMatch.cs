@@ -112,7 +112,7 @@ public class ChessMatch
 
 
         yield return CoroutineRunner.instance.StartCoroutine(ShowSupport(attackingSupportDictionary));
-        yield return new WaitForSeconds(Settings._instance.WaitTime);
+        yield return new WaitForSeconds(Settings.Instance.WaitTime);
         yield return CoroutineRunner.instance.StartCoroutine(ShowSupport(defendingSupportDictionary));
 
         int attackingSupport = attackingSupportDictionary.Values.Sum();
@@ -121,7 +121,7 @@ public class ChessMatch
         eventHub.RaiseAttacked(attacker, attackingSupport, board.GetTileAt(defender.xBoard, defender.yBoard));
 
         bool isCapture = attacker.CalculateAttack() + attackingSupport >= defender.CalculateDefense() + defendingSupport;
-        yield return new WaitForSeconds(Settings._instance.WaitTime);
+        yield return new WaitForSeconds(Settings.Instance.WaitTime);
         yield return CoroutineRunner.instance.StartCoroutine(ShowBattlePanel(attacker, defender, attackingSupport, defendingSupport, isCapture));
         yield return CoroutineRunner.instance.StartCoroutine(ResolveBattlePanel(attacker, defender, attackingSupportDictionary, defendingSupportDictionary, isCapture));
         CompleteAttack(attacker, defender, attackingSupport, defendingSupport, isCapture);
@@ -162,7 +162,7 @@ public class ChessMatch
             rt.position = pieceObject.transform.position;
 
             logManager.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\">{BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} <color=green>+{pieceSupport}</color> on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
-            yield return new WaitForSeconds(Settings._instance.WaitTime);
+            yield return new WaitForSeconds(Settings.Instance.WaitTime);
         }
     }
 
@@ -179,21 +179,22 @@ public class ChessMatch
             if (!isCapture)
                 scale = -0.05f;
             board.BattlePanel.DropIn(attacker.name, attacker.droppingSprite, defender.name, defender.droppingSprite, true, attacker, defender);
+            SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.dropIn, 1f, Settings.Instance.SfxVolume);
             board.BattlePanel.SetAndShowHeroAttack(attackVal, pitch);
             pitch += attackVal * .05f;
-            yield return new WaitForSeconds(Settings._instance.WaitTime);
+            yield return new WaitForSeconds(Settings.Instance.WaitTime);
             board.BattlePanel.SetAndShowHeroSupport(attackSupport, pitch);
             pitch += attackSupport * .05f;
-            yield return new WaitForSeconds(Settings._instance.WaitTime);
+            yield return new WaitForSeconds(Settings.Instance.WaitTime);
             board.BattlePanel.SetAndShowHeroTotal(attackVal + attackSupport, pitch);
 
 
-            yield return new WaitForSeconds(Settings._instance.WaitTime);
+            yield return new WaitForSeconds(Settings.Instance.WaitTime);
             board.BattlePanel.SetAndShowEnemyAttack(defendVal, pitch);
-            yield return new WaitForSeconds(Settings._instance.WaitTime);
+            yield return new WaitForSeconds(Settings.Instance.WaitTime);
             pitch += scale;
             board.BattlePanel.SetAndShowEnemySupport(defenseSupport, pitch);
-            yield return new WaitForSeconds(Settings._instance.WaitTime);
+            yield return new WaitForSeconds(Settings.Instance.WaitTime);
             pitch += scale;
             board.BattlePanel.SetAndShowEnemyTotal(defendVal + defenseSupport, pitch);
         }
@@ -203,21 +204,22 @@ public class ChessMatch
             if (isCapture)
                 scale = -0.05f;
             board.BattlePanel.DropIn(defender.name, defender.droppingSprite, attacker.name, attacker.droppingSprite, false, defender, attacker);
+            SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.dropIn, 1f, Settings.Instance.SfxVolume);
             board.BattlePanel.SetAndShowEnemyAttack(attackVal, pitch);
             pitch += .05f;
-            yield return new WaitForSeconds(Settings._instance.WaitTime);
+            yield return new WaitForSeconds(Settings.Instance.WaitTime);
             board.BattlePanel.SetAndShowEnemySupport(attackVal, pitch);
             pitch += .05f;
-            yield return new WaitForSeconds(Settings._instance.WaitTime);
+            yield return new WaitForSeconds(Settings.Instance.WaitTime);
             board.BattlePanel.SetAndShowEnemyTotal(attackSupport + attackVal, pitch);
-            yield return new WaitForSeconds(Settings._instance.WaitTime);
+            yield return new WaitForSeconds(Settings.Instance.WaitTime);
 
 
             board.BattlePanel.SetAndShowHeroAttack(defendVal, pitch);
-            yield return new WaitForSeconds(Settings._instance.WaitTime);
+            yield return new WaitForSeconds(Settings.Instance.WaitTime);
             pitch += scale;
             board.BattlePanel.SetAndShowHeroSupport(defenseSupport, pitch);
-            yield return new WaitForSeconds(Settings._instance.WaitTime);
+            yield return new WaitForSeconds(Settings.Instance.WaitTime);
             pitch += scale;
             board.BattlePanel.SetAndShowHeroTotal(defendVal + defenseSupport, pitch);
         }
@@ -246,13 +248,14 @@ public class ChessMatch
                 board.BattlePanel.SetAndShowResults("Decimate!");
                 board.BattlePanel.Feedback.PlayFeedbacks();
                 yield return new WaitForSeconds(board.BattlePanel.Feedback.TotalDuration);
+                SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.capture, 1f, Settings.Instance.SfxVolume);
                 destination.SetBloodTile();
                 if (attacker.canStationarySlash)
                     MovePiece(attacker, attacker.xBoard, attacker.yBoard);
                 else
                     MovePiece(attacker, defender.xBoard, defender.yBoard);
                 eventHub.RaisePieceCaptured(attacker, defender);
-                yield return new WaitForSeconds(Settings._instance.WaitTime);
+                yield return new WaitForSeconds(Settings.Instance.WaitTime);
                 defender.DestroyPiece();
             }
             else
@@ -261,6 +264,7 @@ public class ChessMatch
                 attacker.owner.capturedPieces.Add(defender.gameObject);
                 board.BattlePanel.Feedback.PlayFeedbacks();
                 yield return new WaitForSeconds(board.BattlePanel.Feedback.TotalDuration);
+                SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.capture, 1f, Settings.Instance.SfxVolume);
                 destination.SetBloodTile();
                 if (attacker.canStationarySlash)
                     MovePiece(attacker, attacker.xBoard, attacker.yBoard);
@@ -283,6 +287,7 @@ public class ChessMatch
             board.BattlePanel.SetAndShowResults("Bounce!");
             board.BattlePanel.Feedback.PlayFeedbacks();
             yield return new WaitForSeconds(board.BattlePanel.Feedback.TotalDuration);
+            SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.bounce, 1f, Settings.Instance.SfxVolume);
             MovePiece(defender, defender.xBoard, defender.yBoard);
             MovePiece(attacker, attacker.xBoard, attacker.yBoard);
             eventHub.RaisePieceBounced(attacker, defender);

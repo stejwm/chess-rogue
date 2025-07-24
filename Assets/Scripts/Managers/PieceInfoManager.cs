@@ -23,6 +23,8 @@ public class PieceInfoManager : MonoBehaviour
     [SerializeField] private GameObject abilitiesContainer;
     [SerializeField] private GameObject historyContainer;
     [SerializeField] private GameObject increaseContainer;
+    [SerializeField] private GameObject wheelContainer;
+    [SerializeField] private GameObject profile;
     private Chessman piece;
     public void Start()
     {
@@ -35,8 +37,8 @@ public class PieceInfoManager : MonoBehaviour
         pieceName.text = piece.name;
         gender.text = piece.gender.ToString();
         age.text = piece.age.ToString();
-        height.text = piece.height+"cm";
-        weight.text = piece.weight+"lbs";
+        height.text = piece.height + "cm";
+        weight.text = piece.weight + "lbs";
         pieceClass.text = piece.type.ToString();
         attackVal.text = piece.attack.ToString();
         defenseVal.text = piece.defense.ToString();
@@ -51,6 +53,32 @@ public class PieceInfoManager : MonoBehaviour
         else
             increaseContainer.SetActive(false);
         gameObject.SetActive(true);
+
+        foreach (Transform child in wheelContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        var pieces = piece.owner.pieces;
+        int count = pieces.Count;
+
+    
+
+        for (int i = 0; i < count; i++)
+        {
+            GameObject item = pieces[i];
+            GameObject newProfile = Instantiate(profile, wheelContainer.transform);
+            newProfile.GetComponent<Profile>().SetProfile(item.GetComponent<Chessman>());
+
+            // Rotate: right if above halfway, left if below
+            float angle = 2f; // degrees to rotate
+            if (i < count / 2f)
+                newProfile.transform.rotation = Quaternion.Euler(0, 0, angle*i);
+            else if (i > count / 2f)
+                newProfile.transform.rotation = Quaternion.Euler(0, 0, -angle*i);
+            else
+                newProfile.transform.rotation = Quaternion.identity; // middle one, no rotation
+        }
     }
 
     public void IncreaseAttack()

@@ -99,7 +99,7 @@ public class ShopManager : MonoBehaviour
             }
             board.Hero.playerCoins -= selectedCard.ability.Cost;
         }
-        yield return new WaitForSeconds(Settings._instance.WaitTime);
+        yield return new WaitForSeconds(Settings.Instance.WaitTime);
         StartCoroutine(selectedCard.Dissolve());
         selectedCard.Use(board, target);
         yield return new WaitUntil(() => selectedCard.isDissolved);
@@ -108,7 +108,7 @@ public class ShopManager : MonoBehaviour
         ClearSelections();
         applyingAbility = false;
         board.BoardState = BoardState.ShopScreen;
-        yield return new WaitForSeconds(Settings._instance.WaitTime);
+        yield return new WaitForSeconds(Settings.Instance.WaitTime);
         yield break;
     }
     public void RerollAbilities()
@@ -206,6 +206,7 @@ public class ShopManager : MonoBehaviour
             board.Hero.inventoryPieces.Add(piece.gameObject);
             piece.owner = board.Hero;
             piece.UpdateUIPosition();
+            SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.purchase, 1f, Settings.Instance.SfxVolume);
             pieces.Remove(piece.gameObject);
             piece.gameObject.SetActive(false);
         }

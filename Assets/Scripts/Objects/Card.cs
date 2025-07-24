@@ -104,9 +104,10 @@ public class Card : MonoBehaviour, IInteractable
                 effect.text = order.Description;
                 title.text = order.Name;
             }
+            SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.cardFlip, 1f, Settings.Instance.SfxVolume);
             yield return new WaitForSeconds(FlipPlayer.TotalDuration);
             cardFlipped = true;
-            StartCoroutine(CardExpand());
+            //StartCoroutine(CardExpand());
         }
         
         
@@ -116,7 +117,9 @@ public class Card : MonoBehaviour, IInteractable
         Vector3 targetScale = startScale * 1.15f;
         float duration = 0.15f;
         float t = 0f;
-        while (t < duration) {
+        SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.cardHover, 1f, Settings.Instance.SfxVolume);
+        while (t < duration)
+        {
             t += Time.deltaTime;
             transform.localScale = Vector3.Lerp(startScale, targetScale, t / duration);
             yield return null;

@@ -166,6 +166,7 @@ public class MarketManager : MonoBehaviour
             selectedPieces.Add(piece);
             piece.highlightedParticles.Play();
             DropIn(piece);
+            SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.dropIn, 1f, Settings.Instance.SfxVolume);
             if (piece.color == PieceColor.White)
                 totalCost += piece.releaseCost;
         }

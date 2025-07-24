@@ -144,35 +144,28 @@ public class PlayerAgent : Agent
     {
         Debug.Log("Move commands count: " + moveCommands.Count);
         List<int> validIndexes = new List<int>();
-        foreach(KeyValuePair<int, MoveCommand> entry in moveCommands)
-        {
-            foreach(GameObject pieceObject in pieces){
-                Chessman selectedPiece = pieceObject.GetComponent<Chessman>();
-                if (!selectedPiece.isValidForAttack)
-                    continue;
-                var moves = selectedPiece.GetValidMoves();
-                foreach (var move in moves)
+        
+        foreach(GameObject pieceObject in pieces){
+            Chessman selectedPiece = pieceObject.GetComponent<Chessman>();
+            if (!selectedPiece.isValidForAttack)
+                continue;
+            var moves = selectedPiece.GetValidMoves();
+            foreach (var move in moves)
+            {
+                MoveCommand testCommand = new MoveCommand(selectedPiece, move.X, move.Y);
+                if (reverseMoveCommands.TryGetValue(testCommand, out int index))
                 {
-                    MoveCommand testCommand = new MoveCommand(selectedPiece, move.X, move.Y);
-                    if (testCommand.Equals(entry.Value))
-                    {
-                        validIndexes.Add(entry.Key);
-                    }
+                    validIndexes.Add(index);
                 }
-                
             }
             
         }
-        Debug.Log("Valid moves found: " + validIndexes.Count);
-        //Debug.Log("Found all valid move commands. Count = "+validIndexes.Count);
+            
         foreach (int index in moveCommands.Keys)
         {
             if (!validIndexes.Contains(index))
                 actionMask.SetActionEnabled(0, index, false);
-            //else
-            //Debug.Log("Not masking: "+index);
         }
-        //Debug.Log("Actions masked");
     }
 
     public override void CollectObservations(VectorSensor sensor)

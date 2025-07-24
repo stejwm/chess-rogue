@@ -102,7 +102,7 @@ public class BonusPopUp : MonoBehaviour
         bonusText.color= fontColor;
         bonusText.fontSize = fontSize;
         audioSource.pitch=pitch;
-        
+        SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.pieceBonus, pitch, Settings.Instance.SfxVolume);
 
         if(_moveCoroutine !=null)
             StopCoroutine(_moveCoroutine);
@@ -117,7 +117,7 @@ public class BonusPopUp : MonoBehaviour
             
             float time = 0;
             float fadeStartTime = startColorFadeAtPercent * _displayDuration;
-            audioSource.Play();
+            //audioSource.Play();
             //OrientCurveBasedOnDirection();
             
             Vector3 start = transform.position;
