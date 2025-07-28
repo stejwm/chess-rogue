@@ -24,7 +24,7 @@ public class IncreasingStrike : Ability
     }
     public void AddBonus(Chessman attacker, Chessman defender){
         if (attacker==piece){
-            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Increasing Strike</gradient></color>", "I want more...");
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Increasing Strike</gradient></color>", "I want more...");
 
             piece.attack+=1;
         }

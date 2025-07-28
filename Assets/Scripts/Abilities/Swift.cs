@@ -54,7 +54,7 @@ public class Swift : Ability
 
             board.CurrentMatch.MyTurn(piece.color);
 
-            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Swift</gradient></color>", " move again");
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Swift</gradient></color>", " move again");
             piece.owner.MakeMove(board.CurrentMatch);
 
             // If all uses are spent, reset SwiftOverride

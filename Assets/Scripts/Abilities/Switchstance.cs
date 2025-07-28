@@ -58,7 +58,7 @@ public class Switchstance : Ability
             piece.DefenseBonuses = SwappedDefenseDict;
 
 
-            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Switchstance</gradient></color>", $"Defense set to {piece.CalculateDefense()} Attack set to {piece.CalculateAttack()}");
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Switchstance</gradient></color>", $"Defense set to {piece.CalculateDefense()} Attack set to {piece.CalculateAttack()}");
         }
     }
 

@@ -107,25 +107,31 @@ public class RewardManager : MonoBehaviour
         {
             selectedPiece.flames.Stop();
             selectedPiece = null;
+            StatBoxManager._instance.UnlockView();
         }
         else if (selectedPiece != null && selectedPiece != piece)
         {
+            StatBoxManager._instance.UnlockView();
             selectedPiece.flames.Stop();
             selectedPiece = piece;
             selectedPiece.flames.Play();
             StatBoxManager._instance.SetAndShowStats(piece);
+            StatBoxManager._instance.LockView(piece);
         }
         else
         {
+            StatBoxManager._instance.UnlockView();
             selectedPiece = piece;
             selectedPiece.flames.Play();
             StatBoxManager._instance.SetAndShowStats(piece);
+            StatBoxManager._instance.LockView(piece);
         }
     }
 
     public void CloseReward(Board board)
     {
         gameObject.SetActive(false);
+        StatBoxManager._instance.UnlockView();
     }
 
 

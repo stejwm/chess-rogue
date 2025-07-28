@@ -35,10 +35,20 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySoundFXClip(AudioClip clip, float pitch, float volume)
     {
-        sfxSource.clip = clip;
-        sfxSource.volume = volume;
         sfxSource.pitch = pitch;
-        sfxSource.Play();
+        sfxSource.PlayOneShot(clip, volume);
     }
-
+    public void PlaySoundFXClip(AudioClip clip, float pitch)
+    {
+        sfxSource.pitch = pitch;
+        sfxSource.PlayOneShot(clip, Settings.Instance.SfxVolume);
+    }
+    public void PlaySoundFXClip(AudioClip clip)
+    {
+        sfxSource.PlayOneShot(clip, Settings.Instance.SfxVolume);
+    }
+    public void ResetPitch()
+    {
+        sfxSource.pitch = 1f;
+    }
 }

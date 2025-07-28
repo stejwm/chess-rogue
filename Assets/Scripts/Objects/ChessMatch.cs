@@ -74,13 +74,14 @@ public class ChessMatch
         if (board.GetPieceAtPosition(x, y) != null)
         {
             Chessman attackedPiece = board.GetPieceAtPosition(x, y).GetComponent<Chessman>();
-            logManager.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"> {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} attacks <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(x, y)}");
+            board.AbilityLogger.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"> {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} attacks <sprite=\"{attackedPiece.color}{attackedPiece.type}\" name=\"{attackedPiece.color}{attackedPiece.type}\"> on {BoardPosition.ConvertToChessNotation(x, y)}");
             CoroutineRunner.instance.StartCoroutine(HandleAttack(piece, attackedPiece));
         }
         else
         {
-            logManager.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"> " + BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard) + " to " + BoardPosition.ConvertToChessNotation(x, y));
+            board.AbilityLogger.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"> " + BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard) + " to " + BoardPosition.ConvertToChessNotation(x, y));
             MovePiece(piece, x, y);
+            SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.pieceMove);
             eventHub.RaiseRawMoveEnd(piece, board.GetTileAt(x, y));
             board.ClearTiles();
             piece.flames.Stop();
@@ -161,7 +162,7 @@ public class ChessMatch
             RectTransform rt = bonusPopUpInstance.GetComponent<RectTransform>();
             rt.position = pieceObject.transform.position;
 
-            logManager.WriteLog($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\">{BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} <color=green>+{pieceSupport}</color> on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
+            board.AbilityLogger.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\">{BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} <color=green>+{pieceSupport}</color> on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
             yield return new WaitForSeconds(Settings.Instance.WaitTime);
         }
     }
@@ -179,7 +180,6 @@ public class ChessMatch
             if (!isCapture)
                 scale = -0.05f;
             board.BattlePanel.DropIn(attacker.name, attacker.droppingSprite, defender.name, defender.droppingSprite, true, attacker, defender);
-            SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.dropIn, 1f, Settings.Instance.SfxVolume);
             board.BattlePanel.SetAndShowHeroAttack(attackVal, pitch);
             pitch += attackVal * .05f;
             yield return new WaitForSeconds(Settings.Instance.WaitTime);
@@ -204,7 +204,6 @@ public class ChessMatch
             if (isCapture)
                 scale = -0.05f;
             board.BattlePanel.DropIn(defender.name, defender.droppingSprite, attacker.name, attacker.droppingSprite, false, defender, attacker);
-            SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.dropIn, 1f, Settings.Instance.SfxVolume);
             board.BattlePanel.SetAndShowEnemyAttack(attackVal, pitch);
             pitch += .05f;
             yield return new WaitForSeconds(Settings.Instance.WaitTime);
@@ -223,6 +222,7 @@ public class ChessMatch
             pitch += scale;
             board.BattlePanel.SetAndShowHeroTotal(defendVal + defenseSupport, pitch);
         }
+        SoundManager.Instance.ResetPitch();
     }
 
     public IEnumerator ResolveBattlePanel(Chessman attacker, Chessman defender, Dictionary<GameObject, int> attackingSupporters, Dictionary<GameObject, int> defendingSupporters, bool isCapture)
@@ -235,7 +235,7 @@ public class ChessMatch
             foreach (GameObject supporter in attackingSupporters.Keys)
                 supporter.GetComponent<Chessman>().supportsAttacking++;
 
-            logManager.WriteLog($"<sprite=\"{attacker.color}{attacker.type}\" name=\"{attacker.color}{attacker.type}\"> captures <sprite=\"{defender.color}{defender.type}\" name=\"{defender.color}{defender.type}\"> on {BoardPosition.ConvertToChessNotation(destination)}");
+            board.AbilityLogger.AddLogToQueue($"<sprite=\"{attacker.color}{attacker.type}\" name=\"{attacker.color}{attacker.type}\"> captures <sprite=\"{defender.color}{defender.type}\" name=\"{defender.color}{defender.type}\"> on {BoardPosition.ConvertToChessNotation(destination)}");
 
             if (black.pieces.Contains(defender.gameObject))
                 black.pieces.Remove(defender.gameObject);
@@ -247,8 +247,8 @@ public class ChessMatch
             {
                 board.BattlePanel.SetAndShowResults("Decimate!");
                 board.BattlePanel.Feedback.PlayFeedbacks();
+                SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.capture);
                 yield return new WaitForSeconds(board.BattlePanel.Feedback.TotalDuration);
-                SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.capture, 1f, Settings.Instance.SfxVolume);
                 destination.SetBloodTile();
                 if (attacker.canStationarySlash)
                     MovePiece(attacker, attacker.xBoard, attacker.yBoard);
@@ -263,8 +263,8 @@ public class ChessMatch
                 board.BattlePanel.SetAndShowResults("Capture!");
                 attacker.owner.capturedPieces.Add(defender.gameObject);
                 board.BattlePanel.Feedback.PlayFeedbacks();
+                SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.capture);
                 yield return new WaitForSeconds(board.BattlePanel.Feedback.TotalDuration);
-                SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.capture, 1f, Settings.Instance.SfxVolume);
                 destination.SetBloodTile();
                 if (attacker.canStationarySlash)
                     MovePiece(attacker, attacker.xBoard, attacker.yBoard);
@@ -281,13 +281,13 @@ public class ChessMatch
             attacker.bounced++;
             foreach (var supporter in defendingSupporters.Keys)
                 supporter.GetComponent<Chessman>().supportsDefending++;
-            logManager.WriteLog($"<sprite=\"{attacker.color}{attacker.type}\" name=\"{attacker.color}{attacker.type}\"> failed to capture <sprite=\"{defender.color}{defender.type}\" name=\"{defender.color}{defender.type}\"> on {BoardPosition.ConvertToChessNotation(destination)}");
+            board.AbilityLogger.AddLogToQueue($"<sprite=\"{attacker.color}{attacker.type}\" name=\"{attacker.color}{attacker.type}\"> failed to capture <sprite=\"{defender.color}{defender.type}\" name=\"{defender.color}{defender.type}\"> on {BoardPosition.ConvertToChessNotation(destination)}");
             //defender.defenseBonus = Mathf.Max(-defender.defense, defender.defenseBonus - attacker.CalculateAttack());
             defender.SetBonus(StatType.Defense, Mathf.Max(-defender.defense, defender.defenseBonus - attacker.CalculateAttack()), "Attack Damage");
             board.BattlePanel.SetAndShowResults("Bounce!");
             board.BattlePanel.Feedback.PlayFeedbacks();
+            SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.bounce);
             yield return new WaitForSeconds(board.BattlePanel.Feedback.TotalDuration);
-            SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.bounce, 1f, Settings.Instance.SfxVolume);
             MovePiece(defender, defender.xBoard, defender.yBoard);
             MovePiece(attacker, attacker.xBoard, attacker.yBoard);
             eventHub.RaisePieceBounced(attacker, defender);
@@ -454,11 +454,12 @@ public class ChessMatch
     }
     public void EndMatch()
     {
+        eventHub.RaiseGameEnd(board.Hero.color);
         board.BattlePanel.HideResults();
         board.BattlePanel.HideStats();
         logManager.ClearLogs();
+        reward += board.Opponent.pieces.Count + 1;
         white.playerCoins += reward;
-        white.playerCoins += (turnReward / turns);
         board.EndMatch();
     }
     public void EndGame()

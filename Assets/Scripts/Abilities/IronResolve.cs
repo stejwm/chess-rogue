@@ -24,7 +24,7 @@ public class IronResolve : Ability
     }
     public void AddBonus(Chessman attacker, Chessman defender){
         if (defender==piece){
-                        AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Iron Resolve</gradient></color>", "Try harder next time!");
+                        board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Iron Resolve</gradient></color>", "Try harder next time!");
 
             piece.defense+=1;
         }

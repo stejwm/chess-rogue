@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PickPocket
   m_EditorClassIdentifier: 
   abilityName: Pickpocket
-  description: +3 coins when bounced
+  description: +2 coins when bounced
   sprite: {fileID: 4552134719307402070, guid: 1e9724fd823a3534c990fbe14606eabc, type: 3}
   Cost: 3
   rarity: 0

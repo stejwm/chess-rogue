@@ -31,7 +31,7 @@ public class ParalyzingBlow : Ability
         if (attacker==piece){
             defender.paralyzed=true;
             piece.effectsFeedback.PlayFeedbacks();
-            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Paralyzing Blow</gradient></color>", " Paralyzed");
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Paralyzing Blow</gradient></color>", " Paralyzed");
         }
     }
 

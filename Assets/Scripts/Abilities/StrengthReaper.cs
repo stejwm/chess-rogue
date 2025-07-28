@@ -33,7 +33,7 @@ public class StrengthReaper : Ability
             bonus = attacker.CalculateAttack()/2;
             attacker.RemoveBonus(StatType.Attack, bonus, abilityName);
              piece.effectsFeedback.PlayFeedbacks();
-            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Strength Reaper</gradient></color>", $" attack reduced by <color=red>-{bonus}</color>");
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Strength Reaper</gradient></color>", $" attack reduced by <color=red>-{bonus}</color>");
         
         }
     }

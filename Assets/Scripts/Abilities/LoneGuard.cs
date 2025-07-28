@@ -27,7 +27,7 @@ public class LoneGuard : Ability
     }
     public void AddBonus(Chessman cm, int support, Tile targetedPosition){
         if (cm==piece && support==0){
-            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Lone Guard</gradient></color>", "<color=green>+5 defense</color>");
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Lone Guard</gradient></color>", "<color=green>+5 defense</color>");
             piece.AddBonus(StatType.Defense, 5, abilityName);
         }
     }

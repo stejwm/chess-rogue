@@ -29,7 +29,7 @@ public class BrokenDeath : Ability
         if (defender==piece){
             eventHub.OnPieceCaptured.Invoke(defender, attacker);
             attacker.DestroyPiece();
-            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Broken Death</gradient></color>", $" dragged {attacker.name} to hell with them");
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Broken Death</gradient></color>", $" dragged {attacker.name} to hell with them");
         }
     }
 

@@ -35,6 +35,7 @@ public class BattlePanel : MonoBehaviour
     }
     public void DropIn(string name, GameObject sprite, string enemyPieceName, GameObject enemySprite, bool heroIsAttacking, Chessman white, Chessman black)
     {
+        SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.dropIn);
         gameObject.SetActive(true);
         
         if (heroIsAttacking)

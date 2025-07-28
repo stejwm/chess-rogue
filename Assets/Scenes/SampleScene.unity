@@ -15718,7 +15718,7 @@ MonoBehaviour:
   m_Content: {fileID: 1838923740}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 0
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -16190,7 +16190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8657185058453696488, guid: f7a20c0b359efe24894f76772b84033b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.17248948
+      value: 0.17261155
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17884,6 +17884,8 @@ MonoBehaviour:
   kingsOrderManager: {fileID: 1890992358}
   currencyManager: {fileID: 862692195}
   pauseMenuManager: {fileID: 573596370}
+  abilityLogger: {fileID: 921522522}
+  stockFishEngine: {fileID: 1624334855}
   Width: 8
   Height: 8
   previousBoardState: 7
@@ -20218,6 +20220,7 @@ GameObject:
   - component: {fileID: 1624334848}
   - component: {fileID: 1624334849}
   - component: {fileID: 1624334852}
+  - component: {fileID: 1624334855}
   - component: {fileID: 1624334854}
   - component: {fileID: 1624334853}
   m_Layer: 0
@@ -20307,9 +20310,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 525a91cf0617b8541a60a77f79c7fc28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterVolume: 100
-  sfxVolume: 100
-  musicVolume: 100
+  masterVolume: 1
+  sfxVolume: 1
+  musicVolume: 1
   waitTime: 0.25
 --- !u!114 &1624334850
 MonoBehaviour:
@@ -20360,6 +20363,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fd0ba3f0eba4dab4d8fa40aea1545010, type: 2}
   - {fileID: 11400000, guid: 4486eb42e50d9774190ce7db99aec8f4, type: 2}
   - {fileID: 11400000, guid: aa159d6241be2ef4092c04fa55f8a178, type: 2}
+  - {fileID: 11400000, guid: 19f00f10b285db04ba0565a0e560bbcd, type: 2}
+  - {fileID: 11400000, guid: aaab6b43ddd9f2b46994fe4d12600e0a, type: 2}
   orders:
   - {fileID: 11400000, guid: 8812b8c1196501e4c85c6485c44955f7, type: 2}
   - {fileID: 11400000, guid: 15273d54d6aa5434a8f509b8cf2fb5f3, type: 2}
@@ -20387,6 +20392,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 3186847924759451737, guid: 213abdc1572143548af75a7c41f77bd7, type: 3}
   holoMaterial: {fileID: 2100000, guid: 0ed6c5d3345213c469cd51e325a5d1d6, type: 2}
+  abilitySprite: {fileID: 21300000, guid: 09d810581cd9c564b96b8900098c7a39, type: 3}
+  orderSprite: {fileID: 21300000, guid: 84b1f4a77309e86489d53e25ae601c66, type: 3}
 --- !u!114 &1624334852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20603,6 +20610,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1624334855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624334840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e30e673421b65fd4c9748fff98d45f5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1633117964
 GameObject:
   m_ObjectHideFlags: 0
@@ -25234,7 +25253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 259.88, y: -16.49}
+  m_AnchoredPosition: {x: 259.88, y: -16.489998}
   m_SizeDelta: {x: 519.76, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2102584121
@@ -27344,7 +27363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8657185058453696488, guid: f7a20c0b359efe24894f76772b84033b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.17056656
+      value: 0.17068863
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

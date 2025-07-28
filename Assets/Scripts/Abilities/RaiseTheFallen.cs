@@ -47,11 +47,11 @@ public class RaiseTheFallen : Ability
         if (attacker==piece){
             board.CurrentMatch.MovePiece(piece, piece.xBoard, piece.yBoard);
             if(piece.owner.openPositions.Count==0){
-                AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Raise the Fallen</gradient></color>",  "no open positions, cannot raise the dead");
+                board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Raise the Fallen</gradient></color>",  "no open positions, cannot raise the dead");
                 board.CurrentMatch.isDecimating=false;
                 return;
             }
-            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Raise the Fallen</gradient></color>",  $"raised the dead at {BoardPosition.ConvertToChessNotation(defender.xBoard, defender.yBoard)}");
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Raise the Fallen</gradient></color>",  $"raised the dead at {BoardPosition.ConvertToChessNotation(defender.xBoard, defender.yBoard)}");
 
             var undead = PieceFactory._instance.CreateAbilityPiece(board, PieceType.Pawn, $"undead {defender.name}", defender.xBoard, defender.yBoard, PieceColor.White, piece.owner, AbilityDatabase.Instance.GetAbilityByName("RadiatingDeath")); //Create with radiating death
             undead.GetComponent<Collider2D>().enabled = false;

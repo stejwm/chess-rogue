@@ -115,7 +115,7 @@ public class BloodThirstAbility : Ability
             board.CurrentMatch.isDecimating=false;
             return;
         }
-        AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Blood Thirst</gradient></color>",  " attack again");
+        board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Blood Thirst</gradient></color>",  " attack again");
         piece.owner.MakeMove(board.CurrentMatch);
     }
 

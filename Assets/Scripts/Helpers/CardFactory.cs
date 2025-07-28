@@ -10,6 +10,8 @@ public class CardFactory : MonoBehaviour
 
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private Material holoMaterial;
+    [SerializeField] private Sprite abilitySprite;
+    [SerializeField] private Sprite orderSprite;
 
     private void Awake()
     {
@@ -46,6 +48,7 @@ public class CardFactory : MonoBehaviour
     public GameObject CreateCard(Ability ability)
     {
         GameObject obj = Instantiate(cardPrefab, new Vector3(0, 0, -2), Quaternion.identity);
+        obj.GetComponent<SpriteRenderer>().sprite = abilitySprite;
         obj.GetComponent<Card>().ability = ability;
 
         if (ability.rarity > 0)
@@ -68,6 +71,7 @@ public class CardFactory : MonoBehaviour
         foreach (var order in orders)
         {
             GameObject obj = Instantiate(cardPrefab, new Vector3(0, 0, -2), Quaternion.identity);
+            obj.GetComponent<SpriteRenderer>().sprite = orderSprite;
             obj.GetComponent<Card>().order = order;
             cards.Add(obj);
         }

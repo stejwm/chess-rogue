@@ -63,6 +63,18 @@ public class BoardPosition
         if (tile.X < 0 || tile.Y < 0 || tile.X >= 8 || tile.Y >= 8) return false;
         return true;
     }
+    public static void ParseUCIMove(string uciMove, out int fromX, out int fromY, out int toX, out int toY)
+    {
+        if (uciMove.Length < 4)
+        {
+            throw new System.ArgumentException("Invalid UCI move: " + uciMove);
+        }
+
+        fromX = uciMove[0] - 'a'; // 'a' = 0, 'h' = 7
+        fromY = uciMove[1] - '1'; // '1' = 0, '8' = 7
+        toX   = uciMove[2] - 'a';
+        toY   = uciMove[3] - '1';
+    }
 
     public override bool Equals(object obj)
     {

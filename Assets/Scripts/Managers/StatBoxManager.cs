@@ -36,6 +36,7 @@ public class StatBoxManager : MonoBehaviour
         {
             statBox.gameObject.SetActive(false);
         }
+        EnemyStatBox.gameObject.SetActive(false);
     }
 
     public void LockView(Chessman piece)

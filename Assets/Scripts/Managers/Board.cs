@@ -46,6 +46,8 @@ public class Board : MonoBehaviour
     [SerializeField] KingsOrderManager kingsOrderManager;
     [SerializeField] CurrencyManager currencyManager;
     [SerializeField] PauseMenuManager pauseMenuManager;
+    [SerializeField] AbilityLogger abilityLogger;
+    [SerializeField] StockfishEngine stockFishEngine;
     public int Width = 8;
     public int Height = 8;
     private int reRollCost = 2;
@@ -74,6 +76,8 @@ public class Board : MonoBehaviour
     public PauseMenuManager PauseMenuManager { get => pauseMenuManager; set => pauseMenuManager = value; }
     public MapManager MapManager { get => mapManager; set => mapManager = value; }
     public int RerollCostIncrease { get => rerollCostIncrease; set => rerollCostIncrease = value; }
+    public AbilityLogger AbilityLogger { get => abilityLogger; set => abilityLogger = value; }
+    public StockfishEngine StockFishEngine { get => stockFishEngine; set => stockFishEngine = value; }
 
     public void Start()
     {
@@ -81,6 +85,7 @@ public class Board : MonoBehaviour
         CreateTiles();
         currencyManager.Initialize(this);
         pauseMenuManager.Initialize(this);
+        abilityLogger.Initialize(logManager);
         NameDatabase.LoadNames();
         if (SceneLoadManager.LoadPreviousSave)
         {
@@ -432,6 +437,13 @@ public class Board : MonoBehaviour
         else
             return null;
     }
+    public Chessman GetChessmanAtPosition(int x, int y)
+    {
+        if (positions[x, y])
+            return positions[x, y].GetComponent<Chessman>();
+        else
+            return null;
+    }
     public void SetSelectedPosition(Tile tile)
     {
         if (selectedPosition == null)
@@ -448,5 +460,118 @@ public class Board : MonoBehaviour
     {
         gameOverPanel.SetActive(true);
     }
+
+    public string BoardToFEN()
+    {
+        int size = 8; // assuming 8x8
+        List<string> rows = new List<string>();
+
+        for (int y = size - 1; y >= 0; y--) // FEN starts from rank 8 to 1 (top to bottom)
+        {
+            string row = "";
+            int emptyCount = 0;
+
+            for (int x = 0; x < size; x++) // file a to h (left to right)
+            {
+                GameObject pieceObj = positions[x, y];
+
+                if (pieceObj == null)
+                {
+                    emptyCount++;
+                }
+                else
+                {
+                    if (emptyCount > 0)
+                    {
+                        row += emptyCount.ToString();
+                        emptyCount = 0;
+                    }
+
+                    Chessman piece = pieceObj.GetComponent<Chessman>();
+                    row += piece != null ? piece.GetFENChar().ToString() : "?";
+                }
+            }
+
+            if (emptyCount > 0)
+                row += emptyCount.ToString();
+
+            rows.Add(row);
+        }
+
+        string piecePlacement = string.Join("/", rows);
+
+        // You can extend this to add the full FEN fields
+        string fullFEN = piecePlacement + " b - - 0 1"; // placeholder: white to move, all castling rights, no en passant, etc.
+
+        return fullFEN;
+    }
+
+    public int GetSupportAtPosition(Chessman cm, int x, int y, bool isAttacking)
+    {
+        List<GameObject> possibleSupporters;
+        switch (cm.color)
+        {
+            case PieceColor.White:
+                possibleSupporters = Hero.pieces;
+                break;
+            case PieceColor.Black:
+                possibleSupporters = Opponent.pieces;
+                break;
+            default:
+                return 0;
+
+        }
+
+        Tile tile = GetTileAt(x, y);
+        int supportTotal;
+        if (isAttacking)
+            supportTotal = cm.CalculateAttack();
+        else
+            supportTotal = cm.CalculateDefense();
+
+        foreach (GameObject piece in possibleSupporters)
+        {
+            Chessman cmSupport = piece.GetComponent<Chessman>();
+            if (cmSupport.GetValidSupportMoves().Contains(tile))
+            {
+                supportTotal += cmSupport.CalculateSupport();
+            }
+        }
+        return supportTotal;
+
+    }
+
+    public List<string> GetValidMovesFromEngineMoves(List<string> moves)
+    {
+        List<string> validatedMoves = new List<string>();
+        foreach (string move in moves)
+        {
+            BoardPosition.ParseUCIMove(move, out int fromX, out int fromY, out int toX, out int toY);
+            Chessman cm = GetChessmanAtPosition(fromX, fromY);
+            if (!cm)
+                continue;
+            if (!cm.GetValidMoves().Contains(GetTileAt(toX, toY)))
+                continue;
+            if (isUselessBounce(GetChessmanAtPosition(fromX, fromY), GetChessmanAtPosition(toX, toY)))
+                continue;
+
+            else
+            {
+                validatedMoves.Add(move);
+            }
+        }
+        return validatedMoves;
+    }
+    private bool isUselessBounce(Chessman attacker, Chessman defender)
+    {
+        if (defender == null)
+            return false;
+        if (defender.CalculateDefense() > 0)
+            return false;
+        if (GetSupportAtPosition(defender, defender.xBoard, defender.yBoard, false) < GetSupportAtPosition(attacker, defender.xBoard, defender.yBoard, true))
+            return false;
+        return true;
+    }
+     
 
 }

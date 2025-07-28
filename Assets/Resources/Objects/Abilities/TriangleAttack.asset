@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97efc35183a03ed41bab6bf922585b09, type: 3}
+  m_Name: TriangleAttack
+  m_EditorClassIdentifier: 
+  abilityName: Triangle Attack
+  description: x3 attack if supported by 2 of the same piece types
+  sprite: {fileID: 0}
+  Cost: 5
+  rarity: 1

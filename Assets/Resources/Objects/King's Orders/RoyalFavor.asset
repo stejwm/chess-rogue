@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: Royal Favor
   Description: One piece permanently gains +1 to all stats
   sprite: {fileID: 0}
-  Cost: 10
+  Cost: 5
   canBeUsedFromManagement: 1

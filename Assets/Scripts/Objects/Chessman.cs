@@ -378,6 +378,22 @@ public abstract class Chessman : MonoBehaviour, IInteractable
             PopUpManager._instance.HideValues();
     }*/
 
+
+    public char GetFENChar()
+    {
+        char c = type switch
+        {
+            PieceType.Pawn => 'p',
+            PieceType.Knight => 'n',
+            PieceType.Bishop => 'b',
+            PieceType.Rook => 'r',
+            PieceType.Queen => 'q',
+            PieceType.King => 'k',
+            _ => '?'
+        };
+
+        return color == PieceColor.White ? char.ToUpper(c) : c;
+    }
     public override bool Equals(object obj)
     {
         if (obj is Chessman other)

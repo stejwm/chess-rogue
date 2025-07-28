@@ -5265,7 +5265,7 @@ SpriteRenderer:
   m_SortingLayerID: 1431253717
   m_SortingLayer: 1
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: c7bf45f0ef95bed4491c5809fc6bf484, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 84b1f4a77309e86489d53e25ae601c66, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5348,6 +5348,7 @@ MonoBehaviour:
   effect: {fileID: 985453881502054971}
   cost: {fileID: 5713109710302699702}
   front: {fileID: 21300000, guid: fd7c597ed20ede74685f5cec04564428, type: 3}
+  abilityFront: {fileID: 21300000, guid: 8db9cd5b7390cf444afaaa54700be767, type: 3}
   FlipPlayer: {fileID: 8049959902687354676}
   cardFlipped: 0
   cardFlipping: 0

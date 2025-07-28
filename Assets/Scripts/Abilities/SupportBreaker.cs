@@ -50,7 +50,7 @@ public class SupportBreaker : Ability
                 }
             }
             piece.effectsFeedback.PlayFeedbacks();
-            AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Support Breaker</gradient></color>",  supporters.Count +" pieces <color=red>-1</color> support");
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Support Breaker</gradient></color>",  supporters.Count +" pieces <color=red>-1</color> support");
             eventHub.OnSupportAdded.RemoveListener(GatherSupporters);
             supporters.Clear();   
                

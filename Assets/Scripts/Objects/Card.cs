@@ -18,6 +18,7 @@ public class Card : MonoBehaviour, IInteractable
     public TMP_Text cost;
 
     public Sprite front;
+    public Sprite abilityFront;
 
     public MMF_Player FlipPlayer;
     public bool cardFlipped =false;
@@ -93,14 +94,16 @@ public class Card : MonoBehaviour, IInteractable
             cardFlipping = true;
             FlipPlayer.PlayFeedbacks();
 
-            this.GetComponent<SpriteRenderer>().sprite = front;
+            
             if (ability != null)
             {
+                this.GetComponent<SpriteRenderer>().sprite = abilityFront;
                 effect.text = ability.description;
                 title.text = ability.abilityName;
             }
             else if (order != null)
             {
+                this.GetComponent<SpriteRenderer>().sprite = front;
                 effect.text = order.Description;
                 title.text = order.Name;
             }

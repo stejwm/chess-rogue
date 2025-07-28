@@ -36,7 +36,7 @@ public class Merchant : Ability
                 }
             }
             if (attackBonus>0){
-                AbilityLogger._instance.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Merchant</gradient></color>", $"<color=green>+{attackBonus} attack from wares</color>");
+                board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Merchant</gradient></color>", $"<color=green>+{attackBonus} attack from wares</color>");
             }
             piece.AddBonus(StatType.Attack, attackBonus, abilityName);
         }
