@@ -148,7 +148,7 @@ public class PieceInfoManager : MonoBehaviour
         if (piece.owner.playerCoins >= 3)
         {
             piece.diplomacy += 1;
-            piece.owner.playerBlood -= 3;
+            piece.owner.playerCoins -= 3;
             diplomacy.text = ":" + piece.diplomacy;
         }
     }

@@ -41,52 +41,44 @@ public class Selector : MonoBehaviour
 
     public void CheckForUIButtonUnderSelector()
     {
-        // Find all active canvases
+        // Find all active canvases and sort by sortingOrder descending
         Canvas[] canvases = FindObjectsOfType<Canvas>();
-        Canvas topCanvas = null;
-        int highestOrder = int.MinValue;
-
+        List<Canvas> sortedCanvases = new List<Canvas>();
         foreach (var canvas in canvases)
         {
             if (canvas.isActiveAndEnabled && canvas.gameObject.activeInHierarchy)
             {
-                if (canvas.sortingOrder > highestOrder)
-                {
-                    highestOrder = canvas.sortingOrder;
-                    topCanvas = canvas;
-                }
+                sortedCanvases.Add(canvas);
             }
         }
-
-        if (topCanvas == null)
-            return;
-
-        GraphicRaycaster raycaster = topCanvas.GetComponent<GraphicRaycaster>();
-        if (raycaster == null)
-            return;
+        sortedCanvases.Sort((a, b) => b.sortingOrder.CompareTo(a.sortingOrder));
 
         PointerEventData pointerData = new PointerEventData(EventSystem.current);
         pointerData.position = Camera.main.WorldToScreenPoint(transform.position);
 
-        List<RaycastResult> results = new List<RaycastResult>();
-        raycaster.Raycast(pointerData, results);
-
-        bool foundButton = false;
-        foreach (RaycastResult result in results)
+        foreach (var canvas in sortedCanvases)
         {
-            Button button = result.gameObject.GetComponent<Button>();
-            if (button != null && button.interactable)
+            GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
+            if (raycaster == null)
+                continue;
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            raycaster.Raycast(pointerData, results);
+
+            foreach (RaycastResult result in results)
             {
-                EventSystem.current.SetSelectedGameObject(button.gameObject);
-                foundButton = true;
-                break;
+                Button button = result.gameObject.GetComponent<Button>();
+                if (button != null && button.interactable)
+                {
+                    EventSystem.current.SetSelectedGameObject(button.gameObject);
+                    return;
+                }
             }
         }
-        if (!foundButton)
-        {
-            EventSystem.current.SetSelectedGameObject(null);
-        }
+        // If no button found in any canvas
+        EventSystem.current.SetSelectedGameObject(null);
     }
+
 
 
 

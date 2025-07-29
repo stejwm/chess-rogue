@@ -14,22 +14,33 @@ public class LoneGuard : Ability
     {
         this.piece = piece;
         piece.info += " " + abilityName;
-        board.EventHub.OnAttack.AddListener(AddBonus);
+        board.EventHub.OnAttackStart.AddListener(CheckDefender);
         board.EventHub.OnAttackEnd.AddListener(RemoveBonus);
         base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
+        board.EventHub.OnAttackStart.AddListener(CheckDefender);
         eventHub.OnAttack.RemoveListener(AddBonus); 
         eventHub.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
-    public void AddBonus(Chessman cm, int support, Tile targetedPosition){
-        if (cm==piece && support==0){
+    public void CheckDefender(Chessman attacker, Chessman defender)
+    {
+        if (defender == piece)
+        {
+            board.EventHub.OnAttack.AddListener(AddBonus);
+        }
+    }
+    public void AddBonus(Chessman cm, int support, Tile targetedPosition)
+    {
+        if (support == 0)
+        {
             board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Lone Guard</gradient></color>", "<color=green>+5 defense</color>");
             piece.AddBonus(StatType.Defense, 5, abilityName);
         }
+        eventHub.OnAttack.RemoveListener(AddBonus);
     }
     public void RemoveBonus(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if (defender==piece && defenseSupport==0)
