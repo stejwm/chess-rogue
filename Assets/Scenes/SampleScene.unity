@@ -8165,7 +8165,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -726.4699, y: 0.000061035156}
+  m_AnchoredPosition: {x: -726.47, y: 0.000061035156}
   m_SizeDelta: {x: -1452.94, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &531202783
@@ -20427,7 +20427,7 @@ MonoBehaviour:
   attackVal: {fileID: 569065897}
   defenseVal: {fileID: 1564077441}
   supportVal: {fileID: 358832169}
-  diplomacy: {fileID: 0}
+  diplomacy: {fileID: 881185712}
   sprite: {fileID: 1857614591}
   abilitiesContainer: {fileID: 560794415}
   historyContainer: {fileID: 998211116}
