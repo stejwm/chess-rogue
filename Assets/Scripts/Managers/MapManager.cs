@@ -373,7 +373,7 @@ public class MapManager : MonoBehaviour
         }
         foreach (var nodeData in mapNodeData)
         {
-            Debug.Log("MapNodeData Count: " + mapNodeData.Count);
+            //Debug.Log("MapNodeData Count: " + mapNodeData.Count);
             connectedNodes.Clear();
             foreach (string nodeName in nodeData.connectedNodes)
             {

@@ -39,7 +39,7 @@ public class AbilityDatabase : MonoBehaviour
                 name = Regex.Replace(name, "<.*?>", string.Empty);
                 name = name.ToLower().Replace(" ", String.Empty);
                 abilityDict.Add(name, ability);
-                Debug.Log($"Ability: {name} added to dictionary as key");
+                //Debug.Log($"Ability: {name} added to dictionary as key");
                 
             }
             else
@@ -90,7 +90,7 @@ public class AbilityDatabase : MonoBehaviour
     public Ability GetRandomAbility(int common, int uncommon, int rare)
     {
         int tolken = UnityEngine.Random.Range(0, 100);
-        Debug.Log($"Random tolken for ability {tolken}");
+        //Debug.Log($"Random tolken for ability {tolken}");
         if (tolken >= (common + uncommon))
             return rareAbilities[UnityEngine.Random.Range(0, rareAbilities.Count)].Clone();
         if (tolken >= common && tolken < (common + uncommon))

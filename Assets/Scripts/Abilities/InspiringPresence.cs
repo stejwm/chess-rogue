@@ -26,7 +26,6 @@ public class InspiringPresence : Ability
         if(supporter==piece){
             eventHub.OnPieceBounced.AddListener(IsBounce);
             eventHub.OnPieceCaptured.AddListener(RemoveListener);
-            Debug.Log("Inspiring Presence Listening for Bounce");
         }
     }
 
@@ -37,9 +36,7 @@ public class InspiringPresence : Ability
         if(defender.team==piece.team){
             board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Inspiring Presence</gradient></color>", "happy to help!");
             piece.support+=1;
-            Debug.Log("Bounced, bonus added");
         }
-        Debug.Log("Removing Bounce Listener");
         eventHub.OnPieceBounced.RemoveListener(IsBounce);
         eventHub.OnPieceCaptured.RemoveListener(RemoveListener);
     }

@@ -43,10 +43,10 @@ public class SupportBreaker : Ability
     public void ReduceSupport(Chessman attacker, Chessman defender){
         if(attacker==piece){
             foreach (Chessman enemy in supporters){
-                if (enemy.support > 0)
+                if (enemy.CalculateSupport() > 0)
                 {
                     enemy.RemoveBonus(StatType.Support, 1, $"{abilityName} ({piece.name})");
-                    Debug.Log($"Supporter {enemy.name} support reduced to {enemy.support}");
+                    //Debug.Log($"Supporter {enemy.name} support reduced to {enemy.support}");
                 }
             }
             piece.effectsFeedback.PlayFeedbacks();

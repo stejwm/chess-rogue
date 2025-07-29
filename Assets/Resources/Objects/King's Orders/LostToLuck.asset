@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: Lost To Luck
   Description: Abandon a piece in order to increase odds uncommon and rare abilities
   sprite: {fileID: 0}
-  Cost: 15
+  Cost: 10
   canBeUsedFromManagement: 1

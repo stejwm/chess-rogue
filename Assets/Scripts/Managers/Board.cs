@@ -9,6 +9,8 @@ using UnityEngine.Events;
 using System;
 using System.Linq;
 using CI.QuickSave;
+using Unity.MLAgents.Integrations.Match3;
+using System.Threading.Tasks;
 
 public enum BoardState
 {
@@ -96,6 +98,16 @@ public class Board : MonoBehaviour
             LetsBegin();
         }
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            //hero.capturedPieces = opponent.pieces;
+            //opponent.pieces.Clear();
+            CurrentMatch.EndMatch();
+        }
+    }
     public void LetsBegin()
     {
         opponent.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(this, opponent, opponent.color);
@@ -117,7 +129,7 @@ public class Board : MonoBehaviour
         quickSaveReader.TryRead<List<MapNodeData>>("MapNodes", out mapNodes);
         BoardState = state;
 
-        Debug.Log($"Resuming board.BoardState{state}");
+        //Debug.Log($"Resuming board.BoardState{state}");
         mapManager.LoadMap(mapNodes);
         hero.playerBlood = player.blood;
         hero.playerCoins = player.coins;
@@ -333,10 +345,13 @@ public class Board : MonoBehaviour
     }
     public void CloseShop()
     {
-        ShopManager.CloseShop();
-        boardState = BoardState.None;
-        //if(hero.orders.Where(x => x.canBeUsedFromManagement).Count>0)
-        OpenManagement();
+        if (boardState == BoardState.ShopScreen)
+        {
+            ShopManager.CloseShop();
+            boardState = BoardState.None;
+            //if(hero.orders.Where(x => x.canBeUsedFromManagement).Count>0)
+            OpenManagement();
+        }
     }
     public void OpenManagement()
     {
@@ -346,7 +361,7 @@ public class Board : MonoBehaviour
     }
     public void CloseManagement()
     {
-        if (ArmyManager.CloseManagement())
+        if (boardState == BoardState.ManagementScreen && ArmyManager.CloseManagement())
         {
             boardState = BoardState.None;
             OpenMap();
@@ -385,9 +400,12 @@ public class Board : MonoBehaviour
     }
     public void CloseKingsOrders()
     {
-        boardState = previousBoardState;
-        previousBoardState = BoardState.None;
-        KingsOrderManager.CloseManagement();
+        if (boardState == BoardState.KingsOrder)
+        {
+            boardState = previousBoardState;
+            previousBoardState = BoardState.None;
+            KingsOrderManager.CloseManagement();
+        }
     }
     public void ShopToManagement()
     {
@@ -397,9 +415,12 @@ public class Board : MonoBehaviour
     }
     public void ManagementToShop()
     {
-        ArmyManager.ExitToShop();
-        ShopManager.OpenShopFromManagement();
-        boardState = BoardState.ShopScreen;
+        if (boardState == BoardState.ManagementScreen)
+        {
+            ArmyManager.ExitToShop();
+            ShopManager.OpenShopFromManagement();
+            boardState = BoardState.ShopScreen;
+        }
     }
     public void OpenPieceInfo(Chessman piece)
     {
@@ -449,7 +470,6 @@ public class Board : MonoBehaviour
         if (selectedPosition == null)
         {
             selectedPosition = tile;
-            Debug.Log("position set");
         }
     }
     public void ClearSelectedPosition()
@@ -550,11 +570,12 @@ public class Board : MonoBehaviour
             Chessman cm = GetChessmanAtPosition(fromX, fromY);
             if (!cm)
                 continue;
+            if (!cm.isValidForAttack)
+                continue;
             if (!cm.GetValidMoves().Contains(GetTileAt(toX, toY)))
                 continue;
             if (isUselessBounce(GetChessmanAtPosition(fromX, fromY), GetChessmanAtPosition(toX, toY)))
                 continue;
-
             else
             {
                 validatedMoves.Add(move);
@@ -572,6 +593,8 @@ public class Board : MonoBehaviour
             return false;
         return true;
     }
+
+    
      
 
 }

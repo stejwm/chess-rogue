@@ -19,6 +19,7 @@ public class MarketManager : MonoBehaviour
     public PieceColor selectedColor = PieceColor.None;
     [SerializeField] GameObject dropInSprite;
     private Dictionary<Chessman, GameObject> sprites = new Dictionary<Chessman, GameObject>();
+    public bool killingField;
     public void Start()
     {
         gameObject.SetActive(false);
@@ -35,8 +36,8 @@ public class MarketManager : MonoBehaviour
 
 
         //board.CurrentMatch.black.pieces.AddRange(myCapturedPieces);
-        foreach (GameObject piece in hero.pieces) { piece.SetActive(false); }
-        foreach (GameObject piece in board.Opponent.pieces) { piece.SetActive(false); }
+        foreach (GameObject piece in hero.pieces) { piece.SetActive(false); if(killingField){ piece.GetComponent<Chessman>().blood *= 2; }}
+        foreach (GameObject piece in board.Opponent.pieces) { piece.SetActive(false); if(killingField){ piece.GetComponent<Chessman>().blood *= 2; }}
 
         if (myCapturedPieces.Count > 0)
             foreach (GameObject piece in myCapturedPieces)
@@ -73,6 +74,7 @@ public class MarketManager : MonoBehaviour
     public void CloseMarket(Board board)
     {
         selectedColor = PieceColor.None;
+        killingField = false;
         opponentCapturedPieces = board.Opponent.capturedPieces;
         if (opponentCapturedPieces.Count > 0)
             foreach (GameObject piece in opponentCapturedPieces)
@@ -101,7 +103,7 @@ public class MarketManager : MonoBehaviour
     {
         foreach (Chessman item in selectedPieces)
         {
-            hero.playerCoins += item.releaseCost;
+            //hero.playerCoins += item.releaseCost;
             item.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             item.gameObject.SetActive(false);
             item.DestroyPiece();

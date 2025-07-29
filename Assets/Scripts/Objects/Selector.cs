@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Selector : MonoBehaviour
 {
@@ -26,18 +29,119 @@ public class Selector : MonoBehaviour
                 CurrentInteractable = interactable;
                 CurrentInteractable?.OnHover(board);
             }
+
         }
         else
         {
             CurrentInteractable?.OnHoverExit(board);
             CurrentInteractable = null;
         }
+        CheckForUIButtonUnderSelector();
     }
 
-    public void MoveByOffset(Vector2Int offset)
+    public void CheckForUIButtonUnderSelector()
     {
-        // Move selector by grid offset if you're navigating with keyboard/controller
-        Vector3 newPosition = transform.position + new Vector3(offset.x, 0, offset.y); // assuming flat XZ board
-        SetWorldPosition(newPosition);
+        // Find all active canvases
+        Canvas[] canvases = FindObjectsOfType<Canvas>();
+        Canvas topCanvas = null;
+        int highestOrder = int.MinValue;
+
+        foreach (var canvas in canvases)
+        {
+            if (canvas.isActiveAndEnabled && canvas.gameObject.activeInHierarchy)
+            {
+                if (canvas.sortingOrder > highestOrder)
+                {
+                    highestOrder = canvas.sortingOrder;
+                    topCanvas = canvas;
+                }
+            }
+        }
+
+        if (topCanvas == null)
+            return;
+
+        GraphicRaycaster raycaster = topCanvas.GetComponent<GraphicRaycaster>();
+        if (raycaster == null)
+            return;
+
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+        pointerData.position = Camera.main.WorldToScreenPoint(transform.position);
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        raycaster.Raycast(pointerData, results);
+
+        bool foundButton = false;
+        foreach (RaycastResult result in results)
+        {
+            Button button = result.gameObject.GetComponent<Button>();
+            if (button != null && button.interactable)
+            {
+                EventSystem.current.SetSelectedGameObject(button.gameObject);
+                foundButton = true;
+                break;
+            }
+        }
+        if (!foundButton)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+    }
+
+
+
+
+    public void SnapToNearestTile(Board board)
+    {
+        // Find nearest tile based on selector's current position
+        float minDist = float.MaxValue;
+        Tile nearestTile = null;
+        Vector3 selectorPos = transform.position;
+
+        foreach (var tile in board.tiles)
+        {
+            Vector3 tilePos = tile.transform.position;
+            float dist = Vector3.Distance(selectorPos, tilePos);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                nearestTile = tile;
+            }
+        }
+
+        if (nearestTile != null)
+            SetWorldPosition(nearestTile.transform.position);
+    }
+
+
+    public void MoveToAdjacentTile(Board board, Vector2Int direction)
+    {
+        // Snap to nearest tile if not already on one
+        SnapToNearestTile(board);
+
+        // Find current tile indices
+        Vector3 selectorPos = transform.position;
+        int closestX = 0, closestY = 0;
+        float minDist = float.MaxValue;
+        for (int x = 0; x < board.Width; x++)
+        {
+            for (int y = 0; y < board.Height; y++)
+            {
+                Vector3 tilePos = board.tiles[x, y].transform.position;
+                float dist = Vector3.Distance(selectorPos, tilePos);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    closestX = x;
+                    closestY = y;
+                }
+            }
+        }
+
+        // Calculate new position
+        int newX = Mathf.Clamp(closestX + direction.x, 0, board.Width - 1);
+        int newY = Mathf.Clamp(closestY + direction.y, 0, board.Height - 1);
+
+        SetWorldPosition(board.tiles[newX, newY].transform.position);
     }
 }

@@ -9,6 +9,7 @@ public class Settings : MonoBehaviour
     [SerializeField] private float sfxVolume = 1f;
     [SerializeField] private float musicVolume = 1f;
     [SerializeField] private float waitTime = 0.25f;
+    [SerializeField] private float joystickSpeed = 5f;
 
     public static Settings Instance;
 
@@ -16,6 +17,7 @@ public class Settings : MonoBehaviour
     public float MusicVolume { get => musicVolume; set => musicVolume = value; }
     public float SfxVolume { get => sfxVolume; set => sfxVolume = value; }
     public float MasterVolume { get => masterVolume; set => masterVolume = value; }
+    public float JoystickSpeed { get => joystickSpeed; set => joystickSpeed = value; }
 
     public void Awake()
     {

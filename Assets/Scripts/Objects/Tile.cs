@@ -54,7 +54,7 @@ public class Tile : MonoBehaviour, IInteractable
     public void SetBloodTile()
     {
         var rand = UnityEngine.Random.Range(0, 1000);
-        Debug.Log(rand);
+        //Debug.Log(rand);
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.material = bloodMat;
         spriteRenderer.material.SetFloat("_RandomSeed", rand);
@@ -168,7 +168,7 @@ public class Tile : MonoBehaviour, IInteractable
             else if (piece != null && piece.isValidForAttack && piece.owner == board.Hero)
             {
                 //Game._instance.StopHeroFlames();
-                Debug.Log("Display moves for piece: " + piece.name);
+                //Debug.Log("Display moves for piece: " + piece.name);
                 StatBoxManager._instance.UnlockView();
                 DisplayValidMoves(piece, board);
                 StatBoxManager._instance.SetAndShowStats(piece);
@@ -176,7 +176,7 @@ public class Tile : MonoBehaviour, IInteractable
             }
             else if (piece != null && piece.owner != board.Hero && piece == StatBoxManager._instance.enemyLockedPiece)
             {
-                Debug.Log(board.Hero.name);
+                //Debug.Log(board.Hero.name);
                 StatBoxManager._instance.UnlockEnemyView();
                 //piece.validMoves.Clear();
             }

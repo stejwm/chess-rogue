@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bda91237447ae7542b2c2a1f9f361405, type: 3}
-  m_Name: RedistributionOfPower
+  m_Script: {fileID: 11500000, guid: a7861073d25818b4cbf7a81f3757cca5, type: 3}
+  m_Name: VictoryFormation
   m_EditorClassIdentifier: 
-  Name: Redistribution Of Power
-  Description: Sets each stat of all your pieces to average of each stat across all
-    your pieces
+  abilityName: Victory Formation
+  description: permanent +1 to all stats if no pieces captured during match
   sprite: {fileID: 0}
-  Cost: 10
-  canBeUsedFromManagement: 1
+  Cost: 5
+  rarity: 1

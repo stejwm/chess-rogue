@@ -24,7 +24,7 @@ public class PickPocket : Ability
     }
     public void Steal(Chessman attacker, Chessman defender){
         if(attacker==piece){
-            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">PickPocket</gradient></color>", $"<color=yellow>+3</color> coins");
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">PickPocket</gradient></color>", $"<color=yellow>+2</color> coins");
             piece.owner.playerCoins+=2;
         }
     }

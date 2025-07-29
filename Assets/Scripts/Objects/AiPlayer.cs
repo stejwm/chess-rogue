@@ -60,12 +60,33 @@ public class AIPlayer : Player
         Debug.Log(fen);
         //string move = await board.StockFishEngine.GetBestMove(fen, 15);
         List<string> moves = await board.StockFishEngine.GetTopMoves(fen, 1);
+        if (moves.Count == 0)
+        {
+            string possibleMoves = "";
+            foreach (GameObject piece in pieces)
+            {
+                if (!(piece || piece.activeSelf))
+                    continue;
+
+                Chessman cm = piece.GetComponent<Chessman>();
+                string startingPosition = BoardPosition.ConvertToChessNotation(board.GetTileAt(cm.xBoard, cm.yBoard));
+                if (cm.isValidForAttack)
+                {
+                    foreach (Tile tile in cm.GetValidMoves())
+                    {
+                        string move = startingPosition + BoardPosition.ConvertToChessNotation(tile);
+                        possibleMoves += move;
+                        possibleMoves += " ";
+                    }
+                }
+            }
+            moves = await board.StockFishEngine.GetTopMoves(board.BoardToFEN(), 1, possibleMoves); 
+        }
 
         
         BoardPosition.ParseUCIMove(PickMoveBasedOnSkill(board.GetValidMovesFromEngineMoves(moves), board.Level), out int fromX, out int fromY, out int toX, out int toY);
         board.CurrentMatch.ExecuteTurn(board.GetChessmanAtPosition(fromX, fromY), toX, toY);
     }
-
     public override void DestroyPieces()
     {
 
@@ -78,12 +99,12 @@ public class AIPlayer : Player
     {
        int moveCount = topMoves.Count;
 
-    // Invert skill level: lower skill = higher maxIndex
-    int maxIndex = Mathf.RoundToInt(Mathf.Lerp(moveCount - 1, 0, skillLevel / 10f));
+        // Invert skill level: lower skill = higher maxIndex
+        int maxIndex = Mathf.RoundToInt(Mathf.Lerp(moveCount - 1, 0, skillLevel / 10f));
 
-    // Pick randomly between 0 and maxIndex
-    int chosenIndex = UnityEngine.Random.Range(0, maxIndex + 1);
-    return topMoves[chosenIndex];
+        // Pick randomly between 0 and maxIndex
+        int chosenIndex = UnityEngine.Random.Range(0, maxIndex + 1);
+        return topMoves[chosenIndex];
     }
     
 }

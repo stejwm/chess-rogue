@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bda91237447ae7542b2c2a1f9f361405, type: 3}
-  m_Name: RedistributionOfPower
+  m_Script: {fileID: 11500000, guid: cd57c14ac6f231b43bc256df2401619d, type: 3}
+  m_Name: ArcaneResonance
   m_EditorClassIdentifier: 
-  Name: Redistribution Of Power
-  Description: Sets each stat of all your pieces to average of each stat across all
-    your pieces
+  abilityName: Arcane Resonance
+  description: Adds +1 stack to each stackable ability
   sprite: {fileID: 0}
-  Cost: 10
-  canBeUsedFromManagement: 1
+  Cost: 7
+  rarity: 2

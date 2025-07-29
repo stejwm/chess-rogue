@@ -457,7 +457,7 @@ public abstract class Chessman : MonoBehaviour, IInteractable
 
     public void OnHover(Board board)
     {
-        Debug.Log($"Nothing good here yet, or maybe at all?");
+        //Debug.Log($"Nothing good here yet, or maybe at all?");
     }
 
     public void OnHoverExit(Board board)

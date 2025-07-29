@@ -15,4 +15,5 @@ MonoBehaviour:
   Name: Return To Formation
   Description: Returns all pieces to their starting positions
   sprite: {fileID: 0}
-  Cost: 20
+  Cost: 15
+  canBeUsedFromManagement: 0

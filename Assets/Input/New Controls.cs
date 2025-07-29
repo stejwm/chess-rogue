@@ -71,6 +71,24 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""1b98cc8a-d33b-4fc5-bb60-b6b899839ff2"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DPadMove"",
+                    ""type"": ""Value"",
+                    ""id"": ""2098eb35-5743-4d70-b4e5-f7adc0522cc5"",
+                    ""expectedControlType"": ""Dpad"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -98,8 +116,30 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a07ca284-1706-416d-9c55-cfe57af255ff"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""88e9c58c-aef9-471d-9e87-083a7c0d63fb"",
                     ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5328bef5-aa11-48a4-b8be-86c9103c5ddb"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -128,6 +168,28 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a1aad27-90d3-4864-9a0a-1b65e433cb6e"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""31a074a7-92c9-4efb-ab5a-b6ef1410cf09"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DPadMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -141,6 +203,8 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         m_ChessMatchInput_RightClick = m_ChessMatchInput.FindAction("RightClick", throwIfNotFound: true);
         m_ChessMatchInput_Confirm = m_ChessMatchInput.FindAction("Confirm", throwIfNotFound: true);
         m_ChessMatchInput_Cancel = m_ChessMatchInput.FindAction("Cancel", throwIfNotFound: true);
+        m_ChessMatchInput_Move = m_ChessMatchInput.FindAction("Move", throwIfNotFound: true);
+        m_ChessMatchInput_DPadMove = m_ChessMatchInput.FindAction("DPadMove", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +271,8 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_ChessMatchInput_RightClick;
     private readonly InputAction m_ChessMatchInput_Confirm;
     private readonly InputAction m_ChessMatchInput_Cancel;
+    private readonly InputAction m_ChessMatchInput_Move;
+    private readonly InputAction m_ChessMatchInput_DPadMove;
     public struct ChessMatchInputActions
     {
         private @NewControls m_Wrapper;
@@ -216,6 +282,8 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_ChessMatchInput_RightClick;
         public InputAction @Confirm => m_Wrapper.m_ChessMatchInput_Confirm;
         public InputAction @Cancel => m_Wrapper.m_ChessMatchInput_Cancel;
+        public InputAction @Move => m_Wrapper.m_ChessMatchInput_Move;
+        public InputAction @DPadMove => m_Wrapper.m_ChessMatchInput_DPadMove;
         public InputActionMap Get() { return m_Wrapper.m_ChessMatchInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -240,6 +308,12 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
             @Cancel.started += instance.OnCancel;
             @Cancel.performed += instance.OnCancel;
             @Cancel.canceled += instance.OnCancel;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @DPadMove.started += instance.OnDPadMove;
+            @DPadMove.performed += instance.OnDPadMove;
+            @DPadMove.canceled += instance.OnDPadMove;
         }
 
         private void UnregisterCallbacks(IChessMatchInputActions instance)
@@ -259,6 +333,12 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
             @Cancel.started -= instance.OnCancel;
             @Cancel.performed -= instance.OnCancel;
             @Cancel.canceled -= instance.OnCancel;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @DPadMove.started -= instance.OnDPadMove;
+            @DPadMove.performed -= instance.OnDPadMove;
+            @DPadMove.canceled -= instance.OnDPadMove;
         }
 
         public void RemoveCallbacks(IChessMatchInputActions instance)
@@ -283,5 +363,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnConfirm(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
+        void OnDPadMove(InputAction.CallbackContext context);
     }
 }

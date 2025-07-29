@@ -66,7 +66,7 @@ public class Pope : Ability
                     cm.AddBonus(StatType.Defense,bonus, abilityName);
                     cm.AddBonus(StatType.Support,bonus, abilityName);
                     appliedBonus[cm] = bonus;
-                    Debug.Log($"{cm.name} bonus applying, currently applied bonus {currentlyAppliedBonus} total bonus amount {bonus} amount to apply {bonus-currentlyAppliedBonus}");
+                    //Debug.Log($"{cm.name} bonus applying, currently applied bonus {currentlyAppliedBonus} total bonus amount {bonus} amount to apply {bonus-currentlyAppliedBonus}");
                 }else{
                     Debug.Log($"Untracked Bishop {cm.name} not in dictionary or destroyed while adding");
                 }
@@ -86,7 +86,7 @@ public class Pope : Ability
                     cm.SetBonus(StatType.Defense, Mathf.Max(-cm.defense, cm.defenseBonus - currentlyAppliedBonus), abilityName);
                     cm.SetBonus(StatType.Support, Mathf.Max(-cm.support, cm.supportBonus - currentlyAppliedBonus), abilityName);
                     appliedBonus[cm] = 0;
-                    Debug.Log($"{cm.name} bonus removing, currently applied bonus {currentlyAppliedBonus} total bonus amount {bonus} amount to remove {currentlyAppliedBonus}");
+                    //Debug.Log($"{cm.name} bonus removing, currently applied bonus {currentlyAppliedBonus} total bonus amount {bonus} amount to remove {currentlyAppliedBonus}");
                 }else{
                     Debug.LogWarning($"Untracked bishop {cm.name} not in dictionary or destroyed while removing");
                 }

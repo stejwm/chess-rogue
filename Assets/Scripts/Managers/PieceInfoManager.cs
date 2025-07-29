@@ -19,12 +19,15 @@ public class PieceInfoManager : MonoBehaviour
     [SerializeField] private TMP_Text attackVal;
     [SerializeField] private TMP_Text defenseVal;
     [SerializeField] private TMP_Text supportVal;
+    [SerializeField] private TMP_Text diplomacy;
     [SerializeField] private Image sprite;
     [SerializeField] private GameObject abilitiesContainer;
     [SerializeField] private GameObject historyContainer;
     [SerializeField] private GameObject increaseContainer;
     [SerializeField] private GameObject wheelContainer;
     [SerializeField] private GameObject profile;
+    [SerializeField] private GameObject abilityBox;
+    [SerializeField] private GameObject abilityUI;
     private Chessman piece;
     public void Start()
     {
@@ -52,6 +55,7 @@ public class PieceInfoManager : MonoBehaviour
             increaseContainer.SetActive(true);
         else
             increaseContainer.SetActive(false);
+        SetAbilities();
         gameObject.SetActive(true);
 
         foreach (Transform child in wheelContainer.transform)
@@ -61,8 +65,7 @@ public class PieceInfoManager : MonoBehaviour
 
         var pieces = piece.owner.pieces;
         int count = pieces.Count;
-
-    
+        
 
         for (int i = 0; i < count; i++)
         {
@@ -73,11 +76,41 @@ public class PieceInfoManager : MonoBehaviour
             // Rotate: right if above halfway, left if below
             float angle = 2f; // degrees to rotate
             if (i < count / 2f)
-                newProfile.transform.rotation = Quaternion.Euler(0, 0, angle*i);
+                newProfile.transform.rotation = Quaternion.Euler(0, 0, angle * i);
             else if (i > count / 2f)
-                newProfile.transform.rotation = Quaternion.Euler(0, 0, -angle*i);
+                newProfile.transform.rotation = Quaternion.Euler(0, 0, -angle * i);
             else
                 newProfile.transform.rotation = Quaternion.identity; // middle one, no rotation
+        }
+    }
+
+    public void SetAbilities()
+    {
+        List<Ability> multiples = new List<Ability>();
+        foreach (Transform child in abilityBox.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (var ability in piece.abilities)
+        {
+            if(multiples.Contains(ability))
+                continue;
+
+            int abilityCount = piece.abilities.Where(s=>s!=null && s.Equals(ability)).Count();
+            if(abilityCount>1){
+                var icon=Instantiate(abilityUI, abilityBox.transform);
+                icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+                icon.GetComponent<AbilityUI>().ability=ability;
+                icon.GetComponentInChildren<TMP_Text>().text=$"x{abilityCount}";
+                multiples.Add(ability);
+            }else{
+                var icon=Instantiate(abilityUI, abilityBox.transform);
+                icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
+                icon.GetComponent<AbilityUI>().ability=ability;
+                icon.GetComponentInChildren<TMP_Text>().text="";
+            }
+            
+            
         }
     }
 
@@ -107,6 +140,16 @@ public class PieceInfoManager : MonoBehaviour
             piece.support += 1;
             piece.owner.playerBlood -= 1;
             supportVal.text = (Int32.Parse(supportVal.text) + 1).ToString();
+        }
+    }
+
+    public void IncreaseDiplomacy()
+    {
+        if (piece.owner.playerCoins >= 3)
+        {
+            piece.diplomacy += 1;
+            piece.owner.playerBlood -= 3;
+            diplomacy.text = ":" + piece.diplomacy;
         }
     }
 

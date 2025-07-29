@@ -16,13 +16,13 @@ public class AbilityUI : MonoBehaviour, IInteractable
 
     public void OnHover(Board board)
     {
-        Debug.Log("Hovered over ability icon");
+        //Debug.Log("Hovered over ability icon");
         PopUpManager._instance.SetAndShowAbilityInfo(this);
     }
 
     public void OnHoverExit(Board board)
     {
-        Debug.Log("exited over ability icon");
+        //Debug.Log("exited over ability icon");
         PopUpManager._instance.HideInfo();
     }
 

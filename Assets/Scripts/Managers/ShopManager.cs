@@ -103,11 +103,13 @@ public class ShopManager : MonoBehaviour
         StartCoroutine(selectedCard.Dissolve());
         selectedCard.Use(board, target);
         yield return new WaitUntil(() => selectedCard.isDissolved);
+        SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.applyAbility);
         StatBoxManager._instance.SetAndShowStats(selectedPiece);
         Destroy(selectedCard.gameObject);
         ClearSelections();
         applyingAbility = false;
         board.BoardState = BoardState.ShopScreen;
+        StatBoxManager._instance.UnlockView();
         yield return new WaitForSeconds(Settings.Instance.WaitTime);
         yield break;
     }

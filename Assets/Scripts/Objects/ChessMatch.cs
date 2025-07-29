@@ -48,7 +48,7 @@ public class ChessMatch
 
     public void StartMatch()
     {
-        reward = 4;
+        reward = 6;
         Debug.Log("Match Starting");
         //KingsOrderManager._instance.Setup();
         white.CreateMoveCommandDictionary();
@@ -445,7 +445,10 @@ public class ChessMatch
         piece.yBoard = y;
         board.Positions[x, y] = piece.gameObject;
         piece.UpdateUIPosition();
-        StatBoxManager._instance.SetAndShowStats(piece);
+        if (piece.color == board.Hero.color)
+            StatBoxManager._instance.SetAndShowStats(piece);
+        else
+            StatBoxManager._instance.SetAndShowEnemyStats(piece);
     }
 
     public void MyTurn(PieceColor player)
@@ -458,7 +461,7 @@ public class ChessMatch
         board.BattlePanel.HideResults();
         board.BattlePanel.HideStats();
         logManager.ClearLogs();
-        reward += board.Opponent.pieces.Count + 1;
+        reward += board.Opponent.pieces.Count;
         white.playerCoins += reward;
         board.EndMatch();
     }

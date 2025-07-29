@@ -24,6 +24,7 @@ public class Vampire : Ability
         board.EventHub.OnAttackEnd.AddListener(SuckBlood);
         board.EventHub.OnChessMatchStart.AddListener(MatchStartBonus);
         board.EventHub.OnPieceBounced.AddListener(PossibleReset);
+        this.board = board;
         if (board.CurrentMatch != null)
         {
             AddBonus(piece, board.GetTileAt(piece.xBoard, piece.yBoard));
@@ -42,7 +43,7 @@ public class Vampire : Ability
     {
         if (piece)
         {
-            Debug.Log($"Resetting previous bonus to  0 and applying vamp at match start for {piece.name}");
+            //Debug.Log($"Resetting previous bonus to  0 and applying vamp at match start for {piece.name}");
             bonus = 0;
             AddBonus(piece, piece.startingPosition);
         }
@@ -82,11 +83,11 @@ public class Vampire : Ability
     {
         if (piece == null) return;
         
-        Debug.Log($"Bonus change of {bonusChange} being applied to {piece.name}. Current bonuses are a:{piece.attackBonus}, d:{piece.defenseBonus}, s:{piece.supportBonus}");
+        //Debug.Log($"Bonus change of {bonusChange} being applied to {piece.name}. Current bonuses are a:{piece.attackBonus}, d:{piece.defenseBonus}, s:{piece.supportBonus}");
         piece.SetBonus(StatType.Attack, Mathf.Max(-piece.attack, piece.attackBonus + bonusChange), abilityName);
         piece.SetBonus(StatType.Defense, Mathf.Max(-piece.defense, piece.defenseBonus + bonusChange), abilityName);
         piece.SetBonus(StatType.Support, Mathf.Max(-piece.support, piece.supportBonus + bonusChange), abilityName);
-        Debug.Log($"Bonus change of {bonusChange} should be applied to {piece.name}. Bonuses are now:{piece.attackBonus}, d:{piece.defenseBonus}, s:{piece.supportBonus}");
+        //Debug.Log($"Bonus change of {bonusChange} should be applied to {piece.name}. Bonuses are now:{piece.attackBonus}, d:{piece.defenseBonus}, s:{piece.supportBonus}");
 
         
 
@@ -110,11 +111,11 @@ public class Vampire : Ability
     }
     public void RemoveBonus()
     {
-        Debug.Log($"removing bonus of {bonus} on {piece.name}. Current bonuses are a:{piece.attackBonus}, d:{piece.defenseBonus}, s:{piece.supportBonus}");
+        //Debug.Log($"removing bonus of {bonus} on {piece.name}. Current bonuses are a:{piece.attackBonus}, d:{piece.defenseBonus}, s:{piece.supportBonus}");
         piece.SetBonus(StatType.Attack, Mathf.Max(-piece.attack, piece.attackBonus - bonus), abilityName);
         piece.SetBonus(StatType.Defense, Mathf.Max(-piece.defense, piece.defenseBonus - bonus), abilityName);
         piece.SetBonus(StatType.Support, Mathf.Max(-piece.support, piece.supportBonus - bonus), abilityName);
-        Debug.Log($"bonuses of {bonus} should be removed on {piece.name}. Bonuses are now a:{piece.attackBonus}, d:{piece.defenseBonus}, s:{piece.supportBonus}");
+        //Debug.Log($"bonuses of {bonus} should be removed on {piece.name}. Bonuses are now a:{piece.attackBonus}, d:{piece.defenseBonus}, s:{piece.supportBonus}");
         bonus = 0;
     }
     public void PossibleReset(Chessman attacker, Chessman defender)

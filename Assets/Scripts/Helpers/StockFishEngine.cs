@@ -50,9 +50,6 @@ public class StockfishEngine : MonoBehaviour
         ReadUntil("uciok");
         SendCommand("setoption name UCI_Variant value chess-rogue");
         SendCommand("setoption name MultiPV value 10");
-        SendCommand("setoption name UCI_LimitStrength value true");
-        SendCommand("setoption name UCI_Elo value 0");
-        //SendCommand("setoption name Skill Level value -20");
 
         SendCommand("isready");
         ReadUntil("readyok");
@@ -60,10 +57,10 @@ public class StockfishEngine : MonoBehaviour
         UnityEngine.Debug.Log("Fairy-Stockfish engine started.");
     }
 
-    public async Task<string> GetBestMove(string fen, int depth = 8)
+    public async Task<string> GetBestMove(string fen, int depth = 8, string moves ="")
     {
         SendCommand($"position fen {fen}");
-        SendCommand($"go depth {depth}");
+        SendCommand($"go depth {depth} {(String.IsNullOrEmpty(moves) ? "": $"searchmoves {moves}")}");
 
         string line;
         while ((line = await stockfishOutput.ReadLineAsync()) != null)
@@ -77,11 +74,11 @@ public class StockfishEngine : MonoBehaviour
 
         return null;
     }
-    public async Task<List<string>> GetTopMoves(string fen, int depth = 15)
+    public async Task<List<string>> GetTopMoves(string fen, int depth = 15, string moves = "")
     {
         // Set MultiPV option
         SendCommand($"position fen {fen}");
-        SendCommand($"go depth {depth}");
+        SendCommand($"go depth {depth} {(String.IsNullOrEmpty(moves) ? "": $"searchmoves {moves}")}");
 
         var moveList = new Dictionary<int, string>();
         string line;

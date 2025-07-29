@@ -213,7 +213,7 @@ public class Card : MonoBehaviour, IInteractable
 
         if (order != null)
         {
-            Debug.Log("Card management clicked");
+            //Debug.Log("Card management clicked");
             BoardState previousState = board.BoardState;
             board.BoardState = BoardState.KingsOrderActive;
             flames.Play();
@@ -254,16 +254,24 @@ public class Card : MonoBehaviour, IInteractable
 
     public void OnHover(Board board)
     {
-        if (cardFlipped)
-            StartCoroutine(CardExpand());
-        else
-            StartCoroutine(CardHovered());
         switch (board.BoardState)
         {
+            case BoardState.RewardScreen:
+            case BoardState.ShopScreen:
+                HandleHover();
+                break;
             case BoardState.KingsOrder:
                 board.KingsOrderManager.HoverCard(this);
                 break;
         }
+        
+    }
+    public void HandleHover()
+    {
+        if (cardFlipped)
+            StartCoroutine(CardExpand());
+        else
+            StartCoroutine(CardHovered());
     }
 
     public void OnHoverExit(Board board)
@@ -274,7 +282,7 @@ public class Card : MonoBehaviour, IInteractable
                 board.KingsOrderManager.ResetCards();
                 break;
         }
-        if(this != null)
+        if (this != null)
             StartCoroutine(CardShrink());
     }
 }

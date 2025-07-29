@@ -51,7 +51,6 @@ public class Monk : Ability
 
     public void RemoveBonus(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if(attacker==piece){
-            Debug.Log("Removing monk bonus");
             piece.SetBonus(StatType.Attack, Mathf.Max(-piece.attack, piece.attackBonus - attackIncrease), abilityName);
             piece.SetBonus(StatType.Defense, Mathf.Max(-piece.defense, piece.defenseBonus - defenseIncrease), abilityName);
             piece.SetBonus(StatType.Support, Mathf.Max(-piece.support, piece.supportBonus - supportIncrease), abilityName);
