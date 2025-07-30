@@ -82,10 +82,19 @@ public class AIPlayer : Player
             }
             moves = await board.StockFishEngine.GetTopMoves(board.BoardToFEN(), 1, possibleMoves); 
         }
+        if (moves.Count == 0)
+        {
+            board.AbilityLogger.AddLogToQueue($"<sprite=\"{PieceColor.Black}{PieceType.King}\" name=\"{PieceColor.Black}{PieceType.King}\"> hope is lost, finish this");
+            board.CurrentMatch.NextTurn();
+        }
+        else
+        {
+            BoardPosition.ParseUCIMove(PickMoveBasedOnSkill(board.GetValidMovesFromEngineMoves(moves), board.Level), out int fromX, out int fromY, out int toX, out int toY);
+            board.CurrentMatch.ExecuteTurn(board.GetChessmanAtPosition(fromX, fromY), toX, toY);
+        }
 
         
-        BoardPosition.ParseUCIMove(PickMoveBasedOnSkill(board.GetValidMovesFromEngineMoves(moves), board.Level), out int fromX, out int fromY, out int toX, out int toY);
-        board.CurrentMatch.ExecuteTurn(board.GetChessmanAtPosition(fromX, fromY), toX, toY);
+        
     }
     public override void DestroyPieces()
     {

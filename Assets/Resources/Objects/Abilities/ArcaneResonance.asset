@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Arcane Resonance
   description: Adds +1 stack to each stackable ability
-  sprite: {fileID: 0}
+  sprite: {fileID: 598772856664157095, guid: e3d7aeb3c16554d42b85cd0c7bc227ab, type: 3}
   Cost: 7
   rarity: 2

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Victory Formation
   description: permanent +1 to all stats if no pieces captured during match
-  sprite: {fileID: 0}
+  sprite: {fileID: 6129281177322434811, guid: 123bd5833c8288b4982d187e372c1e8c, type: 3}
   Cost: 5
   rarity: 1

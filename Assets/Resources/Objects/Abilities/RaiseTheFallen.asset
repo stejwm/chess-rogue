@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Raise The Fallen
   description: Decimates piece on capture, raises a friendly pawn in it's position
-  sprite: {fileID: 0}
+  sprite: {fileID: 407007512029339459, guid: ea93a47230fc00342a5e72a58264c7cf, type: 3}
   Cost: 5
   rarity: 1
-  brokenDeath: {fileID: 11400000, guid: 8a4f143caffef774281aa7f7112a82fc, type: 2}

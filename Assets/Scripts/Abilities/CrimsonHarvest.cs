@@ -24,8 +24,8 @@ public class CrimsonHarvest : Ability
     }
     public void Steal(Chessman attacker, Chessman defender){
         if(attacker==piece){
-            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Crimson Harvest</gradient></color>", $"<color=red>let the streets run red</color>");
-            piece.owner.playerCoins+=2;
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Crimson Harvest</gradient></color>", $"<color=red>+1</color> blood value, let the streets run red");
+            defender.blood++;
         }
     }
 

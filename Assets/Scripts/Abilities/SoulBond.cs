@@ -35,7 +35,6 @@ public class SoulBond : Ability
         eventHub.OnMove.RemoveListener(Decimate);
         eventHub.OnAttackEnd.RemoveListener(RemoveDecimate);
         piece.owner.soulBondedPieces--;
-        eventHub.OnSoulBonded.Invoke();
 
     }
 
@@ -65,7 +64,7 @@ public class SoulBond : Ability
             board.CurrentMatch.isDecimating=true;
     }
     public void RemoveDecimate(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
-        if(defender==piece || piece==null)
+        if(defender==piece || piece.gameObject==null)
             board.CurrentMatch.isDecimating=false;
     }
     public void Capture(Chessman attacker, Chessman defender){

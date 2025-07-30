@@ -101,34 +101,33 @@ public class MarketManager : MonoBehaviour
 
     public void ReleasePieces()
     {
-        foreach (Chessman item in selectedPieces)
+        foreach (Chessman piece in selectedPieces)
         {
-            //hero.playerCoins += item.releaseCost;
-            item.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            item.gameObject.SetActive(false);
-            item.DestroyPiece();
+            if (piece.owner != hero)
+            {
+                piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                piece.gameObject.SetActive(false);
+                piece.DestroyPiece();
+                hero.releasedPieceCount++;
+            }
+            else
+            {
+                hero.playerCoins -= piece.releaseCost;
+                piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                piece.gameObject.SetActive(false);
+                hero.pieces.Add(piece.gameObject);
+                opponentCapturedPieces.Remove(piece.gameObject);
+                myCapturedPieces.Remove(piece.gameObject);
+            }
         }
+        totalCost = 0;
         selectedPieces.Clear();
-        ClearPanel();
+        ClearPanel();  
     }
 
     public void ReturnMyPieces()
     {
-        foreach (Chessman piece in selectedPieces)
-        {
-            if (piece.owner != hero)
-                break;
-            
-            hero.playerCoins -= piece.releaseCost;
-            piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            piece.gameObject.SetActive(false);
-            hero.pieces.Add(piece.gameObject);
-            opponentCapturedPieces.Remove(piece.gameObject);
-            myCapturedPieces.Remove(piece.gameObject);
-        }
-        totalCost = 0;
-        selectedPieces.Clear();
-        ClearPanel();
+        
     }
 
     public void KillPieces()

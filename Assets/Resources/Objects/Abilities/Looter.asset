@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Looter
   description: +4 coins if survives to end of match
-  sprite: {fileID: 0}
+  sprite: {fileID: 3197888298547496208, guid: 177071facbb173843bacab5ebdd72ea7, type: 3}
   Cost: 3
   rarity: 0

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Triangle Attack
   description: x3 attack if supported by 2 of the same piece types
-  sprite: {fileID: 0}
+  sprite: {fileID: 6889886262391224065, guid: 82fc2c1cc4e3ed147967f4ffa855f4f9, type: 3}
   Cost: 5
   rarity: 1

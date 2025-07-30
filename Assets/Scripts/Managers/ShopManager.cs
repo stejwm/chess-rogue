@@ -119,6 +119,8 @@ public class ShopManager : MonoBehaviour
             return;
         if (board.Hero.playerCoins < board.RerollCost)
             return;
+        if (board.BoardState != BoardState.ShopScreen)
+            return;
 
         board.Hero.playerCoins -= board.RerollCost;
         foreach (var card in cards)
@@ -259,45 +261,48 @@ public class ShopManager : MonoBehaviour
         StatBoxManager._instance.UnlockView();
         gameObject.SetActive(false);
     }
-
     public void HideShop()
     {
         foreach (var card in cards)
         {
-            if(card)
+            if (card)
                 card.SetActive(false);
         }
         foreach (var order in orders)
         {
-            if(order)
+            if (order)
                 order.SetActive(false);
         }
         foreach (var piece in pieces)
         {
-            if(piece)
+            if (piece)
                 piece.SetActive(false);
         }
         gameObject.SetActive(false);
 
     }
-
     public void OpenShopFromManagement()
     {
         gameObject.SetActive(true);
         foreach (var card in cards)
         {
-            if(card)
+            if (card)
                 card.SetActive(true);
         }
         foreach (var order in orders)
         {
-            if(order)
+            if (order)
                 order.SetActive(true);
         }
         foreach (var piece in pieces)
         {
-            if(piece)
+            if (piece)
                 piece.SetActive(true);
         }
     }
+    public void UpdateRerollCost()
+    {
+        rerollCostText.text = board.RerollCost.ToString();
+    }
+
 }

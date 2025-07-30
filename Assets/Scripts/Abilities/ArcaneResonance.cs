@@ -7,6 +7,7 @@ using Rand= System.Random;
 public class ArcaneResonance : Ability
 {
     private Chessman piece;
+    HashSet<System.Type> addedTypes = new HashSet<System.Type>();
 
     public ArcaneResonance() : base("Arcane Resonance", "Adds +1 stack to each stackable ability") { }
 
@@ -17,11 +18,17 @@ public class ArcaneResonance : Ability
             return;
         this.piece = piece;
         piece.info += " " + abilityName;
+
         var abilitiesCopy = new List<Ability>(piece.abilities);
+        
         foreach (Ability ability in abilitiesCopy)
         {
-            //ability.Apply(board, piece);
-            piece.AddAbility(board, ability.Clone());
+            var type = ability.GetType();
+            if (!addedTypes.Contains(type))
+            {
+                piece.AddAbility(board, ability.Clone());
+                addedTypes.Add(type);
+            }
         }
         board.EventHub.OnAbilityAdded.AddListener(AddStack);
 
@@ -43,9 +50,18 @@ public class ArcaneResonance : Ability
 
     public void AddStack(Chessman cm, Ability ability)
     {
-        eventHub.OnAbilityAdded.RemoveListener(AddStack);
-        piece.AddAbility(board, ability);
-        eventHub.OnAbilityAdded.AddListener(AddStack);
+        if (cm == piece)
+        {
+            var type = ability.GetType();
+            if (!addedTypes.Contains(type))
+            {
+                eventHub.OnAbilityAdded.RemoveListener(AddStack);
+                piece.AddAbility(board, ability.Clone());
+                addedTypes.Add(type);
+                eventHub.OnAbilityAdded.AddListener(AddStack);
+            }
+            
+        }
     }
 
 }

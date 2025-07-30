@@ -24,6 +24,7 @@ public abstract class Player: MonoBehaviour
     public List<KingsOrder> orders = new List<KingsOrder>();
     private static Rand rng = new Rand();
     private int abandonedPieces = 0;
+    public int releasedPieceCount = 0;
     public Dictionary<Rarity, int> RarityWeights = new Dictionary<Rarity, int>()
         {
             { Rarity.Common, 55 },

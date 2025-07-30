@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Momentum
   description: Gain +1 to attack per move, resets after being bounced or not moving
-  sprite: {fileID: 0}
+  sprite: {fileID: 2622176797773788838, guid: 4fdf88bed22f342429ca9b90954efe0d, type: 3}
   Cost: 3
   rarity: 0

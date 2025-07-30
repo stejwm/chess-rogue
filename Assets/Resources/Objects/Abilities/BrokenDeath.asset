@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Broken Death
   description: Decimates attacker when captured
-  sprite: {fileID: 0}
+  sprite: {fileID: -7840476305325368638, guid: 417d91525ac80b245af5890722143b2a, type: 3}
   Cost: 5
   rarity: 3

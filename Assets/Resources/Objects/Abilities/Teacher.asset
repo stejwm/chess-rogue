@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f16671d2041534a9885077948626a8, type: 3}
   m_Name: Teacher
   m_EditorClassIdentifier: 
-  abilityName: Teacher
+  abilityName: Magister
   description: +5 to all pieces with no abilities
-  sprite: {fileID: 0}
+  sprite: {fileID: 3662951565956707185, guid: e4515b8ee38c1274a80945912e844212, type: 3}
   Cost: 5
   rarity: 1

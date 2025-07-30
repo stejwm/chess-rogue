@@ -10,6 +10,7 @@ public class FreeTrade : KingsOrder
     public override IEnumerator Use(Board board){
         board.RerollCost=0;
         board.RerollCostIncrease++;
+        board.ShopManager.UpdateRerollCost();
         yield return null;
     }
 
