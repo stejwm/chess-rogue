@@ -104,6 +104,7 @@ public class AIPlayer : Player
 
         // Pick randomly between 0 and maxIndex
         int chosenIndex = UnityEngine.Random.Range(0, maxIndex + 1);
+        Debug.Log($"Chose index {chosenIndex}: {topMoves[chosenIndex]}");
         return topMoves[chosenIndex];
     }
     

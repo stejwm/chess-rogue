@@ -23,7 +23,7 @@ public class ArcaneResonance : Ability
             //ability.Apply(board, piece);
             piece.AddAbility(board, ability.Clone());
         }
-        eventHub.OnAbilityAdded.AddListener(AddStack);
+        board.EventHub.OnAbilityAdded.AddListener(AddStack);
 
         base.Apply(board, piece);
     }

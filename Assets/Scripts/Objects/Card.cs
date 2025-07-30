@@ -187,7 +187,7 @@ public class Card : MonoBehaviour, IInteractable
             case BoardState.ShopScreen:
                 HandleShopScreenClick(board);
                 break;
-            case BoardState.ManagementScreen:
+            //case BoardState.ManagementScreen:
             case BoardState.KingsOrder:
                 StartCoroutine(HandleManagementScreen(board));
                 break;

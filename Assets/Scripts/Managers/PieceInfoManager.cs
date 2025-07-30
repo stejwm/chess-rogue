@@ -46,6 +46,7 @@ public class PieceInfoManager : MonoBehaviour
         attackVal.text = piece.attack.ToString();
         defenseVal.text = piece.defense.ToString();
         supportVal.text = piece.support.ToString();
+        diplomacy.text = ":"+piece.diplomacy;
         sprite.sprite = piece.isometricSprite;
         if (piece.color == PieceColor.Black)
             sprite.color = new Color32(69, 69, 69, 255);

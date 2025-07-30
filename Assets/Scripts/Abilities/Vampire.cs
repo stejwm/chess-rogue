@@ -21,7 +21,8 @@ public class Vampire : Ability
         this.piece = piece;
 
         board.EventHub.OnMove.AddListener(AddBonus);
-        board.EventHub.OnAttackEnd.AddListener(SuckBlood);
+        //board.EventHub.OnAttackEnd.AddListener(SuckBlood);
+        board.EventHub.OnPieceCaptured.AddListener(SuckBlood);
         board.EventHub.OnChessMatchStart.AddListener(MatchStartBonus);
         board.EventHub.OnPieceBounced.AddListener(PossibleReset);
         this.board = board;
@@ -35,7 +36,7 @@ public class Vampire : Ability
     public override void Remove(Chessman piece)
     {
         eventHub.OnMove.RemoveListener(AddBonus);
-        eventHub.OnAttackEnd.RemoveListener(SuckBlood);
+        eventHub.OnPieceCaptured.RemoveListener(SuckBlood);
         eventHub.OnChessMatchStart.RemoveListener(MatchStartBonus);
         eventHub.OnPieceBounced.RemoveListener(PossibleReset);
     }
@@ -100,12 +101,13 @@ public class Vampire : Ability
 
     }
 
-    public void SuckBlood(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport)
+    public void SuckBlood(Chessman attacker, Chessman defender)
     {
         if (attacker == piece)
         {
-            defender.AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("Vampire"));
-            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Vampire</gradient></color>", $"fledgling created on {BoardPosition.ConvertToChessNotation(defender.xBoard, defender.yBoard)}");
+            //defender.AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("Vampire"));
+            piece.owner.playerBlood++;
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Vampire</gradient></color>", $"<color=red>+1</color> blood");
 
         }
     }
@@ -130,7 +132,7 @@ public class Vampire : Ability
         if (piece != null)
         {
             eventHub.OnMove.RemoveListener(AddBonus);
-            eventHub.OnAttackEnd.RemoveListener(SuckBlood);
+            eventHub.OnPieceCaptured.RemoveListener(SuckBlood);
             eventHub.OnChessMatchStart.RemoveListener(MatchStartBonus);
             eventHub.OnPieceBounced.RemoveListener(PossibleReset);
         }

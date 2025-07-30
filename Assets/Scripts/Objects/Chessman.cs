@@ -389,6 +389,7 @@ public abstract class Chessman : MonoBehaviour, IInteractable
             PieceType.Rook => 'r',
             PieceType.Queen => 'q',
             PieceType.King => 'k',
+            PieceType.Jester => 'j',
             _ => '?'
         };
 

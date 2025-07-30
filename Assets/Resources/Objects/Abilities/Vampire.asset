@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Vampire
   description: +1 to all stats on dark squares, -1 to all stats on light squares.
-    transfer ability when attacking
+    +1 blood on captures
   sprite: {fileID: -6706551144356255671, guid: 383612421a13f8c43af6b66c3faabf03, type: 3}
   Cost: 5
   rarity: 1

@@ -23,7 +23,7 @@ public class InspiringPresence : Ability
 
     }
     public void CheckForResult(Chessman attacker, Chessman defender, Chessman supporter){
-        if(supporter==piece){
+        if(supporter==piece && defender.color == piece.color){
             eventHub.OnPieceBounced.AddListener(IsBounce);
             eventHub.OnPieceCaptured.AddListener(RemoveListener);
         }
@@ -33,7 +33,7 @@ public class InspiringPresence : Ability
         eventHub.OnPieceBounced.RemoveListener(IsBounce);
     }
     public void IsBounce(Chessman attacker, Chessman defender){
-        if(defender.team==piece.team){
+        if(defender.color==piece.color){
             board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Inspiring Presence</gradient></color>", "happy to help!");
             piece.support+=1;
         }

@@ -92,7 +92,7 @@ public class BloodThirstAbility : Ability
             return;
         board.CurrentMatch.BloodThirstOverride =true;
         Debug.Log("Blood thirst activated");
-        piece.effectsFeedback.PlayFeedbacks();
+        //piece.effectsFeedback.PlayFeedbacks();
         List<GameObject> pieces;
         if (piece.abilities.OfType<Betrayer>().FirstOrDefault()!=null){
             piece.moveProfile = new BetrayerMovement(board, new AttackOnlyMovement(board, startingProfile));
@@ -123,8 +123,8 @@ public class BloodThirstAbility : Ability
         if(attackingPiece==piece)
             board.CurrentMatch.isDecimating=false;
         if(attackingPiece==piece && thirsting){
-            Debug.Log("Bounced, thirst over");
-            thirsting=false;
+            board.AbilityLogger.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Blood Thirst</gradient></color>" +  "This will have to do. Thirst Over");
+            thirsting =false;
             piece.moveProfile=startingProfile;
             board.CurrentMatch.BloodThirstOverride =false;
             board.CurrentMatch.isDecimating=false;
