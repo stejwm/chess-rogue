@@ -214,7 +214,7 @@ public class Card : MonoBehaviour, IInteractable
         if (order != null)
         {
             //Debug.Log("Card management clicked");
-            BoardState previousState = board.BoardState;
+            //BoardState previousState = BoardState.KingsOrder;
             board.BoardState = BoardState.KingsOrderActive;
             flames.Play();
             yield return StartCoroutine(order.Use(board));
@@ -223,7 +223,7 @@ public class Card : MonoBehaviour, IInteractable
             board.Hero.orders.Remove(order);
             board.KingsOrderManager.ResetCards();
             board.ClearSelectedPosition();
-            board.BoardState = previousState;
+            board.BoardState = BoardState.KingsOrder;
             Destroy(gameObject);
         }
     }

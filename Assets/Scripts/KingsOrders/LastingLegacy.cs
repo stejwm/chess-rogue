@@ -8,7 +8,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LastingLegacy", menuName = "KingsOrders/LastingLegacy")]
 public class LastingLegacy : KingsOrder
 {
-    private List<GameObject> civilians = new List<GameObject>();
     public LastingLegacy() : base("Lasting Legacy", "Abandon a piece to create 3 copies of one of its ability in the next shop") {}
 
     public override IEnumerator Use(Board board)

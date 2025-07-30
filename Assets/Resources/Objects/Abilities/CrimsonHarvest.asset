@@ -15,5 +15,5 @@ MonoBehaviour:
   abilityName: Crimson Harvest
   description: +1 blood to opponents value when bounced
   sprite: {fileID: 0}
-  Cost: 10
+  Cost: 3
   rarity: 0
