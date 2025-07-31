@@ -62,21 +62,24 @@ public class SoulBond : Ability
 
     public void Increase(Chessman cm)
     {
-        soulBondedPieces.Add(cm);
-        piece.attack += bonus;
-        piece.defense += bonus;
-        piece.support += bonus;
-        foreach (Chessman soulBonder in soulBondedPieces)
+        if (cm.owner == piece.owner)
         {
-            soulBonder.attack += bonus;
-            soulBonder.defense += bonus;
-            soulBonder.support += bonus;
+            soulBondedPieces.Add(cm);
+            piece.attack += bonus;
+            piece.defense += bonus;
+            piece.support += bonus;
+            foreach (Chessman soulBonder in soulBondedPieces)
+            {
+                soulBonder.attack += bonus;
+                soulBonder.defense += bonus;
+                soulBonder.support += bonus;
+            }
         }
         
         
     }
     public void Decimate(Chessman attacker, Chessman defender){
-        if (soulBondedPieces.Contains(defender))
+        if (soulBondedPieces.Contains(defender) || piece==defender)
         {
             board.CurrentMatch.isDecimating = true;
         }
@@ -86,7 +89,7 @@ public class SoulBond : Ability
     }
     public void RemoveDecimate(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport)
     {
-        if (soulBondedPieces.Contains(defender) || piece.gameObject == null)
+        if (soulBondedPieces.Contains(defender) || piece == defender)
             board.CurrentMatch.isDecimating = false;
     }
     public void Capture(Chessman attacker, Chessman defender){
@@ -101,9 +104,9 @@ public class SoulBond : Ability
             {
                 if (cm == defender)
                     continue;
-                board.AbilityLogger.AddLogToQueue($"<sprite=\"{cm.color}{cm.type}\" name=\"{cm.color}{cm.type}\"><color=white><gradient=\"AbilityGradient\">Soul bond</gradient></color>" + $"{cm.name} decimated on {BoardPosition.ConvertToChessNotation(cm.xBoard, cm.yBoard)}");
-                board.ClearPosition(piece.xBoard, piece.yBoard);
-                board.GetTileAt(piece.xBoard, piece.yBoard).SetBloodTile();
+                board.AbilityLogger.AddLogToQueue($"<sprite=\"{cm.color}{cm.type}\" name=\"{cm.color}{cm.type}\"><color=white><gradient=\"AbilityGradient\">Soul bond</gradient></color>" + $" {cm.name} decimated on {BoardPosition.ConvertToChessNotation(cm.xBoard, cm.yBoard)}");
+                board.ClearPosition(cm.xBoard, cm.yBoard);
+                board.GetTileAt(cm.xBoard, cm.yBoard).SetBloodTile();
                 eventHub.RaisePieceCaptured(attacker, cm);
                 eventHub.RaisePieceRemoved(cm);
                 if (cm.type == PieceType.King && cm.owner == board.Hero)
@@ -121,7 +124,7 @@ public class SoulBond : Ability
             //destroy this piece if it's not the one decimated
             if (piece != defender)
             {
-                board.AbilityLogger.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Soul bond</gradient></color>" + $"{piece.name} decimated on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
+                board.AbilityLogger.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Soul bond</gradient></color>" + $" {piece.name} decimated on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
                 board.ClearPosition(piece.xBoard, piece.yBoard);
                 board.GetTileAt(piece.xBoard, piece.yBoard).SetBloodTile();
                 eventHub.RaisePieceCaptured(attacker, piece);
@@ -137,7 +140,8 @@ public class SoulBond : Ability
                 }
                 piece.DestroyPiece();
             }
-            board.CurrentMatch.isDecimating = false;
+            if(board.CurrentMatch!=null)
+                board.CurrentMatch.isDecimating = false;
         }
     }
 

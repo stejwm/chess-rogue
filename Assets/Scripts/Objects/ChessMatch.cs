@@ -312,8 +312,11 @@ public class ChessMatch
         }
         else
         {
-            NextTurn();
-            board.IsInMove = false;
+            if (board.CurrentMatch == this)
+            {
+                NextTurn();
+                board.IsInMove = false;
+            }
         }
 
     }
