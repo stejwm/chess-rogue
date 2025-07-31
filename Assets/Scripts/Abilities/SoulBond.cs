@@ -9,8 +9,9 @@ public class SoulBond : Ability
 {
     private Chessman piece;
     private int bonus = 0;
+    int x, y;
     
-    public SoulBond() : base("Soul Bond", "Permanently gain +5 to each stat for each soul bonded piece, when any soul bonded piece is captured, all are decimated") {}
+    public SoulBond() : base("Soul Bond", "Permanently gain +5 to each stat for each soul bonded piece, when any soul bonded piece is captured, all are decimated") { }
 
     public override void Apply(Board board, Chessman piece)
     {
@@ -60,8 +61,10 @@ public class SoulBond : Ability
         
     }
     public void Decimate(Chessman attacker, Tile position){
-        if(position.X== piece.xBoard && position.Y== piece.yBoard)
-            board.CurrentMatch.isDecimating=true;
+        if (piece == attacker)
+        {
+            board.CurrentMatch.isDecimating = true;
+        }
     }
     public void RemoveDecimate(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
         if(defender==piece || piece.gameObject==null)
@@ -69,11 +72,17 @@ public class SoulBond : Ability
     }
     public void Capture(Chessman attacker, Chessman defender){
         if(defender.color == piece.color && defender!=piece && defender.abilities.OfType<SoulBond>().FirstOrDefault()!=null && !defender.hexed && !piece.hexed){
-            if(piece.type==PieceType.King){
-                board.CurrentMatch.EndMatch();
+            eventHub.OnPieceCaptured.RemoveListener(Capture);
+            if (piece.type == PieceType.King && piece.owner == board.Hero)
+            {
+                board.CurrentMatch.EndGame();
             }
-            eventHub.OnPieceCaptured.RemoveListener(Capture); 
-            board.CurrentMatch.SetPositionEmpty(piece.xBoard, piece.yBoard);
+            else if (piece.type == PieceType.King)
+            {
+                if(board.CurrentMatch!=null)
+                    board.CurrentMatch.EndMatch();
+            }
+            board.ClearPosition(piece.xBoard, piece.yBoard);
             board.GetTileAt(piece.xBoard, piece.yBoard).SetBloodTile();
             eventHub.OnPieceCaptured.Invoke(attacker, piece);
             piece.owner.pieces.Remove(piece.gameObject);

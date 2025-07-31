@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using Rand= System.Random;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 public enum EnemyType
 {
@@ -211,7 +212,9 @@ public class PieceFactory : MonoBehaviour
 
         foreach (var piece in pieces)
         {
-            piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("BloodOffering")); //Blood offering ability
+            Chessman cm = piece.GetComponent<Chessman>();
+            if (cm.type != PieceType.Queen && cm.type != PieceType.King)
+                piece.GetComponent<Chessman>().AddAbility(board, AbilityDatabase.Instance.GetAbilityByName("BloodOffering")); //Blood offering ability
         }
         // Create pawns
         for (int i = 0; i < 8; i++)
