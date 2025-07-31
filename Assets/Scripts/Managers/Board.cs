@@ -59,6 +59,8 @@ public class Board : MonoBehaviour
     private GameObject[,] positions = new GameObject[8, 8];
     [SerializeField] private BoardState boardState;
     public Ability LastingLegacyAbility { get; set; }
+    public bool RoyalFavor { get; set; }
+    public bool CrownsFinest { get; set; }
     public ChessMatch CurrentMatch { get => currentMatch; set => currentMatch = value; }
     public BattlePanel BattlePanel { get => battlePanel; set => battlePanel = value; }
     public EventHub EventHub { get => eventHub; set => eventHub = value; }

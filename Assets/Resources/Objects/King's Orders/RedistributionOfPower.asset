@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RedistributionOfPower
   m_EditorClassIdentifier: 
   Name: Redistribution Of Power
-  Description: Sets each stat of all your pieces to average of each stat across all
-    your pieces
+  Description: Sets each stat of all your pieces to average of each base stat across
+    all your pieces
   sprite: {fileID: 0}
   Cost: 10
   canBeUsedFromManagement: 1

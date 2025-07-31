@@ -59,9 +59,21 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            cards = CardFactory.Instance.CreateCards(3, board.Hero.RarityWeights);
-
+            if (board.RoyalFavor == true)
+            {
+                cards.Add(CardFactory.Instance.CreateCardOfRarity(Rarity.Uncommon));
+                board.RoyalFavor = false;
+            }
+            if (board.CrownsFinest == true)
+            {
+                cards.Add(CardFactory.Instance.CreateCardOfRarity(Rarity.Rare));
+                board.CrownsFinest = false;
+            }
         }
+
+        cards.AddRange(CardFactory.Instance.CreateCards(3-cards.Count, board.Hero.RarityWeights));
+
+        
         int index = 0;
         foreach (var card in cards)
         {
@@ -257,6 +269,7 @@ public class ShopManager : MonoBehaviour
         {
             Destroy(piece);
         }
+        cards.Clear();
         PopUpManager._instance.HideValues();
         StatBoxManager._instance.UnlockView();
         gameObject.SetActive(false);

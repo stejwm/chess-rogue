@@ -28,7 +28,7 @@ public class Merchant : Ability
         eventHub.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
-    public void AddBonus(Chessman attacker, int support, Tile targetedPosition){
+    public void AddBonus(Chessman attacker, int support, int defendingSupport, Tile targetedPosition){
         if (attacker==piece){
             for (int i =0; i<piece.owner.playerCoins; i++){
                 if (rng.Next(1,11)<=1){

@@ -58,7 +58,7 @@ public class CardFactory : MonoBehaviour
 
         return obj;
     }
-    
+
     public GameObject CreateCard(KingsOrder order)
     {
         GameObject obj = Instantiate(cardPrefab, new Vector3(0, 0, -2), Quaternion.identity);
@@ -96,7 +96,7 @@ public class CardFactory : MonoBehaviour
         }
         return orders;
     }
-    
+
     public List<GameObject> CreateCards(int n, Dictionary<Rarity, int> rarities)
     {
         List<GameObject> cards = new List<GameObject>();
@@ -105,8 +105,12 @@ public class CardFactory : MonoBehaviour
             var card = CreateCard(AbilityDatabase.Instance.GetRandomAbility(rarities[Rarity.Common], rarities[Rarity.Uncommon], rarities[Rarity.Rare]));
             cards.Add(card);
         }
-
         return cards;
+    }
+    
+    public GameObject CreateCardOfRarity(Rarity rarity)
+    {
+        return CreateCard(AbilityDatabase.Instance.GetAbilityOfRarity(rarity));
     }
 
     

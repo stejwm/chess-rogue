@@ -27,7 +27,7 @@ public class Assassin : Ability
         eventHub.OnAttackEnd.RemoveListener(RemoveBonus); 
 
     }
-    public void AddBonus(Chessman attacker, int support, Tile targetedPosition){
+    public void AddBonus(Chessman attacker, int support, int defendingSupport, Tile targetedPosition){
         if (attacker==piece && support==0){
             piece.effectsFeedback.PlayFeedbacks();
             board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Assassin</gradient></color>", "<color=green>+5</color> attack");

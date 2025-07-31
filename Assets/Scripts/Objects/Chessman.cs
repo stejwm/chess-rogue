@@ -433,7 +433,7 @@ public abstract class Chessman : MonoBehaviour, IInteractable
         owner.pieces.Remove(this.gameObject);
         foreach (var ability in abilities)
             ability.Remove(this);
-        Destroy(this.gameObject);
+        Destroy(this.gameObject);  
     }
 
     public void OnClick(Board board)

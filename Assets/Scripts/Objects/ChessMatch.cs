@@ -119,7 +119,7 @@ public class ChessMatch
         int attackingSupport = attackingSupportDictionary.Values.Sum();
         int defendingSupport = defendingSupportDictionary.Values.Sum();
 
-        eventHub.RaiseAttacked(attacker, attackingSupport, board.GetTileAt(defender.xBoard, defender.yBoard));
+        eventHub.RaiseAttacked(attacker, attackingSupport, defendingSupport, board.GetTileAt(defender.xBoard, defender.yBoard));
 
         bool isCapture = attacker.CalculateAttack() + attackingSupport >= defender.CalculateDefense() + defendingSupport;
         yield return new WaitForSeconds(Settings.Instance.WaitTime);
@@ -256,6 +256,7 @@ public class ChessMatch
                     MovePiece(attacker, defender.xBoard, defender.yBoard);
                 eventHub.RaisePieceCaptured(attacker, defender);
                 yield return new WaitForSeconds(Settings.Instance.WaitTime);
+                board.EventHub.RaisePieceRemoved(defender);
                 defender.DestroyPiece();
             }
             else

@@ -101,9 +101,23 @@ public class AbilityDatabase : MonoBehaviour
             return null;
 
     }
+    public Ability GetAbilityOfRarity(Rarity rarity)
+    {
+        switch (rarity)
+        {
+            case Rarity.Common:
+                return commonAbilities[UnityEngine.Random.Range(0, commonAbilities.Count)].Clone();
+            case Rarity.Uncommon:
+                return uncommonAbilities[UnityEngine.Random.Range(0, uncommonAbilities.Count)].Clone();
+            case Rarity.Rare:
+                return rareAbilities[UnityEngine.Random.Range(0, rareAbilities.Count)].Clone();
+        }
+        return null;
+
+    }
     public Ability GetAbilityByName(string name)
     {
-        return abilityDict[name.ToLower().Replace(" ","")].Clone();
+        return abilityDict[name.ToLower().Replace(" ", "")].Clone();
     }
 
     public KingsOrder GetOrderByName(string name)

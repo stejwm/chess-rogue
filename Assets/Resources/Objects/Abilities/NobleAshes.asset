@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46345339e5a37034d85b879feb168ecd, type: 3}
-  m_Name: KillingField
+  m_Script: {fileID: 11500000, guid: c2ac99bff27ed4841b64f21c3dc28f39, type: 3}
+  m_Name: NobleAshes
   m_EditorClassIdentifier: 
-  Name: Killing Field
-  Description: Doubles blood earned in next market
+  abilityName: Noble Ashes
+  description: +1 to all stats for each owned ranked (non-pawn) piece below 8
   sprite: {fileID: 0}
-  Cost: 15
-  canBeUsedFromManagement: 1
+  Cost: 5
+  rarity: 1

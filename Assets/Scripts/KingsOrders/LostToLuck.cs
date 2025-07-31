@@ -23,14 +23,26 @@ public class LostToLuck : KingsOrder
         }
         Chessman cm = Chessobj.GetComponent<Chessman>();
         board.Hero.pieces.Remove(Chessobj);
-        Chessobj.GetComponent<Chessman>().DestroyPiece();
+        board.EventHub.RaisePieceRemoved(cm);
+        cm.DestroyPiece();
         board.Hero.AbandonedPieces++;
-        
-        //TODO: Check weights do not drop below zero
-        board.Hero.RarityWeights[Rarity.Uncommon] += 5;
-        board.Hero.RarityWeights[Rarity.Rare] += 5;
-        board.Hero.RarityWeights[Rarity.Common] -= 10;
 
+        //TODO: Check weights do not drop below zero
+        if (board.Hero.RarityWeights[Rarity.Common] <= 12)
+        {
+            board.Hero.RarityWeights[Rarity.Uncommon] -= 6;
+            board.Hero.RarityWeights[Rarity.Rare] += 6;
+        }
+        else if (board.Hero.RarityWeights[Rarity.Uncommon] <= 20)
+        {
+
+        }
+        else
+        {
+            board.Hero.RarityWeights[Rarity.Uncommon] += 6;
+            board.Hero.RarityWeights[Rarity.Rare] += 6;
+            board.Hero.RarityWeights[Rarity.Common] -= 12;
+        }
         
 
         yield return null;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RoyalFavor
   m_EditorClassIdentifier: 
   Name: Royal Favor
-  Description: One piece permanently gains +1 to all stats
+  Description: Uncommon ability appears in next shop
   sprite: {fileID: 0}
   Cost: 5
   canBeUsedFromManagement: 1

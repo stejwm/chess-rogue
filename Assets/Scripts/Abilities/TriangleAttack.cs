@@ -41,7 +41,7 @@ public class TriangleAttack : Ability
             }
         }
     }
-    public void AddBonus(Chessman attacker, int support, Tile targetedPosition)
+    public void AddBonus(Chessman attacker, int support, int defendingSupport, Tile targetedPosition)
     {
         if (attacker == piece && matchingSupporters>=2)
         {

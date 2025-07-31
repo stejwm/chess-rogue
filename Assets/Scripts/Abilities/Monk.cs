@@ -35,7 +35,7 @@ public class Monk : Ability
             RemoveBonus(piece, null, 0, 0);
         }
     }
-    public void Check(Chessman movedPiece, int support, Tile targetedPosition){
+    public void Check(Chessman movedPiece, int support, int dSupport, Tile targetedPosition){
         if (movedPiece.color == piece.color && movedPiece!=piece){
             AddBonus(piece, null);
         }

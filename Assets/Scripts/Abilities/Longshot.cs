@@ -27,7 +27,7 @@ public class Longshot : Ability
         eventHub.OnAttackEnd.RemoveListener(RemoveBonus);
 
     }
-    public void AddBonus(Chessman cm, int support, Tile targetedPosition){
+    public void AddBonus(Chessman cm, int support, int dSupport, Tile targetedPosition){
         //Debug.Log("starting position: "+cm.xBoard+","+cm.yBoard + " attacking position "+targetedPosition.x+","+targetedPosition.y);
         if (cm==piece && (!Enumerable.Range(cm.xBoard-4,8).Contains(targetedPosition.X) ||!Enumerable.Range(cm.yBoard-4,8).Contains(targetedPosition.Y))){
             board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Longshot</gradient></color>", "<color=green>+5</color> attack");

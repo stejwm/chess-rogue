@@ -23,7 +23,8 @@ public class LastingLegacy : KingsOrder
         }
         Chessman cm = Chessobj.GetComponent<Chessman>();
         board.LastingLegacyAbility = cm.abilities[Random.Range(0, cm.abilities.Count)].Clone();
-        Chessobj.GetComponent<Chessman>().DestroyPiece();
+        board.EventHub.RaisePieceRemoved(cm);
+        cm.DestroyPiece();
         board.Hero.AbandonedPieces++;
 
         yield return null;

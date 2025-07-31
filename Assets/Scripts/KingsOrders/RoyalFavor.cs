@@ -1,9 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using MoreMountains.Feedbacks;
-using TMPro;
-using Unity.Cinemachine;
-using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "RoyalFavor", menuName = "KingsOrders/RoyalFavor")]
@@ -13,7 +8,12 @@ public class RoyalFavor : KingsOrder
 
     public override IEnumerator Use(Board board)
     {
-        Player hero = board.Hero;
+        
+        board.RoyalFavor = true;
+        yield return null;
+
+    }
+        /* Player hero = board.Hero;
         yield return new WaitUntil(() => board.selectedPosition !=null);
         Tile targetPosition = board.selectedPosition;
         board.selectedPosition=null;
@@ -27,8 +27,8 @@ public class RoyalFavor : KingsOrder
         piece.attack++;
         piece.defense++;
         piece.support++;  
-        yield return null; 
-    }
+        yield return null;  */
+    
 
 
 }

@@ -4467,7 +4467,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCoins: 0
   playerBlood: 0
-  soulBondedPieces: 0
   color: 1
   pieces: []
   capturedPieces: []
@@ -6470,7 +6469,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCoins: 0
   playerBlood: 0
-  soulBondedPieces: 0
   color: 0
   pieces: []
   capturedPieces: []
@@ -20648,6 +20646,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a0356e34763b687499af5eb5a08450a7, type: 2}
   - {fileID: 11400000, guid: 4f611bb851a2d1245b919c6eeca79a8c, type: 2}
   - {fileID: 11400000, guid: 83ddca776ecef9443945a039845a4ca1, type: 2}
+  - {fileID: 11400000, guid: fd8abc8408a79424d92aa05ac5cf9842, type: 2}
   orders:
   - {fileID: 11400000, guid: 8812b8c1196501e4c85c6485c44955f7, type: 2}
   - {fileID: 11400000, guid: 15273d54d6aa5434a8f509b8cf2fb5f3, type: 2}
@@ -20662,6 +20661,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 25bc2e0dd2babf44baa373ec7f2e92c0, type: 2}
   - {fileID: 11400000, guid: d6d656b437ba3a84cacbe9040ff0c8df, type: 2}
   - {fileID: 11400000, guid: 6f8022cb9d598c442a2dc628139dbed2, type: 2}
+  - {fileID: 11400000, guid: 235e807d5b643664fa2ef21e0e968168, type: 2}
 --- !u!114 &1624334851
 MonoBehaviour:
   m_ObjectHideFlags: 0

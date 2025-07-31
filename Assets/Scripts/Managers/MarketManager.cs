@@ -20,6 +20,7 @@ public class MarketManager : MonoBehaviour
     [SerializeField] GameObject dropInSprite;
     private Dictionary<Chessman, GameObject> sprites = new Dictionary<Chessman, GameObject>();
     public bool killingField;
+    private Board board;
     public void Start()
     {
         gameObject.SetActive(false);
@@ -28,6 +29,7 @@ public class MarketManager : MonoBehaviour
     public void OpenMarket(Board board)
     {
         hero = board.Hero;
+        this.board = board;
         totalCost = 0;
         //Debug.Log("Opening market");
         gameObject.SetActive(true);
@@ -61,6 +63,7 @@ public class MarketManager : MonoBehaviour
                         {
                             Debug.Log("decimated from diplomacy check");
                             decimatedPieces.Add(piece);
+                            board.EventHub.RaisePieceRemoved(chessman);
                             chessman.DestroyPiece();
                         }
                     }
@@ -82,6 +85,7 @@ public class MarketManager : MonoBehaviour
                 if (piece != null)
                 {
                     Chessman cm = piece.GetComponent<Chessman>();
+                    board.EventHub.RaisePieceRemoved(cm);
                     cm.DestroyPiece();
                     hero.AbandonedPieces++;
                 }
@@ -91,7 +95,11 @@ public class MarketManager : MonoBehaviour
             foreach (GameObject piece in myCapturedPieces)
             {
                 if (piece != null)
-                    piece.GetComponent<Chessman>().DestroyPiece();
+                {
+                    Chessman cm = piece.GetComponent<Chessman>();
+                    board.EventHub.RaisePieceRemoved(cm);
+                    cm.DestroyPiece();
+                }
             }
         myCapturedPieces.Clear();
         opponentCapturedPieces.Clear();
@@ -125,10 +133,6 @@ public class MarketManager : MonoBehaviour
         ClearPanel();  
     }
 
-    public void ReturnMyPieces()
-    {
-        
-    }
 
     public void KillPieces()
     {
@@ -139,6 +143,7 @@ public class MarketManager : MonoBehaviour
             myCapturedPieces.Remove(item.gameObject);
             opponentCapturedPieces.Remove(item.gameObject);
             item.gameObject.SetActive(false);
+            board.EventHub.RaisePieceRemoved(item);
             item.DestroyPiece();
         }
         selectedPieces.Clear();

@@ -9,7 +9,7 @@ public class EventHub
 {
 
     public UnityEvent<Chessman, Chessman> OnPieceCaptured = new UnityEvent<Chessman, Chessman>();
-    public UnityEvent<Chessman, int, Tile> OnAttack = new UnityEvent<Chessman, int, Tile>();
+    public UnityEvent<Chessman, int, int, Tile> OnAttack = new UnityEvent<Chessman, int, int, Tile>();
     public UnityEvent<Chessman, Chessman> OnAttackStart = new UnityEvent<Chessman, Chessman>();
     public UnityEvent<Chessman, Chessman, int, int> OnAttackEnd = new UnityEvent<Chessman, Chessman, int, int>();
     public UnityEvent<Chessman, Tile> OnMove = new UnityEvent<Chessman, Tile>();
@@ -19,8 +19,10 @@ public class EventHub
     public UnityEvent OnChessMatchStart = new UnityEvent();
     public UnityEvent<Chessman, Ability> OnAbilityAdded = new UnityEvent<Chessman, Ability>();
     public UnityEvent<Chessman> OnPieceAdded = new UnityEvent<Chessman>();
+    public UnityEvent<Chessman> OnPieceRemoved = new UnityEvent<Chessman>();
     public UnityEvent<PieceColor> OnGameEnd = new UnityEvent<PieceColor>();
-    public UnityEvent OnSoulBonded = new UnityEvent();
+    public UnityEvent<Chessman> OnSoulBonded = new UnityEvent<Chessman>();
+    public UnityEvent<Chessman> OnSoulBondRemoved = new UnityEvent<Chessman>();
 
 
     public void RaisePieceMoved(Chessman piece, Tile tile)
@@ -32,9 +34,9 @@ public class EventHub
     {
         OnPieceCaptured?.Invoke(attacker, defender);
     }
-    public void RaiseAttacked(Chessman piece, int support, Tile tile)
+    public void RaiseAttacked(Chessman piece, int support, int defendingSupport, Tile tile)
     {
-        OnAttack?.Invoke(piece, support, tile);
+        OnAttack?.Invoke(piece, support, defendingSupport, tile);
     }
 
     public void RaiseAttackStart(Chessman attacker, Chessman defender)
@@ -75,13 +77,21 @@ public class EventHub
     {
         OnPieceAdded?.Invoke(piece);
     }
+    public void RaisePieceRemoved(Chessman piece)
+    {
+        OnPieceRemoved?.Invoke(piece);
+    }
     public void RaiseGameEnd(PieceColor winner)
     {
         OnGameEnd?.Invoke(winner);
     }
-    public void RaiseSoulBonded()
+    public void RaiseSoulBonded(Chessman piece)
     {
-        OnSoulBonded?.Invoke();
+        OnSoulBonded?.Invoke(piece);
+    }
+    public void RaiseSoulBondRemoved(Chessman piece)
+    {
+        OnSoulBondRemoved?.Invoke(piece);
     }
 
 

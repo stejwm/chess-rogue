@@ -409,8 +409,10 @@ public class PieceFactory : MonoBehaviour
 
     public IEnumerator DelayedDestroy(Chessman piece){
         yield return null;
-        if(piece !=null)
+        if (piece != null)
+        {
             piece.DestroyPiece();
+        }
     }
 
     public List<GameObject> LoadPieces(Board board, List<PieceData> pieces, Player player){

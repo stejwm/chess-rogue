@@ -33,9 +33,9 @@ public class LoneGuard : Ability
             board.EventHub.OnAttack.AddListener(AddBonus);
         }
     }
-    public void AddBonus(Chessman cm, int support, Tile targetedPosition)
+    public void AddBonus(Chessman cm, int support, int defenseSupport, Tile targetedPosition)
     {
-        if (support == 0)
+        if (defenseSupport == 0)
         {
             board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Lone Guard</gradient></color>", "<color=green>+5 defense</color>");
             piece.AddBonus(StatType.Defense, 5, abilityName);

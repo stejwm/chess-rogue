@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Unity.VisualScripting;
+using System.Runtime.InteropServices;
 
 [CreateAssetMenu(fileName = "SoulBond", menuName = "Abilities/SoulBond")]
 public class SoulBond : Ability
 {
     private Chessman piece;
-    private int bonus = 0;
-    int x, y;
+    private int bonus = 5;
+    List<Chessman> soulBondedPieces = new List<Chessman>();
     
     public SoulBond() : base("Soul Bond", "Permanently gain +5 to each stat for each soul bonded piece, when any soul bonded piece is captured, all are decimated") { }
 
@@ -19,23 +20,32 @@ public class SoulBond : Ability
             return;
         }
         this.piece = piece;
-        piece.info += " " + abilityName;
+        foreach (GameObject otherPiece in piece.owner.pieces)
+        {
+            if (otherPiece.GetComponent<Chessman>().abilities.Contains(this))
+            {
+                Debug.Log("Another piece already soul bonded lead");
+                board.EventHub.RaiseSoulBonded(piece);
+                base.Apply(board, piece);
+                return;
+            }
+        }
+        Debug.Log("First sol bonded piece");
         board.EventHub.OnPieceCaptured.AddListener(Capture);
         board.EventHub.OnSoulBonded.AddListener(Increase);
-        board.EventHub.OnMove.AddListener(Decimate);
+        board.EventHub.OnAttackStart.AddListener(Decimate);
         board.EventHub.OnAttackEnd.AddListener(RemoveDecimate);
-        piece.owner.soulBondedPieces++;
-        board.EventHub.RaiseSoulBonded();
+        board.EventHub.OnSoulBondRemoved.AddListener(RemovePiece);
         base.Apply(board, piece);
     }
 
     public override void Remove(Chessman piece)
     {
-        eventHub.OnPieceCaptured.RemoveListener(Capture); 
-        eventHub.OnSoulBonded.RemoveListener(Increase); 
-        eventHub.OnMove.RemoveListener(Decimate);
+        eventHub.OnPieceCaptured.RemoveListener(Capture);
+        eventHub.OnSoulBonded.RemoveListener(Increase);
+        eventHub.OnAttackStart.RemoveListener(Decimate);
         eventHub.OnAttackEnd.RemoveListener(RemoveDecimate);
-        piece.owner.soulBondedPieces--;
+        board.EventHub.RaiseSoulBondRemoved(piece);
 
     }
 
@@ -45,49 +55,89 @@ public class SoulBond : Ability
         {
             eventHub.OnPieceCaptured.RemoveListener(Capture); 
             eventHub.OnSoulBonded.RemoveListener(Increase); 
-            eventHub.OnMove.RemoveListener(Decimate);
+            eventHub.OnAttackStart.RemoveListener(Decimate);
             eventHub.OnAttackEnd.RemoveListener(RemoveDecimate);
         }
     }
 
-    public void Increase(){
-        piece.attack-=bonus;
-        piece.defense-=bonus;
-        piece.support-=bonus;
-        bonus = 5*(piece.owner.soulBondedPieces-1);
-        piece.attack+=bonus;
-        piece.defense+=bonus;
-        piece.support+=bonus;
+    public void Increase(Chessman cm)
+    {
+        soulBondedPieces.Add(cm);
+        piece.attack += bonus;
+        piece.defense += bonus;
+        piece.support += bonus;
+        foreach (Chessman soulBonder in soulBondedPieces)
+        {
+            soulBonder.attack += bonus;
+            soulBonder.defense += bonus;
+            soulBonder.support += bonus;
+        }
+        
         
     }
-    public void Decimate(Chessman attacker, Tile position){
-        if (piece == attacker)
+    public void Decimate(Chessman attacker, Chessman defender){
+        if (soulBondedPieces.Contains(defender))
         {
             board.CurrentMatch.isDecimating = true;
         }
     }
-    public void RemoveDecimate(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport){
-        if(defender==piece || piece.gameObject==null)
-            board.CurrentMatch.isDecimating=false;
+    public void RemovePiece(Chessman cm){
+        soulBondedPieces.Remove(cm);
+    }
+    public void RemoveDecimate(Chessman attacker, Chessman defender, int attackSupport, int defenseSupport)
+    {
+        if (soulBondedPieces.Contains(defender) || piece.gameObject == null)
+            board.CurrentMatch.isDecimating = false;
     }
     public void Capture(Chessman attacker, Chessman defender){
-        if(defender.color == piece.color && defender!=piece && defender.abilities.OfType<SoulBond>().FirstOrDefault()!=null && !defender.hexed && !piece.hexed){
+        if (soulBondedPieces.Contains(defender) || defender == piece)
+        {
+            board.AbilityLogger.AddAbilityLogToQueue($"<sprite=\"{defender.color}{defender.type}\" name=\"{defender.color}{defender.type}\"><color=white><gradient=\"AbilityGradient\">Soul bond</gradient></color>", $"Bonds could not hold");
             eventHub.OnPieceCaptured.RemoveListener(Capture);
-            if (piece.type == PieceType.King && piece.owner == board.Hero)
+            eventHub.OnSoulBondRemoved.RemoveListener(RemovePiece);
+
+            //destroy all other soulbonded pieces
+            foreach (Chessman cm in soulBondedPieces)
             {
-                board.CurrentMatch.EndGame();
+                if (cm == defender)
+                    continue;
+                board.AbilityLogger.AddLogToQueue($"<sprite=\"{cm.color}{cm.type}\" name=\"{cm.color}{cm.type}\"><color=white><gradient=\"AbilityGradient\">Soul bond</gradient></color>" + $"{cm.name} decimated on {BoardPosition.ConvertToChessNotation(cm.xBoard, cm.yBoard)}");
+                board.ClearPosition(piece.xBoard, piece.yBoard);
+                board.GetTileAt(piece.xBoard, piece.yBoard).SetBloodTile();
+                eventHub.RaisePieceCaptured(attacker, cm);
+                eventHub.RaisePieceRemoved(cm);
+                if (cm.type == PieceType.King && cm.owner == board.Hero)
+                {
+                    board.CurrentMatch.EndGame();
+                }
+                else if (cm.type == PieceType.King)
+                {
+                    if (board.CurrentMatch != null)
+                        board.CurrentMatch.EndMatch();
+                }
+                cm.DestroyPiece();
             }
-            else if (piece.type == PieceType.King)
+
+            //destroy this piece if it's not the one decimated
+            if (piece != defender)
             {
-                if(board.CurrentMatch!=null)
-                    board.CurrentMatch.EndMatch();
+                board.AbilityLogger.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\"><color=white><gradient=\"AbilityGradient\">Soul bond</gradient></color>" + $"{piece.name} decimated on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
+                board.ClearPosition(piece.xBoard, piece.yBoard);
+                board.GetTileAt(piece.xBoard, piece.yBoard).SetBloodTile();
+                eventHub.RaisePieceCaptured(attacker, piece);
+                eventHub.RaisePieceRemoved(piece);
+                if (piece.type == PieceType.King && piece.owner == board.Hero)
+                {
+                    board.CurrentMatch.EndGame();
+                }
+                else if (piece.type == PieceType.King)
+                {
+                    if (board.CurrentMatch != null)
+                        board.CurrentMatch.EndMatch();
+                }
+                piece.DestroyPiece();
             }
-            board.ClearPosition(piece.xBoard, piece.yBoard);
-            board.GetTileAt(piece.xBoard, piece.yBoard).SetBloodTile();
-            eventHub.OnPieceCaptured.Invoke(attacker, piece);
-            piece.owner.pieces.Remove(piece.gameObject);
-            CoroutineRunner.instance.StartCoroutine(PieceFactory._instance.DelayedDestroy(piece));
-            
+            board.CurrentMatch.isDecimating = false;
         }
     }
 

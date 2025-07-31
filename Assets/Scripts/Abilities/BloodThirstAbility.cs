@@ -40,7 +40,7 @@ public class BloodThirstAbility : Ability
         eventHub.OnGameEnd.RemoveListener(ResetMoveProfile);
     }
 
-    public void Decimate(Chessman attacker, int support, Tile targetedPosition){
+    public void Decimate(Chessman attacker, int support, int defendingSupport, Tile targetedPosition){
         if(attacker==piece){
             board.CurrentMatch.isDecimating=true;
             if(!thirsting)
