@@ -103,11 +103,13 @@ public class PieceInfoManager : MonoBehaviour
                 icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
                 icon.GetComponent<AbilityUI>().ability=ability;
                 icon.GetComponentInChildren<TMP_Text>().text=$"x{abilityCount}";
+                icon.transform.position = new(icon.transform.position.x, icon.transform.position.y, -3);
                 multiples.Add(ability);
             }else{
                 var icon=Instantiate(abilityUI, abilityBox.transform);
                 icon.GetComponent<AbilityUI>().SetIcon(ability.sprite);
                 icon.GetComponent<AbilityUI>().ability=ability;
+                icon.transform.position = new(icon.transform.position.x, icon.transform.position.y, -3);
                 icon.GetComponentInChildren<TMP_Text>().text="";
             }
             

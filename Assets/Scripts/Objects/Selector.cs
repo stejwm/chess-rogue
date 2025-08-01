@@ -22,6 +22,7 @@ public class Selector : MonoBehaviour
 
         if (hit.collider != null)
         {
+            Debug.Log($"Hit {hit.collider.name}");
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
             if (CurrentInteractable != interactable)
             {

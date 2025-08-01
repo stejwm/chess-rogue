@@ -17,8 +17,8 @@ public class StatInfo : MonoBehaviour, IInteractable
 
     public void OnHover(Board board)
     {
-        Debug.Log("Hovered over stat info");
-        PopUpManager._instance.SetAndShowStatInfo(this);
+        if (board.BoardState != BoardState.InfoScreen)
+            PopUpManager._instance.SetAndShowStatInfo(this);
     }
 
     public void OnHoverExit(Board board)

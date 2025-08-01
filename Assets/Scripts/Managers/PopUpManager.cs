@@ -21,6 +21,8 @@ public class PopUpManager : MonoBehaviour
     public GameObject values;
     public TMP_Text coinValue;
     public TMP_Text bloodValue; 
+    public GameObject coinsContainer;
+    public GameObject bloodContainer; 
 
     public bool alreadyActive = false;
     
@@ -132,23 +134,51 @@ public class PopUpManager : MonoBehaviour
         gameObject.SetActive(alreadyActive);
     }
 
-    public void SetAndShowValues(Chessman piece){
+    public void SetAndShowValues(Chessman piece, bool coins, bool blood){
         alreadyActive = gameObject.activeSelf;
         gameObject.SetActive(true);
         coinValue.text=piece.releaseCost.ToString();
         bloodValue.text=piece.blood.ToString();
+
+        if (coins)
+            coinsContainer.SetActive(true);
+        else
+            coinsContainer.SetActive(false);
+
+        if (blood)
+            bloodContainer.SetActive(true);
+        else
+            bloodContainer.SetActive(false);
+
         values.gameObject.SetActive(true);
         values.transform.position=piece.gameObject.transform.position;
         values.GetComponent<RectTransform>().localPosition+=new Vector3(96,0);
-        /* float xVal = values.GetComponent<RectTransform>().localPosition.x;
-        if(xVal<0)
-            
-        else if(xVal>0)
-            values.GetComponent<RectTransform>().localPosition-=new Vector3(48,0); */
-        
     }
-    public void DiplomacyValues(Transform transform){
-        SetAndShowUpgrades(25,0, transform);
+
+    public void SetAndShowValues(GameObject container, int value, bool coins, bool blood){
+        alreadyActive = gameObject.activeSelf;
+        gameObject.SetActive(true);
+        coinValue.text = value.ToString();
+        bloodValue.text= value.ToString();
+
+        if (coins)
+            coinsContainer.SetActive(true);
+        else
+            coinsContainer.SetActive(false);
+
+        if (blood)
+            bloodContainer.SetActive(true);
+        else
+            bloodContainer.SetActive(false);
+
+        values.gameObject.SetActive(true);
+        values.transform.position=container.gameObject.transform.position;
+        values.GetComponent<RectTransform>().localPosition+=new Vector3(96,0);
+    }
+    
+    public void DiplomacyValues(Transform transform)
+    {
+        SetAndShowUpgrades(25, 0, transform);
     }
     public void StatValues(Transform transform){
         SetAndShowUpgrades(0,1, transform);

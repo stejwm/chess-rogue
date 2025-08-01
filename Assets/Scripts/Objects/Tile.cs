@@ -293,7 +293,7 @@ public class Tile : MonoBehaviour, IInteractable
             case BoardState.PrisonersMarket:
             case BoardState.ShopScreen:
                 SetStatBox(board.GetChessmanAtPosition(this));
-                ShowPieceValues(board.GetChessmanAtPosition(this));
+                ShowPieceValues(board, board.GetChessmanAtPosition(this));
                 break;
         }
     }
@@ -320,13 +320,16 @@ public class Tile : MonoBehaviour, IInteractable
             piece.GetComponent<MMSpringPosition>().Bump(new Vector3(0, 5f, 0f));
         }
     }
-    public void ShowPieceValues(Chessman piece)
+    public void ShowPieceValues(Board board, Chessman piece)
     {
         if (piece && piece.gameObject.activeSelf)
         {
-            PopUpManager._instance.SetAndShowValues(piece);
+            if(piece.owner == board.Opponent)
+                PopUpManager._instance.SetAndShowValues(piece, false, true);
+            else
+                PopUpManager._instance.SetAndShowValues(piece, true, false);
 
-            piece.GetComponent<MMSpringPosition>().Bump(new Vector3(0, 5f, 0f));
+                piece.GetComponent<MMSpringPosition>().Bump(new Vector3(0, 5f, 0f));
         }
     }
 
