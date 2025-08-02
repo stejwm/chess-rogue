@@ -9,6 +9,18 @@ public class PlayerData
 {
     public int coins;
     public int blood;
+    public int piecesCaptured;
+    public int piecesBounced;
+    public int piecesDecimated;
+    public int piecesKilled;
+    public int piecesReleased;      
+    public int piecesAbandoned;
+    public int enemiesCaptured; 
+    public int enemiesBounced;
+    public int enemiesDecimated;
+    public int enemiesKilled;
+    public int enemiesReleased;
+    public int enemiesAbandoned;
     public List<PieceData> pieces;
 }
 
@@ -31,6 +43,12 @@ public class AbilityData
 {
     public string abilityName;
     public string abilityDescription;
+}
+
+[System.Serializable]
+public class OrderData
+{
+    public string orderName;
 }
 
 [System.Serializable]

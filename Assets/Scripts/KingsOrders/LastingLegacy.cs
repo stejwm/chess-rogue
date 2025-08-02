@@ -25,7 +25,7 @@ public class LastingLegacy : KingsOrder
         board.LastingLegacyAbility = cm.abilities[Random.Range(0, cm.abilities.Count)].Clone();
         board.EventHub.RaisePieceRemoved(cm);
         cm.DestroyPiece();
-        board.Hero.AbandonedPieces++;
+        board.Hero.myPieceAbandoned++;
 
         yield return null;
 

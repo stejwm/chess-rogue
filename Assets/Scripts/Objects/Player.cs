@@ -22,8 +22,23 @@ public abstract class Player: MonoBehaviour
     public List<Tile> openPositions = new List<Tile>();
     public List<KingsOrder> orders = new List<KingsOrder>();
     private static Rand rng = new Rand();
-    private int abandonedPieces = 0;
-    public int releasedPieceCount = 0;
+
+    public int enemiesCaptured = 0;
+    public int enemiesBounced = 0;
+    public int enemiesDecimated = 0;
+    public int enemiesKilled = 0;
+    public int enemiesReleased = 0;
+    public int enemiesAbandoned = 0;
+
+    public int myPieceCaptured = 0;
+    public int myPieceBounced = 0;
+    public int myPieceDecimated = 0;
+    public int myPieceKilled = 0;
+    public int myPieceReleased = 0;
+    public int myPieceAbandoned = 0;
+
+
+
     public Dictionary<Rarity, int> RarityWeights = new Dictionary<Rarity, int>()
         {
             { Rarity.Common, 55 },
@@ -31,14 +46,13 @@ public abstract class Player: MonoBehaviour
             { Rarity.Rare, 10 }
         };
 
-    public int AbandonedPieces { get => abandonedPieces; set => abandonedPieces = value; }
-
     public Player(List<GameObject> pieces)
     {
         this.pieces = pieces;
     }
 
     public abstract void Initialize(Board board);
+    public abstract void InitializeFromLoad(Board board);
     public abstract void MakeMove(ChessMatch match);
 
     public virtual void CreateMoveCommandDictionary(){}

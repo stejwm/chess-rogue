@@ -13,7 +13,7 @@ public class EchoesOfTheFallen : KingsOrder
     public override IEnumerator Use(Board board)
     {
         List<GameObject> pieces = board.Hero.pieces;
-        for (int i=0; i< board.Hero.AbandonedPieces; i++){
+        for (int i=0; i< board.Hero.myPieceAbandoned; i++){
         foreach (var obj in pieces)
             {
                 Chessman piece = obj.GetComponent<Chessman>();

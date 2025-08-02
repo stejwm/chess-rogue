@@ -221,6 +221,10 @@ public class ShopManager : MonoBehaviour
     }
     public void PurchasePiece(Chessman piece)
     {
+        if(Settings.Instance.Tutorial)
+        {
+            board.TutorialManager.ShowNewPieceTutorial();
+        }
         if (board.Hero.playerCoins >= piece.releaseCost && board.Hero.openPositions.Count > board.Hero.inventoryPieces.Count)
         {
             board.Hero.playerCoins -= piece.releaseCost;
@@ -238,6 +242,10 @@ public class ShopManager : MonoBehaviour
     }
     public void SelectedOrder(Card card)
     {
+        if (Settings.Instance.Tutorial)
+        {
+            board.TutorialManager.ShowKingsOrderTutorial();
+        }
         if (board.Hero.playerCoins >= card.order.Cost)
         {
             board.Hero.playerCoins -= card.order.Cost;

@@ -43,7 +43,7 @@ public class ChessMatch
         this.black = black;
         this.eventHub = eventHub;
         this.logManager = logManager;
-        SetBoard();
+        board.SetBoard();
     }
 
     public void StartMatch()
@@ -92,6 +92,8 @@ public class ChessMatch
     public IEnumerator HandleAttack(Chessman attacker, Chessman defender)
     {
         eventHub.RaiseAttackStart(attacker, defender);
+        if(Settings.Instance.Tutorial)
+            yield return new WaitForSeconds(Settings.Instance.WaitTime);
         List<GameObject> defendingUnits = new List<GameObject>();
         List<GameObject> attackingUnits = new List<GameObject>();
         SetPositionEmpty(defender.xBoard, defender.yBoard);
@@ -150,6 +152,25 @@ public class ChessMatch
         }
         return supporters;
     }
+    public Dictionary<GameObject, int> FindSupportersNoInvoke(List<GameObject> pieces, int x, int y, Chessman attackingPiece, Chessman defendingPiece)
+    {
+        Dictionary<GameObject, int> supporters = new Dictionary<GameObject, int>();
+        foreach (GameObject pieceObject in pieces)
+        {
+            var piece = pieceObject.GetComponent<Chessman>();
+            if (piece == attackingPiece || piece == defendingPiece)
+                continue;
+            foreach (var coordinate in piece.GetValidSupportMoves())
+            {
+                if (coordinate.X == x && coordinate.Y == y)
+                {
+                    supporters.Add(pieceObject, piece.CalculateSupport());
+                    break;
+                }
+            }
+        }
+        return supporters;
+    }
 
     private IEnumerator ShowSupport(Dictionary<GameObject, int> supporters)
     {
@@ -162,7 +183,7 @@ public class ChessMatch
             RectTransform rt = bonusPopUpInstance.GetComponent<RectTransform>();
             rt.position = pieceObject.transform.position;
 
-            board.AbilityLogger.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\">{BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} <color=green>+{pieceSupport}</color> on {BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)}");
+            board.AbilityLogger.AddLogToQueue($"<sprite=\"{piece.color}{piece.type}\" name=\"{piece.color}{piece.type}\">{BoardPosition.ConvertToChessNotation(piece.xBoard, piece.yBoard)} <color=green>+{pieceSupport}</color> support");
             yield return new WaitForSeconds(Settings.Instance.WaitTime);
         }
     }
@@ -258,6 +279,10 @@ public class ChessMatch
                 yield return new WaitForSeconds(Settings.Instance.WaitTime);
                 board.EventHub.RaisePieceRemoved(defender);
                 defender.DestroyPiece();
+                if (attacker.owner == board.Hero)
+                    board.Hero.enemiesDecimated++;
+                else
+                    board.Hero.myPieceDecimated++;
             }
             else
             {
@@ -273,6 +298,10 @@ public class ChessMatch
                     MovePiece(attacker, defender.xBoard, defender.yBoard);
                 defender.gameObject.SetActive(false);
                 eventHub.RaisePieceCaptured(attacker, defender);
+                if (attacker.owner == board.Hero)
+                    board.Hero.enemiesCaptured++;
+                else
+                    board.Hero.myPieceCaptured++;
             }
 
         }
@@ -285,6 +314,7 @@ public class ChessMatch
             board.AbilityLogger.AddLogToQueue($"<sprite=\"{attacker.color}{attacker.type}\" name=\"{attacker.color}{attacker.type}\"> failed to capture <sprite=\"{defender.color}{defender.type}\" name=\"{defender.color}{defender.type}\"> on {BoardPosition.ConvertToChessNotation(destination)}");
             //defender.defenseBonus = Mathf.Max(-defender.defense, defender.defenseBonus - attacker.CalculateAttack());
             defender.SetBonus(StatType.Defense, Mathf.Max(-defender.defense, defender.defenseBonus - attacker.CalculateAttack()), "Attack Damage");
+            board.AbilityLogger.AddLogToQueue($"<sprite=\"{defender.color}{defender.type}\" name=\"{defender.color}{defender.type}\">{BoardPosition.ConvertToChessNotation(destination)} <color=red>-{attacker.CalculateAttack()}</color> defense");
             board.BattlePanel.SetAndShowResults("Bounce!");
             board.BattlePanel.Feedback.PlayFeedbacks();
             SoundManager.Instance.PlaySoundFXClip(SoundManager.Instance.bounce);
@@ -292,6 +322,10 @@ public class ChessMatch
             MovePiece(defender, defender.xBoard, defender.yBoard);
             MovePiece(attacker, attacker.xBoard, attacker.yBoard);
             eventHub.RaisePieceBounced(attacker, defender);
+            if(attacker.owner == board.Hero)
+                    board.Hero.myPieceBounced++;
+            else
+                board.Hero.enemiesBounced++;
         }
     }
     private void CompleteAttack(Chessman attacker, Chessman defender, int attackingSupport, int defendingSupport, bool isCapture)
@@ -321,22 +355,6 @@ public class ChessMatch
 
     }
 
-    public void SetBoard()
-    {
-        Array.Clear(board.Positions, 0, board.Positions.Length);
-        foreach (GameObject piece in white.pieces)
-        {
-            Chessman cm = piece.GetComponent<Chessman>();
-            board.Positions[cm.xBoard, cm.yBoard] = piece;
-        }
-        if (black != null)
-            foreach (GameObject piece in black.pieces)
-            {
-                Chessman cm = piece.GetComponent<Chessman>();
-                board.Positions[cm.xBoard, cm.yBoard] = piece;
-            }
-
-    }
 
     public void SetWhiteTurn()
     {

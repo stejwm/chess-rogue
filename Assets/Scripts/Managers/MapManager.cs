@@ -32,12 +32,13 @@ public class MapManager : MonoBehaviour
     float minVerticalDistance = 1.5f; // Minimum vertical distance between nodes from different paths
 
 
-    public void Start()
+    public void Awake()
     {
-        //if(GameManager._instance.state != ScreenState.Map)
-            gameObject.SetActive(false);
-        if(!SceneLoadManager.LoadPreviousSave)
+        gameObject.SetActive(false);
+        if (!SceneLoadManager.LoadPreviousSave)
+        {
             GenerateMap();
+        }
     }
 
     public void OpenMap(Board board)

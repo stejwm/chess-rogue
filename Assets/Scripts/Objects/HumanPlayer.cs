@@ -21,6 +21,24 @@ public class HumanPlayer : Player
             openPositions.Add(board.GetTileAt(i, 2));
         }
     }
+    public override void InitializeFromLoad(Board board)
+    {
+        RarityWeights = new Dictionary<Rarity, int>()
+        {
+            { Rarity.Common, 80 },
+            { Rarity.Uncommon, 15 },
+            { Rarity.Rare, 5 }
+        };
+
+        for (int i = 0; i < board.Width; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if(board.GetChessmanAtPosition(i, j)==null)
+                    openPositions.Add(board.GetTileAt(i, j));
+            }
+        }
+    }
 
     public override void MakeMove(ChessMatch match)
     {

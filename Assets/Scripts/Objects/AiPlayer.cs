@@ -21,6 +21,7 @@ public class AIPlayer : Player
         openPositions = new List<Tile>();
         this.board = board;
     }
+    public override void InitializeFromLoad(Board board) { }
 
     public override void CreateMoveCommandDictionary()
     {
@@ -47,11 +48,16 @@ public class AIPlayer : Player
     public override void MakeMove(ChessMatch match)
     {
         //StartCoroutine(Move());
-        Move();
+        StartCoroutine(DelayedMove());
 
 
     }
 
+    public IEnumerator DelayedMove()
+    {
+        yield return new WaitForSeconds(Settings.Instance.WaitTime);
+        Move();
+    }
     public async void Move()
     {
         //yield return new WaitForSeconds(Settings.Instance.WaitTime);
@@ -80,7 +86,7 @@ public class AIPlayer : Player
                     }
                 }
             }
-            moves = await board.StockFishEngine.GetTopMoves(board.BoardToFEN(), 1, possibleMoves); 
+            moves = await board.StockFishEngine.GetTopMoves(board.BoardToFEN(), 1, possibleMoves);
         }
         if (moves.Count == 0)
         {
@@ -93,8 +99,8 @@ public class AIPlayer : Player
             board.CurrentMatch.ExecuteTurn(board.GetChessmanAtPosition(fromX, fromY), toX, toY);
         }
 
-        
-        
+
+
     }
     public override void DestroyPieces()
     {
@@ -106,10 +112,10 @@ public class AIPlayer : Player
     
     public string PickMoveBasedOnSkill(List<string> topMoves, int skillLevel)
     {
-       int moveCount = topMoves.Count;
-
+        int moveCount = topMoves.Count;
+        int degree = skillLevel * 2;
         // Invert skill level: lower skill = higher maxIndex
-        int maxIndex = Mathf.RoundToInt(Mathf.Lerp(moveCount - 1, 0, skillLevel / 10f));
+        int maxIndex = Mathf.RoundToInt(Mathf.Lerp(moveCount - 1, 0, degree / 10f));
 
         // Pick randomly between 0 and maxIndex
         int chosenIndex = UnityEngine.Random.Range(0, maxIndex + 1);

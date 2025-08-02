@@ -119,6 +119,10 @@ public class SoulBond : Ability
                         board.CurrentMatch.EndMatch();
                 }
                 cm.DestroyPiece();
+                if(attacker.owner == board.Hero)
+                    board.Hero.enemiesDecimated++;
+                else
+                    board.Hero.myPieceDecimated++;
             }
 
             //destroy this piece if it's not the one decimated
@@ -139,6 +143,10 @@ public class SoulBond : Ability
                         board.CurrentMatch.EndMatch();
                 }
                 piece.DestroyPiece();
+                if(attacker.owner == board.Hero)
+                    board.Hero.enemiesDecimated++;
+                else
+                    board.Hero.myPieceDecimated++;
             }
             if(board.CurrentMatch!=null)
                 board.CurrentMatch.isDecimating = false;

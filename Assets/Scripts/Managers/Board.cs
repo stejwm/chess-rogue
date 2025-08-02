@@ -11,6 +11,7 @@ using System.Linq;
 using CI.QuickSave;
 using Unity.MLAgents.Integrations.Match3;
 using System.Threading.Tasks;
+using System.IO;
 
 public enum BoardState
 {
@@ -37,6 +38,7 @@ public class Board : MonoBehaviour
     [SerializeField] private BattlePanel battlePanel;
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject winPanel;
     private Chessman selectedPiece;
     [SerializeField] LogManager logManager;
     [SerializeField] MarketManager marketManager;
@@ -48,13 +50,14 @@ public class Board : MonoBehaviour
     [SerializeField] KingsOrderManager kingsOrderManager;
     [SerializeField] CurrencyManager currencyManager;
     [SerializeField] PauseMenuManager pauseMenuManager;
+    [SerializeField] TutorialManager tutorialManager;
     [SerializeField] AbilityLogger abilityLogger;
     [SerializeField] StockfishEngine stockFishEngine;
     public int Width = 8;
     public int Height = 8;
     private int reRollCost = 2;
     private int rerollCostIncrease = 1;
-    private int level = 0;
+    [SerializeField] private int level = 0;
     public BoardState previousBoardState = BoardState.None;
     private GameObject[,] positions = new GameObject[8, 8];
     [SerializeField] private BoardState boardState;
@@ -82,15 +85,19 @@ public class Board : MonoBehaviour
     public int RerollCostIncrease { get => rerollCostIncrease; set => rerollCostIncrease = value; }
     public AbilityLogger AbilityLogger { get => abilityLogger; set => abilityLogger = value; }
     public StockfishEngine StockFishEngine { get => stockFishEngine; set => stockFishEngine = value; }
+    public TutorialManager TutorialManager { get => tutorialManager; set => tutorialManager = value; }
 
     public void Start()
     {
+        LoadPrefs();
         EventHub = new EventHub();
         CreateTiles();
         currencyManager.Initialize(this);
         pauseMenuManager.Initialize(this);
+        TutorialManager.Initialize(this);
         abilityLogger.Initialize(logManager);
         NameDatabase.LoadNames();
+        AbilityDatabase.Instance.LoadAbilitiesAndOrders();
         if (SceneLoadManager.LoadPreviousSave)
         {
             LoadGame();
@@ -109,9 +116,16 @@ public class Board : MonoBehaviour
             //opponent.pieces.Clear();
             CurrentMatch.EndMatch();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            previousBoardState = boardState;
+            boardState = BoardState.None;
+            pauseMenuManager.OpenMenu();
+        }
     }
     public void LetsBegin()
     {
+        QuickSaveWriter.DeleteRoot("Game");
         opponent.pieces = PieceFactory._instance.CreateKnightsOfTheRoundTable(this, opponent, opponent.color);
         hero.pieces = PieceFactory._instance.CreatePiecesForColor(this, hero, hero.color);
         hero.Initialize(this);
@@ -121,24 +135,55 @@ public class Board : MonoBehaviour
     }
     public void LoadGame()
     {
-        var quickSaveReader = QuickSaveReader.Create("Game");
-        PlayerData player;
-        List<MapNodeData> mapNodes;
-        BoardState state;
-        quickSaveReader.TryRead<PlayerData>("Player", out player);
-        quickSaveReader.TryRead<BoardState>("State", out state);
-        quickSaveReader.TryRead<int>("Level", out level);
-        quickSaveReader.TryRead<List<MapNodeData>>("MapNodes", out mapNodes);
-        BoardState = state;
+        try
+        {
+            int commonRarity, uncommonRarity, rareRarity;
+            var quickSaveReader = QuickSaveReader.Create("Game");
+            PlayerData player;
+            List<MapNodeData> mapNodes;
+            List<OrderData> orders;
+            BoardState state;
+            quickSaveReader.TryRead<PlayerData>("Player", out player);
+            quickSaveReader.TryRead<BoardState>("State", out state);
+            quickSaveReader.TryRead<int>("Level", out level);
+            quickSaveReader.TryRead<List<OrderData>>("Orders", out orders);
+            quickSaveReader.TryRead<int>("CommonRarity", out commonRarity);
+            quickSaveReader.TryRead<int>("UncommonRarity", out uncommonRarity);
+            quickSaveReader.TryRead<int>("RareRarity", out rareRarity);
+            quickSaveReader.TryRead<List<MapNodeData>>("MapNodes", out mapNodes);
+            BoardState = state;
 
-        //Debug.Log($"Resuming board.BoardState{state}");
-        mapManager.LoadMap(mapNodes);
-        hero.playerBlood = player.blood;
-        hero.playerCoins = player.coins;
+            //Debug.Log($"Resuming board.BoardState{state}");
+            mapManager.LoadMap(mapNodes);
+            hero.pieces = PieceFactory._instance.LoadPieces(this, player.pieces, hero);
+            SetBoard();
+            hero.InitializeFromLoad(this);
+            hero.orders = AbilityDatabase.Instance.LoadOrders(orders);
+            hero.playerBlood = player.blood;
+            hero.playerCoins = player.coins;
+            hero.myPieceCaptured = player.piecesCaptured;
+            hero.myPieceBounced = player.piecesBounced;
+            hero.myPieceDecimated = player.piecesDecimated;
+            hero.myPieceKilled = player.piecesKilled;
+            hero.myPieceReleased = player.piecesReleased;
+            hero.myPieceAbandoned = player.piecesAbandoned;
+            hero.enemiesCaptured = player.enemiesCaptured;
+            hero.enemiesBounced = player.enemiesBounced;
+            hero.enemiesDecimated = player.enemiesDecimated;
+            hero.enemiesKilled = player.enemiesKilled;
+            hero.enemiesReleased = player.enemiesReleased;
+            hero.enemiesAbandoned = player.enemiesAbandoned;
+            hero.RarityWeights[Rarity.Common] = commonRarity;
+            hero.RarityWeights[Rarity.Uncommon] = uncommonRarity;
+            hero.RarityWeights[Rarity.Rare] = rareRarity;
 
-        hero.pieces = PieceFactory._instance.LoadPieces(this, player.pieces, hero);
-
-        OpenMap();
+            OpenMap();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Error loading game: {e.Message}");
+            LetsBegin();
+        }
 
     }
     public void CreateNewMatch(Player white, Player black)
@@ -308,11 +353,18 @@ public class Board : MonoBehaviour
     }
     public void EndMatch()
     {
-        Level++;
-        currentMatch = null;
-        boardState = BoardState.None;
-        ResetBoard();
-        OpenMarket();
+        if (level > 10)
+        {
+            winPanel.SetActive(true);
+        }
+        else
+        {
+            Level++;
+            currentMatch = null;
+            boardState = BoardState.None;
+            ResetBoard();
+            OpenMarket();
+        }
     }
     public void OpenMarket()
     {
@@ -341,6 +393,10 @@ public class Board : MonoBehaviour
     }
     public void OpenShop()
     {
+        if(Settings.Instance.Tutorial)
+        {
+            TutorialManager.ShowShopTutorial();
+        }
         boardState = BoardState.ShopScreen;
         ResetPlayerPieces();
         ShopManager.OpenShop(this);
@@ -357,6 +413,10 @@ public class Board : MonoBehaviour
     }
     public void OpenManagement()
     {
+        if (Settings.Instance.Tutorial)
+        {
+            TutorialManager.ShowManagementTutorial();
+        }
         boardState = BoardState.ManagementScreen;
         ResetPlayerPieces();
         ArmyManager.OpenManagement(this);
@@ -371,6 +431,10 @@ public class Board : MonoBehaviour
     }
     public void OpenMap()
     {
+        if(Settings.Instance.Tutorial)
+        {
+            TutorialManager.ShowMapTutorial();
+        }
         ResetPlayerPieces();
         boardState = BoardState.Map;
         MapManager.OpenMap(this);
@@ -394,7 +458,7 @@ public class Board : MonoBehaviour
         else if (boardState == BoardState.ShopScreen)
         {
             ShopToManagement();
-            previousBoardState = BoardState.ManagementScreen;
+            previousBoardState = BoardState.ShopScreen;
             KingsOrderManager.OpenManagement(this);
             boardState = BoardState.KingsOrder;
         }
@@ -402,11 +466,23 @@ public class Board : MonoBehaviour
     }
     public void CloseKingsOrders()
     {
+
         if (boardState == BoardState.KingsOrder)
         {
-            boardState = previousBoardState;
-            previousBoardState = BoardState.None;
-            KingsOrderManager.CloseManagement();
+            if (previousBoardState == BoardState.ShopScreen)
+            {
+                KingsOrderManager.CloseManagement();
+                BoardState = BoardState.ManagementScreen;
+                previousBoardState = BoardState.None;
+                ManagementToShop();
+                
+            }
+            else
+            {
+                boardState = previousBoardState;
+                previousBoardState = BoardState.None;
+                KingsOrderManager.CloseManagement();
+            }
         }
     }
     public void ShopToManagement()
@@ -417,7 +493,7 @@ public class Board : MonoBehaviour
     }
     public void ManagementToShop()
     {
-        if (boardState == BoardState.ManagementScreen)
+        if (boardState == BoardState.ManagementScreen && ArmyManager.CloseManagement())
         {
             ArmyManager.ExitToShop();
             ShopManager.OpenShopFromManagement();
@@ -426,6 +502,10 @@ public class Board : MonoBehaviour
     }
     public void OpenPieceInfo(Chessman piece)
     {
+        if(Settings.Instance.Tutorial)
+        {
+            TutorialManager.ShowUpgradeTutorial();
+        }
         if (boardState != BoardState.InfoScreen)
         {
             previousBoardState = boardState;
@@ -439,6 +519,22 @@ public class Board : MonoBehaviour
         previousBoardState = BoardState.None;
         pieceInfoManager.ClosePieceInfo();
     }
+
+    public void OpenPauseMenu()
+    {
+        if (boardState != BoardState.None)
+        {
+            previousBoardState = boardState;
+        }
+        boardState = BoardState.None;
+        pauseMenuManager.OpenMenu();
+    }
+    public void ClosePauseMenu()
+    {
+        boardState = previousBoardState;
+        pauseMenuManager.CloseMenu();
+    }
+
     public GameObject GetPieceAtPosition(int x, int y)
     {
         if (positions[x, y])
@@ -467,6 +563,23 @@ public class Board : MonoBehaviour
         else
             return null;
     }
+
+    public void SetBoard()
+    {
+        Array.Clear(positions, 0, positions.Length);
+        foreach (GameObject piece in hero.pieces)
+        {
+            Chessman cm = piece.GetComponent<Chessman>();
+            positions[cm.xBoard, cm.yBoard] = piece;
+        }
+        if (opponent != null)
+            foreach (GameObject piece in opponent.pieces)
+            {
+                Chessman cm = piece.GetComponent<Chessman>();
+                positions[cm.xBoard, cm.yBoard] = piece;
+            }
+
+    }
     public void SetSelectedPosition(Tile tile)
     {
         if (selectedPosition == null)
@@ -481,6 +594,7 @@ public class Board : MonoBehaviour
     public void GameOver()
     {
         gameOverPanel.SetActive(true);
+        QuickSaveWriter.DeleteRoot("Game");
     }
 
     public string BoardToFEN()
@@ -596,7 +710,26 @@ public class Board : MonoBehaviour
         return true;
     }
 
-    
+    public void LoadPrefs()
+    {
+        Settings.Instance.SfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
+        Settings.Instance.MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
+        Settings.Instance.MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        Settings.Instance.WaitTime = PlayerPrefs.GetFloat("WaitTime", 0.25f);
+        Settings.Instance.JoystickSpeed = PlayerPrefs.GetFloat("JoystickSpeed", 40f);
+        Settings.Instance.Tutorial = Convert.ToBoolean(PlayerPrefs.GetInt("Tutorial", 1));
+        Debug.Log($"Loaded Settings: SFXVolume={Settings.Instance.SfxVolume}, MasterVolume={Settings.Instance.MasterVolume}, MusicVolume={Settings.Instance.MusicVolume}, WaitTime={Settings.Instance.WaitTime}, JoystickSpeed={Settings.Instance.JoystickSpeed}, Tutorial={Settings.Instance.Tutorial}");
+    }
+
+    public void SavePrefs()
+    {
+        PlayerPrefs.SetFloat("SFXVolume",Settings.Instance.SfxVolume);
+        PlayerPrefs.SetFloat("MasterVolume", Settings.Instance.MasterVolume);
+        PlayerPrefs.SetFloat("MusicVolume", Settings.Instance.MusicVolume);
+        PlayerPrefs.SetFloat("WaitTime", Settings.Instance.WaitTime);
+        PlayerPrefs.SetFloat("JoystickSpeed", Settings.Instance.JoystickSpeed);
+        PlayerPrefs.SetInt("Tutorial", Convert.ToInt32(Settings.Instance.Tutorial));
+    }
      
 
 }

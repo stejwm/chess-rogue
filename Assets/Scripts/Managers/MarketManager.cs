@@ -57,7 +57,7 @@ public class MarketManager : MonoBehaviour
                     if (chessman.abilities.Count > chessman.diplomacy)
                     {
                         Debug.Log("checking diplomacy for " + piece.name);
-                        int survive = Random.Range(1, 10);
+                        int survive = Random.Range(1, 11);
                         Debug.Log("Rolled " + survive + " and diplomacy is " + chessman.diplomacy);
                         if (survive <= ((chessman.abilities.Count - chessman.diplomacy) * 2))
                         {
@@ -87,7 +87,7 @@ public class MarketManager : MonoBehaviour
                     Chessman cm = piece.GetComponent<Chessman>();
                     board.EventHub.RaisePieceRemoved(cm);
                     cm.DestroyPiece();
-                    hero.AbandonedPieces++;
+                    hero.myPieceAbandoned++;
                 }
 
             }
@@ -99,6 +99,7 @@ public class MarketManager : MonoBehaviour
                     Chessman cm = piece.GetComponent<Chessman>();
                     board.EventHub.RaisePieceRemoved(cm);
                     cm.DestroyPiece();
+                    hero.enemiesAbandoned++;
                 }
             }
         myCapturedPieces.Clear();
@@ -116,10 +117,11 @@ public class MarketManager : MonoBehaviour
                 piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 piece.gameObject.SetActive(false);
                 piece.DestroyPiece();
-                hero.releasedPieceCount++;
+                hero.enemiesReleased++;
             }
             else
             {
+                hero.myPieceReleased++;
                 hero.playerCoins -= piece.releaseCost;
                 piece.highlightedParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 piece.gameObject.SetActive(false);
@@ -139,6 +141,14 @@ public class MarketManager : MonoBehaviour
 
         foreach (Chessman item in selectedPieces)
         {
+            if (item.owner == hero)
+            {
+                hero.myPieceKilled++;
+            }
+            else
+            {
+                hero.enemiesKilled++;
+            }
             hero.playerBlood += item.blood;
             myCapturedPieces.Remove(item.gameObject);
             opponentCapturedPieces.Remove(item.gameObject);

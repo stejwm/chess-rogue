@@ -25,7 +25,7 @@ public class LostToLuck : KingsOrder
         board.Hero.pieces.Remove(Chessobj);
         board.EventHub.RaisePieceRemoved(cm);
         cm.DestroyPiece();
-        board.Hero.AbandonedPieces++;
+        board.Hero.myPieceAbandoned++;
 
         //TODO: Check weights do not drop below zero
         if (board.Hero.RarityWeights[Rarity.Common] <= 12)

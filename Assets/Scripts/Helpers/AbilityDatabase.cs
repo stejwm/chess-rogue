@@ -31,6 +31,10 @@ public class AbilityDatabase : MonoBehaviour
     }
     public void Start()
     {
+        
+    }
+    public void LoadAbilitiesAndOrders()
+    {
         foreach (var ability in abilities)
         {
             if (!abilityDict.ContainsKey(ability.abilityName))
@@ -39,7 +43,7 @@ public class AbilityDatabase : MonoBehaviour
                 name = Regex.Replace(name, "<.*?>", string.Empty);
                 name = name.ToLower().Replace(" ", String.Empty);
                 abilityDict.Add(name, ability);
-                //Debug.Log($"Ability: {name} added to dictionary as key");
+                Debug.Log($"Ability: {name} added to dictionary as key");
                 
             }
             else
@@ -76,6 +80,25 @@ public class AbilityDatabase : MonoBehaviour
                 Debug.LogWarning($"Duplicate order found: {order.Name}. Only the first instance will be used.");
             }
         }
+    }
+    public List<KingsOrder> LoadOrders(List<OrderData> orderDataList)
+    {
+        List<KingsOrder> loadedOrders = new List<KingsOrder>();
+        foreach (var orderData in orderDataList)
+        {
+            string name = orderData.orderName;
+            name = Regex.Replace(name, "<.*?>", string.Empty);
+            name = name.ToLower().Replace(" ", String.Empty);
+            if (orderDict.TryGetValue(name, out KingsOrder order))
+            {
+                loadedOrders.Add(order.Clone());
+            }
+            else
+            {
+                Debug.LogWarning($"Order {orderData.orderName} not found in database.");
+            }
+        }
+        return loadedOrders;
     }
     public Ability GetRandomAbility()
     {
